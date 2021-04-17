@@ -1,0 +1,10 @@
+Streamer Extra ID Offset:
+
+MINE_EXTRA_ID_OFFSET		200001	//Include: ./engine/Mines.inc
+MISSILE_EXTRA_ID_OFFSET		300001	//Include: ./engine/Missile.inc
+PORTAL_EXTRA_ID_OFFSET		400000	//Include: ./engine/PortalGun.inc
+STINGERS_EXTRA_ID_OFFSET	500000	//Include: ./engine/Stingers.inc
+HUNT_EXTRA_ID_OFFSET		600000	//Include: ./engine/Hunting.inc
+VCOLLISION_EXTRA_ID_OFFSET	800000	//Include: ./ADM/3DTryg.inc
+SAOI_EXTRA_ID_OFFSET		1000000	//Include: Repository:SAOI/include/SAOI.inc
+SAOIFM_EXTRA_ID_OFFSET		1100000	//Include: Repository:SAOI/filterscript/SAOI_FileManager.pwn

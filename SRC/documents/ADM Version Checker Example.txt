@@ -1,0 +1,28 @@
+//Include:
+#if defined _example_file
+	#endinput
+#endif
+#define _example_file
+
+#define example_Version			(20201)	 //a.b.c 10000*a+100*b+c
+
+
+//Script Check:
+
+//Check Version Example.inc
+#if !defined _example_file
+	#error [ADM] You need Example.inc v2.2.1
+#elseif !defined example_Version
+	#error [ADM] Update you Example.inc to v2.2.1
+#elseif (example_Version < 20201)
+	#error [ADM] Update you Example.inc to v2.2.1
+#endif
+
+
+//Get Version name:
+GetSAMIncludeVersion(value,name[],maxdest = sizeof(name)); //from ATM.inc
+
+example:
+new buff[16];
+GetSAMIncludeVersion(example_Version,buff);
+printf("Include Version: %s",buff);

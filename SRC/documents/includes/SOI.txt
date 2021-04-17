@@ -1,0 +1,40 @@
+﻿SOI File Structure
+
+Extension:      soi
+Name:           Skin Offset Image
+Data Type:      Binary
+Structure type: Static
+Version:        1.0
+Author:         Abyss Morgan
+
+File: {
+	$HEADER_KEY
+	$STATIC_DATA
+}
+
+$HEADER_KEY: {
+	static "SOI 1.0 ADM"
+}
+
+$STATIC_DATA: {
+	[for everyone skins]
+
+	function: {
+		SOI::GetSkinOffset(skinid,bone,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:sx,Float:sy,Float:sz);
+	}
+	fseek: {
+		offset = skinid * size:arguments = 37B
+	}
+	arguments: {
+		bone size:8b
+		Float:x size:32b
+		Float:y size:32b
+		Float:z size:32b
+		Float:rx size:32b
+		Float:ry size:32b
+		Float:rz size:32b
+		Float:sx size:32b
+		Float:sy size:32b
+		Float:sz size:32b
+	}
+}

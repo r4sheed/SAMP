@@ -1,0 +1,90 @@
+/**************************
+ * Include Header Example *
+ **************************/
+
+//SA-MP includes
+#include <a_samp>
+#include <a_http>
+
+
+
+//Plugin includes
+#include <sscanf2>                  //http://forum.sa-mp.com/showthread.php?t=570927
+#include <streamer>                 //http://forum.sa-mp.com/showthread.php?t=102865
+#include <audio>                    //http://forum.sa-mp.com/showthread.php?t=82162
+#include <a_mysql>
+#include <mapandreas>               //http://forum.sa-mp.com/showthread.php?t=275492
+#include <ColAndreas>               //http://forum.sa-mp.com/showthread.php?t=586068
+#include <regex>
+#include <crashdetect>              //http://forum.sa-mp.com/showthread.php?t=262796
+#include <YSF>                      //http://forum.sa-mp.com/showthread.php?t=609499
+#include <SAOI>                     //http://forum.sa-mp.com/showthread.php?t=618429
+#include <profiler>                 //http://forum.sa-mp.com/showthread.php?t=271129
+
+
+//Other includes
+#include <foreach>
+
+
+#include <izcmd>                    //http://forum.sa-mp.com/showthread.php?t=576114
+#include <progress>                 //http://forum.sa-mp.com/showthread.php?t=113443
+#include <md5>
+#include <Dini>
+#include <SHA256>
+#include <pointers>
+
+//3DTryg.inc Config (Please read 3DTryg.inc header)
+
+//StreamerFunction.inc Config (Please read StreamerFunction.inc header)
+
+//ATM.inc Config
+//#define DISABLE_ATM_FUNCTION
+//#define DISABLE_ATM_EXEC
+//#define DISABLE_ATM_PUB_VAR
+
+
+//Logs.inc Config
+//#define EMPTY_LOG_BUFFER          "My Log File\n"
+
+//Santa.inc Config
+//#define SANTA_IS_EASTER_EVENT     //Change to Easter Event 
+//#define SANTA_IS_EASTER_HALLOWEEN //Change to Halloween Event 
+
+
+
+//ADM Includes
+#include <ADM/StreamerFunction>     //http://forum.sa-mp.com/showthread.php?t=590918
+#include <ADM/BitFunctions>         //http://forum.sa-mp.com/showthread.php?t=591223
+#include <ADM/RGB>                  //http://forum.sa-mp.com/showthread.php?t=590770
+#include <ADM/FoxForeach>           //http://forum.sa-mp.com/showthread.php?t=611175 (Incompatible with foreach.inc !)
+#include <ADM/3DTryg>               //http://forum.sa-mp.com/showthread.php?t=591010
+#include <ADM/LY>                   //http://forum.sa-mp.com/showthread.php?t=598933
+#include <ADM/ADM>                  //http://forum.sa-mp.com/showthread.php?t=595203
+#include <ADM/DataConvert>          //http://forum.sa-mp.com/showthread.php?p=3719467
+#include <ADM/EVF>                  //http://forum.sa-mp.com/showthread.php?p=3727224
+#include <ADM/vnpc>                 //http://forum.sa-mp.com/showthread.php?t=632664
+#include <ADM/Logs>                 //not published
+#include <ADM/ATM>                  //not published
+
+//Other includes created by Abyss Morgan
+
+#include <other/AntiSupremeTroll>
+#include <other/Interiors>
+
+#include <engine/EngineX>           //http://forum.sa-mp.com/showthread.php?t=600617 [Old Version] (Incompatible with NGCM Core)
+#include <engine/EngineV6>          //http://forum.sa-mp.com/showthread.php?t=600617 [New Version] (Compatible with NGCM Core)
+#include <engine/Knife>             //http://forum.sa-mp.com/showthread.php?t=599773
+#include <engine/Magic>             //http://forum.sa-mp.com/showthread.php?p=3846263
+#include <engine/VehPara>           //http://forum.sa-mp.com/showthread.php?p=3848232
+#include <engine/PortalGun>         //http://forum.sa-mp.com/showthread.php?p=3862804
+#include <engine/Mines>             //http://forum.sa-mp.com/showthread.php?t=600369
+#include <engine/Missile>           //http://forum.sa-mp.com/showthread.php?t=608018
+#include <engine/VehicleMissileCol>    //http://forum.sa-mp.com/showthread.php?t=609788
+
+#include <event/Fireworks>
+#include <event/Lottery>            //http://forum.sa-mp.com/showthread.php?t=604954
+#include <event/Santa>              //http://forum.sa-mp.com/showthread.php?t=595265
+
+#include <security/UltimateScriptSecure>    //http://forum.sa-mp.com/showthread.php?t=600408
+
+//EOF

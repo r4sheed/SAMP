@@ -1,0 +1,126 @@
+﻿INCLUDE
+├───ADM
+│   ├───3DTryg
+│   │   ├───MapAndreas
+│   │   ├───ColAndreas
+│   │   ├───YSF
+│   │   ├───Streamer
+│   │   ├───FoxForeach
+│   │   ├───Foreach
+│   │   ├───FCNPC
+│   │   ├───VehicleStreamer
+│   │   ├───Stream3D
+│   │   ├───Actor
+│   │   ├───ATM
+│   │   ├───Anims
+│   │   └───VehicleCollision
+│   ├───ADM
+│   │   ├───MD5
+│   │   └───SScanf
+│   ├───ADM_Guard
+│   ├───ATM
+│   ├───BitFunctions
+│   ├───DataConvert
+│   │   └───SScanf
+│   ├───DINI
+│   ├───EVF
+│   │   └───Streamer
+│   ├───FoxForeach
+│   ├───Logs
+│   ├───LY
+│   ├───MD5
+│   ├───mentiones
+│   │   ├───RGB
+│   │   └───Sscanf
+│   ├───RGB
+│   ├───route_rand
+│   │   └───route_rand.bin
+│   ├───SHA256
+│   ├───SOI
+│   ├───StreamerFunction
+│   │   └───Streamer
+│   ├───SWAP
+│   ├───vnpc
+│   │   └───YSF
+│   └───Zones
+├───engine
+│   ├───EngineV6
+│   │   ├───3DTryg
+│   │   ├───ColAndreas
+│   │   └───Streamer
+│   ├───EngineX
+│   │   ├───3DTryg
+│   │   ├───MapAndreas
+│   │   └───Streamer
+│   ├───Hunting
+│   │   ├───3DTryg
+│   │   ├───ColAndreas
+│   │   └───Streamer
+│   ├───Knife
+│   │   ├───3DTryg
+│   │   ├───ColAndreas
+│   │   └───Streamer
+│   ├───Magic
+│   │   ├───3DTryg
+│   │   ├───ColAndreas
+│   │   └───Streamer
+│   ├───Mines
+│   │   ├───3DTryg
+│   │   └───Streamer
+│   ├───Missile
+│   │   ├───3DTryg
+│   │   └───Streamer
+│   ├───PortalGun
+│   │   ├───3DTryg
+│   │   ├───ColAndreas
+│   │   └───Streamer
+│   ├───Stingers
+│   │   ├───3DTryg
+│   │   └───Streamer
+│   ├───VehicleMissileCol
+│   │   ├───3DTryg
+│   │   ├───ColAndreas
+│   │   ├───Missile
+│   │   └───Streamer
+│   └───VehPara
+│       ├───3DTryg
+│       ├───ColAndreas
+│       └───Streamer
+├───security
+│   └───UltimateScriptSecure
+├───SAOI
+│   ├───SAOI
+│   │   ├───Streamer
+│   │   └───SScanf
+│   ├───SAOI_FileManager
+│   │   ├───Streamer
+│   │   ├───SScanf
+│   │   ├───MapAndreas
+│   │   ├───ColAndreas
+│   │   ├───YSF
+│   │   ├───SAOI
+│   │   ├───3DTryg
+│   │   ├───StreamerFunction
+│   │   ├───IZCMD
+│   │   ├───SWAP
+│   │   ├───MD5
+│   │   └───ZCMD
+│   └───SAOI_Generator
+│       ├───SAOI
+│       ├───Streamer
+│       ├───SScanf
+│       ├───MD5
+│       └───ObjectDist
+├───event
+│   ├───Fireworks
+│   │   ├───3DTryg
+│   │   └───Streamer
+│   ├───Lottery
+│   └───Santa
+│       ├───3DTryg
+│       ├───MapAndreas
+│       ├───ColAndreas
+│       ├───Streamer
+│       └───StreamerFunction
+└───other
+    └───Interiors
