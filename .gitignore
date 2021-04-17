@@ -1,3 +1,7 @@
 .pack
 .pack.cmd
 Other
+SRC/database
+SRC/maps
+SRC/plugins
+SRC/tools
