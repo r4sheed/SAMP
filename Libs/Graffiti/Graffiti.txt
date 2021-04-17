@@ -1,0 +1,55 @@
+﻿Hello, I would like to present you the Los Santos Gang Graffiti.
+
+[b]Video:[/b]
+[url=https://i.imgur.com/c0RgnwW.gif][img]https://i.imgur.com/c0RgnwW.gif[/img][/url]
+
+[b]Installation:[/b]
+[php]
+#include <streamer>
+#include <3DTryg>
+
+//#define GRAFFITI_DEFAULT_GANG			0
+//#define GRAFFITI_DEFAULT_COLOR		0x003D00FF
+//#define GRAFFITI_DEFAULT_NAME			"Sekhmete Axion Rush"
+
+#include <Graffiti>
+
+public OnGameModeInit(){
+	//...load gang meta before init Graffiti
+	Graffiti::Init();
+	return 1;
+}
+
+public Graffiti::GetPlayerGang(playerid){
+	return PlayerData[playerid][gang]; //your variable returning gangid
+}
+
+//called after player change graffiti tag
+public OnGraffitiTagChanged(mobid,playerid,gangid,old_gangid){
+	new buffer[32];
+	format(buffer,sizeof(buffer),"~w~Tag painted ~n~%d of %d",Graffiti::CountGangTags(gangid),MAX_GRAFFITI);
+	GameTextForPlayer(playerid,buffer,3000,4);
+	
+	//Graffiti::SetGangName(mobid,0xDBDE1FFF,"Grove Street");
+	return 1;
+}
+
+//called after server init
+public OnGraffitiTagCreated(mobid,gangid){
+	
+	//Graffiti::SetGangName(mobid,0xDBDE1FFF,"Grove Street");
+	return 1;
+}
+[/php]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/Graffiti.inc]Graffiti.inc[/url]
+[url=http://adm.ct8.pl/d/graffiti.bin]graffiti.bin[/url] (put in /scriptfiles)
+[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
+
+[i][b]Non-Registered Users:[/b]
+[url=http://adm.ct8.pl/report/?title=Graffiti%20Bug]Bug Report[/url][/i]

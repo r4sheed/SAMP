@@ -1,0 +1,166 @@
+Hello, I would like to present a simple include to convert numbers between systems, decimal, hexadecimal, binary.
+
+[php]
+/*************************************************************************************************************************************
+ *                                                                                                                                   *
+ *                                                      )(   Data Convert   )(                                                       *
+ *                                                                                                                                   *
+ * Copyright © 2019 Abyss Morgan. All rights reserved.                                                                               *
+ * Contributors: Crayder, Shiny                                                                                                      *
+ *                                                                                                                                   *
+ * Website:  adm.ct8.pl                                                                                                              *
+ * Download: adm.ct8.pl/r/download                                                                                                   *
+ *                                                                                                                                   *
+ * Plugins: SScanf                                                                                                                   *
+ * Modules: None                                                                                                                     *
+ *                                                                                                                                   *
+ * File Version: 2.1.1                                                                                                               *
+ * SScanf Version: 2.8.2                                                                                                             *
+ *                                                                                                                                   *
+ * Definitions:                                                                                                                      *
+ * FIRST_FILE_ADDRESS                                                                                                                *
+ * INVALID_FILE_ID                                                                                                                   *
+ * INVALID_FILE_HANDLE                                                                                                               *
+ * INT_NUMBER_LEN                                                                                                                    *
+ * HEX_NUMBER_LEN                                                                                                                    *
+ * BIN_NUMBER_LEN                                                                                                                    *
+ * OCT_NUMBER_LEN                                                                                                                    *
+ *                                                                                                                                   *
+ * Functions:                                                                                                                        *
+ * strcopy(input[],output[]);  //string copy for warning 224: indeterminate array size                                               *
+ * fstrcopy(input[],output[],maxdest = sizeof(output));   //fast string copy                                                         *
+ * ABCToCBA(input[],output[]);                                                                                                       *
+ * AnyToInt(string[],type,&bool:flag);                                                                                               *
+ * IntToAny(value,output[],type);                                                                                                    *
+ * rot13(string[]);                                                                                                                  *
+ * code128(input[],output[]);                                                                                                        *
+ * swap_int({Float,_}:int1,{Float,_}:int2);                                                                                          *
+ * swap_string(string1[], string2[], dest1 = sizeof(string1), dest2 = sizeof(string2));                                              *
+ * bool:ContainInSeries(value,...);                                                                                                  *
+ * bool:ContainInSeriesFloat(Float:value,Float:...);                                                                                 *
+ * StringEqual(string1[],string2[],ignorecase);                                                                                      *
+ * StringNotEqual(string1[],string2[],ignorecase);                                                                                   *
+ * base64_decode(input[],output[]); //d:base64                                                                                       *
+ * base64_encode(input[],output[]); //e:base64                                                                                       *
+ * StripNewLine(string[]);                                                                                                           *
+ * strreplace(string[],const search[],const replacement[],bool:ignorecase = false,pos = 0,limit = -1,maxlength = sizeof(string));    *
+ * strlower(string[]);                                                                                                               *
+ * strupper(string[]);                                                                                                               *
+ *                                                                                                                                   *
+ * File functions:                                                                                                                   *
+ * GetFileHandleID(File:handle);                                                                                                     *
+ * GetFileID(File:handle);                                                                                                           *
+ * fcopy(input[],output[]);                                                                                                          *
+ * frename(oldname[],newname[]);                                                                                                     *
+ *                                                                                                                                   *
+ * Validators:                                                                                                                       *
+ * bool:IsDecimalNumber(string[]);                                                                                                   *
+ * bool:IsHexNumber(string[]);                                                                                                       *
+ * bool:IsBinaryNumber(string[]);                                                                                                    *
+ * bool:IsOctalNumber(string[]);                                                                                                     *
+ * bool:IsFloatNumber(string[]);                                                                                                     *
+ *                                                                                                                                   *
+ * Convert to Bool:                                                                                                                  *
+ * bool:StringToBool(string[]);                                                                                                      *
+ * bool:IntToBool(value);                                                                                                            *
+ *                                                                                                                                   *
+ * Convert to Int:                                                                                                                   *
+ * StringToInt(string[]);                                                                                                            *
+ * BoolToInt(bool:boolean);                                                                                                          *
+ * HexToInt(string[]);                                                                                                               *
+ * BinToInt(string[]);                                                                                                               *
+ * OctToInt(string[]);                                                                                                               *
+ *                                                                                                                                   *
+ * Convert to Hex:                                                                                                                   *
+ * IntToHex(value);                                                                                                                  *
+ * IntToHexEx(value);                                                                                                                *
+ * BinToHex(string[]);                                                                                                               *
+ * BinToHexEx(string[]);                                                                                                             *
+ * OctToHex(string[]);                                                                                                               *
+ *                                                                                                                                   *
+ * Convert to Bin:                                                                                                                   *
+ * IntToBin(value);                                                                                                                  *
+ * HexToBin(string[]);                                                                                                               *
+ * OctToBin(string[]);                                                                                                               *
+ *                                                                                                                                   *
+ * Convert to Oct:                                                                                                                   *
+ * IntToOct(value);                                                                                                                  *
+ * HexToOct(string[]);                                                                                                               *
+ * BinToOct(string[]);                                                                                                               *
+ *                                                                                                                                   *
+ * Binary Data Convert:                                                                                                              *
+ * FloatToInt(Float:value); //Convert Float binary data to Integer binary data !                                                     *
+ * Float:IntToFloat(value); //Convert Integer binary data to Float binary data !                                                     *
+ *                                                                                                                                   *
+ *************************************************************************************************************************************/
+[/php]
+
+Examples:
+[php]
+new File:edi = fopen("test.txt",io_readwrite);
+new id = GetFileID(edi); //returns the number of open file: 1, 2, 3, 4, ...
+
+new a = BinToInt("1010"); //return 10
+
+new hex[10];
+hex = IntToHex(15); //return 00000F
+hex = IntToHexEx(15); //return F
+
+new g = 15, Float:h = 15.0;
+if(IsIdentical(g,h)){ //This operator can only be used on variables
+	printf("YES");
+} else {
+	printf("NO"); //<-- print this
+}
+
+new buf[128];
+ABCToCBA("Hello",buf);
+printf(buf); //print: olleH
+
+new v1 = 15, v2 = 19;
+swap_int(v1,v2); //swapvars by Crayder
+//after operation: v1 = 19, v2 = 15
+
+new test = FloatToInt(25666.000000); //return 1187546112
+
+new Float:test2 = IntToFloat(1084227584); //return 5.0
+
+//http://www.rot13.com
+new rot[64];
+rot = rot13("San Andreas Multiplayer"); //return "Fna Naqernf Zhygvcynlre"
+
+//ContainInSeries(Float)
+
+new myvalue = 431;
+	
+//if(myvalue == 425 || myvalue == 430 || myvalue == 432 || myvalue == 447 || myvalue == 464 || myvalue == 476 || myvalue == 520)
+if(ContainInSeries(myvalue,425,430,432,447,464,476,520)){ //millitary vehicles
+	printf("#1 YES");
+} else {
+	printf("#1 NO"); //<-- print this
+}
+
+//if(myvalue != 425 && myvalue != 430 && myvalue != 432 && myvalue != 447 && myvalue != 464 && myvalue != 476 && myvalue != 520)
+if(!ContainInSeries(myvalue,425,430,432,447,464,476,520)){
+	printf("#2 YES"); //<-- print this
+} else {
+	printf("#2 NO");
+}
+
+new Float:myfloatvalue = 15.0;
+if(ContainInSeriesFloat(myfloatvalue,12.0,1.0)){
+	printf("#3 YES");
+} else {
+	printf("#3 NO"); //<-- print this
+}
+[/php]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/DataConvert.inc]DataConvert.inc[/url]
+
+[b]Website:[/b]
+[url=http://adm.ct8.pl/r/dataconverter]Data Converter[/url]
+
+
+[i][b]Non-Registered Users:[/b]
+[url=http://adm.ct8.pl/report/?title=DataConvert%20Bug]Bug Report[/url][/i]

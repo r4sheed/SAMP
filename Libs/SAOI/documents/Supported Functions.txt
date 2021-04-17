@@ -1,0 +1,36 @@
+- streamer.inc
+CreateDynamicObject
+SetDynamicObjectMaterial
+SetDynamicObjectMaterialText
+SetDynamicObjectNoCameraCol
+CreateDynamicPickup
+CreateDynamicMapIcon
+CreateDynamic3DTextLabel
+CreateDynamicActor
+CreateDynamicCircle
+CreateDynamicCylinder
+CreateDynamicSphere
+CreateDynamicRectangle
+CreateDynamicCube
+CreateDynamicPolygon
+Streamer_ToggleItemInvAreas
+
+- ColAndreas.inc
+CA_CreateDynamicObject_DC
+CA_CreateDynamicObject_SC
+
+- a_players.inc
+RemoveBuildingForPlayer
+
+- a_vehicles.inc
+CreateVehicle
+LinkVehicleToInterior
+SetVehicleVirtualWorld
+
+- SAOI.inc
+SetSAOIBumperIP
+SetSAOIBumperPort
+SetSAOIPositionFlag
+
+- CA3.inc
+CreateDynamicArt (improvement)

@@ -1,0 +1,63 @@
+Hello, I would like to present you the Magic Wand Script
+
+[b]Video:[/b]
+[url]https://www.youtube.com/watch?v=aaHfVz-UxR8[/url]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/Magic.inc]Magic.inc[/url]
+[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
+[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
+
+[b]Installation:[/b]
+[php]
+#include <ADM/3DTryg>
+#include <Magic>
+[/php]
+
+[b]Functions:[/b]
+[php]
+ToggleUseTeamMagicShoot(bool:toggle);            //default: false
+bool:IsToggleUseTeamMagicShoot();
+ToggleMagicShootForAll(bool:toggle);             //default: false
+bool:IsToggleMagicShootForAll();                  
+ToggleMagicShootForPlayer(playerid,bool:toggle); //default: false
+bool:IsToggleMagicShootForPlayer(playerid);
+Float:GetMagicShootDamage(playerid);
+SetMagicShootDamage(playerid,Float:amount);
+Float:GetMagicShootSpeed(playerid);
+SetMagicShootSpeed(playerid,Float:speed);
+Float:GetMagicShootRange(playerid);
+SetMagicShootRange(playerid,Float:range);
+GetMagicShootAmmo(playerid);
+SetMagicShootAmmo(playerid,ammo);
+
+SetMagicProjectile(playerid,modelid=18693,Float:rx=90.0,Float:ry=0.0,Float:rz=0.0,Float:offx=0.0,Float:offy=0.0,Float:offz=0.0);
+GetMagicProjectile(playerid,&modelid,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:offx=0.0,&Float:offy=0.0,&Float:offz=0.0);
+[/php]
+
+[b]Callbacks:[/b]
+[php]
+OnPlayerRequestMagicShot(playerid,targetid); //return 0 - prevent to use knife shoot (this callback is called also if ammo is 0)
+[/php]
+
+[b]Definitions:[/b]
+[php]
+MAGIC_SPEED
+MAGIC_MAX_RADIUS
+MAGIC_REFRESH_ACTION
+MAGIC_DAMAGE
+MAGIC_WEAPON_AMMO_INFINITY
+[/php]
+
+[b]Activation:[/b]
+[php]
+Weapon: Fist
+Left Mouse Button
+[/php]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
+
+[i][b]Non-Registered Users:[/b]
+[url=http://adm.ct8.pl/report/?title=Magic%20Bug]Bug Report[/url][/i]

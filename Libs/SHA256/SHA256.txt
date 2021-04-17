@@ -1,0 +1,41 @@
+Include contains [url=https://wikipedia.org/wiki/SHA-2]SHA256[/url] Hash Generator.
+
+[php]
+/****************************************************************************************************
+ *                                                                                                  *
+ *                                         )(   SHA256   )(                                         *
+ *                                                                                                  *
+ * Copyright © 2018 National Security Agency. All rights reserved.                                  *
+ * Contributors: dwd222, Abyss Morgan                                                               *
+ *                                                                                                  *
+ * Website:  adm.ct8.pl                                                                             *
+ * Download: adm.ct8.pl/r/download                                                                  *
+ *                                                                                                  *
+ * Plugins: None                                                                                    *
+ * Modules: None                                                                                    *
+ *                                                                                                  *
+ * File Version: 1.0.0                                                                              *
+ *                                                                                                  *
+ * Functions:                                                                                       *
+ * SHA256::Hash(str[]);                                                                             *
+ * SHA256::HashFile(const file_name[],position=0,max_len=cellmax);                                  *
+ *                                                                                                  *
+ * Extended Functions:                                                                              *
+ * SHA256::UINT8ToBit(value);                                                                       *
+ * SHA256::UINT64ToBit(value);                                                                      *
+ * SHA256::BitToUINT32(str[]);                                                                      *
+ * SHA256::TextToBit(text[],bittext[],len);                                                         *
+ *                                                                                                  *
+ ****************************************************************************************************/
+[/php]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/SHA256.inc]SHA256.inc[/url]
+
+[b]Example:[/b]
+[php]
+#define PASSWORD_SALT	"d2b03dcb"
+new hash[65], buffer[256];
+format(buffer,sizeof(buffer),"%s%s",PASSWORD_SALT,password);
+hash = SHA256::Hash(buffer);
+[/php]

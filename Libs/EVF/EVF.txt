@@ -1,0 +1,266 @@
+﻿Include contains additional functions for vehicles.
+
+New Extended Vehicle Functions (EVF V3)
+Simple functions for [url=https://wiki.sa-mp.com/wiki/GetVehicleDamageStatus]GetVehicleDamageStatus[/url], [url=https://wiki.sa-mp.com/wiki/UpdateVehicleDamageStatus]UpdateVehicleDamageStatus[/url] and more.
+
+[php]
+/**********************************************************************************************************************************
+ *                                                                                                                                *
+ *                                              )(   Extended Vehicle Functions   )(                                              *
+ *                                                                                                                                *
+ * Copyright © 2019 Abyss Morgan. All rights reserved.                                                                            *
+ * Contributors: Emmet_, Pottus, kvann, Hanger, Freaksken, Gammix, Yashas, Admigo, RIDE2DAY, Unrea1, Katarina Calzaghe            *
+ *                                                                                                                                *
+ * Website:  adm.ct8.pl                                                                                                           *
+ * Download: adm.ct8.pl/r/download                                                                                                *
+ *                                                                                                                                *
+ * Plugins: Streamer                                                                                                              *
+ * Modules: None                                                                                                                  *
+ *                                                                                                                                *
+ * File Version: 3.3.1                                                                                                            *
+ * Streamer Version: 2.9.4                                                                                                        *
+ *                                                                                                                                *
+ * Functions:                                                                                                                     *
+ * IsValidVehicleModelID(modelid);                                                                                                *
+ * GetVehiclePanels(vehicleid,&front_left,&front_right,&rear_left,&rear_right,&windshield,&front_bumper,&rear_bumper);            *
+ * SetVehiclePanels(vehicleid,front_left,front_right,rear_left,rear_right,windshield,front_bumper,rear_bumper);                   *
+ * GetVehicleLights(vehicleid,&front_left_light,&front_right_light,&back_lights);                                                 *
+ * SetVehicleLights(vehicleid,front_left_light,front_right_light,back_lights);                                                    *
+ * GetVehicleDoors(vehicleid,&bonnet,&boot,&driver_door,&passenger_door);                                                         *
+ * SetVehicleDoors(vehicleid,bonnet,boot,driver_door,passenger_door);                                                             *
+ * GetVehicleTires(vehicleid,&front_left,&front_right,&rear_left,&rear_right);                                                    *
+ * SetVehicleTires(vehicleid,front_left,front_right,rear_left,rear_right);                                                        *
+ * GetVehicleWindowState(vehicleid,doorid);                                                                                       *
+ * SetVehicleWindowState(vehicleid,doorid,window_state);                                                                          *
+ * GetVehicleDoorState(vehicleid,doorid);                                                                                         *
+ * SetVehicleDoorState(vehicleid,doorid,door_state);                                                                              *
+ * IsValidVehicleDoor(vehicleid,doorid);                                                                                          *
+ * GetVehicleModelDoorAmount(modelid);                                                                                            *
+ * GetVehicleDoorAmount(vehicleid);                                                                                               *
+ * SwitchVehicleEngine(vehicleid,bool:engine_status);                                                                             *
+ * SwitchVehicleLight(vehicleid,bool:light_status);                                                                               *
+ * SwitchVehicleAlarm(vehicleid,bool:alarm_status);                                                                               *
+ * SwitchVehicleDoors(vehicleid,bool:doors_status);                                                                               *
+ * SwitchVehicleBonnet(vehicleid,bool:bonnet_status);                                                                             *
+ * SwitchVehicleBoot(vehicleid,bool:boot_status);                                                                                 *
+ * SwitchVehicleObjective(vehicleid,bool:objective_status);                                                                       *
+ * GetVehicleParams(vehicleid,type);                                                                                              *
+ * SetVehicleParams(vehicleid,type,status,delay = 0);                                                                             *
+ * GetVehicleRandomColors(modelid,&color1,&color2);                                                                               *
+ * GetNearestVehicleToPos(Float:x,Float:y,Float:z,worldid=-1,interiorid=-1,Float:maxdist=0.0,bool:fast=true,except_vid=0);        *
+ * GetNearestVehicleToPlayer(playerid,Float:maxdist=0.0,bool:fast=false);                                                         *
+ * GetVehicleDriver(vehicleid);                                                                                                   *
+ * Float:GetVehicleModelTopSpeed(modelid);                                                                                        *
+ * Float:GetVehicleTopSpeed(vehicleid);                                                                                           *
+ * SetVehicleInterior(vehicleid,interiorid);                                                                                      *
+ * GetVehicleSeats(vehicleid);                                                                                                    *
+ * GetVehicleModelSeats(modelid);                                                                                                 *
+ * IsVehicleSeatOccupied(vehicleid,seatid);                                                                                       *
+ * IsValidVehicle(vehicleid);                                                                                                     *
+ * RemoveVehiclePaintjob(vehicleid);                                                                                              *
+ * SetVehicleHorn(vehicleid,soundid);                                                                                             *
+ * GetVehicleHorn(vehicleid);                                                                                                     *
+ * RestoreVehicleHorn(vehicleid);                                                                                                 *
+ * GetVehicleBomb(vehicleid);                                                                                                     *
+ * IsVehicleBombed(vehicleid);                                                                                                    *
+ * RemoveVehicleBomb(vehicleid);                                                                                                  *
+ * SetVehicleBomb(vehicleid,time = 1000);                                                                                         *
+ * IsVehicleBombActivated(vehicleid);                                                                                             *
+ * Float:EVF::GetVehicleSpeed(vehicleid);                                                                                         *
+ * SetVehicleSpeedCap(vehicleid,Float:maxspeed);                                                                                  *
+ * Float:GetVehicleSpeedCap(vehicleid);                                                                                           *
+ * DisableVehicleSpeedCap(vehicleid);                                                                                             *
+ * SetVehicleFuel(vehicleid,fuel);                                                                                                *
+ * GetVehicleFuel(vehicleid);                                                                                                     *
+ * ToggleVehicleFuel(vehicleid,bool:toggle);                                                                                      *
+ * IsVehicleFuelToggled(vehicleid);                                                                                               *
+ * ToggleVehicleSticky(vehicleid,bool:toggle);                                                                                    *
+ * IsVehicleSticky(vehicleid);                                                                                                    *
+ * ToggleUnoccupiedVehicleDamage(vehicleid,bool:toggle);                                                                          *
+ * IsUnoccupiedDamageToggled(vehicleid);                                                                                          *
+ * ToggleVehiclePetrolCapDestroy(vehicleid,bool:toggle);                                                                          *
+ * IsPetrolCapDestroyToggled(vehicleid);                                                                                          *
+ * IsVehicleDamageToggled(vehicleid,type);                                                                                        *
+ * ToggleVehicleDamageUpdate(vehicleid,type,toggle);                                                                              *
+ * GetVehicleNextSeat(vehicleid,passenger = 1);                                                                                   *
+ * TeleportVehicle(vehicleid,Float:x,Float:y,Float:z,Float:angle,worldid = -1,interiorid = -1);                                   *
+ * GetVehicleSlotAttachedObject(vehicleid,slot);                                                                                  *
+ * IsObjectAttachedToVehicle(objectid,vehicleid);                                                                                 *
+ * EVF::UpdateVehicleDamage(vehicleid,type);                                                                                      *
+ * EVF::UpdateVehicleDamageStatus(vehicleid,type,update);                                                                         *
+ * EVF::GetVehicleDamageStatus(vehicleid,type);                                                                                   *
+ * SetVehicleNeonLights(vehicleid,bool:enable = true,color = RED_NEON,slotid = 0);                                                *
+ * VehicleSupportsNeonLights(modelid);                                                                                            *
+ * GetVehicleNeonLightsState(vehicleid,slotid = 0);                                                                               *
+ * IsToggledVehicleBulletproof(vehicleid);                                                                                        *
+ * ToggleVehicleBulletproof(vehicleid,bool:toggle);                                                                               *
+ * GetComponentName(componentid,name[],len = sizeof(name));                                                                       *
+ * GetComponentTypeName(component);                                                                                               *
+ * EVF::IsPlayerInModShop(playerid);                                                                                              *
+ * IsValidComponentForVehicle(vehicleid,componentid);                                                                             *
+ * GetVehicleComponentPrice(componentid);                                                                                         *
+ * GetVehicleName(vehicleid);                                                                                                     *
+ * GetVehicleModelName(modelid);                                                                                                  *
+ * EVF::IsTrailer(vehicleid);                                                                                                     *
+ * EVF::IsCarBlinking(vehicleid);                                                                                                 *
+ * EVF::DisableCarBlinking(vehicleid);                                                                                            *
+ * EVF::SetCarBlinking(vehicleid,side,bool:skip=false);                                                                           *
+ * EVF::ToggleVehicleBlinking(bool:toggle);                                                                                       *
+ * EVF::IsToggledVehicleBlinking();                                                                                               *
+ *                                                                                                                                *
+ * Remote functions:                                                                                                              *
+ * EVF_ImportVehicle(vehicleid,modelid,Float:x,Float:y,Float:z,Float:angle,color1,color2,worldid,interiorid,unoccupied_damage);   *
+ * EVF_RemoveVehicle(vehicleid);                                                                                                  *
+ *                                                                                                                                *
+ * Compatible with YSF Functions:                                                                                                 *
+ * GetVehicleColor(vehicleid,&color1,&color2);                                                                                    *
+ * GetVehiclePaintjob(vehicleid);                                                                                                 *
+ * GetVehicleInterior(vehicleid);                                                                                                 *
+ * EVF::GetVehicleSpawnInfo(vehicleid,&Float:x,&Float:y,&Float:z,&Float:rotation,&worldid,&interiorid);                           *
+ * EVF::SetVehicleSpawnInfo(vehicleid,Float:x,Float:y,Float:z,Float:rotation,worldid,interiorid);                                 *
+ * IsVehicleOccupied(vehicleid);                                                                                                  *
+ *                                                                                                                                *
+ * Callbacks:                                                                                                                     *
+ * OnVehicleCreated(vehicleid);                       //Called when a vehicle is created.                                         *
+ * OnVehicleDestroyed(vehicleid);                     //Called when a vehicle is deleted.                                         *
+ * OnTrailerHooked(playerid,vehicleid,trailerid);     //Called when a trailer is hooked.                                          *
+ * OnTrailerUnhooked(playerid,vehicleid,trailerid);   //Called when a trailer is unhooked.                                        *
+ * OnPlayerShotVehicle(playerid,vehicleid,weaponid,Float:amount,bodypart); //Called when a player shoots at a vehicle.            *
+ * OnVehiclePosChange(vehicleid,Float:newx,Float:newy,Float:newz,Float:newangle,Float:oldx,Float:oldy,Float:oldz,Float:oldangle); *
+ * OnVehicleVelocityChange(vehicleid,Float:newx,Float:newy,Float:newz,Float:oldx,Float:oldy,Float:oldz);                          *
+ * OnVehicleHealthChange(vehicleid,Float:newhealth,Float:oldhealth);                                                              *
+ * OnVehicleFuelChange(vehicleid,newfuel,oldfuel);                                                                                *
+ * OnVehicleBombDeactivate(vehicleid);                                                                                            *
+ * OnVehicleBombExplode(vehicleid);                                                                                               *
+ * OnPlayerEditVehicle(playerid,vehicleid,response,Float:fX,Float:fY,Float:fZ,Float:fRotZ);                                       *
+ * OnPlayerEditVehicleObject(playerid,vehicleid,response,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz);                     *
+ * OnPlayerReachSpeedCapLimit(playerid,vehicleid,Float:speed);                                                                    *
+ * OnVehicleBombActivate(vehicleid);                                                                                              *
+ * OnVehicleModEx(playerid,vehicleid,componentid,price,illegal);                                                                  *
+ *                                                                                                                                *
+ * Definitions:                                                                                                                   *
+ * INVALID_SEAT_ID                                                                                                                *
+ * INVALID_PAINTJOB_ID                                                                                                            *
+ * VEHICLE_UPDATE_INTERVAL                                                                                                        *
+ * MAX_VEHICLE_ATTACHED_OBJECTS                                                                                                   *
+ * RESET_PAINTJOB_ID                                                                                                              *
+ * MAX_VEHICLE_PARAMS                                                                                                             *
+ * MAX_VEHICLE_MODELS                                                                                                             *
+ * DEFAULT_VEHICLE_FUEL                                                                                                           *
+ * VEHICLE_SPEED_MULTIPLIER                                                                                                       *
+ * MULTIPLIER_FUEL_SYSTEM                                                                                                         *
+ *                                                                                                                                *
+ * BONNET_HEALTHY_CLOSED                                                                                                          *
+ * BONNET_HEALTHY_OPENED                                                                                                          *
+ * BONNET_DAMAGED_CLOSED                                                                                                          *
+ * BONNET_DAMAGED_OPENED                                                                                                          *
+ * BONNET_MISSING                                                                                                                 *
+ *                                                                                                                                *
+ * BOOT_HEALTHY_CLOSED                                                                                                            *
+ * BOOT_HEALTHY_OPENED                                                                                                            *
+ * BOOT_DAMAGED_CLOSED                                                                                                            *
+ * BOOT_DAMAGED_OPENED                                                                                                            *
+ * BOOT_MISSING                                                                                                                   *
+ *                                                                                                                                *
+ * DOOR_HEALTHY_CLOSED                                                                                                            *
+ * DOOR_HEALTHY_OPENED                                                                                                            *
+ * DOOR_DAMAGED_CLOSED                                                                                                            *
+ * DOOR_DAMAGED_OPENED                                                                                                            *
+ * DOOR_MISSING                                                                                                                   *
+ *                                                                                                                                *
+ * BUMPER_HEALTHY                                                                                                                 *
+ * BUMPER_CRUSHED                                                                                                                 *
+ * BUMPER_HANGING                                                                                                                 *
+ * BUMPER_MISSING                                                                                                                 *
+ *                                                                                                                                *
+ * WINDSHIELD_HEALTHY                                                                                                             *
+ * WINDSHIELD_DAMAGED                                                                                                             *
+ * WINDSHIELD_MISSING                                                                                                             *
+ *                                                                                                                                *
+ * LIGHT_ENABLE                                                                                                                   *
+ * LIGHT_DISABLE                                                                                                                  *
+ *                                                                                                                                *
+ * TIRE_HEALTHY                                                                                                                   *
+ * TIRE_DAMAGED                                                                                                                   *
+ *                                                                                                                                *
+ * DOOR_DRIVER                                                                                                                    *
+ * DOOR_PASSENGER                                                                                                                 *
+ * DOOR_BACKLEFF                                                                                                                  *
+ * DOOR_BACKRIGHT                                                                                                                 *
+ *                                                                                                                                *
+ * VEHICLE_DAMAGE_PANELS                                                                                                          *
+ * VEHICLE_DAMAGE_DOORS                                                                                                           *
+ * VEHICLE_DAMAGE_LIGHTS                                                                                                          *
+ * VEHICLE_DAMAGE_TIRES                                                                                                           *
+ *                                                                                                                                *
+ * RED_NEON                                                                                                                       *
+ * BLUE_NEON                                                                                                                      *
+ * GREEN_NEON                                                                                                                     *
+ * YELLOW_NEON                                                                                                                    *
+ * PINK_NEON                                                                                                                      *
+ * WHITE_NEON                                                                                                                     *
+ *                                                                                                                                *
+ * EVF_CAR_BLINK_NONE                                                                                                             *
+ * EVF_CAR_BLINK_LEFT                                                                                                             *
+ * EVF_CAR_BLINK_RIGHT                                                                                                            *
+ * EVF_CAR_BLINK_EMERGENCY                                                                                                        *
+ *                                                                                                                                *
+ * MIN_VEHICLE_COMPONENT_ID                                                                                                       *
+ * MAX_VEHICLE_COMPONENT_ID                                                                                                       *
+ *                                                                                                                                *
+ * Enums:                                                                                                                         *
+ * enum 'EVF::VehicleProperties'                                                                                                  *
+ * # e_VEHICLE_PAINTJOB                                                                                                           *
+ * # e_VEHICLE_INTERIOR                                                                                                           *
+ * # e_VEHICLE_COLOR_1                                                                                                            *
+ * # e_VEHICLE_COLOR_2                                                                                                            *
+ * # e_VEHICLE_HORN                                                                                                               *
+ * # e_VEHICLE_SPAWN_X                                                                                                            *
+ * # e_VEHICLE_SPAWN_Y                                                                                                            *
+ * # e_VEHICLE_SPAWN_Z                                                                                                            *
+ * # e_VEHICLE_SPAWN_A                                                                                                            *
+ * # e_VEHICLE_SPAWN_VW                                                                                                           *
+ * # e_VEHICLE_SPAWN_INT                                                                                                          *
+ * # e_VEHICLE_SPEED_CAP                                                                                                          *
+ * # e_VEHICLE_FUEL_USE                                                                                                           *
+ * # e_VEHICLE_FUEL                                                                                                               *
+ * # e_VEHICLE_STICKY                                                                                                             *
+ * # e_VEHICLE_UNO_DAMAGE                                                                                                         *
+ * # e_VEHICLE_CAP_DAMAGE                                                                                                         *
+ * # e_VEHICLE_EDITOR                                                                                                             *
+ * # e_VEHICLE_DAMAGE_PANELS                                                                                                      *
+ * # e_VEHICLE_DAMAGE_DOORS                                                                                                       *
+ * # e_VEHICLE_DAMAGE_LIGHTS                                                                                                      *
+ * # e_VEHICLE_DAMAGE_TIRES                                                                                                       *
+ * # e_VEHICLE_BOMB                                                                                                               *
+ * # e_VEHICLE_BOMB_TIMER                                                                                                         *
+ * # e_VEHICLE_BULLETPROOF                                                                                                        *
+ * # e_VEHICLE_STORED                                                                                                             *
+ *                                                                                                                                *
+ * enum 'EVF::VehicleBodyPart'                                                                                                    *
+ * # VEHICLE_BODYPART_UNKNOWN                                                                                                     *
+ * # VEHICLE_BODYPART_FL_WHEEL    - Front Left                                                                                    *
+ * # VEHICLE_BODYPART_FR_WHEEL    - Front Right                                                                                   *
+ * # VEHICLE_BODYPART_BL_WHEEL    - Back Left                                                                                     *
+ * # VEHICLE_BODYPART_BR_WHEEL    - Back Right                                                                                    *
+ * # VEHICLE_BODYPART_PETROLCAP                                                                                                   *
+ *                                                                                                                                *
+ * enum 'EVF::ParamTypes'                                                                                                         *
+ * # VEHICLE_TYPE_ENGINE                                                                                                          *
+ * # VEHICLE_TYPE_LIGHTS                                                                                                          *
+ * # VEHICLE_TYPE_ALARM                                                                                                           *
+ * # VEHICLE_TYPE_DOORS                                                                                                           *
+ * # VEHICLE_TYPE_BONNET                                                                                                          *
+ * # VEHICLE_TYPE_BOOT                                                                                                            *
+ * # VEHICLE_TYPE_OBJECTIVE                                                                                                       *
+ *                                                                                                                                *
+ **********************************************************************************************************************************/
+[/php]
+
+Some options will only work if the player is in a vehicle.
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/EVF.inc]EVF.inc[/url]
+
+[i][b]Non-Registered Users:[/b]
+[url=http://adm.ct8.pl/report/?title=EVF%20Bug]Bug Report[/url][/i]

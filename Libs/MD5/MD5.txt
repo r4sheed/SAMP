@@ -1,0 +1,35 @@
+Include contains [url=https://wikipedia.org/wiki/MD5]MD5[/url] Hash Generator.
+
+[php]
+/****************************************************************************************************
+ *                                                                                                  *
+ *                                          )(   MD5   )(                                           *
+ *                                                                                                  *
+ * Copyright © 2018 Ron Rivest. All rights reserved.                                                *
+ * Contributors: Colin Plumb, Y_Less, Abyss Morgan                                                  *
+ *                                                                                                  *
+ * Website:  adm.ct8.pl                                                                             *
+ * Download: adm.ct8.pl/r/download                                                                  *
+ *                                                                                                  *
+ * Plugins: None                                                                                    *
+ * Modules: None                                                                                    *
+ *                                                                                                  *
+ * File Version: 1.0.0                                                                              *
+ *                                                                                                  *
+ * Functions:                                                                                       *
+ * MD5::Hash(str[]);                                                                                *
+ * MD5::HashFile(const file_name[],position=0,max_len=cellmax);                                     *
+ *                                                                                                  *
+ ****************************************************************************************************/
+[/php]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/MD5.inc]MD5.inc[/url]
+
+[b]Example:[/b]
+[php]
+#define PASSWORD_SALT	"d2b03dcb"
+new hash[33], buffer[256];
+format(buffer,sizeof(buffer),"%s%s",PASSWORD_SALT,password);
+hash = MD5::Hash(buffer);
+[/php]

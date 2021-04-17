@@ -1,0 +1,71 @@
+Include contain functions for color conversion
+
+[php]
+/****************************************************************************************************
+ *                                                                                                  *
+ *                                   )(   R G B A Conversion   )(                                   *
+ *                                                                                                  *
+ * Copyright © 2019 Abyss Morgan. All rights reserved.                                              *
+ *                                                                                                  *
+ * Website:  adm.ct8.pl                                                                             *
+ * Download: adm.ct8.pl/r/download                                                                  *
+ *                                                                                                  *
+ * Plugins: None                                                                                    *
+ * Modules: None                                                                                    *
+ *                                                                                                  *
+ * File Version: 2.5.0                                                                              *
+ *                                                                                                  *
+ * Functions:                                                                                       *
+ * RGB::RGBAToHex(color,&red,&green,&blue,&alpha);                                                  *
+ * RGB::RGBToHex(color,&red,&green,&blue);                                                          *
+ * RGB::HexToRGBA(red,green,blue,alpha);                                                            *
+ * RGB::HexToARGB(red,green,blue,alpha);                                                            *
+ * RGB::HexToRGB(red,green,blue);                                                                   *
+ * RGB::RGBAToRGB(color);                                                                           *
+ * RGB::RGBToRGBA(color,alpha);                                                                     *
+ * RGB::RGBToARGB(color,alpha);                                                                     *
+ * RGB::ARGBToRGB(color);                                                                           *
+ * RGB::RGBAToARGB(color);                                                                          *
+ * RGB::ARGBToRGBA(color);                                                                          *
+ * RGB::GetRFromRGBA(color);                       //RGBA:0xFAB0A0FF R:0xFA000000                   *
+ * RGB::GetGFromRGBA(color);                       //RGBA:0xFAB0A0FF G:0x00B00000                   *
+ * RGB::GetBFromRGBA(color);                       //RGBA:0xFAB0A0FF B:0x0000A000                   *
+ * RGB::GetAFromRGBA(color);                       //RGBA:0xFAB0A0FF A:0x000000FF                   *
+ * RGB::GetRHexFromRGBA(color);                    //RGBA:0xFAB0A0FF R:0xFA                         *
+ * RGB::GetGHexFromRGBA(color);                    //RGBA:0xFAB0A0FF G:0xB0                         *
+ * RGB::GetBHexFromRGBA(color);                    //RGBA:0xFAB0A0FF B:0xA0                         *
+ * RGB::GetAHexFromRGBA(color);                    //RGBA:0xFAB0A0FF A:0xFF                         *
+ * RGB::GetColorRGBA(color);                       //Return {RGB}                                   *
+ * RGB::GetColorRGB(color);                        //Return {RGB}                                   *
+ * RGB::GetColorARGB(color);                       //Return {RGB}                                   *
+ * RGB::AdjustColorLuminance(color,Float:adjust);                                                   *
+ *                                                                                                  *
+ ****************************************************************************************************/
+[/php]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/RGB.inc]RGB.inc[/url]
+
+[b]Website:[/b]
+[url=http://adm.ct8.pl/r/colorconverter]Color Converter[/url]
+
+[b]Example 1:[/b]
+[php]
+new col = RGB::RGBAToARGB(0xFF6600FF); //return 0xFFFF6600;
+[/php]
+
+[b]Example 2:[/b]
+[php]
+new red, green, blue, alpha;
+RGB::RGBAToHex(0xFF6600AA,red,green,blue,alpha); //return red = 0xFF; green = 0x66; blue = 0x00; alpha = 0xAA;
+[/php]
+
+[b]Example 3:[/b]
+[php]
+new r = RGB::GetRHexFromRGBA(0xFF6600AA); //return 0xFF;
+[/php]
+
+[b]Example 4:[/b]
+[php]
+new r = RGB::GetRFromRGBA(0xFF6600AA); //return 0xFF000000;
+[/php]

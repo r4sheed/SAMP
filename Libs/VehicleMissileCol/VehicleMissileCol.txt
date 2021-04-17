@@ -1,0 +1,571 @@
+Hi I would like to present include for Vehicle Missile Launcher.
+
+[b]Video:[/b]
+1. [url=https://www.youtube.com/watch?v=Pd5HmlL8uXw]Vehicle Missile (Beta)[/url]
+2. [url=https://www.youtube.com/watch?v=HTHinI1IGhY]Vehicle Missile (ColAndreas)[/url]
+3. [url=https://www.youtube.com/watch?v=B4pfX39bIwM]Marica Mortar V1[/url]
+4. [url=https://www.youtube.com/watch?v=0FlZwi34wIA]Heavy Marica Mortar[/url]
+5. [url=https://www.youtube.com/watch?v=Fxp-BDCQ94U]Congreve Rocket[/url]
+6. [url=https://www.youtube.com/watch?v=lYS-ryk7n4E]Marica Mortar V2[/url]
+7. [url=https://www.youtube.com/watch?v=NDWkGCxCJuA][color=#FF0000]New Vehicle Missile[/color][/url]
+
+[php]
+//Functions Mini Missile:
+ToggleVehicleMiniMissile(vehicleid,toggle);
+IsToggleVehicleMiniMissile(vehicleid);
+Float:GetVehicleMiniMissileSpeed(vehicleid);
+SetVehicleMiniMissileSpeed(vehicleid,Float:speed);
+GetVehicleMiniMissileReload(vehicleid);
+SetVehicleMiniMissileReload(vehicleid,time);
+Float:GetVehicleMiniMissileDistance(vehicleid);
+SetVehicleMiniMissileDistance(vehicleid,Float:distance);
+GetVehicleMiniMissileKey(vehicleid);
+SetVehicleMiniMissileKey(vehicleid,key);
+GetVehicleMiniMissileAmmo(vehicleid);
+SetVehicleMiniMissileAmmo(vehicleid,ammo);
+Float:GetVehicleMiniMissileDMG(vehicleid);
+SetVehicleMiniMissileDMG(vehicleid,Float:damage);
+Float:GetVehicleMiniMissileVehDMG(vehicleid);
+SetVehicleMiniMissileVehDMG(vehicleid,Float:damage);
+
+//Functions Heavy Missile:
+ToggleVehicleHeavyMissile(vehicleid,toggle);
+IsToggleVehicleHeavyMissile(vehicleid);
+Float:GetVehicleHeavyMissileSpeed(vehicleid);
+SetVehicleHeavyMissileSpeed(vehicleid,Float:speed);
+GetVehicleHeavyMissileReload(vehicleid);
+SetVehicleHeavyMissileReload(vehicleid,time);
+Float:GetVehicleHeavyMissileDistance(vehicleid);
+SetVehicleHeavyMissileDistance(vehicleid,Float:distance);
+GetVehicleHeavyMissileKey(vehicleid);
+SetVehicleHeavyMissileKey(vehicleid,key);
+GetVehicleHeavyMissileAmmo(vehicleid);
+SetVehicleHeavyMissileAmmo(vehicleid,ammo);
+Float:GetVehicleHeavyMissileDMG(vehicleid);
+SetVehicleHeavyMissileDMG(vehicleid,Float:damage);
+Float:GetVehicleHeavyMissileVehDMG(vehicleid);
+SetVehicleHeavyMissileVehDMG(vehicleid,Float:damage);
+
+//Functions Rhino Missile:
+ToggleVehicleRhinoMissile(vehicleid,toggle);
+IsToggleVehicleRhinoMissile(vehicleid);
+GetVehicleRhinoMissileReload(vehicleid);
+SetVehicleRhinoMissileReload(vehicleid,time);
+Float:GetVehicleRhinoMissileDistance(vehicleid);
+SetVehicleRhinoMissileDistance(vehicleid,Float:distance);
+GetVehicleRhinoMissileKey(vehicleid);
+SetVehicleRhinoMissileKey(vehicleid,key);
+GetVehicleRhinoMissileAmmo(vehicleid);
+SetVehicleRhinoMissileAmmo(vehicleid,ammo);
+Float:GetVehicleRhinoMissileDMG(vehicleid);
+SetVehicleRhinoMissileDMG(vehicleid,Float:damage);
+Float:GetVehicleRhinoMissileVehDMG(vehicleid);
+SetVehicleRhinoMissileVehDMG(vehicleid,Float:damage);
+
+//Functions Bomber Missile:
+ToggleVehicleBomberMissile(vehicleid,toggle);
+IsToggleVehicleBomberMissile(vehicleid);
+Float:GetVehicleBomberMissileSpeed(vehicleid);
+SetVehicleBomberMissileSpeed(vehicleid,Float:speed);
+GetVehicleBomberMissileReload(vehicleid);
+SetVehicleBomberMissileReload(vehicleid,time);
+Float:GetVehicleBomberMissileDistance(vehicleid);
+SetVehicleBomberMissileDistance(vehicleid,Float:distance);
+GetVehicleBomberMissileKey(vehicleid);
+SetVehicleBomberMissileKey(vehicleid,key);
+GetVehicleBomberMissileAmmo(vehicleid);
+SetVehicleBomberMissileAmmo(vehicleid,ammo);
+Float:GetVehicleBomberMissileDMG(vehicleid);
+SetVehicleBomberMissileDMG(vehicleid,Float:damage);
+Float:GetVehicleBomberMissileVehDMG(vehicleid);
+SetVehicleBomberMissileVehDMG(vehicleid,Float:damage);
+
+//Functions Mortar Missile:
+ToggleVehicleMortarMissile(vehicleid,toggle);
+IsToggleVehicleMortarMissile(vehicleid);
+Float:GetVehicleMortarMissileSpeed(vehicleid);
+SetVehicleMortarMissileSpeed(vehicleid,Float:speed);
+GetVehicleMortarMissileReload(vehicleid);
+SetVehicleMortarMissileReload(vehicleid,time);
+Float:GetVehicleMortarMissileDistance(vehicleid);
+SetVehicleMortarMissileDistance(vehicleid,Float:distance);
+GetVehicleMortarMissileKey(vehicleid);
+SetVehicleMortarMissileKey(vehicleid,key);
+Float:GetVehicleMortarMissileHeight(vehicleid);
+SetVehicleMortarMissileHeight(vehicleid,Float:height);
+Float:GetVehicleMortarMissileRotation(vehicleid);
+SetVehicleMortarMissileRotation(vehicleid,Float:rotation);
+GetVehicleMortarMissileAmmo(vehicleid);
+SetVehicleMortarMissileAmmo(vehicleid,ammo);
+GetVehicleMortarMissileAimSys(vehicleid);
+SetVehicleMortarMissileAimSys(vehicleid,toggle);
+Float:GetVehicleMortarMissileDMG(vehicleid);
+SetVehicleMortarMissileDMG(vehicleid,Float:damage);
+Float:GetVehicleMortarMissileVehDMG(vehicleid);
+SetVehicleMortarMissileVehDMG(vehicleid,Float:damage);
+
+//Functions Mega Missile:
+ToggleVehicleMegaMissile(vehicleid,toggle);
+IsToggleVehicleMegaMissile(vehicleid);
+Float:GetVehicleMegaMissileSpeed(vehicleid);
+SetVehicleMegaMissileSpeed(vehicleid,Float:speed);
+GetVehicleMegaMissileReload(vehicleid);
+SetVehicleMegaMissileReload(vehicleid,time);
+Float:GetVehicleMegaMissileDistance(vehicleid);
+SetVehicleMegaMissileDistance(vehicleid,Float:distance);
+GetVehicleMegaMissileKey(vehicleid);
+SetVehicleMegaMissileKey(vehicleid,key);
+Float:GetVehicleMegaMissileHeight(vehicleid);
+SetVehicleMegaMissileHeight(vehicleid,Float:height);
+Float:GetVehicleMegaMissileRotation(vehicleid);
+SetVehicleMegaMissileRotation(vehicleid,Float:rotation);
+GetVehicleMegaMissileAmmo(vehicleid);
+SetVehicleMegaMissileAmmo(vehicleid,ammo);
+GetVehicleMegaMissileAimSys(vehicleid);
+SetVehicleMegaMissileAimSys(vehicleid,toggle);
+Float:GetVehicleMegaMissileDMG(vehicleid);
+SetVehicleMegaMissileDMG(vehicleid,Float:damage);
+Float:GetVehicleMegaMissileVehDMG(vehicleid);
+SetVehicleMegaMissileVehDMG(vehicleid,Float:damage);
+
+//Functions Congreve Rocket:
+ToggleVehicleCongreve(vehicleid,toggle);
+IsToggleVehicleCongreve(vehicleid);
+Float:GetVehicleCongreveSpeed(vehicleid);
+SetVehicleCongreveSpeed(vehicleid,Float:speed);
+GetVehicleCongreveReload(vehicleid);
+SetVehicleCongreveReload(vehicleid,time);
+Float:GetVehicleCongreveDistance(vehicleid);
+SetVehicleCongreveDistance(vehicleid,Float:distance);
+GetVehicleCongreveKey(vehicleid);
+SetVehicleCongreveKey(vehicleid,key);
+Float:GetVehicleCongreveSpread(vehicleid);
+SetVehicleCongreveSpread(vehicleid,Float:spread);
+GetVehicleCongreveSalvo(vehicleid);
+SetVehicleCongreveSalvo(vehicleid,salvo);
+GetVehicleCongreveAmmo(vehicleid);
+SetVehicleCongreveAmmo(vehicleid,ammo);
+Float:GetVehicleCongreveDMG(vehicleid);
+SetVehicleCongreveDMG(vehicleid,Float:damage);
+Float:GetVehicleCongreveVehDMG(vehicleid);
+SetVehicleCongreveVehDMG(vehicleid,Float:damage);
+
+//Functions Havoc Rocket:
+ToggleVehicleHavoc(vehicleid,toggle);
+IsToggleVehicleHavoc(vehicleid);
+Float:GetVehicleHavocSpeed(vehicleid);
+SetVehicleHavocSpeed(vehicleid,Float:speed);
+GetVehicleHavocReload(vehicleid);
+SetVehicleHavocReload(vehicleid,time);
+Float:GetVehicleHavocDistance(vehicleid);
+SetVehicleHavocDistance(vehicleid,Float:distance);
+GetVehicleHavocKey(vehicleid);
+SetVehicleHavocKey(vehicleid,key);
+Float:GetVehicleHavocSpread(vehicleid);
+SetVehicleHavocSpread(vehicleid,Float:spread);
+GetVehicleHavocSalvo(vehicleid);
+SetVehicleHavocSalvo(vehicleid,salvo);
+GetVehicleHavocAmmo(vehicleid);
+SetVehicleHavocAmmo(vehicleid,ammo);
+Float:GetVehicleHavocDMG(vehicleid);
+SetVehicleHavocDMG(vehicleid,Float:damage);
+Float:GetVehicleHavocVehDMG(vehicleid);
+SetVehicleHavocVehDMG(vehicleid,Float:damage);
+
+//Functions Flare:
+ToggleVehicleFlare(vehicleid,toggle);
+IsToggleVehicleFlare(vehicleid);
+Float:GetVehicleFlareSpeed(vehicleid);
+SetVehicleFlareSpeed(vehicleid,Float:speed);
+GetVehicleFlareReload(vehicleid);
+SetVehicleFlareReload(vehicleid,time);
+Float:GetVehicleFlareDistance(vehicleid);
+SetVehicleFlareDistance(vehicleid,Float:distance);
+GetVehicleFlareKey(vehicleid);
+SetVehicleFlareKey(vehicleid,key);
+GetVehicleFlareSalvo(vehicleid);
+SetVehicleFlareSalvo(vehicleid,salvo);
+GetVehicleFlareAmmo(vehicleid);
+SetVehicleFlareAmmo(vehicleid,ammo);
+GetVehicleFlareType(vehicleid);
+SetVehicleFlareType(vehicleid,type);
+
+//Functions Ground Bomb:
+ToggleVehicleGroundBomb(vehicleid,toggle);
+IsToggleVehicleGroundBomb(vehicleid);
+Float:GetVehicleGroundBombSpeed(vehicleid);
+SetVehicleGroundBombSpeed(vehicleid,Float:speed);
+GetVehicleGroundBombReload(vehicleid);
+SetVehicleGroundBombReload(vehicleid,time);
+Float:GetVehicleGroundBombDistance(vehicleid);
+SetVehicleGroundBombDistance(vehicleid,Float:distance);
+GetVehicleGroundBombKey(vehicleid);
+SetVehicleGroundBombKey(vehicleid,key);
+GetVehicleGroundBombAmmo(vehicleid);
+SetVehicleGroundBombAmmo(vehicleid,ammo);
+Float:GetVehicleGroundBombDMG(vehicleid);
+SetVehicleGroundBombDMG(vehicleid,Float:damage);
+Float:GetVehicleGroundBombVehDMG(vehicleid);
+SetVehicleGroundBombVehDMG(vehicleid,Float:damage);
+
+//Functions Ground Bomb (Extended Grenade):
+GetVehicleGroundBombType(vehicleid);
+SetVehicleGroundBombType(vehicleid,special_weaponid);
+GetVehicleGroundBombEffect(vehicleid);
+SetVehicleGroundBombEffect(vehicleid,effectid);
+Float:GetVehicleGroundBombEffectDMG(vehicleid);
+SetVehicleGroundBombEffectDMG(vehicleid,Float:damage);
+Float:GetVehicleGroundBombEffectVDMG(vehicleid);
+SetVehicleGroundBombEffectVDMG(vehicleid,Float:veh_damage);
+GetVehicleGroundBombEffectTime(vehicleid);
+SetVehicleGroundBombEffectTime(vehicleid,seconds);
+
+//Player Functions:
+GetMiniMissileRemainingTime(playerid);
+GetHeavyMissileRemainingTime(playerid);
+GetRhinoMissileRemainingTime(playerid);
+GetBomberMissileRemainingTime(playerid);
+GetMortarMissileRemainingTime(playerid);
+GetMegaMissileRemainingTime(playerid);
+GetCongreveRemainingTime(playerid);
+GetHavocRemainingTime(playerid);
+GetGroundBombRemainingTime(playerid);
+GetFlareRemainingTime(playerid);
+IsVehicleMissileAimSysReady(playerid);
+SetVehicleMissileAimTarget(playerid,Float:x=0.0,Float:y=0.0);
+
+//Extended Functions:
+Float:GetMissileStreamDistance();
+SetMissileStreamDistance(Float:streamdistance);
+DisarmVehicleMissile(vehicleid);
+SetVehicleMissileDefaultConfig(vehicleid);
+ToggleMissileAutoDisarm(bool:toggle);
+bool:IsToggleMissileAutoDisarm();
+OnVehicleShot(playerid,type);
+OnVehicleMissileInit();
+GetMissileRemainingTime(playerid,type);
+GetVehicleMissileAmmo(vehicleid,type);
+SetVehicleMissileAmmo(vehicleid,type,ammo);
+
+//Callbacks:
+OnVehicleArmed(playerid,vehicleid);
+OnVehicleMissileRequestLaunch(playerid,type,vehicleid);
+OnVehicleMissileLaunched(playerid,type,vehicleid);
+[/php]
+
+[b]Default control:[/b]
+[php]
+Mini Missile - LALT
+Rhino Missile - LALT
+Heavy Missile - ALT GR / LCTRL / NUM0 
+Bomber Missile - Y
+Mortar Missile - Y
+Mega Missile - Y
+Congreve Rocket - N
+Havoc Rocket - Y
+Ground Bomb - Y
+[/php]
+
+[b]Definitions:[/b]
+[php]
+//Vehicle Missile Types:
+VEHICLE_MISSILE_TYPE_MINI
+VEHICLE_MISSILE_TYPE_HEAVY
+VEHICLE_MISSILE_TYPE_BOMBER
+VEHICLE_MISSILE_TYPE_RHINO
+VEHICLE_MISSILE_TYPE_MORTAR
+VEHICLE_MISSILE_TYPE_MEGA
+VEHICLE_MISSILE_TYPE_CON
+VEHICLE_MISSILE_TYPE_HAVOC
+VEHICLE_MISSILE_TYPE_BOMB
+VEHICLE_MISSILE_TYPE_FLARE
+
+//default projectile speed
+VEHICLE_MISSILE_SPEED_MINI
+VEHICLE_MISSILE_SPEED_HEAVY
+VEHICLE_MISSILE_SPEED_BOMBER
+VEHICLE_MISSILE_SPEED_MORTAR
+VEHICLE_MISSILE_SPEED_MEGA
+VEHICLE_MISSILE_SPEED_CON
+VEHICLE_MISSILE_SPEED_HAVOC
+VEHICLE_MISSILE_SPEED_BOMB
+VEHICLE_MISSILE_SPEED_FLARE
+
+//default reload time in milisecond
+VEHICLE_MISSILE_RELOAD_MINI
+VEHICLE_MISSILE_RELOAD_HEAVY
+VEHICLE_MISSILE_RELOAD_BOMBER
+VEHICLE_MISSILE_RELOAD_RHINO
+VEHICLE_MISSILE_RELOAD_MORTAR
+VEHICLE_MISSILE_RELOAD_MEGA
+VEHICLE_MISSILE_RELOAD_CON
+VEHICLE_MISSILE_RELOAD_HAVOC
+VEHICLE_MISSILE_RELOAD_BOMB
+VEHICLE_MISSILE_RELOAD_FLARE
+
+//default maximum distance that can be overcome missile
+VEHICLE_MISSILE_DISTANCE_MINI
+VEHICLE_MISSILE_DISTANCE_HEAVY
+VEHICLE_MISSILE_DISTANCE_BOMBER
+VEHICLE_MISSILE_DISTANCE_RHINO
+VEHICLE_MISSILE_DISTANCE_MORTAR
+VEHICLE_MISSILE_DISTANCE_MEGA
+VEHICLE_MISSILE_DISTANCE_CON
+VEHICLE_MISSILE_DISTANCE_HAVOC
+VEHICLE_MISSILE_DISTANCE_BOMB
+VEHICLE_MISSILE_DISTANCE_FLARE
+
+//default key
+VEHICLE_MISSILE_KEY_MINI
+VEHICLE_MISSILE_KEY_HEAVY
+VEHICLE_MISSILE_KEY_BOMBER
+VEHICLE_MISSILE_KEY_RHINO
+VEHICLE_MISSILE_KEY_MORTAR
+VEHICLE_MISSILE_KEY_MEGA
+VEHICLE_MISSILE_KEY_CON
+VEHICLE_MISSILE_KEY_HAVOC
+VEHICLE_MISSILE_KEY_BOMB
+VEHICLE_MISSILE_KEY_FLARE
+
+VEHICLE_MISSILE_HEIGHT_MORTAR   // default arc height for Mortar Missile
+VEHICLE_MISSILE_HEIGHT_MEGA     // default arc height for Mega Missile
+
+VEHICLE_MISSILE_ROTATION        // default mortar/mega rotation
+
+VEHICLE_MISSILE_SPREAD_CON      // default spread for Congreve Rocket
+VEHICLE_MISSILE_SALVO_CON       // default salvo (number of projectiles) for Congreve Rocket
+
+VEHICLE_MISSILE_SPREAD_HAVOC    // default spread for Havoc Missile
+VEHICLE_MISSILE_SALVO_HAVOC     // default salvo (number of projectiles) for Havoc Missile
+
+VEHICLE_MISSILE_SALVO_FLARE     // default salvo (number of projectiles) for Flare
+
+//infinity ammo
+VEHICLE_WEAPON_AMMO_INFINITY
+[/php]
+
+[b]Weapon Vehicle Recommendation:[/b]
+[php]
+VEHICLE_MISSILE_TYPE_MINI - Any vehicle
+VEHICLE_MISSILE_TYPE_HEAVY - All air vehicles (Causes turbulence)
+VEHICLE_MISSILE_TYPE_BOMBER - All air vehicles
+VEHICLE_MISSILE_TYPE_RHINO - Recommended for use only RC Tiger
+VEHICLE_MISSILE_TYPE_MORTAR - Any vehicle (Recomended Air Vehicle)
+VEHICLE_MISSILE_TYPE_MEGA - Any vehicle (Recomended Air Vehicle)
+VEHICLE_MISSILE_TYPE_CON - Hydra
+VEHICLE_MISSILE_TYPE_HAVOC - Andromada
+VEHICLE_MISSILE_TYPE_BOMB - Rustler
+VEHICLE_MISSILE_TYPE_FLARE - Hydra
+[/php]
+
+[b]Example Code:[/b]
+[php]
+public OnGameModeInit(){
+	
+	ToggleMissileAutoDisarm(true);
+	
+	return 1;
+}
+
+public OnVehicleArmed(playerid,vehicleid){
+	
+	SetVehicleMiniMissileDMG(vehicleid,100.0);
+	SetVehicleMiniMissileVehDMG(vehicleid,500.0);
+
+	SetVehicleHeavyMissileDMG(vehicleid,200.0);
+	SetVehicleHeavyMissileVehDMG(vehicleid,1000.0);
+	
+	SetVehicleBomberMissileDMG(vehicleid,100.0);
+	SetVehicleBomberMissileVehDMG(vehicleid,500.0);
+
+	SetVehicleRhinoMissileDMG(vehicleid,50.0);
+	SetVehicleRhinoMissileVehDMG(vehicleid,500.0);
+
+	SetVehicleMortarMissileDMG(vehicleid,100.0);
+	SetVehicleMortarMissileVehDMG(vehicleid,1000.0);
+
+	SetVehicleMegaMissileDMG(vehicleid,200.0);
+	SetVehicleMegaMissileVehDMG(vehicleid,2000.0);
+
+	SetVehicleCongreveDMG(vehicleid,50.0);
+	SetVehicleCongreveVehDMG(vehicleid,1500.0);
+
+	SetVehicleHavocDMG(vehicleid,500.0);
+	SetVehicleHavocVehDMG(vehicleid,5000.0);
+
+	SetVehicleGroundBombDMG(vehicleid,500.0);
+	SetVehicleGroundBombVehDMG(vehicleid,5000.0);
+	
+	
+	switch(GetVehicleModel(vehicleid)){
+		case 564: { //rc tiger
+			ToggleVehicleRhinoMissile(vehicleid,1);
+		}
+		case 553: { //nevada
+			ToggleVehicleBomberMissile(vehicleid,1);
+		}
+		case 592: { //andromada
+			ToggleVehicleBomberMissile(vehicleid,1);
+			SetVehicleBomberMissileSpeed(vehicleid,60.0);
+			SetVehicleBomberMissileReload(vehicleid,500);
+		}
+		case 520: { //hydra
+			ToggleVehicleBomberMissile(vehicleid,1);
+			SetVehicleBomberMissileSpeed(vehicleid,80.0);
+			SetVehicleBomberMissileReload(vehicleid,500);
+			
+			ToggleVehicleHeavyMissile(vehicleid,1);
+			SetVehicleHeavyMissileSpeed(vehicleid,90.0);
+			SetVehicleHeavyMissileKey(vehicleid,KEY_CROUCH);
+		}
+		case 476: { //rustler
+			ToggleVehicleMiniMissile(vehicleid,1);
+			SetVehicleMiniMissileSpeed(vehicleid,80.0);
+			
+			ToggleVehicleBomberMissile(vehicleid,1);
+			SetVehicleBomberMissileSpeed(vehicleid,80.0);
+			SetVehicleBomberMissileReload(vehicleid,500);
+		}
+		case 548, 497, 469: { //Cargobob, Police Maverik, Sparrow
+			ToggleVehicleMiniMissile(vehicleid,1);
+			ToggleVehicleBomberMissile(vehicleid,1);
+		}
+		case 512: { //Cropduster
+			ToggleVehicleBomberMissile(vehicleid,1);
+		}
+		case 513: { //stuntplane
+			ToggleVehicleBomberMissile(vehicleid,1);
+		}
+		case 519: { //shamal
+			ToggleVehicleMiniMissile(vehicleid,1);
+			SetVehicleMiniMissileSpeed(vehicleid,80.0);
+		}
+		case 432: { //rhino
+			ToggleVehicleMegaMissile(vehicleid,1);
+			SetVehicleMegaMissileSpeed(vehicleid,50.0);
+			SetVehicleMegaMissileHeight(vehicleid,VEHICLE_MISSILE_HEIGHT_MEGA);
+			SetVehicleMegaMissileDistance(vehicleid,VEHICLE_MISSILE_DISTANCE_MEGA);
+			SetVehicleMegaMissileAimSys(vehicleid,1);
+		}
+	}
+	return 1;
+}
+
+[/php]
+
+[b]Remaining Time / Ammo detection:[/b]
+[php]
+public OnVehicleMissileRequestLaunch(playerid,type,vehicleid){
+	
+	new c_time = GetMissileRemainingTime(playerid,type);
+	if(c_time > 0){
+		new buffer[32];
+		format(buffer,sizeof(buffer),"Remaining Time~n~~w~%.2f second",c_time / 1000.0);
+		GameTextForPlayer(playerid,buffer,2500,4);
+	} else if(GetVehicleMissileAmmo(vehicleid,type) == 0){
+		new buffer[32];
+		format(buffer,sizeof(buffer),"No ammunition");
+		GameTextForPlayer(playerid,buffer,2500,4);
+	}
+	if((type == VEHICLE_MISSILE_TYPE_MORTAR && GetVehicleMortarMissileAimSys(vehicleid)) || (type == VEHICLE_MISSILE_TYPE_MEGA && GetVehicleMegaMissileAimSys(vehicleid))){
+		if(!IsVehicleMissileAimSysReady(playerid)){
+			GameTextForPlayer(playerid,"Select target in map",2500,4);
+		}
+	}
+	return 1;
+}
+
+public OnVehicleMissileLaunched(playerid,type,vehicleid){
+	new ammo = GetVehicleMissileAmmo(vehicleid,type);
+	if(ammo != VEHICLE_WEAPON_AMMO_INFINITY){
+		new buffer[32];
+		format(buffer,sizeof(buffer),"Vehicle Ammo~n~~w~%d",ammo);
+		GameTextForPlayer(playerid,buffer,2500,4);
+	}
+	return 1;
+}
+[/php]
+
+[b]Advanced Mortar Control (if AimSys is disabled):[/b]
+[php]
+public OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
+	if(IsToggleVehicleMegaMissile(GetPlayerVehicleID(playerid))){
+		if(KEY_PRESSED(KEY_ANALOG_UP)){
+			new vid = GetPlayerVehicleID(playerid), Float:val = GetVehicleMegaMissileDistance(vid), buf[128];
+			val += 5.0;
+			if(val > 800.0) val = 800.0;
+			SetVehicleMegaMissileDistance(vid,val);
+			format(buf,sizeof buf,"Mortar Distance: ~g~%.0f",val);
+			GameTextForPlayer(playerid,buf,1000,4);
+		} else if(KEY_PRESSED(KEY_ANALOG_DOWN)){
+			new vid = GetPlayerVehicleID(playerid), Float:val = GetVehicleMegaMissileDistance(vid), buf[128];
+			val -= 5.0;
+			if(val < 50.0) val = 50.0;
+			SetVehicleMegaMissileDistance(vid,val);
+			format(buf,sizeof buf,"Mortar Distance: ~g~%.0f",val);
+			GameTextForPlayer(playerid,buf,1000,4);
+		} else if(KEY_PRESSED(KEY_ANALOG_RIGHT)){
+			new vid = GetPlayerVehicleID(playerid), Float:val = GetVehicleMegaMissileHeight(vid), buf[128];
+			val += 5.0;
+			if(val > 400.0) val = 400.0;
+			SetVehicleMegaMissileHeight(vid,val);
+			format(buf,sizeof buf,"Mortar Height: ~g~%.0f",val);
+			GameTextForPlayer(playerid,buf,1000,4);
+		} else if(KEY_PRESSED(KEY_ANALOG_LEFT)){
+			new vid = GetPlayerVehicleID(playerid), Float:val = GetVehicleMegaMissileHeight(vid), buf[128];
+			val -= 5.0;
+			if(val < 25.0) val = 25.0;
+			SetVehicleMegaMissileHeight(vid,val);
+			format(buf,sizeof buf,"Mortar Height: ~g~%.0f",val);
+			GameTextForPlayer(playerid,buf,1000,4);
+		}
+	} else if(IsToggleVehicleMortarMissile(GetPlayerVehicleID(playerid))){
+		if(KEY_PRESSED(KEY_ANALOG_UP)){
+			new vid = GetPlayerVehicleID(playerid), Float:val = GetVehicleMortarMissileDistance(vid), buf[128];
+			val += 5.0;
+			if(val > 600.0) val = 600.0;
+			SetVehicleMortarMissileDistance(vid,val);
+			format(buf,sizeof buf,"Mortar Distance: ~g~%.0f",val);
+			GameTextForPlayer(playerid,buf,1000,4);
+		} else if(KEY_PRESSED(KEY_ANALOG_DOWN)){
+			new vid = GetPlayerVehicleID(playerid), Float:val = GetVehicleMortarMissileDistance(vid), buf[128];
+			val -= 5.0;
+			if(val < 50.0) val = 50.0;
+			SetVehicleMortarMissileDistance(vid,val);
+			format(buf,sizeof buf,"Mortar Distance: ~g~%.0f",val);
+			GameTextForPlayer(playerid,buf,1000,4);
+		} else if(KEY_PRESSED(KEY_ANALOG_RIGHT)){
+			new vid = GetPlayerVehicleID(playerid), Float:val = GetVehicleMortarMissileHeight(vid), buf[128];
+			val += 5.0;
+			if(val > 300.0) val = 300.0;
+			SetVehicleMortarMissileHeight(vid,val);
+			format(buf,sizeof buf,"Mortar Height: ~g~%.0f",val);
+			GameTextForPlayer(playerid,buf,1000,4);
+		} else if(KEY_PRESSED(KEY_ANALOG_LEFT)){
+			new vid = GetPlayerVehicleID(playerid), Float:val = GetVehicleMortarMissileHeight(vid), buf[128];
+			val -= 5.0;
+			if(val < 25.0) val = 25.0;
+			SetVehicleMortarMissileHeight(vid,val);
+			format(buf,sizeof buf,"Mortar Height: ~g~%.0f",val);
+			GameTextForPlayer(playerid,buf,1000,4);
+		}
+	}
+	return 1;
+}
+[/php]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/VehicleMissileCol.inc]VehicleMissileCol.inc[/url]
+[url=http://adm.ct8.pl/d/Missile.inc]Missile.inc[/url] [url=https://adm.ct8.pl/r/Missile][color=#003D00][b]Thread[/b][/color][/url]
+[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
+[url=http://adm.ct8.pl/d/ExtendedGrenade.inc]ExtendedGrenade.inc[/url] [url=https://adm.ct8.pl/r/ExtendedGrenade][color=#003D00][b]Thread[/b][/color][/url]
+[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
+
+See also [url=adm.ct8.pl/18]Missile Launcher[/url]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
+
+[i][b]Non-Registered Users:[/b]
+[url=http://adm.ct8.pl/report/?title=VehicleMissile%20Bug]Bug Report[/url][/i]

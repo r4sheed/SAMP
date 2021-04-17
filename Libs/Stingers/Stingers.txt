@@ -1,0 +1,103 @@
+Hello, I would like to present you the Stingers Script (Cops and Robbers)
+
+[b]Video:[/b]
+[url]https://www.youtube.com/watch?v=nslVT5RC3J0[/url]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/Stingers.inc]Stingers.inc[/url]
+[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
+
+[b]Installation:[/b]
+[php]
+#include <ADM/3DTryg>
+#include <Stingers>
+[/php]
+
+[b]Functions:[/b]
+[php]
+CreateDynamicStinger(type,Float:x,Float:y,Float:z,Float:rx,Float:ty,Float:rz,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=100.0,teamid=ANY_TEAM,byplayerid=INVALID_PLAYER_ID);
+DestroyDynamicStinger(mobid);
+
+bool:IsDynamicStingerActive(mobid);
+GetDynamicStingerObjectID(mobid);
+GetDynamicStingerTeam(mobid);
+SetDynamicStingerTeam(mobid,teamid);
+GetDynamicStingerPlayerID(mobid);
+SetDynamicStingerPlayerID(mobid,byplayerid);
+GetPlayerActiveDynamicStinger(playerid);
+ToggleDynamicStingerDamage(mobid,bool:toggle);
+[/php]
+
+[b]Callbacks:[/b]
+[php]
+//called on vehicle damage updated by stinger
+OnVehicleDamageByStinger(playerid,killerid,mobid,old_tires,new_tires);
+[/php]
+
+[b]Definitions:[/b]
+[php]
+STINGER_TYPE_SMALL //Object: 2899
+STINGER_TYPE_BIG   //Object: 2892
+[/php]
+
+[b]Example code:[/b]
+[php]
+public OnVehicleDamageByStinger(playerid,killerid,mobid,old_tires,new_tires){
+	if(killerid != INVALID_PLAYER_ID){
+		new p_name[MAX_PLAYER_NAME],string[144];
+		GetPlayerName(killerid,p_name,sizeof(p_name));
+		format(string,sizeof(string),"{00AAFF}Your vehicle has been damaged by {00FF00}%s {00AAFF}stinger.",p_name);
+		SendClientMessage(playerid,-1,string);
+	}
+	return 1;
+}
+
+new StingerObj[MAX_PLAYERS];
+
+public OnPlayerDisconnect(playerid,reason){
+	if(StingerObj[playerid] != 0){
+		DestroyDynamicStinger(StingerObj[playerid]);
+		StingerObj[playerid] = 0;
+	}
+	return 1;
+}
+
+CMD:stinger(playerid,params[]){
+	if(!strcmp(params,"destroy",true)){
+		DestroyDynamicStinger(StingerObj[playerid]);
+		StingerObj[playerid] = 0;
+		return SendClientMessage(playerid,-1,"Stinger Destroyed");
+	}
+	if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,-1,"First get out of the vehicle");
+	if(GetPlayerActiveDynamicStinger(playerid)) return SendClientMessage(playerid,-1,"You are near another stinger");
+	new type;
+	if(!strcmp(params,"big",true)){
+		type = STINGER_TYPE_BIG;
+	} else if(!strcmp(params,"small",true)){
+		type = STINGER_TYPE_SMALL;
+	} else {
+		if(!IsGM(playerid)){
+			return SendClientMessage(playerid,-1,"Usage /stinger <big/small/destroy>");
+		} else {
+			return SendClientMessage(playerid,-1,"Usage /stinger <big/small/destroy>");
+		}
+	}
+	
+	new Float:x,Float:y,Float:z,Float:z_angle;
+	GetPlayerPos(playerid,x,y,z);
+	GetPlayerFacingAngle(playerid,z_angle);
+	DestroyDynamicStinger(StingerObj[playerid]);
+	StingerObj[playerid] = CreateDynamicStinger(type,x,y,z-0.9,0.0,0.0,CompRotationFloat(z_angle+90.0),-1,-1,-1,100.0,ANY_TEAM,playerid);
+	return SendClientMessage(playerid,-1,"Stinger added");
+}
+[/php]
+
+[b]Issues:[/b]
+- Stinger can not be located near to another stinger
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
+
+[i][b]Non-Registered Users:[/b]
+[url=http://adm.ct8.pl/report/?title=Stingers%20Bug]Bug Report[/url][/i]

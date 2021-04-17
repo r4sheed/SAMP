@@ -1,0 +1,134 @@
+﻿Hello, I would like to present a dynamic system landmines.
+
+[b]Video:[/b]
+[url]https://www.youtube.com/watch?v=SXwb26E-kkU[/url]
+[url]https://www.youtube.com/watch?v=_E3tw_qYzhI[/url]
+
+[b]Functions:[/b]
+[php]
+Mines::Create(type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,mine_object = MINE_OBJECT_STANDARD,teamid = ANY_TEAM,detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,Float:vehicle_damage=-1.0);
+
+type - explosion type //https://wiki.sa-mp.com/wiki/Explosion_List
+Float:detection_range - detection range player/vehicle
+Float:explode_radius - the explosion range (the same as in CreateExplosion)
+Float:health - mine health (set MINE_INFINITY_HEALTH to be indestructible)
+respawntime - respawn time in seconds
+Float:x, Float:y, Float:z, worldid, interiorid, playerid, Float:streamdistance - the same as in CreateDynamicObject
+mine_object - mine object
+teamid - player team will be immune to detection range or destroy mine
+detect_type - specify which elements are to be detected (MINE_DETECT_TYPE_ALL / MINE_DETECT_TYPE_PLAYER / MINE_DETECT_TYPE_VEHICLE)
+Float:damage - player damage on explosion created
+Float:vehicle_damage - vehicle damage on explosion created
+
+Mines::CreateEx(objectid,type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,worldid,interiorid,playerid,Float:streamdistance,teamid = ANY_TEAM,detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,Float:vehicle_damage=-1.0);
+
+Mines::Destroy(mobid);
+
+Mines::GetExplodeVisibility();
+Mines::SetExplodeVisibility(Float:explode_stream);
+[/php]
+
+[b]Callbacks:[/b]
+[php]
+OnMineDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,Float:radius,damagerid);
+
+types:
+MINE_DESTROY_TYPE_DETECT  //When mine has been destroyed by detection range
+MINE_DESTROY_TYPE_KILL    //When mine has been destroyed by player shoot
+[/php]
+
+[b]Mine Object:[/b]
+[php]
+MINE_OBJECT_STANDARD //default
+MINE_OBJECT_UNDERWATER
+MINE_OBJECT_LASER
+MINE_OBJECT_PIZZA
+[/php]
+
+[b]Example Pawn Code:[/b]
+[php]
+#include <a_samp>
+#include <streamer>
+#include <ADM/3DTryg>
+#include <Mines>
+
+public OnFilterScriptInit(){
+	
+	
+	/*
+	simply enter the coordinates of /save
+	AddPlayerClass(71,-0.3440,0.2275,3.1172,65.1647,0,0,0,0,0,0); // 
+	and select other parameters
+	*/
+	
+	// not recommended set worldid and interiorid -1
+	
+	
+	Mines::Create(MINE_TYPE_EXPLODE_HUGE, 2.0, 0.1, 200.0, 60, 10.0,0.0,3.1172, 0,0,-1, 300.0, MINE_OBJECT_STANDARD);
+	
+	Mines::Create(MINE_TYPE_EXPLODE_SMALL, 1.5, 0.01, 100.0, 15, 0.0, 0.0, 3.1172, 0,0, -1, 200.0,MINE_OBJECT_PIZZA);
+	
+	Mines::Create(MINE_TYPE_EXPLODE_HUGE, 6.0, 0.01, 2000.0, 120, 71.8122, 175.3036, -0.5547, 0,0,-1,200.0, MINE_OBJECT_UNDERWATER);
+
+	return 1;
+}
+[/php]
+
+[b]Example Command:[/b]
+[php]
+CMD:addmine(playerid,params[]){
+	if(!IsPlayerAdmin(playerid)) return 0;
+	
+	new buffer[128], type, Float:detection_range, Float:explode_radius, Float:health, respawntime,
+		Float:x, Float:y, Float:z, worldid, interiorid, Float:streamdistance, mine_object = MINE_OBJECT_STANDARD, teamid = ANY_TEAM;
+	GetPlayerPos(playerid,x,y,z);
+	worldid = GetPlayerVirtualWorld(playerid);
+	interiorid = GetPlayerInterior(playerid);
+	if(sscanf(params,"dfffdfD(-1)D(-1)",type,detection_range,explode_radius,health,respawntime,streamdistance,mine_object,teamid)) return SendClientMessage(playerid,-1,"/addmine <type> <detection r> <explode r> <hp> <respawn> <stream distance> [obj] [team]");
+	
+	if(mine_object == -1) mine_object = MINE_OBJECT_STANDARD;
+	if(teamid == -1) teamid = ANY_TEAM;
+	
+	new mobid = Mines::Create(type,detection_range,explode_radius,health,respawntime,x,y,z,worldid,interiorid,-1,streamdistance,mine_object,teamid);
+	format(buffer,sizeof buffer,"Added mine id %d",mobid);
+	SendClientMessage(playerid,-1,buffer);
+	
+	/*
+	Mines::SetSpecialWeapon(mobid,GRENADE_SPECIAL_WEAPON_TEARGAS);
+	Mines::SetEffectID(mobid,GRENADE_EFFECT_HUGE_SMOKE_1);
+	Mines::SetEffectDMG(mobid,1.0);
+	Mines::SetEffectVDMG(mobid,0.0);
+	Mines::SetEffectTime(mobid,25);
+	*/
+	
+	return 1;
+}
+
+CMD:delmine(playerid,params[]){
+	if(!IsPlayerAdmin(playerid)) return 0;
+	new buffer[128], mobid = INVALID_MINE_ID;
+	if(sscanf(params,"d",mobid)) return SendClientMessage(playerid,-1,"/delmine <mobid>");
+	
+	if(MineComponent[mobid][mine_status] != MINE_STATUS_UNACTIVE){
+		Mines::Destroy(mobid);
+		format(buffer,sizeof buffer,"Removed mine id %d",mobid);
+		SendClientMessage(playerid,-1,buffer);
+	} else {
+		format(buffer,sizeof buffer,"Mine id %d not exist",mobid);
+		SendClientMessage(playerid,-1,buffer);
+	}
+	return 1;
+}
+[/php]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/Mines.inc]Mines.inc[/url]
+[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
+[url=http://adm.ct8.pl/d/ExtendedGrenade.inc]ExtendedGrenade.inc[/url] [url=https://adm.ct8.pl/r/ExtendedGrenade][color=#003D00][b]Thread[/b][/color][/url]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
+
+[i][b]Non-Registered Users:[/b]
+[url=http://adm.ct8.pl/report/?title=Mines%20Bug]Bug Report[/url][/i]

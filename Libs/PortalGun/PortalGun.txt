@@ -1,0 +1,47 @@
+Hello, I would like to present you the Portal Gun Script
+
+[b]Video:[/b]
+[url]https://www.youtube.com/watch?v=pHGUVNh9y3c[/url]
+[url]https://www.youtube.com/watch?v=wDBgtBY-cPs[/url]
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/PortalGun.inc]PortalGun.inc[/url]
+[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
+[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
+
+[b]Installation:[/b]
+[php]
+#include <ADM/3DTryg>
+#include <PortalGun>
+[/php]
+
+[b]Functions:[/b]
+[php]
+TogglePrivatePortalGun(bool:toggle);//default: false
+bool:IsTogglePrivatePortalGun();
+TogglePortalGunForAll(bool:toggle); //default: true
+bool:IsTogglePortalGunForAll();
+TogglePortalGunForPlayer(playerid,bool:toggle); //default: false
+bool:IsTogglePortalGunForPlayer(playerid);
+Float:GetPortalGunSpeed(playerid);
+SetPortalGunSpeed(playerid,Float:speed);
+Float:GetPortalGunStreamDistance();
+SetPortalGunStreamDistance(Float:streamdistance);
+ForceOpenPortalGunRing(playerid,portal_id,Float:ox,Float:oy,Float:oz,Float:tx,Float:ty,Float:tz,worldid,interiorid);
+ForceClosePortalGunRing(playerid);
+ToggleUseTeamPortalGun(bool:toggle);
+IsToggleUseTeamPortalGun();
+[/php]
+
+[b]Activation:[/b]
+[php]
+Weapon: Country Rifle
+Y - Change Ring
+[/php]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
+
+[i][b]Non-Registered Users:[/b]
+[url=http://adm.ct8.pl/report/?title=PortalGun%20Bug]Bug Report[/url][/i]
