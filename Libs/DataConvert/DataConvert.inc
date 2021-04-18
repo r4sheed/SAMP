@@ -1,94 +1,92 @@
-/*************************************************************************************************************************************
- *                                                                                                                                   *
- *                                                      )(   Data Convert   )(                                                       *
- *                                                                                                                                   *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                               *
- * Contributors: Crayder, Shiny                                                                                                      *
- *                                                                                                                                   *
- * Website: https://adm.ct8.pl                                                                                                       *
- *                                                                                                                                   *
- * Plugins: SScanf                                                                                                                   *
- * Modules: None                                                                                                                     *
- *                                                                                                                                   *
- * File Version: 2.1.1                                                                                                               *
- * SScanf Version: 2.8.2                                                                                                             *
- *                                                                                                                                   *
- * Definitions:                                                                                                                      *
- * FIRST_FILE_ADDRESS                                                                                                                *
- * INVALID_FILE_ID                                                                                                                   *
- * INVALID_FILE_HANDLE                                                                                                               *
- * INT_NUMBER_LEN                                                                                                                    *
- * HEX_NUMBER_LEN                                                                                                                    *
- * BIN_NUMBER_LEN                                                                                                                    *
- * OCT_NUMBER_LEN                                                                                                                    *
- *                                                                                                                                   *
- * Functions:                                                                                                                        *
- * strcopy(const input[],output[]);  //string copy for warning 224: indeterminate array size                                         *
- * fstrcopy(const input[],output[],maxdest = sizeof(output));   //fast string copy                                                   *
- * ABCToCBA(const input[],output[]);                                                                                                 *
- * AnyToInt(string[],type,&bool:flag);                                                                                               *
- * IntToAny(value,output[],type);                                                                                                    *
- * rot13(string[]);                                                                                                                  *
- * code128(const input[],output[]);                                                                                                  *
- * swap_int({Float,_}:int1,{Float,_}:int2);                                                                                          *
- * swap_string(string1[], string2[], dest1 = sizeof(string1), dest2 = sizeof(string2));                                              *
- * bool:ContainInSeries(value,...);                                                                                                  *
- * bool:ContainInSeriesFloat(Float:value,Float:...);                                                                                 *
- * StringEqual(string1[],string2[],ignorecase);                                                                                      *
- * StringNotEqual(string1[],string2[],ignorecase);                                                                                   *
- * base64_decode(const input[],output[]); //d:base64                                                                                 *
- * base64_encode(const input[],output[]); //e:base64                                                                                 *
- * StripNewLine(string[]);                                                                                                           *
- * strreplace(string[],const search[],const replacement[],bool:ignorecase = false,pos = 0,limit = -1,maxlength = sizeof(string));    *
- * strlower(string[]);                                                                                                               *
- * strupper(string[]);                                                                                                               *
- *                                                                                                                                   *
- * File functions:                                                                                                                   *
- * GetFileHandleID(File:handle);                                                                                                     *
- * GetFileID(File:handle);                                                                                                           *
- * fcopy(const input[],output[]);                                                                                                    *
- * frename(oldname[],newname[]);                                                                                                     *
- *                                                                                                                                   *
- * Validators:                                                                                                                       *
- * bool:IsDecimalNumber(const string[]);                                                                                             *
- * bool:IsHexNumber(const string[]);                                                                                                 *
- * bool:IsBinaryNumber(const string[]);                                                                                              *
- * bool:IsOctalNumber(const string[]);                                                                                               *
- * bool:IsFloatNumber(const string[]);                                                                                               *
- *                                                                                                                                   *
- * Convert to Bool:                                                                                                                  *
- * bool:StringToBool(const string[]);                                                                                                *
- * bool:IntToBool(value);                                                                                                            *
- *                                                                                                                                   *
- * Convert to Int:                                                                                                                   *
- * StringToInt(const string[]);                                                                                                      *
- * BoolToInt(bool:boolean);                                                                                                          *
- * HexToInt(const string[]);                                                                                                         *
- * BinToInt(const string[]);                                                                                                         *
- * OctToInt(const string[]);                                                                                                         *
- *                                                                                                                                   *
- * Convert to Hex:                                                                                                                   *
- * IntToHex(value);                                                                                                                  *
- * IntToHexEx(value);                                                                                                                *
- * BinToHex(const string[]);                                                                                                         *
- * BinToHexEx(const string[]);                                                                                                       *
- * OctToHex(const string[]);                                                                                                         *
- *                                                                                                                                   *
- * Convert to Bin:                                                                                                                   *
- * IntToBin(value);                                                                                                                  *
- * HexToBin(const string[]);                                                                                                         *
- * OctToBin(const string[]);                                                                                                         *
- *                                                                                                                                   *
- * Convert to Oct:                                                                                                                   *
- * IntToOct(value);                                                                                                                  *
- * HexToOct(const string[]);                                                                                                         *
- * BinToOct(const string[]);                                                                                                         *
- *                                                                                                                                   *
- * Binary Data Convert:                                                                                                              *
- * FloatToInt(Float:value); //Convert Float binary data to Integer binary data !                                                     *
- * Float:IntToFloat(value); //Convert Integer binary data to Float binary data !                                                     *
- *                                                                                                                                   *
- *************************************************************************************************************************************/
+/*
+ DataConvert.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: Crayder, Shiny
+
+ Website: https://adm.ct8.pl
+
+ Plugins: SScanf
+ Modules: None
+
+ File Version: 2.1.1
+ SScanf Version: 2.8.2
+
+ Definitions:
+ FIRST_FILE_ADDRESS
+ INVALID_FILE_ID
+ INVALID_FILE_HANDLE
+ INT_NUMBER_LEN
+ HEX_NUMBER_LEN
+ BIN_NUMBER_LEN
+ OCT_NUMBER_LEN
+
+ Functions:
+ strcopy(const input[],output[]);  //string copy for warning 224: indeterminate array size
+ fstrcopy(const input[],output[],maxdest = sizeof(output));   //fast string copy
+ ABCToCBA(const input[],output[]);
+ AnyToInt(string[],type,&bool:flag);
+ IntToAny(value,output[],type);
+ rot13(string[]);
+ code128(const input[],output[]);
+ swap_int({Float,_}:int1,{Float,_}:int2);
+ swap_string(string1[], string2[], dest1 = sizeof(string1), dest2 = sizeof(string2));
+ bool:ContainInSeries(value,...);
+ bool:ContainInSeriesFloat(Float:value,Float:...);
+ StringEqual(string1[],string2[],ignorecase);
+ StringNotEqual(string1[],string2[],ignorecase);
+ base64_decode(const input[],output[]); //d:base64
+ base64_encode(const input[],output[]); //e:base64
+ StripNewLine(string[]);
+ strreplace(string[],const search[],const replacement[],bool:ignorecase = false,pos = 0,limit = -1,maxlength = sizeof(string));
+ strlower(string[]);
+ strupper(string[]);
+
+ File functions:
+ GetFileHandleID(File:handle);
+ GetFileID(File:handle);
+ fcopy(const input[],output[]);
+ frename(oldname[],newname[]);
+
+ Validators:
+ bool:IsDecimalNumber(const string[]);
+ bool:IsHexNumber(const string[]);
+ bool:IsBinaryNumber(const string[]);
+ bool:IsOctalNumber(const string[]);
+ bool:IsFloatNumber(const string[]);
+
+ Convert to Bool:
+ bool:StringToBool(const string[]);
+ bool:IntToBool(value);
+
+ Convert to Int:
+ StringToInt(const string[]);
+ BoolToInt(bool:boolean);
+ HexToInt(const string[]);
+ BinToInt(const string[]);
+ OctToInt(const string[]);
+
+ Convert to Hex:
+ IntToHex(value);
+ IntToHexEx(value);
+ BinToHex(const string[]);
+ BinToHexEx(const string[]);
+ OctToHex(const string[]);
+
+ Convert to Bin:
+ IntToBin(value);
+ HexToBin(const string[]);
+ OctToBin(const string[]);
+
+ Convert to Oct:
+ IntToOct(value);
+ HexToOct(const string[]);
+ BinToOct(const string[]);
+
+ Binary Data Convert:
+ FloatToInt(Float:value); //Convert Float binary data to Integer binary data !
+ Float:IntToFloat(value); //Convert Integer binary data to Float binary data !
+
+*/
 
 #if !defined sscanf
 	#error [ADM] You need SScanf v2.8.2
