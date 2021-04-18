@@ -4,17 +4,17 @@ Hello, I would like to present you the Stingers Script (Cops and Robbers)
 [url]https://www.youtube.com/watch?v=nslVT5RC3J0[/url]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/Stingers.inc]Stingers.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
+[url=https://adm.ct8.pl/cloud/Libs/Stingers/Stingers.inc]Stingers.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 
 [b]Installation:[/b]
-[php]
-#include <ADM/3DTryg>
+[code]
+#include <3DTryg>
 #include <Stingers>
-[/php]
+[/code]
 
 [b]Functions:[/b]
-[php]
+[code]
 CreateDynamicStinger(type,Float:x,Float:y,Float:z,Float:rx,Float:ty,Float:rz,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=100.0,teamid=ANY_TEAM,byplayerid=INVALID_PLAYER_ID);
 DestroyDynamicStinger(mobid);
 
@@ -26,22 +26,22 @@ GetDynamicStingerPlayerID(mobid);
 SetDynamicStingerPlayerID(mobid,byplayerid);
 GetPlayerActiveDynamicStinger(playerid);
 ToggleDynamicStingerDamage(mobid,bool:toggle);
-[/php]
+[/code]
 
 [b]Callbacks:[/b]
-[php]
+[code]
 //called on vehicle damage updated by stinger
 OnVehicleDamageByStinger(playerid,killerid,mobid,old_tires,new_tires);
-[/php]
+[/code]
 
 [b]Definitions:[/b]
-[php]
+[code]
 STINGER_TYPE_SMALL //Object: 2899
 STINGER_TYPE_BIG   //Object: 2892
-[/php]
+[/code]
 
 [b]Example code:[/b]
-[php]
+[code]
 public OnVehicleDamageByStinger(playerid,killerid,mobid,old_tires,new_tires){
 	if(killerid != INVALID_PLAYER_ID){
 		new p_name[MAX_PLAYER_NAME],string[144];
@@ -90,7 +90,7 @@ CMD:stinger(playerid,params[]){
 	StingerObj[playerid] = CreateDynamicStinger(type,x,y,z-0.9,0.0,0.0,CompRotationFloat(z_angle+90.0),-1,-1,-1,100.0,ANY_TEAM,playerid);
 	return SendClientMessage(playerid,-1,"Stinger added");
 }
-[/php]
+[/code]
 
 [b]Issues:[/b]
 - Stinger can not be located near to another stinger
@@ -98,6 +98,3 @@ CMD:stinger(playerid,params[]){
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=Stingers%20Bug]Bug Report[/url][/i]

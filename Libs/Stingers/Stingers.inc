@@ -1,41 +1,37 @@
-/**********************************************************************************************************************************
- *                                                                                                                                *
- *                                                        Dynamic Stingers                                                        *
- *                                                                                                                                *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                            *
- *                                                                                                                                *
- * Website: https://adm.ct8.pl                                                                                                    *
- *                                                                                                                                *
- * Plugins: Streamer                                                                                                              *
- * Modules: 3DTryg                                                                                                                *
- *                                                                                                                                *
- * File Version: 1.1.2                                                                                                            *
- * Streamer Version: 2.9.4                                                                                                        *
- * 3DTryg Version: 4.8.6                                                                                                          *
- *                                                                                                                                *
- * Definitions:                                                                                                                   *
- * STINGER_TYPE_SMALL  //Object: 2899                                                                                             *
- * STINGER_TYPE_BIG    //Object: 2892                                                                                             *
- *                                                                                                                                *
- * Functions:                                                                                                                     *
- * CreateDynamicStinger(type,Float:x,Float:y,Float:z,Float:rx,Float:ty,Float:rz,worldid=-1,interiorid=-1,playerid=-1,             *
- *                      Float:streamdistance=100.0,teamid=ANY_TEAM,byplayerid=INVALID_PLAYER_ID);                                 *
- * DestroyDynamicStinger(mobid);                                                                                                  *
- *                                                                                                                                *
- * Extended Functions:                                                                                                            *
- * bool:IsDynamicStingerActive(mobid);                                                                                            *
- * GetDynamicStingerObjectID(mobid);                                                                                              *
- * GetDynamicStingerTeam(mobid);                                                                                                  *
- * SetDynamicStingerTeam(mobid,teamid);                                                                                           *
- * GetDynamicStingerPlayerID(mobid);                                                                                              *
- * SetDynamicStingerPlayerID(mobid,byplayerid);                                                                                   *
- * GetPlayerActiveDynamicStinger(playerid);                                                                                       *
- * ToggleDynamicStingerDamage(mobid,bool:toggle);                                                                                 *
- *                                                                                                                                *
- * Callbacks:                                                                                                                     *
- * OnVehicleDamageByStinger(playerid,killerid,mobid,old_tires,new_tires);                                                         *
- *                                                                                                                                *
- **********************************************************************************************************************************/
+/*
+ Stingers.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer
+ Modules: 3DTryg
+
+ File Version: 1.1.2
+ Streamer Version: 2.9.4
+ 3DTryg Version: 4.8.6
+
+ Definitions:
+ STINGER_TYPE_SMALL  //Object: 2899
+ STINGER_TYPE_BIG    //Object: 2892
+
+ Functions:
+ CreateDynamicStinger(type,Float:x,Float:y,Float:z,Float:rx,Float:ty,Float:rz,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=100.0,teamid=ANY_TEAM,byplayerid=INVALID_PLAYER_ID);
+ DestroyDynamicStinger(mobid);
+
+ Extended Functions:
+ bool:IsDynamicStingerActive(mobid);
+ GetDynamicStingerObjectID(mobid);
+ GetDynamicStingerTeam(mobid);
+ SetDynamicStingerTeam(mobid,teamid);
+ GetDynamicStingerPlayerID(mobid);
+ SetDynamicStingerPlayerID(mobid,byplayerid);
+ GetPlayerActiveDynamicStinger(playerid);
+ ToggleDynamicStingerDamage(mobid,bool:toggle);
+
+ Callbacks:
+ OnVehicleDamageByStinger(playerid,killerid,mobid,old_tires,new_tires);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
