@@ -1,44 +1,39 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                        Magic Wand Script                                         *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- * Contributors: Katarina Calzaghe                                                                  *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: Streamer, ColAndreas                                                                    *
- * Modules: 3DTryg                                                                                  *
- *                                                                                                  *
- * File Version: 1.2.1                                                                              *
- * Streamer Version: 2.9.4                                                                          *
- * ColAndreas Version: 1.4.0                                                                        *
- * 3DTryg Version: 4.8.6                                                                            *
- *                                                                                                  *
- * Functions:                                                                                       *
- * ToggleUseTeamMagicShoot(bool:toggle);            //default: false                                *
- * bool:IsToggleUseTeamMagicShoot();                                                                *
- * ToggleMagicShootForAll(bool:toggle);             //default: false                                *
- * bool:IsToggleMagicShootForAll();                                                                 *
- * ToggleMagicShootForPlayer(playerid,bool:toggle); //default: false                                *
- * bool:IsToggleMagicShootForPlayer(playerid);                                                      *
- * Float:GetMagicShootDamage(playerid);                                                             *
- * SetMagicShootDamage(playerid,Float:amount);                                                      *
- * Float:GetMagicShootSpeed(playerid);                                                              *
- * SetMagicShootSpeed(playerid,Float:speed);                                                        *
- * Float:GetMagicShootRange(playerid);                                                              *
- * SetMagicShootRange(playerid,Float:range);                                                        *
- * GetMagicShootAmmo(playerid);                                                                     *
- * SetMagicShootAmmo(playerid,ammo);                                                                *
- * SetMagicProjectile(playerid,modelid=18693,Float:rx=90.0,Float:ry=0.0,Float:rz=0.0,               *
- *                    Float:offx=0.0,Float:offy=0.0,Float:offz=0.0);                                *
- * GetMagicProjectile(playerid,&modelid,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,                  *
- *                    &Float:offx=0.0,&Float:offy=0.0,&Float:offz=0.0);                             *
- *                                                                                                  *
- * Callbacks:                                                                                       *
- * OnPlayerRequestMagicShot(playerid,targetid);                                                     *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ Magic.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: Katarina Calzaghe
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg
+
+ File Version: 1.2.1
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ ToggleUseTeamMagicShoot(bool:toggle);            //default: false
+ bool:IsToggleUseTeamMagicShoot();
+ ToggleMagicShootForAll(bool:toggle);             //default: false
+ bool:IsToggleMagicShootForAll();
+ ToggleMagicShootForPlayer(playerid,bool:toggle); //default: false
+ bool:IsToggleMagicShootForPlayer(playerid);
+ Float:GetMagicShootDamage(playerid);
+ SetMagicShootDamage(playerid,Float:amount);
+ Float:GetMagicShootSpeed(playerid);
+ SetMagicShootSpeed(playerid,Float:speed);
+ Float:GetMagicShootRange(playerid);
+ SetMagicShootRange(playerid,Float:range);
+ GetMagicShootAmmo(playerid);
+ SetMagicShootAmmo(playerid,ammo);
+ SetMagicProjectile(playerid,modelid=18693,Float:rx=90.0,Float:ry=0.0,Float:rz=0.0,Float:offx=0.0,Float:offy=0.0,Float:offz=0.0);
+ GetMagicProjectile(playerid,&modelid,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:offx=0.0,&Float:offy=0.0,&Float:offz=0.0);
+
+ Callbacks:
+ OnPlayerRequestMagicShot(playerid,targetid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)

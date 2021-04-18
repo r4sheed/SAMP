@@ -2,23 +2,25 @@ Hello, I would like to present you the Knife Shot Script
 
 [b]Video:[/b]
 [url]https://www.youtube.com/watch?v=WJZCn3XXRHY[/url]
+[url]https://www.youtube.com/watch?v=PSfgKwm3Mc8[/url]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/Knife.inc]Knife.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
+[url=https://adm.ct8.pl/cloud/Libs/Knife/Knife.inc]Knife.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
 
 [b]Installation:[/b]
-[php]
+[code]
+#include <colandreas>
 #include <3DTryg>
 #include <Knife>
-[/php]
+[/code]
 
 [b]Functions:[/b]
-[php]
-Knife::ToggleUseTeam(bool:toggle); //default: false
+[code]
+Knife::ToggleUseTeam(bool:toggle);            //default: false
 Knife::IsToggleUseTeam();
-Knife::ToggleForAll(bool:toggle); //default: false
+Knife::ToggleForAll(bool:toggle);             //default: false
 Knife::IsToggleForAll();
 Knife::ToggleForPlayer(playerid,bool:toggle); //default: false
 Knife::IsToggleForPlayer(playerid);
@@ -35,16 +37,16 @@ Knife::IsTogglePoisoning(playerid);
 Knife::GetPoisoningTime(playerid);
 Knife::SetPoisoningTime(playerid,seconds);
 Knife::GetPoisoningDamage(playerid);
-Knife::SetPoisoningDamage(playerid,Float:damage);*
-[/php]
+Knife::SetPoisoningDamage(playerid,Float:damage);
+[/code]
 
 [b]Callbacks:[/b]
-[php]
+[code]
 OnPlayerRequestKnifeShot(playerid,targetid); //return 0 - prevent to use knife shoot (this callback is called also if ammo is 0)
-[/php]
+[/code]
 
 [b]Definitions:[/b]
-[php]
+[code]
 KNIFE_SPEED
 KNIFE_MAX_RADIUS
 KNIFE_REFRESH_ACTION
@@ -56,19 +58,16 @@ KNIFE_POISONING_TIME
 
 WEAPON_KNIFE_THROWN
 WEAPON_KNIFE_POISONING
-[/php]
+[/code]
 
 [b]Activation:[/b]
-[php]
+[code]
 Weapon: Knife
 
 Step 1: Right Mouse Button
 Step 2: Left Mouse Button
-[/php]
+[/code]
 
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=Knife%20Bug]Bug Report[/url][/i]

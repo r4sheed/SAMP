@@ -1,46 +1,43 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                        Knife Shoot Script                                        *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- * Contributors: Katarina Calzaghe                                                                  *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: Streamer, ColAndreas                                                                    *
- * Modules: 3DTryg                                                                                  *
- *                                                                                                  *
- * File Version: 2.7.0                                                                              *
- * Streamer Version: 2.9.4                                                                          *
- * ColAndreas Version: 1.4.0                                                                        *
- * 3DTryg Version: 4.8.6                                                                            *
- *                                                                                                  *
- * Functions:                                                                                       *
- * Knife::ToggleUseTeam(bool:toggle);            //default: false                                   *
- * Knife::IsToggleUseTeam();                                                                        *
- * Knife::ToggleForAll(bool:toggle);             //default: false                                   *
- * Knife::IsToggleForAll();                                                                         *
- * Knife::ToggleForPlayer(playerid,bool:toggle); //default: false                                   *
- * Knife::IsToggleForPlayer(playerid);                                                              *
- * Knife::GetDamage(playerid);                                                                      *
- * Knife::SetDamage(playerid,Float:amount);                                                         *
- * Knife::GetSpeed(playerid);                                                                       *
- * Knife::SetSpeed(playerid,Float:speed);                                                           *
- * Knife::GetRange(playerid);                                                                       *
- * Knife::SetRange(playerid,Float:range);                                                           *
- * Knife::GetAmmo(playerid);                                                                        *
- * Knife::SetAmmo(playerid,ammo);                                                                   *
- * Knife::TogglePoisoning(playerid,bool:toggle);                                                    *
- * Knife::IsTogglePoisoning(playerid);                                                              *
- * Knife::GetPoisoningTime(playerid);                                                               *
- * Knife::SetPoisoningTime(playerid,seconds);                                                       *
- * Knife::GetPoisoningDamage(playerid);                                                             *
- * Knife::SetPoisoningDamage(playerid,Float:damage);                                                *
- *                                                                                                  *
- * Callbacks:                                                                                       *
- * OnPlayerRequestKnifeShot(playerid,targetid);                                                     *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ Knife.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: Katarina Calzaghe
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg
+
+ File Version: 2.7.0
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ Knife::ToggleUseTeam(bool:toggle);            //default: false
+ Knife::IsToggleUseTeam();
+ Knife::ToggleForAll(bool:toggle);             //default: false
+ Knife::IsToggleForAll();
+ Knife::ToggleForPlayer(playerid,bool:toggle); //default: false
+ Knife::IsToggleForPlayer(playerid);
+ Knife::GetDamage(playerid);
+ Knife::SetDamage(playerid,Float:amount);
+ Knife::GetSpeed(playerid);
+ Knife::SetSpeed(playerid,Float:speed);
+ Knife::GetRange(playerid);
+ Knife::SetRange(playerid,Float:range);
+ Knife::GetAmmo(playerid);
+ Knife::SetAmmo(playerid,ammo);
+ Knife::TogglePoisoning(playerid,bool:toggle);
+ Knife::IsTogglePoisoning(playerid);
+ Knife::GetPoisoningTime(playerid);
+ Knife::SetPoisoningTime(playerid,seconds);
+ Knife::GetPoisoningDamage(playerid);
+ Knife::SetPoisoningDamage(playerid,Float:damage);
+
+ Callbacks:
+ OnPlayerRequestKnifeShot(playerid,targetid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)

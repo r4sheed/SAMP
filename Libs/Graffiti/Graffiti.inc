@@ -1,31 +1,28 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                     Los Santos Gang Graffiti                                     *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- * Contributors: Robin                                                                              *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: Streamer                                                                                *
- * Modules: 3DTryg                                                                                  *
- *                                                                                                  *
- * File Version: 1.0.3                                                                              *
- * Streamer Version: 2.9.4                                                                          *
- * 3DTryg Version: 4.8.6                                                                            *
- *                                                                                                  *
- * Functions:                                                                                       *
- * Graffiti::Init();                                                                                *
- * Graffiti::CountGangTags(gangid);                                                                 *
- * Graffiti::SetGang(mobid,gangid);                                                                 *
- * Graffiti::SetGangName(mobid,color,name[]);                                                       *
- * Graffiti::ResetGangTags();                                                                       *
- *                                                                                                  *
- * Callbacks:                                                                                       *
- * OnGraffitiTagChanged(mobid,playerid,gangid,old_gangid);                                          *
- * OnGraffitiTagCreated(mobid,gangid);                                                              *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ Graffiti.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: Robin
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer
+ Modules: 3DTryg
+
+ File Version: 1.0.3
+ Streamer Version: 2.9.4
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ Graffiti::Init();
+ Graffiti::CountGangTags(gangid);
+ Graffiti::SetGang(mobid,gangid);
+ Graffiti::SetGangName(mobid,color,name[]);
+ Graffiti::ResetGangTags();
+
+ Callbacks:
+ OnGraffitiTagChanged(mobid,playerid,gangid,old_gangid);
+ OnGraffitiTagCreated(mobid,gangid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
