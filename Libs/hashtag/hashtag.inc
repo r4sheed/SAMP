@@ -1,25 +1,22 @@
-/*************************************************************************************************************************************
- *                                                                                                                                   *
- *                                                        )(   #hashtag   )(                                                         *
- *                                                                                                                                   *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                               *
- * Contributors: None                                                                                                                *
- *                                                                                                                                   *
- * Website: https://adm.ct8.pl                                                                                                       *
- *                                                                                                                                   *
- * Plugins: SScanf                                                                                                                   *
- * Modules: RGB                                                                                                                      *
- *                                                                                                                                   *
- * File Version: 1.2.0                                                                                                               *
- *                                                                                                                                   *
- * Functions:                                                                                                                        *
- * GetHashTag(playerid,text[],hashtag_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));                                  *
- * HashTag::name(playerid);                                                                                                          *
- *                                                                                                                                   *
- * Callbacks:                                                                                                                        *
- * OnHashTagPresented(hashtag[]);                                                                                                    *
- *                                                                                                                                   *
- *************************************************************************************************************************************/
+/*
+ hashtag.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: None
+
+ Website: https://adm.ct8.pl
+
+ Plugins: SScanf
+ Modules: RGB
+
+ File Version: 1.2.0
+
+ Functions:
+ GetHashTag(playerid,text[],hashtag_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));
+ HashTag::name(playerid);
+
+ Callbacks:
+ OnHashTagPresented(hashtag[]);
+*/
 
 #if !defined sscanf
 	#error [ADM] You need SScanf v2.8.2

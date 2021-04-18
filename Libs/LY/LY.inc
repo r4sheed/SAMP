@@ -1,39 +1,36 @@
-/**********************************************************************************************************************************
- *                                                                                                                                *
- *                                           )(   Unsigned Long 61 Bit [Long Yoyo]   )(                                           *
- *                                                                                                                                *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                            *
- *                                                                                                                                *
- * Website: https://adm.ct8.pl                                                                                                    *
- *                                                                                                                                *
- * Plugins: None                                                                                                                  *
- * Modules: None                                                                                                                  *
- *                                                                                                                                *
- * File Version: 1.6.1                                                                                                            *
- *                                                                                                                                *
- * Pawn Unsigned Long for 32 Bit language (precision 61-bit)                                                                      *
- * Available limit:                                                                                                               *
- * 0 - 2 147 483 647 000 000 000                                                                                                  *
- * 0 - 2 000 000 000 000 000 000                                                                                                  *
- *                                                                                                                                *
- * Functions:                                                                                                                     *
- * IsValueContainLY(prefix,suffix,value);                                                                                         *
- * GetLYString(prefix,suffix,string[],maxdest = sizeof(string));                                                                  *
- * LYStringToLY(&prefix,&suffix,const string[]); //Reverse to GetLYString                                                         *
- * UpdateLY(&prefix,&suffix,value,limitprefix = DEFAULT_MAX_LY_PREFIX);                                                           *
- * AddSeparatorLY(string[],const separator[]);                                                                                    *
- * DeleteSeparatorLY(const string[],const separator[]);                                                                           *
- * CalculatePercentLY(&prefix,&suffix,Float:percent = 0.0,increase = true,limitprefix = DEFAULT_MAX_LY_PREFIX);                   *
- * GetPercentLY(prefix,suffix,&o_prefix,&o_suffix,Float:percent = 0.0,limitprefix = DEFAULT_MAX_LY_PREFIX);                       *
- *                                                                                                                                *
- * Operators:                                                                                                                     *
- * IsLYEqual(prefix,suffix,from_prefix,from_suffix);                                                                              *
- * IsLYSmallerThan(prefix,suffix,from_prefix,from_suffix);                                                                        *
- * IsLYSmallerThanOrEqual(prefix,suffix,from_prefix,from_suffix);                                                                 *
- * IsLYBiggerThan(prefix,suffix,from_prefix,from_suffix);                                                                         *
- * IsLYBiggerThanOrEqual(prefix,suffix,from_prefix,from_suffix);                                                                  *
- *                                                                                                                                *
- **********************************************************************************************************************************/
+/*
+ LY.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: None
+ Modules: None
+
+ File Version: 1.6.1
+
+ Pawn Unsigned Long for 32 Bit language (precision 61-bit)
+ Available limit:
+ 0 - 2 147 483 647 000 000 000
+ 0 - 2 000 000 000 000 000 000
+
+ Functions:
+ IsValueContainLY(prefix,suffix,value);
+ GetLYString(prefix,suffix,string[],maxdest = sizeof(string));
+ LYStringToLY(&prefix,&suffix,const string[]); //Reverse to GetLYString
+ UpdateLY(&prefix,&suffix,value,limitprefix = DEFAULT_MAX_LY_PREFIX);
+ AddSeparatorLY(string[],const separator[]);
+ DeleteSeparatorLY(const string[],const separator[]);
+ CalculatePercentLY(&prefix,&suffix,Float:percent = 0.0,increase = true,limitprefix = DEFAULT_MAX_LY_PREFIX);
+ GetPercentLY(prefix,suffix,&o_prefix,&o_suffix,Float:percent = 0.0,limitprefix = DEFAULT_MAX_LY_PREFIX);
+
+ Operators:
+ IsLYEqual(prefix,suffix,from_prefix,from_suffix);
+ IsLYSmallerThan(prefix,suffix,from_prefix,from_suffix);
+ IsLYSmallerThanOrEqual(prefix,suffix,from_prefix,from_suffix);
+ IsLYBiggerThan(prefix,suffix,from_prefix,from_suffix);
+ IsLYBiggerThanOrEqual(prefix,suffix,from_prefix,from_suffix);
+*/
 
 #if defined _Long_Yoyo
 	#endinput

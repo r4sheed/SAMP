@@ -1,54 +1,51 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                     )(   Bit Functions   )(                                      *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: None                                                                                    *
- * Modules: None                                                                                    *
- *                                                                                                  *
- * File Version: 1.8.0                                                                              *
- *                                                                                                  *
- * bit 0 - 31:                                                                                      *
- * (bit 31) --> 11111111000000001111010001010000 <-- (bit 0)                                        *
- *                                                                                                  *
- * Example cell mode:                                                                               *
- * Mode 2 (cell id 15) --> 11 11 11 11 00 00 00 00 11 11 01 00 01 01 00 00 <-- (cell id 0)          *
- * Mode 4 (cell id 7) --> 1111 1111 0000 0000 1111 0100 0101 0000 <-- (cell id 0)                   *
- * Mode 8 (cell id 3) --> 11111111 00000000 11110100 01010000 <-- (cell id 0)                       *
- * Mode 16 (cell id 1) --> 1111111100000000 1111010001010000 <-- (cell id 0)                        *
- *                                                                                                  *
- * General Macros:                                                                                  *
- * GetValueBit(value,bit);                                                                          *
- * SetValueBit(&value,bit,power);  //power 0 or 1                                                   *
- * SetValueBitTrue(&value,bit);                                                                     *
- * SetValueBitFalse(&value,bit);                                                                    *
- * GetCellValue(value,cellid,mode);                                                                 *
- * SetCellValue(&value,cellid,mode,power);                                                          *
- * GetCellValueEx(value,offset,cellsize);                                                           *
- * SetCellValueEx(&value,offset,cellsize,power);                                                    *
- * InvertValue(value);                                                                              *
- * InvertValueEx(value,key); //default key 0xFFFFFFFF                                               *
- * bool:CheckValue(value,&count=0); //even - false,uneven - true                                    *
- *                                                                                                  *
- * File Byte Macros:                                                                                *
- * ExtractValue(value,&byte1,&byte2,&byte3,&byte4);                                                 *
- * ExtractFloat(Float:value,&byte1,&byte2,&byte3,&byte4);                                           *
- * MergeValue(&value,byte1,byte2,byte3,byte4);                                                      *
- * MergeFloat(&Float:value,byte1,byte2,byte3,byte4);                                                *
- * MergeValueEx(byte1,byte2,byte3,byte4);                                                           *
- * Float:MergeFloatEx(byte1,byte2,byte3,byte4);                                                     *
- *                                                                                                  *
- * Dynamic Toggle Config Macros:                                                                    *
- * GetConfigAddress(itemid);                                                                        *
- * GetConfigBit(itemid);                                                                            *
- * GetConfigSize(max_items);                                                                        *
- * IsToggleConfigInformation(variable,itemid);                                                      *
- * ToggleConfigInformation(variable,itemid,value); //values: 1/0                                    *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ BitFunctions.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: None
+ Modules: None
+
+ File Version: 1.8.0
+
+ bit 0 - 31:
+ (bit 31) --> 11111111000000001111010001010000 <-- (bit 0)
+
+ Example cell mode:
+ Mode 2 (cell id 15) --> 11 11 11 11 00 00 00 00 11 11 01 00 01 01 00 00 <-- (cell id 0)
+ Mode 4 (cell id 7) --> 1111 1111 0000 0000 1111 0100 0101 0000 <-- (cell id 0)
+ Mode 8 (cell id 3) --> 11111111 00000000 11110100 01010000 <-- (cell id 0)
+ Mode 16 (cell id 1) --> 1111111100000000 1111010001010000 <-- (cell id 0)
+
+ General Macros:
+ GetValueBit(value,bit);
+ SetValueBit(&value,bit,power);  //power 0 or 1
+ SetValueBitTrue(&value,bit);
+ SetValueBitFalse(&value,bit);
+ GetCellValue(value,cellid,mode);
+ SetCellValue(&value,cellid,mode,power);
+ GetCellValueEx(value,offset,cellsize);
+ SetCellValueEx(&value,offset,cellsize,power);
+ InvertValue(value);
+ InvertValueEx(value,key); //default key 0xFFFFFFFF
+ bool:CheckValue(value,&count=0); //even - false,uneven - true
+
+ File Byte Macros:
+ ExtractValue(value,&byte1,&byte2,&byte3,&byte4);
+ ExtractFloat(Float:value,&byte1,&byte2,&byte3,&byte4);
+ MergeValue(&value,byte1,byte2,byte3,byte4);
+ MergeFloat(&Float:value,byte1,byte2,byte3,byte4);
+ MergeValueEx(byte1,byte2,byte3,byte4);
+ Float:MergeFloatEx(byte1,byte2,byte3,byte4);
+
+ Dynamic Toggle Config Macros:
+ GetConfigAddress(itemid);
+ GetConfigBit(itemid);
+ GetConfigSize(max_items);
+ IsToggleConfigInformation(variable,itemid);
+ ToggleConfigInformation(variable,itemid,value); //values: 1/0
+*/
 
 #if defined _bit_function
 	#endinput

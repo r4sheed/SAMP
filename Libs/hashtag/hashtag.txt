@@ -1,33 +1,27 @@
 Include contain function for chat #hashtag system
 
-[php]
-/*************************************************************************************************************************************
- *                                                                                                                                   *
- *                                                        )(   #hashtag   )(                                                         *
- *                                                                                                                                   *
- * Copyright © 2019 Abyss Morgan. All rights reserved.                                                                               *
- * Contributors: None                                                                                                                *
- *                                                                                                                                   *
- * Website:  adm.ct8.pl                                                                                                              *
- * Download: adm.ct8.pl/r/download                                                                                                   *
- *                                                                                                                                   *
- * Plugins: SScanf                                                                                                                   *
- * Modules: RGB                                                                                                                      *
- *                                                                                                                                   *
- * File Version: 1.2.0                                                                                                               *
- *                                                                                                                                   *
- * Functions:                                                                                                                        *
- * GetHashTag(playerid,text[],hashtag_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));                                  *
- * HashTag::name(playerid);                                                                                                          *
- *                                                                                                                                   *
- * Callbacks:                                                                                                                        *
- * OnHashTagPresented(hashtag[]);                                                                                                    *
- *                                                                                                                                   *
- *************************************************************************************************************************************/
-[/php]
+[code]
+ hashtag.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: None
+
+ Website: https://adm.ct8.pl
+
+ Plugins: SScanf
+ Modules: RGB
+
+ File Version: 1.2.0
+
+ Functions:
+ GetHashTag(playerid,text[],hashtag_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));
+ HashTag::name(playerid);
+
+ Callbacks:
+ OnHashTagPresented(hashtag[]);
+[/code]
 
 [b]Example:[/b]
-[php]
+[code]
 //I want #suicide now :D
 HashTag::suicide(playerid){
 	SetPlayerHealth(playerid,0.0);
@@ -35,7 +29,7 @@ HashTag::suicide(playerid){
 }
 
 HashTag::banned(playerid){
-	PlayAudioStreamForPlayer(playerid,"https://adm.ct8.pl/upload/banned.mp3");
+	PlayAudioStreamForPlayer(playerid,"example.com");
 	return 1;
 }
 
@@ -44,12 +38,10 @@ public OnPlayerText(playerid,text[]){
 	SendClientMessageToAll(0x00AA00FF,text);
 	return 0;
 }
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/hashtag.inc]hashtag.inc[/url]
-[url=http://adm.ct8.pl/d/RGB.inc]RGB.inc[/url]
-[url=http://adm.ct8.pl/d/DataConvert.inc]DataConvert.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/hashtag/hashtag.inc]hashtag.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/RGB/RGB.inc]RGB.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc]DataConvert.inc[/url]
 
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=hashtag%20Bug]Bug Report[/url][/i]

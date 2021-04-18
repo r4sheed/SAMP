@@ -4,7 +4,7 @@ Hello, I would like to present you the Extended Granade.
 https://www.youtube.com/watch?v=wlFEwpE0j7k
 
 [b]Functions:[/b]
-[php]
+[code]
 Grenade::IsWeaponEnable(playerid,special_weaponid);
 Grenade::WeaponEnable(playerid,special_weaponid,bool:enable);
 Grenade::GetSpecialAmmo(playerid,special_weaponid);
@@ -23,10 +23,10 @@ Grenade::ToggleGasMask(playerid,bool:toggle);
 Grenade::GetSpecialWeaponID(weaponid);
 Grenade::CreateGrenadeEffect(playerid,special_weaponid,Float:x,Float:y,Float:z);
 Grenade::DestroyEffect(mobid);
-[/php]
+[/code]
 
 [b]Definitions:[/b]
-[php]
+[code]
 MAX_GRENADE_EFFECT
 
 GRENADE_DOT_TEAR_GAS
@@ -64,12 +64,9 @@ GRENADE_EFFECT_HUGE_SMOKE_2
 GRENADE_EFFECT_HUGE_SMOKE_3
 
 GRENADE_EFFECT_NAPALM
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=ExtendedGrenade%20Bug]Bug Report[/url][/i]
+[url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

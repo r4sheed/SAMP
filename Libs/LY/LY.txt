@@ -1,48 +1,42 @@
 Hello, I would like to present the function to use the "unsigned long", or at least to increase the limit of numbers to
 2 147 483 647 000 000 000
 
-[php]
-/**********************************************************************************************************************************
- *                                                                                                                                *
- *                                           )(   Unsigned Long 61 Bit [Long Yoyo]   )(                                           *
- *                                                                                                                                *
- * Copyright © 2019 Abyss Morgan. All rights reserved.                                                                            *
- *                                                                                                                                *
- * Website:  adm.ct8.pl                                                                                                           *
- * Download: adm.ct8.pl/r/download                                                                                                *
- *                                                                                                                                *
- * Plugins: None                                                                                                                  *
- * Modules: None                                                                                                                  *
- *                                                                                                                                *
- * File Version: 1.6.1                                                                                                            *
- *                                                                                                                                *
- * Pawn Unsigned Long for 32 Bit language (precision 61-bit)                                                                      *
- * Available limit:                                                                                                               *
- * 0 - 2 147 483 647 000 000 000                                                                                                  *
- * 0 - 2 000 000 000 000 000 000                                                                                                  *
- *                                                                                                                                *
- * Functions:                                                                                                                     *
- * IsValueContainLY(prefix,suffix,value);                                                                                         *
- * GetLYString(prefix,suffix,string[],maxdest = sizeof(string));                                                                  *
- * LYStringToLY(&prefix,&suffix,string[]); //Reverse to GetLYString                                                               *
- * UpdateLY(&prefix,&suffix,value,limitprefix = DEFAULT_MAX_LY_PREFIX);                                                           *
- * AddSeparatorLY(string[],separator[]);                                                                                          *
- * DeleteSeparatorLY(string[],separator[]);                                                                                       *
- * CalculatePercentLY(&prefix,&suffix,Float:percent = 0.0,increase = true,limitprefix = DEFAULT_MAX_LY_PREFIX);                   *
- * GetPercentLY(prefix,suffix,&o_prefix,&o_suffix,Float:percent = 0.0,limitprefix = DEFAULT_MAX_LY_PREFIX);                       *
- *                                                                                                                                *
- * Operators:                                                                                                                     *
- * IsLYEqual(prefix,suffix,from_prefix,from_suffix);                                                                              *
- * IsLYSmallerThan(prefix,suffix,from_prefix,from_suffix);                                                                        *
- * IsLYSmallerThanOrEqual(prefix,suffix,from_prefix,from_suffix);                                                                 *
- * IsLYBiggerThan(prefix,suffix,from_prefix,from_suffix);                                                                         *
- * IsLYBiggerThanOrEqual(prefix,suffix,from_prefix,from_suffix);                                                                  *
- *                                                                                                                                *
- **********************************************************************************************************************************/
-[/php]
+[code]
+ LY.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: None
+ Modules: None
+
+ File Version: 1.6.1
+
+ Pawn Unsigned Long for 32 Bit language (precision 61-bit)
+ Available limit:
+ 0 - 2 147 483 647 000 000 000
+ 0 - 2 000 000 000 000 000 000
+
+ Functions:
+ IsValueContainLY(prefix,suffix,value);
+ GetLYString(prefix,suffix,string[],maxdest = sizeof(string));
+ LYStringToLY(&prefix,&suffix,const string[]); //Reverse to GetLYString
+ UpdateLY(&prefix,&suffix,value,limitprefix = DEFAULT_MAX_LY_PREFIX);
+ AddSeparatorLY(string[],const separator[]);
+ DeleteSeparatorLY(const string[],const separator[]);
+ CalculatePercentLY(&prefix,&suffix,Float:percent = 0.0,increase = true,limitprefix = DEFAULT_MAX_LY_PREFIX);
+ GetPercentLY(prefix,suffix,&o_prefix,&o_suffix,Float:percent = 0.0,limitprefix = DEFAULT_MAX_LY_PREFIX);
+
+ Operators:
+ IsLYEqual(prefix,suffix,from_prefix,from_suffix);
+ IsLYSmallerThan(prefix,suffix,from_prefix,from_suffix);
+ IsLYSmallerThanOrEqual(prefix,suffix,from_prefix,from_suffix);
+ IsLYBiggerThan(prefix,suffix,from_prefix,from_suffix);
+ IsLYBiggerThanOrEqual(prefix,suffix,from_prefix,from_suffix);
+[/code]
 
 [b]Example for bank system:[/b]
-[php]
+[code]
 pVar[playerid][pMoney] - your variable suffix 
 pVar[playerid][pMoneyLY] - your variable prefix 
 //adding money to the bank 
@@ -60,10 +54,7 @@ new mymoney[LY_STRING_LEN], buffer[128];
 GetLYString(pVar[playerid][pMoneyLY], pVar[playerid][pMoney], mymoney); 
 format(buffer,sizeof buffer,"You money in bank: %s",mymoney); 
 SendClientMessage(playerid,-1,buffer);  
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/LY.inc]LY.inc[/url]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=LY%20Bug]Bug Report[/url][/i]
+[url=https://adm.ct8.pl/cloud/Libs/LY/LY.inc]LY.inc[/url]

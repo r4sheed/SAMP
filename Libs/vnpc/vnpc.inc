@@ -1,21 +1,18 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                   )(   Visible NPC HP Bar   )(                                   *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: FCNPC                                                                                   *
- * Modules: None                                                                                    *
- *                                                                                                  *
- * File Version: 1.1.0                                                                              *
- *                                                                                                  *
- * Functions:                                                                                       *
- * ShowNPCInTabList(npcid);                                                                         *
- * HideNPCInTabList(npcid);                                                                         *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ vnpc.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: FCNPC
+ Modules: None
+
+ File Version: 1.1.0
+
+ Functions:
+ ShowNPCInTabList(npcid);
+ HideNPCInTabList(npcid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
