@@ -1,15 +1,15 @@
 Hi I would like to present include for Vehicle Missile Launcher.
 
 [b]Video:[/b]
-1. [url=https://www.youtube.com/watch?v=Pd5HmlL8uXw]Vehicle Missile (Beta)[/url]
-2. [url=https://www.youtube.com/watch?v=HTHinI1IGhY]Vehicle Missile (ColAndreas)[/url]
-3. [url=https://www.youtube.com/watch?v=B4pfX39bIwM]Marica Mortar V1[/url]
-4. [url=https://www.youtube.com/watch?v=0FlZwi34wIA]Heavy Marica Mortar[/url]
-5. [url=https://www.youtube.com/watch?v=Fxp-BDCQ94U]Congreve Rocket[/url]
-6. [url=https://www.youtube.com/watch?v=lYS-ryk7n4E]Marica Mortar V2[/url]
-7. [url=https://www.youtube.com/watch?v=NDWkGCxCJuA][color=#FF0000]New Vehicle Missile[/color][/url]
+- [url=https://www.youtube.com/watch?v=Pd5HmlL8uXw]Vehicle Missile (Beta)[/url]
+- [url=https://www.youtube.com/watch?v=HTHinI1IGhY]Vehicle Missile (ColAndreas)[/url]
+- [url=https://www.youtube.com/watch?v=B4pfX39bIwM]Marica Mortar V1[/url]
+- [url=https://www.youtube.com/watch?v=0FlZwi34wIA]Heavy Marica Mortar[/url]
+- [url=https://www.youtube.com/watch?v=Fxp-BDCQ94U]Congreve Rocket[/url]
+- [url=https://www.youtube.com/watch?v=lYS-ryk7n4E]Marica Mortar V2[/url]
+- [url=https://www.youtube.com/watch?v=NDWkGCxCJuA]New Vehicle Missile[/url]
 
-[php]
+[code]
 //Functions Mini Missile:
 ToggleVehicleMiniMissile(vehicleid,toggle);
 IsToggleVehicleMiniMissile(vehicleid);
@@ -251,10 +251,10 @@ SetVehicleMissileAmmo(vehicleid,type,ammo);
 OnVehicleArmed(playerid,vehicleid);
 OnVehicleMissileRequestLaunch(playerid,type,vehicleid);
 OnVehicleMissileLaunched(playerid,type,vehicleid);
-[/php]
+[/code]
 
 [b]Default control:[/b]
-[php]
+[code]
 Mini Missile - LALT
 Rhino Missile - LALT
 Heavy Missile - ALT GR / LCTRL / NUM0 
@@ -264,10 +264,10 @@ Mega Missile - Y
 Congreve Rocket - N
 Havoc Rocket - Y
 Ground Bomb - Y
-[/php]
+[/code]
 
 [b]Definitions:[/b]
-[php]
+[code]
 //Vehicle Missile Types:
 VEHICLE_MISSILE_TYPE_MINI
 VEHICLE_MISSILE_TYPE_HEAVY
@@ -342,10 +342,10 @@ VEHICLE_MISSILE_SALVO_FLARE     // default salvo (number of projectiles) for Fla
 
 //infinity ammo
 VEHICLE_WEAPON_AMMO_INFINITY
-[/php]
+[/code]
 
 [b]Weapon Vehicle Recommendation:[/b]
-[php]
+[code]
 VEHICLE_MISSILE_TYPE_MINI - Any vehicle
 VEHICLE_MISSILE_TYPE_HEAVY - All air vehicles (Causes turbulence)
 VEHICLE_MISSILE_TYPE_BOMBER - All air vehicles
@@ -356,10 +356,10 @@ VEHICLE_MISSILE_TYPE_CON - Hydra
 VEHICLE_MISSILE_TYPE_HAVOC - Andromada
 VEHICLE_MISSILE_TYPE_BOMB - Rustler
 VEHICLE_MISSILE_TYPE_FLARE - Hydra
-[/php]
+[/code]
 
 [b]Example Code:[/b]
-[php]
+[code]
 public OnGameModeInit(){
 	
 	ToggleMissileAutoDisarm(true);
@@ -451,10 +451,10 @@ public OnVehicleArmed(playerid,vehicleid){
 	return 1;
 }
 
-[/php]
+[/code]
 
 [b]Remaining Time / Ammo detection:[/b]
-[php]
+[code]
 public OnVehicleMissileRequestLaunch(playerid,type,vehicleid){
 	
 	new c_time = GetMissileRemainingTime(playerid,type);
@@ -484,10 +484,10 @@ public OnVehicleMissileLaunched(playerid,type,vehicleid){
 	}
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Advanced Mortar Control (if AimSys is disabled):[/b]
-[php]
+[code]
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
 	if(IsToggleVehicleMegaMissile(GetPlayerVehicleID(playerid))){
 		if(KEY_PRESSED(KEY_ANALOG_UP)){
@@ -552,20 +552,15 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
 	}
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/VehicleMissileCol.inc]VehicleMissileCol.inc[/url]
-[url=http://adm.ct8.pl/d/Missile.inc]Missile.inc[/url] [url=https://adm.ct8.pl/r/Missile][color=#003D00][b]Thread[/b][/color][/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=http://adm.ct8.pl/d/ExtendedGrenade.inc]ExtendedGrenade.inc[/url] [url=https://adm.ct8.pl/r/ExtendedGrenade][color=#003D00][b]Thread[/b][/color][/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
-
-See also [url=adm.ct8.pl/18]Missile Launcher[/url]
+[url=https://adm.ct8.pl/cloud/Libs/VehicleMissileCol/VehicleMissileCol.inc]VehicleMissileCol.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
 
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=VehicleMissile%20Bug]Bug Report[/url][/i]

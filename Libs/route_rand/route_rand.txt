@@ -1,12 +1,12 @@
 27608 Random points in roads.
 
 [b]Function:[/b]
-[php]
+[code]
 GetRandomRoutePoint(const file_name[],&Float:x,&Float:y,&Float:z,max_points=MAX_ROUTE_RANDOM);
-[/php]
+[/code]
 
 [b]Library:[/b]
-[url=http://adm.ct8.pl/dl.php?id=69]route_rand.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/route_rand/route_rand.inc]route_rand.inc[/url]
 
 [b]Data Base (put in /scriptfiles):[/b]
-[url=http://adm.ct8.pl/dl.php?id=68]route_rand.bin[/url]
+[url=https://adm.ct8.pl/cloud/Libs/route_rand/route_rand.bin]route_rand.bin[/url]

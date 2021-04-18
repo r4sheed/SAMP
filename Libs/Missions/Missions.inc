@@ -1,50 +1,47 @@
-/**********************************************************************************************************************
- *                                                                                                                    *
- *                                                      Missions                                                      *
- *                                                                                                                    *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                *
- *                                                                                                                    *
- * Website: https://adm.ct8.pl                                                                                        *
- *                                                                                                                    *
- * Plugins: Streamer, ColAndreas                                                                                      *
- * Modules: 3DTryg, route_rand.inc                                                                                    *
- *                                                                                                                    *
- * File Version: 1.1.0                                                                                                *
- * Streamer Version: 2.9.4                                                                                            *
- * ColAndreas Version: 1.4.0                                                                                          *
- * 3DTryg Version: 4.8.6                                                                                              *
- *                                                                                                                    *
- * Functions:                                                                                                         *
- * Missions::SetMissionsScrapKey(key);                                                                                *
- * Missions::SetMissionsCorpseKey(key);                                                                               *
- * Missions::SetMissionsBombKey(key);                                                                                 *
- * Missions::CountVehicleScrap(vehicleid);                                                                            *
- * Missions::DropScrap(vehicleid);                                                                                    *
- * Missions::HealCorpse(playerid);                                                                                    *
- * Missions::CreateRadar(Float:x,Float:y,Float:z,Float:rz,worldid=0,interiorid=0,Float:speed=80.0);                   *
- * Missions::DestroyRadar(mobid);                                                                                     *
- * Missions::SetSpawnRectangle(mission_type,Float:minx,Float:miny,Float:maxx,Float:maxy,bool:spawn_validation=true);  *
- * Missions::SetSpawnPolygon(mission_type,Float:points[],maxpoints=sizeof(points),bool:spawn_validation=true);        *
- *                                                                                                                    *
- * Callbacks:                                                                                                         *
- * OnPlayerEnterPatrol(playerid,mobid);                                                                               *
- * OnPlayerDestroyPatrol(playerid,mobid);                                                                             *
- * OnPlayerRobbed(playerid,mobid,mission_state);                                                                      *
- * OnPlayerFoundCorpse(playerid,mobid);                                                                               *
- * OnPlayerHitCorpse(playerid,mobid);                                                                                 *
- * OnPlayerFoundScrap(playerid,mobid);                                                                                *
- * OnPlayerTakeScrap(playerid,mobid,mission_state,count_items);                                                       *
- * OnPlayerExceededSpeed(playerid,mobid,Float:speed,Float:max_speed);                                                 *
- * OnPlayerPutOutFire(playerid,mobid);                                                                                *
- * OnPlayerVehicleDamagedByRoad(playerid,mobid,old_health,new_health,veh_damage);                                     *
- * OnPlayerDestroyedTreeOnRoad(playerid,mobid);                                                                       *
- * OnPlayerUnloadingScrap(playerid,count_items);                                                                      *
- * OnPlayerHealCorpse(playerid,mobid);                                                                                *
- * OnPlayerTryDisarmBomb(playerid,mobid);                                                                             *
- * OnPlayerDisarmBomb(playerid,mobid,mission_state);                                                                  *
- * OnPlayerFixedRoad(playerid,mobid);                                                                                 *
- *                                                                                                                    *
- **********************************************************************************************************************/
+/*
+ Missions.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg, route_rand.inc
+
+ File Version: 1.1.0
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ Missions::SetMissionsScrapKey(key);
+ Missions::SetMissionsCorpseKey(key);
+ Missions::SetMissionsBombKey(key);
+ Missions::CountVehicleScrap(vehicleid);
+ Missions::DropScrap(vehicleid);
+ Missions::HealCorpse(playerid);
+ Missions::CreateRadar(Float:x,Float:y,Float:z,Float:rz,worldid=0,interiorid=0,Float:speed=80.0);
+ Missions::DestroyRadar(mobid);
+ Missions::SetSpawnRectangle(mission_type,Float:minx,Float:miny,Float:maxx,Float:maxy,bool:spawn_validation=true);
+ Missions::SetSpawnPolygon(mission_type,Float:points[],maxpoints=sizeof(points),bool:spawn_validation=true);
+
+ Callbacks:
+ OnPlayerEnterPatrol(playerid,mobid);
+ OnPlayerDestroyPatrol(playerid,mobid);
+ OnPlayerRobbed(playerid,mobid,mission_state);
+ OnPlayerFoundCorpse(playerid,mobid);
+ OnPlayerHitCorpse(playerid,mobid);
+ OnPlayerFoundScrap(playerid,mobid);
+ OnPlayerTakeScrap(playerid,mobid,mission_state,count_items);
+ OnPlayerExceededSpeed(playerid,mobid,Float:speed,Float:max_speed);
+ OnPlayerPutOutFire(playerid,mobid);
+ OnPlayerVehicleDamagedByRoad(playerid,mobid,old_health,new_health,veh_damage);
+ OnPlayerDestroyedTreeOnRoad(playerid,mobid);
+ OnPlayerUnloadingScrap(playerid,count_items);
+ OnPlayerHealCorpse(playerid,mobid);
+ OnPlayerTryDisarmBomb(playerid,mobid);
+ OnPlayerDisarmBomb(playerid,mobid,mission_state);
+ OnPlayerFixedRoad(playerid,mobid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)

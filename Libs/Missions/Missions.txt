@@ -4,7 +4,13 @@ Hello, I would like to present you the Faction Mini Missions.
 https://www.youtube.com/watch?v=uMpS2SaWmB0
 
 [b]Example Code:[/b]
-[php]
+[code]
+#include <Streamer>
+#include <colandreas>
+#include <route_rand>
+#include <3DTryg>
+#include <Missions>
+
 public OnPlayerEnterPatrol(playerid,mobid){
 	if(GetPlayerTeam(playerid) == TEAM_POLICEMAN) return 1; //policeman clear unsafe zone 
 	return 0; //player get robbed
@@ -175,10 +181,10 @@ CMD:speedcamera_add(playerid,params[]){
 	}
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Functions:[/b]
-[php]
+[code]
 Missions::SetMissionsScrapKey(key);
 Missions::SetMissionsCorpseKey(key);
 Missions::SetMissionsBombKey(key);
@@ -189,18 +195,35 @@ Missions::CreateRadar(Float:x,Float:y,Float:z,Float:rz,worldid=0,interiorid=0,Fl
 Missions::DestroyRadar(mobid);
 Missions::SetSpawnRectangle(mission_type,Float:minx,Float:miny,Float:maxx,Float:maxy,bool:spawn_validation=true);
 Missions::SetSpawnPolygon(mission_type,Float:points[],maxpoints=sizeof(points),bool:spawn_validation=true);
-[/php]
+[/code]
+
+[b]Callbacks:[/b]
+[code]
+OnPlayerEnterPatrol(playerid,mobid);
+OnPlayerDestroyPatrol(playerid,mobid);
+OnPlayerRobbed(playerid,mobid,mission_state);
+OnPlayerFoundCorpse(playerid,mobid);
+OnPlayerHitCorpse(playerid,mobid);
+OnPlayerFoundScrap(playerid,mobid);
+OnPlayerTakeScrap(playerid,mobid,mission_state,count_items);
+OnPlayerExceededSpeed(playerid,mobid,Float:speed,Float:max_speed);
+OnPlayerPutOutFire(playerid,mobid);
+OnPlayerVehicleDamagedByRoad(playerid,mobid,old_health,new_health,veh_damage);
+OnPlayerDestroyedTreeOnRoad(playerid,mobid);
+OnPlayerUnloadingScrap(playerid,count_items);
+OnPlayerHealCorpse(playerid,mobid);
+OnPlayerTryDisarmBomb(playerid,mobid);
+OnPlayerDisarmBomb(playerid,mobid,mission_state);
+OnPlayerFixedRoad(playerid,mobid);
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/Missions.inc]Missions.inc[/url]
-[url=http://adm.ct8.pl/d/route_rand.inc]route_rand.inc[/url]
-[url=http://adm.ct8.pl/d/route_rand.bin]route_rand.bin[/url] (put in /scriptfiles)
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
+[url=https://adm.ct8.pl/cloud/Libs/Missions/Missions.inc]Missions.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/route_rand/route_rand.inc]route_rand.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/route_rand/route_rand.bin]route_rand.bin[/url] (put in /scriptfiles)
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
 
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=Missions%20Bug]Bug Report[/url][/i]

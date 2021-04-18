@@ -1,50 +1,47 @@
-/**********************************************************************************************************************************
- *                                                                                                                                *
- *                                                        Missile Launcher                                                        *
- *                                                                                                                                *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                            *
- *                                                                                                                                *
- * Website: https://adm.ct8.pl                                                                                                    *
- *                                                                                                                                *
- * Plugins: Streamer, ColAndreas                                                                                                  *
- * Modules: 3DTryg                                                                                                                *
- *                                                                                                                                *
- * File Version: 2.3.1                                                                                                            *
- * Streamer Version: 2.9.4                                                                                                        *
- * ColAndreas Version: 1.4.0                                                                                                      *
- * 3DTryg Version: 4.8.6                                                                                                          *
- *                                                                                                                                *
- * Functions:
- * Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);
- * Missile::LaunchAimPlayer(targetid,type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,Float:damage=-1.0,Float:vehicle_damage=-1.0);
- * Missile::StopAimPlayer(mobid);
- * Missile::Destroy(mobid,type,playerid); 
- * Missile::RemoteTarget(mobid,Float:tx,Float:ty,Float:tz,Float:speed = 0.0); 
- * Missile::GetExplodeVisibility(); 
- * Missile::SetExplodeVisibility(Float:explode_stream); 
- * Missile::DisableAllAim(playerid);
- *
- * Extended Functions:
- * Misile::GetObject(mobid);
- * Misile::GetArea(mobid);
- * Misile::GetType(mobid);
- * Misile::GetExplode(mobid);
- * Misile::GetPlayer(mobid);
- * Misile::GetTeamID(mobid);
- * Misile::GetVehicle(mobid);
- * Misile::GetRemoteCount(mobid);
- * Misile::GetRemoteID(mobid);
- * Misile::GetSpeed(mobid);
- * Misile::GetTargetID(mobid);
- * Misile::GetDamage(mobid);
- * Misile::GetVehicleDamage(mobid);
- * 
- * Callbacks: 
- * OnMissileDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,byplayerid);
- * OnMissileDetectPlayer(playerid,killerid);
- * OnMissileRequestLaunch(Float:x,Float:y,Float:z,playerid,targetid); 
- *
- **********************************************************************************************************************************/
+/*
+ Missile.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg
+
+ File Version: 2.3.1
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);
+ Missile::LaunchAimPlayer(targetid,type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,Float:damage=-1.0,Float:vehicle_damage=-1.0);
+ Missile::StopAimPlayer(mobid);
+ Missile::Destroy(mobid,type,playerid); 
+ Missile::RemoteTarget(mobid,Float:tx,Float:ty,Float:tz,Float:speed = 0.0); 
+ Missile::GetExplodeVisibility(); 
+ Missile::SetExplodeVisibility(Float:explode_stream); 
+ Missile::DisableAllAim(playerid);
+
+ Extended Functions:
+ Misile::GetObject(mobid);
+ Misile::GetArea(mobid);
+ Misile::GetType(mobid);
+ Misile::GetExplode(mobid);
+ Misile::GetPlayer(mobid);
+ Misile::GetTeamID(mobid);
+ Misile::GetVehicle(mobid);
+ Misile::GetRemoteCount(mobid);
+ Misile::GetRemoteID(mobid);
+ Misile::GetSpeed(mobid);
+ Misile::GetTargetID(mobid);
+ Misile::GetDamage(mobid);
+ Misile::GetVehicleDamage(mobid);
+ 
+ Callbacks: 
+ OnMissileDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,byplayerid);
+ OnMissileDetectPlayer(playerid,killerid);
+ OnMissileRequestLaunch(Float:x,Float:y,Float:z,playerid,targetid); 
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)

@@ -11,7 +11,7 @@ b) ScriptSecureADM
 - Web ACK System
 
 [b]How to use UltimateScriptSecure.inc[/b]
-[php]
+[code]
 //Install
 //1. Open UltimateScriptSecure and find "User Configuration"
 //2. Edit you server information.
@@ -20,28 +20,28 @@ public OnGameModeInit(){ //OR OnFilterScriptInit
 	if(!USS_Init()) return 0;
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Web ACK System:[/b]
 PHP File for UltimateScriptSecure.inc
 
 If you want to use the authorization by the website follow the steps:
 1. Edit /secure_adm/index.php
-[php]
+[code]
 $ANTI_FLOOD = '123'; //the same as SCRIPT_ANTI_FLOOD
 $ACK_TRUE =   '{BOBO_HAHA,ACCESSCONTROL,TRUE}'; //the same as SCRIPT_ACK_KEY
 $ACK_FALSE =  'Fuck you thief :P'; //anything
-[/php]
+[/code]
 
 2. Edit /secure_adm/Server.txt
-[php]
+[code]
 //add IP:PORT your server, example:
 127.0.0.1:7777
 127.0.0.1:7778
-[/php]
+[/code]
 
 [b]Error List:[/b]
-[php]
+[code]
 [ADM] Info: Local server detect.
 [ADM] Error: This script is stolen.
 [ADM] Error: Script license has expired.
@@ -49,11 +49,8 @@ $ACK_FALSE =  'Fuck you thief :P'; //anything
 [ADM] Error: Invalid server config, check your rcon password.
 [ADM] Error: Invalid server config, check your language.
 [ADM] Error: The script did not get permission to activation.
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/UltimateScriptSecure.inc]UltimateScriptSecure.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/UltimateScriptSecure/UltimateScriptSecure.inc]UltimateScriptSecure.inc[/url]
 [url=http://adm.ct8.pl/d/Script%20Secure%20ADM%20WebACK.zip]Web ACK System[/url]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=ScriptSecure%20Bug]Bug Report[/url][/i]

@@ -1,37 +1,34 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                     Hyperion Mega Ship Battle                                    *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: Streamer, ColAndreas                                                                    *
- * Modules: 3DTryg, Missile, progress                                                               *
- *                                                                                                  *
- * File Version: 1.0.0                                                                              *
- * Streamer Version: 2.9.4                                                                          *
- * ColAndreas Version: 1.4.0                                                                        *
- * 3DTryg Version: 4.8.6                                                                            *
- * Missile Version: 2.3.0                                                                           *
- * Progress Version: 1.3.1.0                                                                        *
- *                                                                                                  *
- * Functions:                                                                                       *
- * Hyperion::IsPlayerSaved(playerid);                                                               *
- * Hyperion::SavePlayer(playerid,bool:state);                                                       *
- * Hyperion::IsPlayerOnArea(playerid);                                                              *
- * Hyperion::CountPlayers();                                                                        *
- *                                                                                                  *
- * Callbacks:                                                                                       *
- * IsAllowedToJoinHyperion(playerid);                                                               *
- * OnHyperionBattleResults(playerid,isdead,iswinner);                                               *
- * OnPlayerEnteringHyperion(playerid,teamid);                                                       *
- * OnPlayerExitHyperion(playerid);                                                                  *
- * OnHyperionStateChange(hyperion_state);                                                           *
- * OnHyperionBattleFinished(teamid);                                                                *
- * OnHyperionHelpPresented(playerid);                                                               *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ Hyperion.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg, Missile, progress
+
+ File Version: 1.0.0
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+ Missile Version: 2.3.0
+ Progress Version: 1.3.1.0
+
+ Functions:
+ Hyperion::IsPlayerSaved(playerid);
+ Hyperion::SavePlayer(playerid,bool:state);
+ Hyperion::IsPlayerOnArea(playerid);
+ Hyperion::CountPlayers();
+
+ Callbacks:
+ IsAllowedToJoinHyperion(playerid);
+ OnHyperionBattleResults(playerid,isdead,iswinner);
+ OnPlayerEnteringHyperion(playerid,teamid);
+ OnPlayerExitHyperion(playerid);
+ OnHyperionStateChange(hyperion_state);
+ OnHyperionBattleFinished(teamid);
+ OnHyperionHelpPresented(playerid);
+*/
  
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)

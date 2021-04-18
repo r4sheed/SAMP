@@ -1,23 +1,20 @@
 Hi I would like to present include for Missile Launcher.
 
 [b]Video:[/b]
-1. [url=https://www.youtube.com/watch?v=ZCThAi3FKyU]Sniper Missile[/url]
-2. [url=https://www.youtube.com/watch?v=Pd5HmlL8uXw]Vehicle Missile (MapAndreas Version)[/url]
-3. [url=https://www.youtube.com/watch?v=HTHinI1IGhY]Vehicle Missile (ColAndreas Update)[/url]
-4. [url=https://www.youtube.com/watch?v=B4pfX39bIwM]Marica Mortar V1[/url]
-5. [url=https://www.youtube.com/watch?v=0FlZwi34wIA]Heavy Marica Mortar[/url]
-6. [url=https://www.youtube.com/watch?v=bS6jnEebJR4]Missile Launcher Aim Player[/url]
-7. [url=https://www.youtube.com/watch?v=Fxp-BDCQ94U]Congreve Rocket[/url]
-8. [url=https://www.youtube.com/watch?v=lYS-ryk7n4E]Marica Mortar V2[/url]
-9. [url=https://www.youtube.com/watch?v=NDWkGCxCJuA][color=#FF0000]New Vehicle Missile[/color][/url]
-10. [url=https://www.youtube.com/watch?v=qQ1T2NszDkc][color=#FF0000]Flares[/color][/url]
+- [url=https://www.youtube.com/watch?v=ZCThAi3FKyU]Sniper Missile[/url]
+- [url=https://www.youtube.com/watch?v=Pd5HmlL8uXw]Vehicle Missile (MapAndreas Version)[/url]
+- [url=https://www.youtube.com/watch?v=HTHinI1IGhY]Vehicle Missile (ColAndreas Update)[/url]
+- [url=https://www.youtube.com/watch?v=B4pfX39bIwM]Marica Mortar V1[/url]
+- [url=https://www.youtube.com/watch?v=0FlZwi34wIA]Heavy Marica Mortar[/url]
+- [url=https://www.youtube.com/watch?v=bS6jnEebJR4]Missile Launcher Aim Player[/url]
+- [url=https://www.youtube.com/watch?v=Fxp-BDCQ94U]Congreve Rocket[/url]
+- [url=https://www.youtube.com/watch?v=lYS-ryk7n4E]Marica Mortar V2[/url]
+- [url=https://www.youtube.com/watch?v=NDWkGCxCJuA]New Vehicle Missile[/url]
+- [url=https://www.youtube.com/watch?v=qQ1T2NszDkc]Flares[/url]
 
 [b]Functions:[/b]
-[php]
-Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,
-Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,
-bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,
-Float:vehicle_damage=-1.0);
+[code]
+Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);
 
 type - explosion type //https://wiki.sa-mp.com/wiki/Explosion_List
 Float:detection_range - detection range player/vehicle
@@ -38,23 +35,32 @@ Float:vehicle_damage - vehicle damage on explosion created
 
 Rotation: Auto!
 
-MissileLaunchAimPlayer(targetid,type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,
-worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,
-byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,Float:damage=-1.0,Float:vehicle_damage=-1.0);
-
-MissileRemoteTarget(mobid,Float:tx,Float:ty,Float:tz,Float:speed = 0.0); 
-
-Missile::Destroy(mobid);
-mobid - id returned by Missile::Launch
+Missile::LaunchAimPlayer(targetid,type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,Float:damage=-1.0,Float:vehicle_damage=-1.0);
 
 Missile::StopAimPlayer(mobid);
-Missile::GetExplodeVisibility();
-Missile::SetExplodeVisibility(Float:explode_stream);
+Missile::Destroy(mobid,type,playerid); 
+Missile::RemoteTarget(mobid,Float:tx,Float:ty,Float:tz,Float:speed = 0.0); 
+Missile::GetExplodeVisibility(); 
+Missile::SetExplodeVisibility(Float:explode_stream); 
 Missile::DisableAllAim(playerid);
-[/php]
+
+Misile::GetObject(mobid);
+Misile::GetArea(mobid);
+Misile::GetType(mobid);
+Misile::GetExplode(mobid);
+Misile::GetPlayer(mobid);
+Misile::GetTeamID(mobid);
+Misile::GetVehicle(mobid);
+Misile::GetRemoteCount(mobid);
+Misile::GetRemoteID(mobid);
+Misile::GetSpeed(mobid);
+Misile::GetTargetID(mobid);
+Misile::GetDamage(mobid);
+Misile::GetVehicleDamage(mobid);
+[/code]
 
 [b]Callbacks:[/b]
-[php]
+[code]
 OnMissileDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,byplayerid);
 
 types:
@@ -65,10 +71,10 @@ MISSILE_DESTROY_TYPE_KILL    //When rocket has been destroyed by player
 OnMissileDetectPlayer(playerid,killerid); //called when a player is within range of detection range
 
 OnMissileRequestLaunch(Float:x,Float:y,Float:z,playerid,targetid);
-[/php]
+[/code]
 
 [b]Example Code:[/b]
-[php]
+[code]
 public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ){
 	if(weaponid == 34){
 		new Float:x, Float:y, Float:z,
@@ -100,15 +106,15 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 	}
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Bullet example:[/b]
-[php]
+[code]
 Missile::Launch(MISSILE_TYPE_EXPLODE_NONE,1.0,1.0,20.0,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,MISSILE_OBJECT_BULLET,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,.damage=5.0,.vehicle_damage=25.0);
-[/php]
+[/code]
 
 [b]How to check is player kill by missile (this is not required if you using custom missile damage):[/b]
-[php]
+[code]
 enums:
 last_missile_shot
 last_missile_player
@@ -140,15 +146,9 @@ public OnPlayerDeath(playerid, killerid, reason){
 	//your code
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/Missile.inc]Missile.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
-
-[b]See also[/b] [url=adm.ct8.pl/19]Vehicle Missile Launcher[/url]
-
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=Missile%20Bug]Bug Report[/url][/i]
+[url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

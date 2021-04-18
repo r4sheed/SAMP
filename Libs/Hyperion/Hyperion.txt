@@ -1,13 +1,13 @@
 Hello, I would like to present you the Hyperion Mega Ship Battle.
 It is a war of two large warships in which between 6 and 42 players can participate (21 per ship)
 
-[IMG]https://cdn.discordapp.com/attachments/628121602894200832/631118355729743885/unknown.png[/IMG]
+[IMG]https://i.imgur.com/lDN2lRH.png[/IMG]
 
 [b]Video:[/b]
 [url]https://www.youtube.com/watch?v=Ut7iBj7SRGk[/url]
 
 [b]Installation:[/b]
-[php]
+[code]
 #include <streamer>
 #include <colandreas>
 #include <3DTryg>
@@ -102,18 +102,34 @@ CMD:hyperionexit(playerid){
 	SendClientMessage(playerid,0xFFFFFFFF,"You left the Hyperion Battle queue.");
 	return 1;
 }
-[/php]
+[/code]
+
+[b]Functions:[/b]
+[code]
+Hyperion::IsPlayerSaved(playerid);
+Hyperion::SavePlayer(playerid,bool:state);
+Hyperion::IsPlayerOnArea(playerid);
+Hyperion::CountPlayers();
+[/code]
+
+[b]Callbacks:[/b]
+[code]
+IsAllowedToJoinHyperion(playerid);
+OnHyperionBattleResults(playerid,isdead,iswinner);
+OnPlayerEnteringHyperion(playerid,teamid);
+OnPlayerExitHyperion(playerid);
+OnHyperionStateChange(hyperion_state);
+OnHyperionBattleFinished(teamid);
+OnHyperionHelpPresented(playerid);
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/Hyperion.inc]Hyperion.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=http://adm.ct8.pl/d/Missile.inc]Missile.inc[/url] [url=https://adm.ct8.pl/r/Missile][color=#003D00][b]Thread[/b][/color][/url]
+[url=https://adm.ct8.pl/cloud/Libs/Hyperion/Hyperion.inc]Hyperion.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
 [url=https://pastebin.com/8pv7LCPv]progress.inc[/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
 
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=Hyperion%20Bug]Bug Report[/url][/i]

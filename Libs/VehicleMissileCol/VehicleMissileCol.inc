@@ -1,272 +1,269 @@
-/**********************************************************************************************************************************
- *                                                                                                                                *
- *                                         Vehicle Missile Launcher (ColAndreas Version)                                          *
- *                                                                                                                                *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                            *
- *                                                                                                                                *
- * Website: https://adm.ct8.pl                                                                                                    *
- *                                                                                                                                *
- * Plugins: Streamer, ColAndreas                                                                                                  *
- * Modules: 3DTryg, Missile                                                                                                       *
- *                                                                                                                                *
- * File Version: 2.0.0                                                                                                            *
- * Streamer Version: 2.9.4                                                                                                        *
- * ColAndreas Version: 1.4.0                                                                                                      *
- * 3DTryg Version: 4.8.6                                                                                                          *
- * Missile Version: 2.3.0                                                                                                         *
- *                                                                                                                                *
- * Vehicle Weapons:                                                                                                               *
- * - Mini Missile (Dual rocket)                                                                                                   *
- * - Heavy Missile (Six rocket of high firepower)                                                                                 *
- * - Rhino Missile (Rhino explosion)                                                                                              *
- * - Bomber Missile (Quadruple-ground missiles)                                                                                   *
- * - Mortar Missile (Marica mortar)                                                                                               *
- * - Mega Missile (Heavy Marica mortar)                                                                                           *
- * - Congreve Rocket (Large area of destruction)                                                                                  *
- * - Havoc Rocket (Circle ground missile)                                                                                         *
- * - Ground Bomb (Standard bomb)                                                                                                  *
- *                                                                                                                                *
- * Functions Mini Missile:                                                                                                        *
- * ToggleVehicleMiniMissile(vehicleid,toggle);                                                                                    *
- * IsToggleVehicleMiniMissile(vehicleid);                                                                                         *
- * Float:GetVehicleMiniMissileSpeed(vehicleid);                                                                                   *
- * SetVehicleMiniMissileSpeed(vehicleid,Float:speed);                                                                             *
- * GetVehicleMiniMissileReload(vehicleid);                                                                                        *
- * SetVehicleMiniMissileReload(vehicleid,time);                                                                                   *
- * Float:GetVehicleMiniMissileDistance(vehicleid);                                                                                *
- * SetVehicleMiniMissileDistance(vehicleid,Float:distance);                                                                       *
- * GetVehicleMiniMissileKey(vehicleid);                                                                                           *
- * SetVehicleMiniMissileKey(vehicleid,key);                                                                                       *
- * GetVehicleMiniMissileAmmo(vehicleid);                                                                                          *
- * SetVehicleMiniMissileAmmo(vehicleid,ammo);                                                                                     *
- * Float:GetVehicleMiniMissileDMG(vehicleid);                                                                                     *
- * SetVehicleMiniMissileDMG(vehicleid,Float:damage);                                                                              *
- * Float:GetVehicleMiniMissileVehDMG(vehicleid);                                                                                  *
- * SetVehicleMiniMissileVehDMG(vehicleid,Float:damage);                                                                           *
- *                                                                                                                                *
- * Functions Heavy Missile:                                                                                                       *
- * ToggleVehicleHeavyMissile(vehicleid,toggle);                                                                                   *
- * IsToggleVehicleHeavyMissile(vehicleid);                                                                                        *
- * Float:GetVehicleHeavyMissileSpeed(vehicleid);                                                                                  *
- * SetVehicleHeavyMissileSpeed(vehicleid,Float:speed);                                                                            *
- * GetVehicleHeavyMissileReload(vehicleid);                                                                                       *
- * SetVehicleHeavyMissileReload(vehicleid,time);                                                                                  *
- * Float:GetVehicleHeavyMissileDistance(vehicleid);                                                                               *
- * SetVehicleHeavyMissileDistance(vehicleid,Float:distance);                                                                      *
- * GetVehicleHeavyMissileKey(vehicleid);                                                                                          *
- * SetVehicleHeavyMissileKey(vehicleid,key);                                                                                      *
- * GetVehicleHeavyMissileAmmo(vehicleid);                                                                                         *
- * SetVehicleHeavyMissileAmmo(vehicleid,ammo);                                                                                    *
- * Float:GetVehicleHeavyMissileDMG(vehicleid);                                                                                    *
- * SetVehicleHeavyMissileDMG(vehicleid,Float:damage);                                                                             *
- * Float:GetVehicleHeavyMissileVehDMG(vehicleid);                                                                                 *
- * SetVehicleHeavyMissileVehDMG(vehicleid,Float:damage);                                                                          *
- *                                                                                                                                *
- * Functions Rhino Missile:                                                                                                       *
- * ToggleVehicleRhinoMissile(vehicleid,toggle);                                                                                   *
- * IsToggleVehicleRhinoMissile(vehicleid);                                                                                        *
- * GetVehicleRhinoMissileReload(vehicleid);                                                                                       *
- * SetVehicleRhinoMissileReload(vehicleid,time);                                                                                  *
- * Float:GetVehicleRhinoMissileDistance(vehicleid);                                                                               *
- * SetVehicleRhinoMissileDistance(vehicleid,Float:distance);                                                                      *
- * GetVehicleRhinoMissileKey(vehicleid);                                                                                          *
- * SetVehicleRhinoMissileKey(vehicleid,key);                                                                                      *
- * GetVehicleRhinoMissileAmmo(vehicleid);                                                                                         *
- * SetVehicleRhinoMissileAmmo(vehicleid,ammo);                                                                                    *
- * Float:GetVehicleRhinoMissileDMG(vehicleid);                                                                                    *
- * SetVehicleRhinoMissileDMG(vehicleid,Float:damage);                                                                             *
- * Float:GetVehicleRhinoMissileVehDMG(vehicleid);                                                                                 *
- * SetVehicleRhinoMissileVehDMG(vehicleid,Float:damage);                                                                          *
- *                                                                                                                                *
- * Functions Bomber Missile:                                                                                                      *
- * ToggleVehicleBomberMissile(vehicleid,toggle);                                                                                  *
- * IsToggleVehicleBomberMissile(vehicleid);                                                                                       *
- * Float:GetVehicleBomberMissileSpeed(vehicleid);                                                                                 *
- * SetVehicleBomberMissileSpeed(vehicleid,Float:speed);                                                                           *
- * GetVehicleBomberMissileReload(vehicleid);                                                                                      *
- * SetVehicleBomberMissileReload(vehicleid,time);                                                                                 *
- * Float:GetVehicleBomberMissileDistance(vehicleid);                                                                              *
- * SetVehicleBomberMissileDistance(vehicleid,Float:distance);                                                                     *
- * GetVehicleBomberMissileKey(vehicleid);                                                                                         *
- * SetVehicleBomberMissileKey(vehicleid,key);                                                                                     *
- * GetVehicleBomberMissileAmmo(vehicleid);                                                                                        *
- * SetVehicleBomberMissileAmmo(vehicleid,ammo);                                                                                   *
- * Float:GetVehicleBomberMissileDMG(vehicleid);                                                                                   *
- * SetVehicleBomberMissileDMG(vehicleid,Float:damage);                                                                            *
- * Float:GetVehicleBomberMissileVehDMG(vehicleid);                                                                                *
- * SetVehicleBomberMissileVehDMG(vehicleid,Float:damage);                                                                         *
- *                                                                                                                                *
- * Functions Mortar Missile:                                                                                                      *
- * ToggleVehicleMortarMissile(vehicleid,toggle);                                                                                  *
- * IsToggleVehicleMortarMissile(vehicleid);                                                                                       *
- * Float:GetVehicleMortarMissileSpeed(vehicleid);                                                                                 *
- * SetVehicleMortarMissileSpeed(vehicleid,Float:speed);                                                                           *
- * GetVehicleMortarMissileReload(vehicleid);                                                                                      *
- * SetVehicleMortarMissileReload(vehicleid,time);                                                                                 *
- * Float:GetVehicleMortarMissileDistance(vehicleid);                                                                              *
- * SetVehicleMortarMissileDistance(vehicleid,Float:distance);                                                                     *
- * GetVehicleMortarMissileKey(vehicleid);                                                                                         *
- * SetVehicleMortarMissileKey(vehicleid,key);                                                                                     *
- * Float:GetVehicleMortarMissileHeight(vehicleid);                                                                                *
- * SetVehicleMortarMissileHeight(vehicleid,Float:height);                                                                         *
- * Float:GetVehicleMortarMissileRotation(vehicleid);                                                                              *
- * SetVehicleMortarMissileRotation(vehicleid,Float:rotation);                                                                     *
- * GetVehicleMortarMissileAmmo(vehicleid);                                                                                        *
- * SetVehicleMortarMissileAmmo(vehicleid,ammo);                                                                                   *
- * GetVehicleMortarMissileAimSys(vehicleid);                                                                                      *
- * SetVehicleMortarMissileAimSys(vehicleid,toggle);                                                                               *
- * Float:GetVehicleMortarMissileDMG(vehicleid);                                                                                   *
- * SetVehicleMortarMissileDMG(vehicleid,Float:damage);                                                                            *
- * Float:GetVehicleMortarMissileVehDMG(vehicleid);                                                                                *
- * SetVehicleMortarMissileVehDMG(vehicleid,Float:damage);                                                                         *
- *                                                                                                                                *
- * Functions Mega Missile:                                                                                                        *
- * ToggleVehicleMegaMissile(vehicleid,toggle);                                                                                    *
- * IsToggleVehicleMegaMissile(vehicleid);                                                                                         *
- * Float:GetVehicleMegaMissileSpeed(vehicleid);                                                                                   *
- * SetVehicleMegaMissileSpeed(vehicleid,Float:speed);                                                                             *
- * GetVehicleMegaMissileReload(vehicleid);                                                                                        *
- * SetVehicleMegaMissileReload(vehicleid,time);                                                                                   *
- * Float:GetVehicleMegaMissileDistance(vehicleid);                                                                                *
- * SetVehicleMegaMissileDistance(vehicleid,Float:distance);                                                                       *
- * GetVehicleMegaMissileKey(vehicleid);                                                                                           *
- * SetVehicleMegaMissileKey(vehicleid,key);                                                                                       *
- * Float:GetVehicleMegaMissileHeight(vehicleid);                                                                                  *
- * SetVehicleMegaMissileHeight(vehicleid,Float:height);                                                                           *
- * Float:GetVehicleMegaMissileRotation(vehicleid);                                                                                *
- * SetVehicleMegaMissileRotation(vehicleid,Float:rotation);                                                                       *
- * GetVehicleMegaMissileAmmo(vehicleid);                                                                                          *
- * SetVehicleMegaMissileAmmo(vehicleid,ammo);                                                                                     *
- * GetVehicleMegaMissileAimSys(vehicleid);                                                                                        *
- * SetVehicleMegaMissileAimSys(vehicleid,toggle);                                                                                 *
- * Float:GetVehicleMegaMissileDMG(vehicleid);                                                                                     *
- * SetVehicleMegaMissileDMG(vehicleid,Float:damage);                                                                              *
- * Float:GetVehicleMegaMissileVehDMG(vehicleid);                                                                                  *
- * SetVehicleMegaMissileVehDMG(vehicleid,Float:damage);                                                                           *
- *                                                                                                                                *
- * Functions Congreve Rocket:                                                                                                     *
- * ToggleVehicleCongreve(vehicleid,toggle);                                                                                       *
- * IsToggleVehicleCongreve(vehicleid);                                                                                            *
- * Float:GetVehicleCongreveSpeed(vehicleid);                                                                                      *
- * SetVehicleCongreveSpeed(vehicleid,Float:speed);                                                                                *
- * GetVehicleCongreveReload(vehicleid);                                                                                           *
- * SetVehicleCongreveReload(vehicleid,time);                                                                                      *
- * Float:GetVehicleCongreveDistance(vehicleid);                                                                                   *
- * SetVehicleCongreveDistance(vehicleid,Float:distance);                                                                          *
- * GetVehicleCongreveKey(vehicleid);                                                                                              *
- * SetVehicleCongreveKey(vehicleid,key);                                                                                          *
- * Float:GetVehicleCongreveSpread(vehicleid);                                                                                     *
- * SetVehicleCongreveSpread(vehicleid,Float:spread);                                                                              *
- * GetVehicleCongreveSalvo(vehicleid);                                                                                            *
- * SetVehicleCongreveSalvo(vehicleid,salvo);                                                                                      *
- * GetVehicleCongreveAmmo(vehicleid);                                                                                             *
- * SetVehicleCongreveAmmo(vehicleid,ammo);                                                                                        *
- * Float:GetVehicleCongreveDMG(vehicleid);                                                                                        *
- * SetVehicleCongreveDMG(vehicleid,Float:damage);                                                                                 *
- * Float:GetVehicleCongreveVehDMG(vehicleid);                                                                                     *
- * SetVehicleCongreveVehDMG(vehicleid,Float:damage);                                                                              *
- *                                                                                                                                *
- * Functions Havoc Rocket:                                                                                                        *
- * ToggleVehicleHavoc(vehicleid,toggle);                                                                                          *
- * IsToggleVehicleHavoc(vehicleid);                                                                                               *
- * Float:GetVehicleHavocSpeed(vehicleid);                                                                                         *
- * SetVehicleHavocSpeed(vehicleid,Float:speed);                                                                                   *
- * GetVehicleHavocReload(vehicleid);                                                                                              *
- * SetVehicleHavocReload(vehicleid,time);                                                                                         *
- * Float:GetVehicleHavocDistance(vehicleid);                                                                                      *
- * SetVehicleHavocDistance(vehicleid,Float:distance);                                                                             *
- * GetVehicleHavocKey(vehicleid);                                                                                                 *
- * SetVehicleHavocKey(vehicleid,key);                                                                                             *
- * Float:GetVehicleHavocSpread(vehicleid);                                                                                        *
- * SetVehicleHavocSpread(vehicleid,Float:spread);                                                                                 *
- * GetVehicleHavocSalvo(vehicleid);                                                                                               *
- * SetVehicleHavocSalvo(vehicleid,salvo);                                                                                         *
- * GetVehicleHavocAmmo(vehicleid);                                                                                                *
- * SetVehicleHavocAmmo(vehicleid,ammo);                                                                                           *
- * Float:GetVehicleHavocDMG(vehicleid);                                                                                           *
- * SetVehicleHavocDMG(vehicleid,Float:damage);                                                                                    *
- * Float:GetVehicleHavocVehDMG(vehicleid);                                                                                        *
- * SetVehicleHavocVehDMG(vehicleid,Float:damage);                                                                                 *
- *                                                                                                                                *
- * Functions Ground Bomb:                                                                                                         *
- * ToggleVehicleGroundBomb(vehicleid,toggle);                                                                                     *
- * IsToggleVehicleGroundBomb(vehicleid);                                                                                          *
- * Float:GetVehicleGroundBombSpeed(vehicleid);                                                                                    *
- * SetVehicleGroundBombSpeed(vehicleid,Float:speed);                                                                              *
- * GetVehicleGroundBombReload(vehicleid);                                                                                         *
- * SetVehicleGroundBombReload(vehicleid,time);                                                                                    *
- * Float:GetVehicleGroundBombDistance(vehicleid);                                                                                 *
- * SetVehicleGroundBombDistance(vehicleid,Float:distance);                                                                        *
- * GetVehicleGroundBombKey(vehicleid);                                                                                            *
- * SetVehicleGroundBombKey(vehicleid,key);                                                                                        *
- * GetVehicleGroundBombAmmo(vehicleid);                                                                                           *
- * SetVehicleGroundBombAmmo(vehicleid,ammo);                                                                                      *
- * Float:GetVehicleGroundBombDMG(vehicleid);                                                                                      *
- * SetVehicleGroundBombDMG(vehicleid,Float:damage);                                                                               *
- * Float:GetVehicleGroundBombVehDMG(vehicleid);                                                                                   *
- * SetVehicleGroundBombVehDMG(vehicleid,Float:damage);                                                                            *
- *                                                                                                                                *
- * Functions Ground Bomb (Extended Grenade):                                                                                      *
- * GetVehicleGroundBombType(vehicleid);                                                                                           *
- * SetVehicleGroundBombType(vehicleid,special_weaponid);                                                                          *
- * GetVehicleGroundBombEffect(vehicleid);                                                                                         *
- * SetVehicleGroundBombEffect(vehicleid,effectid);                                                                                *
- * Float:GetVehicleGroundBombEffectDMG(vehicleid);                                                                                *
- * SetVehicleGroundBombEffectDMG(vehicleid,Float:damage);                                                                         *
- * Float:GetVehicleGroundBombEffectVDMG(vehicleid);                                                                               *
- * SetVehicleGroundBombEffectVDMG(vehicleid,Float:veh_damage);                                                                    *
- * GetVehicleGroundBombEffectTime(vehicleid);                                                                                     *
- * SetVehicleGroundBombEffectTime(vehicleid,seconds);                                                                             *
- *                                                                                                                                *
- * Functions Flare:                                                                                                               *
- * ToggleVehicleFlare(vehicleid,toggle);                                                                                          *
- * IsToggleVehicleFlare(vehicleid);                                                                                               *
- * Float:GetVehicleFlareSpeed(vehicleid);                                                                                         *
- * SetVehicleFlareSpeed(vehicleid,Float:speed);                                                                                   *
- * GetVehicleFlareReload(vehicleid);                                                                                              *
- * SetVehicleFlareReload(vehicleid,time);                                                                                         *
- * Float:GetVehicleFlareDistance(vehicleid);                                                                                      *
- * SetVehicleFlareDistance(vehicleid,Float:distance);                                                                             *
- * GetVehicleFlareKey(vehicleid);                                                                                                 *
- * SetVehicleFlareKey(vehicleid,key);                                                                                             *
- * GetVehicleFlareSalvo(vehicleid);                                                                                               *
- * SetVehicleFlareSalvo(vehicleid,salvo);                                                                                         *
- * GetVehicleFlareAmmo(vehicleid);                                                                                                *
- * SetVehicleFlareAmmo(vehicleid,ammo);                                                                                           *
- *                                                                                                                                *
- * Player Functions:                                                                                                              *
- * GetMiniMissileRemainingTime(playerid);                                                                                         *
- * GetHeavyMissileRemainingTime(playerid);                                                                                        *
- * GetRhinoMissileRemainingTime(playerid);                                                                                        *
- * GetBomberMissileRemainingTime(playerid);                                                                                       *
- * GetMortarMissileRemainingTime(playerid);                                                                                       *
- * GetMegaMissileRemainingTime(playerid);                                                                                         *
- * GetCongreveRemainingTime(playerid);                                                                                            *
- * GetHavocRemainingTime(playerid);                                                                                               *
- * GetGroundBombRemainingTime(playerid);                                                                                          *
- * GetFlareRemainingTime(playerid);                                                                                               *
- * IsVehicleMissileAimSysReady(playerid);                                                                                         *
- * SetVehicleMissileAimTarget(playerid,Float:x=0.0,Float:y=0.0);                                                                  *
- *                                                                                                                                *
- * Extended Functions:                                                                                                            *
- * Float:GetMissileStreamDistance();                                                                                              *
- * SetMissileStreamDistance(Float:streamdistance);                                                                                *
- * DisarmVehicleMissile(vehicleid);                                                                                               *
- * SetVehicleMissileDefaultConfig(vehicleid);                                                                                     *
- * ToggleMissileAutoDisarm(bool:toggle);                                                                                          *
- * bool:IsToggleMissileAutoDisarm();                                                                                              *
- * OnVehicleShot(playerid,type);                                                                                                  *
- * OnVehicleMissileInit();                                                                                                        *
- * GetMissileRemainingTime(playerid,type);                                                                                        *
- * GetVehicleMissileAmmo(vehicleid,type);                                                                                         *
- * SetVehicleMissileAmmo(vehicleid,type,ammo);                                                                                    *
- *                                                                                                                                *
- * Callbacks:                                                                                                                     *
- * OnVehicleArmed(playerid,vehicleid);                                                                                            *
- * OnVehicleMissileRequestLaunch(playerid,type,vehicleid);                                                                        *
- * OnVehicleMissileLaunched(playerid,type,vehicleid);                                                                             *
- *                                                                                                                                *
- **********************************************************************************************************************************/
+/*
+ VehicleMissileCol.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg, Missile
+
+ File Version: 2.0.0
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+ Missile Version: 2.3.0
+
+ Vehicle Weapons:
+ - Mini Missile (Dual rocket)
+ - Heavy Missile (Six rocket of high firepower)
+ - Rhino Missile (Rhino explosion)
+ - Bomber Missile (Quadruple-ground missiles)
+ - Mortar Missile (Marica mortar)
+ - Mega Missile (Heavy Marica mortar)
+ - Congreve Rocket (Large area of destruction)
+ - Havoc Rocket (Circle ground missile)
+ - Ground Bomb (Standard bomb)
+
+ Functions Mini Missile:
+ ToggleVehicleMiniMissile(vehicleid,toggle);
+ IsToggleVehicleMiniMissile(vehicleid);
+ Float:GetVehicleMiniMissileSpeed(vehicleid);
+ SetVehicleMiniMissileSpeed(vehicleid,Float:speed);
+ GetVehicleMiniMissileReload(vehicleid);
+ SetVehicleMiniMissileReload(vehicleid,time);
+ Float:GetVehicleMiniMissileDistance(vehicleid);
+ SetVehicleMiniMissileDistance(vehicleid,Float:distance);
+ GetVehicleMiniMissileKey(vehicleid);
+ SetVehicleMiniMissileKey(vehicleid,key);
+ GetVehicleMiniMissileAmmo(vehicleid);
+ SetVehicleMiniMissileAmmo(vehicleid,ammo);
+ Float:GetVehicleMiniMissileDMG(vehicleid);
+ SetVehicleMiniMissileDMG(vehicleid,Float:damage);
+ Float:GetVehicleMiniMissileVehDMG(vehicleid);
+ SetVehicleMiniMissileVehDMG(vehicleid,Float:damage);
+
+ Functions Heavy Missile:
+ ToggleVehicleHeavyMissile(vehicleid,toggle);
+ IsToggleVehicleHeavyMissile(vehicleid);
+ Float:GetVehicleHeavyMissileSpeed(vehicleid);
+ SetVehicleHeavyMissileSpeed(vehicleid,Float:speed);
+ GetVehicleHeavyMissileReload(vehicleid);
+ SetVehicleHeavyMissileReload(vehicleid,time);
+ Float:GetVehicleHeavyMissileDistance(vehicleid);
+ SetVehicleHeavyMissileDistance(vehicleid,Float:distance);
+ GetVehicleHeavyMissileKey(vehicleid);
+ SetVehicleHeavyMissileKey(vehicleid,key);
+ GetVehicleHeavyMissileAmmo(vehicleid);
+ SetVehicleHeavyMissileAmmo(vehicleid,ammo);
+ Float:GetVehicleHeavyMissileDMG(vehicleid);
+ SetVehicleHeavyMissileDMG(vehicleid,Float:damage);
+ Float:GetVehicleHeavyMissileVehDMG(vehicleid);
+ SetVehicleHeavyMissileVehDMG(vehicleid,Float:damage);
+
+ Functions Rhino Missile:
+ ToggleVehicleRhinoMissile(vehicleid,toggle);
+ IsToggleVehicleRhinoMissile(vehicleid);
+ GetVehicleRhinoMissileReload(vehicleid);
+ SetVehicleRhinoMissileReload(vehicleid,time);
+ Float:GetVehicleRhinoMissileDistance(vehicleid);
+ SetVehicleRhinoMissileDistance(vehicleid,Float:distance);
+ GetVehicleRhinoMissileKey(vehicleid);
+ SetVehicleRhinoMissileKey(vehicleid,key);
+ GetVehicleRhinoMissileAmmo(vehicleid);
+ SetVehicleRhinoMissileAmmo(vehicleid,ammo);
+ Float:GetVehicleRhinoMissileDMG(vehicleid);
+ SetVehicleRhinoMissileDMG(vehicleid,Float:damage);
+ Float:GetVehicleRhinoMissileVehDMG(vehicleid);
+ SetVehicleRhinoMissileVehDMG(vehicleid,Float:damage);
+
+ Functions Bomber Missile:
+ ToggleVehicleBomberMissile(vehicleid,toggle);
+ IsToggleVehicleBomberMissile(vehicleid);
+ Float:GetVehicleBomberMissileSpeed(vehicleid);
+ SetVehicleBomberMissileSpeed(vehicleid,Float:speed);
+ GetVehicleBomberMissileReload(vehicleid);
+ SetVehicleBomberMissileReload(vehicleid,time);
+ Float:GetVehicleBomberMissileDistance(vehicleid);
+ SetVehicleBomberMissileDistance(vehicleid,Float:distance);
+ GetVehicleBomberMissileKey(vehicleid);
+ SetVehicleBomberMissileKey(vehicleid,key);
+ GetVehicleBomberMissileAmmo(vehicleid);
+ SetVehicleBomberMissileAmmo(vehicleid,ammo);
+ Float:GetVehicleBomberMissileDMG(vehicleid);
+ SetVehicleBomberMissileDMG(vehicleid,Float:damage);
+ Float:GetVehicleBomberMissileVehDMG(vehicleid);
+ SetVehicleBomberMissileVehDMG(vehicleid,Float:damage);
+
+ Functions Mortar Missile:
+ ToggleVehicleMortarMissile(vehicleid,toggle);
+ IsToggleVehicleMortarMissile(vehicleid);
+ Float:GetVehicleMortarMissileSpeed(vehicleid);
+ SetVehicleMortarMissileSpeed(vehicleid,Float:speed);
+ GetVehicleMortarMissileReload(vehicleid);
+ SetVehicleMortarMissileReload(vehicleid,time);
+ Float:GetVehicleMortarMissileDistance(vehicleid);
+ SetVehicleMortarMissileDistance(vehicleid,Float:distance);
+ GetVehicleMortarMissileKey(vehicleid);
+ SetVehicleMortarMissileKey(vehicleid,key);
+ Float:GetVehicleMortarMissileHeight(vehicleid);
+ SetVehicleMortarMissileHeight(vehicleid,Float:height);
+ Float:GetVehicleMortarMissileRotation(vehicleid);
+ SetVehicleMortarMissileRotation(vehicleid,Float:rotation);
+ GetVehicleMortarMissileAmmo(vehicleid);
+ SetVehicleMortarMissileAmmo(vehicleid,ammo);
+ GetVehicleMortarMissileAimSys(vehicleid);
+ SetVehicleMortarMissileAimSys(vehicleid,toggle);
+ Float:GetVehicleMortarMissileDMG(vehicleid);
+ SetVehicleMortarMissileDMG(vehicleid,Float:damage);
+ Float:GetVehicleMortarMissileVehDMG(vehicleid);
+ SetVehicleMortarMissileVehDMG(vehicleid,Float:damage);
+
+ Functions Mega Missile:
+ ToggleVehicleMegaMissile(vehicleid,toggle);
+ IsToggleVehicleMegaMissile(vehicleid);
+ Float:GetVehicleMegaMissileSpeed(vehicleid);
+ SetVehicleMegaMissileSpeed(vehicleid,Float:speed);
+ GetVehicleMegaMissileReload(vehicleid);
+ SetVehicleMegaMissileReload(vehicleid,time);
+ Float:GetVehicleMegaMissileDistance(vehicleid);
+ SetVehicleMegaMissileDistance(vehicleid,Float:distance);
+ GetVehicleMegaMissileKey(vehicleid);
+ SetVehicleMegaMissileKey(vehicleid,key);
+ Float:GetVehicleMegaMissileHeight(vehicleid);
+ SetVehicleMegaMissileHeight(vehicleid,Float:height);
+ Float:GetVehicleMegaMissileRotation(vehicleid);
+ SetVehicleMegaMissileRotation(vehicleid,Float:rotation);
+ GetVehicleMegaMissileAmmo(vehicleid);
+ SetVehicleMegaMissileAmmo(vehicleid,ammo);
+ GetVehicleMegaMissileAimSys(vehicleid);
+ SetVehicleMegaMissileAimSys(vehicleid,toggle);
+ Float:GetVehicleMegaMissileDMG(vehicleid);
+ SetVehicleMegaMissileDMG(vehicleid,Float:damage);
+ Float:GetVehicleMegaMissileVehDMG(vehicleid);
+ SetVehicleMegaMissileVehDMG(vehicleid,Float:damage);
+
+ Functions Congreve Rocket:
+ ToggleVehicleCongreve(vehicleid,toggle);
+ IsToggleVehicleCongreve(vehicleid);
+ Float:GetVehicleCongreveSpeed(vehicleid);
+ SetVehicleCongreveSpeed(vehicleid,Float:speed);
+ GetVehicleCongreveReload(vehicleid);
+ SetVehicleCongreveReload(vehicleid,time);
+ Float:GetVehicleCongreveDistance(vehicleid);
+ SetVehicleCongreveDistance(vehicleid,Float:distance);
+ GetVehicleCongreveKey(vehicleid);
+ SetVehicleCongreveKey(vehicleid,key);
+ Float:GetVehicleCongreveSpread(vehicleid);
+ SetVehicleCongreveSpread(vehicleid,Float:spread);
+ GetVehicleCongreveSalvo(vehicleid);
+ SetVehicleCongreveSalvo(vehicleid,salvo);
+ GetVehicleCongreveAmmo(vehicleid);
+ SetVehicleCongreveAmmo(vehicleid,ammo);
+ Float:GetVehicleCongreveDMG(vehicleid);
+ SetVehicleCongreveDMG(vehicleid,Float:damage);
+ Float:GetVehicleCongreveVehDMG(vehicleid);
+ SetVehicleCongreveVehDMG(vehicleid,Float:damage);
+
+ Functions Havoc Rocket:
+ ToggleVehicleHavoc(vehicleid,toggle);
+ IsToggleVehicleHavoc(vehicleid);
+ Float:GetVehicleHavocSpeed(vehicleid);
+ SetVehicleHavocSpeed(vehicleid,Float:speed);
+ GetVehicleHavocReload(vehicleid);
+ SetVehicleHavocReload(vehicleid,time);
+ Float:GetVehicleHavocDistance(vehicleid);
+ SetVehicleHavocDistance(vehicleid,Float:distance);
+ GetVehicleHavocKey(vehicleid);
+ SetVehicleHavocKey(vehicleid,key);
+ Float:GetVehicleHavocSpread(vehicleid);
+ SetVehicleHavocSpread(vehicleid,Float:spread);
+ GetVehicleHavocSalvo(vehicleid);
+ SetVehicleHavocSalvo(vehicleid,salvo);
+ GetVehicleHavocAmmo(vehicleid);
+ SetVehicleHavocAmmo(vehicleid,ammo);
+ Float:GetVehicleHavocDMG(vehicleid);
+ SetVehicleHavocDMG(vehicleid,Float:damage);
+ Float:GetVehicleHavocVehDMG(vehicleid);
+ SetVehicleHavocVehDMG(vehicleid,Float:damage);
+
+ Functions Ground Bomb:
+ ToggleVehicleGroundBomb(vehicleid,toggle);
+ IsToggleVehicleGroundBomb(vehicleid);
+ Float:GetVehicleGroundBombSpeed(vehicleid);
+ SetVehicleGroundBombSpeed(vehicleid,Float:speed);
+ GetVehicleGroundBombReload(vehicleid);
+ SetVehicleGroundBombReload(vehicleid,time);
+ Float:GetVehicleGroundBombDistance(vehicleid);
+ SetVehicleGroundBombDistance(vehicleid,Float:distance);
+ GetVehicleGroundBombKey(vehicleid);
+ SetVehicleGroundBombKey(vehicleid,key);
+ GetVehicleGroundBombAmmo(vehicleid);
+ SetVehicleGroundBombAmmo(vehicleid,ammo);
+ Float:GetVehicleGroundBombDMG(vehicleid);
+ SetVehicleGroundBombDMG(vehicleid,Float:damage);
+ Float:GetVehicleGroundBombVehDMG(vehicleid);
+ SetVehicleGroundBombVehDMG(vehicleid,Float:damage);
+
+ Functions Ground Bomb (Extended Grenade):
+ GetVehicleGroundBombType(vehicleid);
+ SetVehicleGroundBombType(vehicleid,special_weaponid);
+ GetVehicleGroundBombEffect(vehicleid);
+ SetVehicleGroundBombEffect(vehicleid,effectid);
+ Float:GetVehicleGroundBombEffectDMG(vehicleid);
+ SetVehicleGroundBombEffectDMG(vehicleid,Float:damage);
+ Float:GetVehicleGroundBombEffectVDMG(vehicleid);
+ SetVehicleGroundBombEffectVDMG(vehicleid,Float:veh_damage);
+ GetVehicleGroundBombEffectTime(vehicleid);
+ SetVehicleGroundBombEffectTime(vehicleid,seconds);
+
+ Functions Flare:
+ ToggleVehicleFlare(vehicleid,toggle);
+ IsToggleVehicleFlare(vehicleid);
+ Float:GetVehicleFlareSpeed(vehicleid);
+ SetVehicleFlareSpeed(vehicleid,Float:speed);
+ GetVehicleFlareReload(vehicleid);
+ SetVehicleFlareReload(vehicleid,time);
+ Float:GetVehicleFlareDistance(vehicleid);
+ SetVehicleFlareDistance(vehicleid,Float:distance);
+ GetVehicleFlareKey(vehicleid);
+ SetVehicleFlareKey(vehicleid,key);
+ GetVehicleFlareSalvo(vehicleid);
+ SetVehicleFlareSalvo(vehicleid,salvo);
+ GetVehicleFlareAmmo(vehicleid);
+ SetVehicleFlareAmmo(vehicleid,ammo);
+
+ Player Functions:
+ GetMiniMissileRemainingTime(playerid);
+ GetHeavyMissileRemainingTime(playerid);
+ GetRhinoMissileRemainingTime(playerid);
+ GetBomberMissileRemainingTime(playerid);
+ GetMortarMissileRemainingTime(playerid);
+ GetMegaMissileRemainingTime(playerid);
+ GetCongreveRemainingTime(playerid);
+ GetHavocRemainingTime(playerid);
+ GetGroundBombRemainingTime(playerid);
+ GetFlareRemainingTime(playerid);
+ IsVehicleMissileAimSysReady(playerid);
+ SetVehicleMissileAimTarget(playerid,Float:x=0.0,Float:y=0.0);
+
+ Extended Functions:
+ Float:GetMissileStreamDistance();
+ SetMissileStreamDistance(Float:streamdistance);
+ DisarmVehicleMissile(vehicleid);
+ SetVehicleMissileDefaultConfig(vehicleid);
+ ToggleMissileAutoDisarm(bool:toggle);
+ bool:IsToggleMissileAutoDisarm();
+ OnVehicleShot(playerid,type);
+ OnVehicleMissileInit();
+ GetMissileRemainingTime(playerid,type);
+ GetVehicleMissileAmmo(vehicleid,type);
+ SetVehicleMissileAmmo(vehicleid,type,ammo);
+
+ Callbacks:
+ OnVehicleArmed(playerid,vehicleid);
+ OnVehicleMissileRequestLaunch(playerid,type,vehicleid);
+ OnVehicleMissileLaunched(playerid,type,vehicleid);
+*/
 
 #if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
 	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)

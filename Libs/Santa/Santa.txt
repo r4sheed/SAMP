@@ -14,7 +14,7 @@ Hello, I would like to present a simple script to automatically deploy gifts on 
 - Halloween
 
 [b]Installation:[/b]
-[php]
+[code]
 //#define SANTA_IS_EASTER_EVENT     //Change to Easter Event
 //#define SANTA_IS_EASTER_HALLOWEEN //Change to Halloween Event
 #include <streamer>
@@ -37,18 +37,13 @@ public OnSantaPickupReward(playerid){
 	
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/Santa.inc]Santa.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
-
-[b]Merry Christmas ![/b]
+[url=https://adm.ct8.pl/cloud/Libs/Santa/Santa.inc]Santa.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
 
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=Santa%20Bug]Bug Report[/url][/i]

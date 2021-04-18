@@ -1,28 +1,25 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                           Santa Gifts                                            *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: Streamer, ColAndreas                                                                    *
- * Modules: 3DTryg, StreamerFunction                                                                *
- *                                                                                                  *
- * File Version: 1.4.3                                                                              *
- * Streamer Version: 2.9.4                                                                          *
- * ColAndreas Version: 1.4.0                                                                        *
- * 3DTryg Version: 4.8.6                                                                            *
- * StreamerFunction Version: 3.0.0                                                                  *
- *                                                                                                  *
- * Functions:                                                                                       *
- * Santa::SetSpawnRectangle(Float:minx,Float:miny,Float:maxx,Float:maxy,bool:reset=true);           *
- * Santa::SetSpawnPolygon(Float:points[],maxpoints=sizeof(points),bool:reset=true);                 *
- *                                                                                                  *
- * Callbacks:                                                                                       *
- * OnSantaPickupReward(playerid);                                                                   *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ Santa.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg, StreamerFunction
+
+ File Version: 1.4.3
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+ StreamerFunction Version: 3.0.0
+
+ Functions:
+ Santa::SetSpawnRectangle(Float:minx,Float:miny,Float:maxx,Float:maxy,bool:reset=true);
+ Santa::SetSpawnPolygon(Float:points[],maxpoints=sizeof(points),bool:reset=true);
+
+ Callbacks:
+ OnSantaPickupReward(playerid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
