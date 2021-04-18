@@ -151,9 +151,3 @@ if(ContainInSeriesFloat(myfloatvalue,12.0,1.0)){
 
 [b]Download:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc]DataConvert.inc[/url]
-
-Available for:
-[code]
-SA:MP 0.3.7
-SA:MP 0.3 DL
-[/code]

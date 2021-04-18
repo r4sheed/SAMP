@@ -1,32 +1,26 @@
 Include contain function for chat @mentiones system
 
-[php]
-/*************************************************************************************************************************************
- *                                                                                                                                   *
- *                                                       )(   @mentiones   )(                                                        *
- *                                                                                                                                   *
- * Copyright © 2019 Abyss Morgan. All rights reserved.                                                                               *
- * Contributors: None                                                                                                                *
- *                                                                                                                                   *
- * Website:  adm.ct8.pl                                                                                                              *
- * Download: adm.ct8.pl/r/download                                                                                                   *
- *                                                                                                                                   *
- * Plugins: SScanf                                                                                                                   *
- * Modules: RGB                                                                                                                      *
- *                                                                                                                                   *
- * File Version: 1.2.0                                                                                                               *
- *                                                                                                                                   *
- * Functions:                                                                                                                        *
- * GetMentiones(playerid,text[],mention_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));                                *
- *                                                                                                                                   *
- * Callbacks:                                                                                                                        *
- * OnPlayerMentioned(playerid,targetid);                                                                                             *
- *                                                                                                                                   *
- *************************************************************************************************************************************/
-[/php]
+[code]
+ mentiones.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: None
+
+ Website: https://adm.ct8.pl
+
+ Plugins: SScanf
+ Modules: RGB, DataConvert
+
+ File Version: 1.2.0
+
+ Functions:
+ GetMentiones(playerid,text[],mention_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));
+
+ Callbacks:
+ OnPlayerMentioned(playerid,targetid);
+[/code]
 
 [b]Example:[/b]
-[php]
+[code]
 public OnPlayerMentioned(playerid,targetid){
 	//create your own notice with TextDraw/sound
 	return 1;
@@ -39,12 +33,9 @@ public OnPlayerText(playerid,text[]){
 }
 //Hi @Johny and @Alena how are you ?
 //Two existing players got notice and nick color has been changed to 0xCC0000FF
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/mentiones.inc]mentiones.inc[/url]
-[url=http://adm.ct8.pl/d/RGB.inc]RGB.inc[/url]
-[url=http://adm.ct8.pl/d/DataConvert.inc]DataConvert.inc[/url]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=mentiones%20Bug]Bug Report[/url][/i]
+[url=https://adm.ct8.pl/cloud/Libs/mentiones/mentiones.inc]mentiones.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/RGB/RGB.inc]RGB.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc]DataConvert.inc[/url]

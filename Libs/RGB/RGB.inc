@@ -1,42 +1,40 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                   )(   R G B A Conversion   )(                                   *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: None                                                                                    *
- * Modules: None                                                                                    *
- *                                                                                                  *
- * File Version: 2.5.0                                                                              *
- *                                                                                                  *
- * Functions:                                                                                       *
- * RGB::RGBAToHex(color,&red,&green,&blue,&alpha);                                                  *
- * RGB::RGBToHex(color,&red,&green,&blue);                                                          *
- * RGB::HexToRGBA(red,green,blue,alpha);                                                            *
- * RGB::HexToARGB(red,green,blue,alpha);                                                            *
- * RGB::HexToRGB(red,green,blue);                                                                   *
- * RGB::RGBAToRGB(color);                                                                           *
- * RGB::RGBToRGBA(color,alpha);                                                                     *
- * RGB::RGBToARGB(color,alpha);                                                                     *
- * RGB::ARGBToRGB(color);                                                                           *
- * RGB::RGBAToARGB(color);                                                                          *
- * RGB::ARGBToRGBA(color);                                                                          *
- * RGB::GetRFromRGBA(color);                       //RGBA:0xFAB0A0FF R:0xFA000000                   *
- * RGB::GetGFromRGBA(color);                       //RGBA:0xFAB0A0FF G:0x00B00000                   *
- * RGB::GetBFromRGBA(color);                       //RGBA:0xFAB0A0FF B:0x0000A000                   *
- * RGB::GetAFromRGBA(color);                       //RGBA:0xFAB0A0FF A:0x000000FF                   *
- * RGB::GetRHexFromRGBA(color);                    //RGBA:0xFAB0A0FF R:0xFA                         *
- * RGB::GetGHexFromRGBA(color);                    //RGBA:0xFAB0A0FF G:0xB0                         *
- * RGB::GetBHexFromRGBA(color);                    //RGBA:0xFAB0A0FF B:0xA0                         *
- * RGB::GetAHexFromRGBA(color);                    //RGBA:0xFAB0A0FF A:0xFF                         *
- * RGB::GetColorRGBA(color);                       //Return {RGB}                                   *
- * RGB::GetColorRGB(color);                        //Return {RGB}                                   *
- * RGB::GetColorARGB(color);                       //Return {RGB}                                   *
- * RGB::AdjustColorLuminance(color,Float:adjust);                                                   *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ RGB.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: None
+ Modules: None
+
+ File Version: 2.5.0
+
+ Functions:
+ RGB::RGBAToHex(color,&red,&green,&blue,&alpha);
+ RGB::RGBToHex(color,&red,&green,&blue);
+ RGB::HexToRGBA(red,green,blue,alpha);
+ RGB::HexToARGB(red,green,blue,alpha);
+ RGB::HexToRGB(red,green,blue);
+ RGB::RGBAToRGB(color);
+ RGB::RGBToRGBA(color,alpha);
+ RGB::RGBToARGB(color,alpha);
+ RGB::ARGBToRGB(color);
+ RGB::RGBAToARGB(color);
+ RGB::ARGBToRGBA(color);
+ RGB::GetRFromRGBA(color);                       //RGBA:0xFAB0A0FF R:0xFA000000
+ RGB::GetGFromRGBA(color);                       //RGBA:0xFAB0A0FF G:0x00B00000
+ RGB::GetBFromRGBA(color);                       //RGBA:0xFAB0A0FF B:0x0000A000
+ RGB::GetAFromRGBA(color);                       //RGBA:0xFAB0A0FF A:0x000000FF
+ RGB::GetRHexFromRGBA(color);                    //RGBA:0xFAB0A0FF R:0xFA
+ RGB::GetGHexFromRGBA(color);                    //RGBA:0xFAB0A0FF G:0xB0
+ RGB::GetBHexFromRGBA(color);                    //RGBA:0xFAB0A0FF B:0xA0
+ RGB::GetAHexFromRGBA(color);                    //RGBA:0xFAB0A0FF A:0xFF
+ RGB::GetColorRGBA(color);                       //Return {RGB}
+ RGB::GetColorRGB(color);                        //Return {RGB}
+ RGB::GetColorARGB(color);                       //Return {RGB}
+ RGB::AdjustColorLuminance(color,Float:adjust);
+
+*/
 
 #if defined _rgb_function
 	#endinput
