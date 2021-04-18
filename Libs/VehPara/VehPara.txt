@@ -4,39 +4,39 @@ Hello, I would like to present you the Vehicle Parachute Script
 [url]https://www.youtube.com/watch?v=TrxYkMeBtsU[/url]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/VehPara.inc]VehPara.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
+[url=https://adm.ct8.pl/cloud/Libs/VehPara/VehPara.inc]VehPara.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
 
 [b]Installation:[/b]
-[php]
+[code]
 #include <ColAndreas>
 #include <3DTryg>
 #include <VehPara>
-[/php]
+[/code]
 
 [b]Functions:[/b]
-[php]
+[code]
 bool:IsPlayerUsingVehPara(playerid);
 bool:IsToggleVehicleParachute(vehicleid);
 ToggleVehicleParachute(vehicleid,bool:toggle);
 SetVehicleParachuteKey(key);
-[/php]
+[/code]
 
 [b]Callbacks:[/b]
-[php]
+[code]
 OnVehicleParachuteThrown(playerid,vehicleid);
 OnVehicleParachuteOpened(playerid,vehicleid);
 OnVehicleParachuteOpenFail(playerid,vehicleid);
-[/php]
+[/code]
 
 [b]Activation:[/b]
-[php]
+[code]
 H - Open/thrown parachute
-[/php]
+[/code]
 
 [b]Example Code:[/b]
-[php]
+[code]
 CMD:vehpara(playerid){
 
 	new vid = GetPlayerVehicleID(playerid);
@@ -62,11 +62,8 @@ public OnVehicleParachuteOpenFail(playerid,vehicleid){
 	GameTextForPlayer(playerid,"~g~Cannot use parachute",2500,3);
 	return 1;
 }
-[/php]
+[/code]
 
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=VehPara%20Bug]Bug Report[/url][/i]

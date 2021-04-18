@@ -1,42 +1,37 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                         Extended Grenade                                         *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: Streamer, ColAndreas                                                                    *
- * Modules: 3DTryg                                                                                  *
- *                                                                                                  *
- * File Version: 1.1.0                                                                              *
- * Streamer Version: 2.9.4                                                                          *
- * ColAndreas Version: 1.4.0                                                                        *
- * 3DTryg Version: 4.8.6                                                                            *
- *                                                                                                  *
- * Functions:                                                                                       *
- * Grenade::IsWeaponEnable(playerid,special_weaponid);                                              *
- * Grenade::WeaponEnable(playerid,special_weaponid,bool:enable);                                    *
- * Grenade::GetSpecialAmmo(playerid,special_weaponid);                                              *
- * Grenade::SetSpecialAmmo(playerid,special_weaponid,ammo);                                         *
- * Grenade::GetEffectID(playerid,special_weaponid);                                                 *
- * Grenade::SetEffectID(playerid,special_weaponid,effectid);                                        *
- * Grenade::GetDamage(playerid,special_weaponid);                                                   *
- * Grenade::SetDamage(playerid,special_weaponid,Float:damage);                                      *
- * Grenade::GetVehicleDamage(playerid,special_weaponid);                                            *
- * Grenade::SetVehicleDamage(playerid,special_weaponid,Float:damage);                               *
- * Grenade::GetTime(playerid,special_weaponid);                                                     *
- * Grenade::SetTime(playerid,special_weaponid,seconds);                                             *
- * Grenade::IsToggleGasMask(playerid);                                                              *
- * Grenade::ToggleGasMask(playerid,bool:toggle);                                                    *
- * Grenade::GetSpecialWeaponID(weaponid);                                                           *
- * Grenade::GrenadeEffectByPlayer(playerid,special_weaponid,Float:x,Float:y,Float:z);               *
- * Grenade::CreateGrenadeEffect(special_weaponid,effectid,Float:x,Float:y,Float:z,worldid,          *
- *                              interiorid,playerid,Float:streamdistance,Float:damage,              *
- *                              Float:veh_damage,active_time=25,byplayerid=INVALID_PLAYER_ID);      *
- * Grenade::DestroyEffect(mobid);                                                                   *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ ExtendedGrenade.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg
+
+ File Version: 1.1.0
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ Grenade::IsWeaponEnable(playerid,special_weaponid);
+ Grenade::WeaponEnable(playerid,special_weaponid,bool:enable);
+ Grenade::GetSpecialAmmo(playerid,special_weaponid);
+ Grenade::SetSpecialAmmo(playerid,special_weaponid,ammo);
+ Grenade::GetEffectID(playerid,special_weaponid);
+ Grenade::SetEffectID(playerid,special_weaponid,effectid);
+ Grenade::GetDamage(playerid,special_weaponid);
+ Grenade::SetDamage(playerid,special_weaponid,Float:damage);
+ Grenade::GetVehicleDamage(playerid,special_weaponid);
+ Grenade::SetVehicleDamage(playerid,special_weaponid,Float:damage);
+ Grenade::GetTime(playerid,special_weaponid);
+ Grenade::SetTime(playerid,special_weaponid,seconds);
+ Grenade::IsToggleGasMask(playerid);
+ Grenade::ToggleGasMask(playerid,bool:toggle);
+ Grenade::GetSpecialWeaponID(weaponid);
+ Grenade::GrenadeEffectByPlayer(playerid,special_weaponid,Float:x,Float:y,Float:z);
+ Grenade::CreateGrenadeEffect(special_weaponid,effectid,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,Float:damage,Float:veh_damage,active_time=25,byplayerid=INVALID_PLAYER_ID);
+ Grenade::DestroyEffect(mobid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)

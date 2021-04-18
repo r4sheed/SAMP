@@ -19,9 +19,9 @@ Grenade::GetTime(playerid,special_weaponid);
 Grenade::SetTime(playerid,special_weaponid,seconds);
 Grenade::IsToggleGasMask(playerid);
 Grenade::ToggleGasMask(playerid,bool:toggle);
- 
 Grenade::GetSpecialWeaponID(weaponid);
-Grenade::CreateGrenadeEffect(playerid,special_weaponid,Float:x,Float:y,Float:z);
+Grenade::GrenadeEffectByPlayer(playerid,special_weaponid,Float:x,Float:y,Float:z);
+Grenade::CreateGrenadeEffect(special_weaponid,effectid,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,Float:damage,Float:veh_damage,active_time=25,byplayerid=INVALID_PLAYER_ID);
 Grenade::DestroyEffect(mobid);
 [/code]
 
@@ -68,5 +68,5 @@ GRENADE_EFFECT_NAPALM
 
 [b]Download:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
-[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

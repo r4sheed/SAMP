@@ -1,31 +1,28 @@
-/****************************************************************************************************
- *                                                                                                  *
- *                                        Vehicle Parachute                                         *
- *                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                              *
- *                                                                                                  *
- * Website: https://adm.ct8.pl                                                                      *
- *                                                                                                  *
- * Plugins: Streamer, ColAndreas                                                                    *
- * Modules: 3DTryg                                                                                  *
- *                                                                                                  *
- * File Version: 1.2.0                                                                              *
- * Streamer Version: 2.9.4                                                                          *
- * ColAndreas Version: 1.4.0                                                                        *
- * 3DTryg Version: 4.8.6                                                                            *
- *                                                                                                  *
- * Functions:                                                                                       *
- * bool:IsPlayerUsingVehPara(playerid);                                                             *
- * bool:IsToggleVehicleParachute(vehicleid);                                                        *
- * ToggleVehicleParachute(vehicleid,bool:toggle);                                                   *
- * SetVehicleParachuteKey(key);                                                                     *
- *                                                                                                  *
- * Callbacks:                                                                                       *
- * OnVehicleParachuteThrown(playerid,vehicleid);                                                    *
- * OnVehicleParachuteOpened(playerid,vehicleid);                                                    *
- * OnVehicleParachuteOpenFail(playerid,vehicleid);                                                  *
- *                                                                                                  *
- ****************************************************************************************************/
+/*
+ VehPara.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg
+
+ File Version: 1.2.0
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ bool:IsPlayerUsingVehPara(playerid);
+ bool:IsToggleVehicleParachute(vehicleid);
+ ToggleVehicleParachute(vehicleid,bool:toggle);
+ SetVehicleParachuteKey(key);
+
+ Callbacks:
+ OnVehicleParachuteThrown(playerid,vehicleid);
+ OnVehicleParachuteOpened(playerid,vehicleid);
+ OnVehicleParachuteOpenFail(playerid,vehicleid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
