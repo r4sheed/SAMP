@@ -1,81 +1,77 @@
-/**********************************************************************************************************************************
- *                                                                                                                                *
- *                                                         Hunting System                                                         *
- *                                                                                                                                *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                            *
- * Contributors: Katarina Calzaghe                                                                                                *
- *                                                                                                                                *
- * Website: https://adm.ct8.pl                                                                                                    *
- *                                                                                                                                *
- * Plugins: Streamer, ColAndreas                                                                                                  *
- * Modules: 3DTryg                                                                                                                *
- *                                                                                                                                *
- * File Version: 1.4.2                                                                                                            *
- * Streamer Version: 2.9.4                                                                                                        *
- * ColAndreas Version: 1.4.0                                                                                                      *
- * 3DTryg Version: 4.8.6                                                                                                          *
- *                                                                                                                                *
- * Functions:                                                                                                                     *
- * Hunting::Create(type,Float:x,Float:y,Float:z,Float:health,respawntime,worldid=-1,interiorid=-1,playerid=-1,                    *
- *                 Float:streamdistance=200.0,moving_area = 0);                                                                   *
- * Hunting::Destroy(mobid);                                                                                                       *
- * Hunting::Respawn(mobid);                                                                                                       *
- * Hunting::ForceRespawn(mobid,Float:x,Float:y,Float:z);                                                                          *
- * Hunting::Kill(mobid,playerid=INVALID_PLAYER_ID);                                                                               *
- * Hunting::Stop(mobid,delay=-1);                                                                                                 *
- * Hunting::GoTo(mobid,Float:x,Float:y,bool:disable_moving=false);                                                                *
- * Hunting::GetDrop(mobid);                                                                                                       *
- * Hunting::SetDrop(mobid,drop);                                                                                                  *
- * Hunting::GetPos(mobid,Float:x,Float:y,Float:z);                                                                                *
- * Hunting::SetPos(mobid,Float:x,Float:y,Float:z,bool:disable_moving=false);                                                      *
- * Hunting::GetScaredRange(mobid);                                                                                                *
- * Hunting::SetScaredRange(mobid,Float:range);                                                                                    *
- * Hunting::GetHealth(mobid);                                                                                                     *
- * Hunting::SetHealth(mobid,Float:health);                                                                                        *
- * Hunting::GetSpawnHealth(mobid);                                                                                                *
- * Hunting::SetSpawnHealth(mobid,Float:health);                                                                                   *
- * Hunting::GetRespawnTime(mobid);                                                                                                *
- * Hunting::SetRespawnTime(mobid,respawntime);                                                                                    *
- * Hunting::GetSpawn(mobid,&Float:x,&Float:y,&Float:z);                                                                           *
- * Hunting::SetSpawn(mobid,Float:x,Float:y,Float:z);                                                                              *
- * Hunting::GetInterior(mobid);                                                                                                   *
- * Hunting::SetInterior(mobid,interiorid);                                                                                        *
- * Hunting::GetVirtualWorld(mobid);                                                                                               *
- * Hunting::SetVirtualWorld(mobid,worldid);                                                                                       *
- * Hunting::GetSpeed(mobid);                                                                                                      *
- * Hunting::SetSpeed(mobid,Float:speed);                                                                                          *
- * Hunting::GetPressTime(mobid);                                                                                                  *
- * Hunting::SetPressTime(mobid,miliseconds);                                                                                      *
- * Hunting::GetFacingAngle(mobid);                                                                                                *
- * Hunting::SetCalmTime(mobid,time=0);                                                                                            *
- * Hunting::IsPlayerInRange(playerid,mobid,Float:range);                                                                          *
- * Hunting::IsToggledMoving(mobid);                                                                                               *
- * Hunting::ToggleMoving(mobid,toggle);                                                                                           *
- * Hunting::IsValid(mobid);                                                                                                       *
- * Hunting::IsSpawned(mobid);                                                                                                     *
- * Hunting::IsDead(mobid);                                                                                                        *
- * Hunting::IsScared(mobid);                                                                                                      *
- * Hunting::IsStopped(mobid);                                                                                                     *
- * Hunting::IsMoving(mobid);                                                                                                      *
- *                                                                                                                                *
- * Extended Functions:                                                                                                            *
- * Hunting::Count();                                                                                                              *
- * Hunting::GetKey();                                                                                                             *
- * Hunting::SetKey(key);                                                                                                          *
- * Hunting::GetFreeID();                                                                                                          *
- * Hunting::GetActiveMob(playerid,mob_state);                                                                                     *
- *                                                                                                                                *
- * Callbacks:                                                                                                                     *
- * OnPlayerTakeHuntDrop(playerid,mobid,drop); //return 0 set drop flag 0                                                          *
- * OnPlayerKillHuntAnimal(playerid,mobid);                                                                                        *
- * OnPlayerApproachingAnimal(playerid,mobid,mob_state);                                                                           *
- * OnPlayerExitApproachingAnimal(playerid,mobid,mob_state);                                                                       *
- * OnAnimalTakeDamage(mobid,playerid,Float:amount,weaponid);                                                                      *
- * OnHuntAnimalRespawn(mobid);                                                                                                    *
- * OnAnimalScareStateChanged(mobid,playerid,isscared);                                                                            *
- * OnPlayerHuntDropStateChange(playerid,mobid,drop_state);                                                                        *
- *                                                                                                                                *
- **********************************************************************************************************************************/
+/*
+ Hunting.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: Katarina Calzaghe
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg
+
+ File Version: 1.4.2
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ Hunting::Create(type,Float:x,Float:y,Float:z,Float:health,respawntime,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=200.0,moving_area = 0);
+ Hunting::Destroy(mobid);
+ Hunting::Respawn(mobid);
+ Hunting::ForceRespawn(mobid,Float:x,Float:y,Float:z);
+ Hunting::Kill(mobid,playerid=INVALID_PLAYER_ID);
+ Hunting::Stop(mobid,delay=-1);
+ Hunting::GoTo(mobid,Float:x,Float:y,bool:disable_moving=false);
+ Hunting::GetDrop(mobid);
+ Hunting::SetDrop(mobid,drop);
+ Hunting::GetPos(mobid,Float:x,Float:y,Float:z);
+ Hunting::SetPos(mobid,Float:x,Float:y,Float:z,bool:disable_moving=false);
+ Hunting::GetScaredRange(mobid);
+ Hunting::SetScaredRange(mobid,Float:range);
+ Hunting::GetHealth(mobid);
+ Hunting::SetHealth(mobid,Float:health);
+ Hunting::GetSpawnHealth(mobid);
+ Hunting::SetSpawnHealth(mobid,Float:health);
+ Hunting::GetRespawnTime(mobid);
+ Hunting::SetRespawnTime(mobid,respawntime);
+ Hunting::GetSpawn(mobid,&Float:x,&Float:y,&Float:z);
+ Hunting::SetSpawn(mobid,Float:x,Float:y,Float:z);
+ Hunting::GetInterior(mobid);
+ Hunting::SetInterior(mobid,interiorid);
+ Hunting::GetVirtualWorld(mobid);
+ Hunting::SetVirtualWorld(mobid,worldid);
+ Hunting::GetSpeed(mobid);
+ Hunting::SetSpeed(mobid,Float:speed);
+ Hunting::GetPressTime(mobid);
+ Hunting::SetPressTime(mobid,miliseconds);
+ Hunting::GetFacingAngle(mobid);
+ Hunting::SetCalmTime(mobid,time=0);
+ Hunting::IsPlayerInRange(playerid,mobid,Float:range);
+ Hunting::IsToggledMoving(mobid);
+ Hunting::ToggleMoving(mobid,toggle);
+ Hunting::IsValid(mobid);
+ Hunting::IsSpawned(mobid);
+ Hunting::IsDead(mobid);
+ Hunting::IsScared(mobid);
+ Hunting::IsStopped(mobid);
+ Hunting::IsMoving(mobid);
+
+ Extended Functions:
+ Hunting::Count();
+ Hunting::GetKey();
+ Hunting::SetKey(key);
+ Hunting::GetFreeID();
+ Hunting::GetActiveMob(playerid,mob_state);
+
+ Callbacks:
+ OnPlayerTakeHuntDrop(playerid,mobid,drop); //return 0 set drop flag 0
+ OnPlayerKillHuntAnimal(playerid,mobid);
+ OnPlayerApproachingAnimal(playerid,mobid,mob_state);
+ OnPlayerExitApproachingAnimal(playerid,mobid,mob_state);
+ OnAnimalTakeDamage(mobid,playerid,Float:amount,weaponid);
+ OnHuntAnimalRespawn(mobid);
+ OnAnimalScareStateChanged(mobid,playerid,isscared);
+ OnPlayerHuntDropStateChange(playerid,mobid,drop_state);
+*/
  
 #if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
 	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)

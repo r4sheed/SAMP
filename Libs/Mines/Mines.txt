@@ -5,9 +5,8 @@
 [url]https://www.youtube.com/watch?v=_E3tw_qYzhI[/url]
 
 [b]Functions:[/b]
-[php]
+[code]
 Mines::Create(type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,mine_object = MINE_OBJECT_STANDARD,teamid = ANY_TEAM,detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,Float:vehicle_damage=-1.0);
-
 type - explosion type //https://wiki.sa-mp.com/wiki/Explosion_List
 Float:detection_range - detection range player/vehicle
 Float:explode_radius - the explosion range (the same as in CreateExplosion)
@@ -20,36 +19,82 @@ detect_type - specify which elements are to be detected (MINE_DETECT_TYPE_ALL / 
 Float:damage - player damage on explosion created
 Float:vehicle_damage - vehicle damage on explosion created
 
+
 Mines::CreateEx(objectid,type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,worldid,interiorid,playerid,Float:streamdistance,teamid = ANY_TEAM,detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,Float:vehicle_damage=-1.0);
-
 Mines::Destroy(mobid);
-
 Mines::GetExplodeVisibility();
-Mines::SetExplodeVisibility(Float:explode_stream);
-[/php]
+Mines::SetExplodeVisibility(Float:streamdistance);
+Mines::ForceRespawn(mobid);
+Mines::Count();
+Mines::GetObjectID(mobid);
+Mines::GetAreaID(mobid);
+Mines::GetPos(mobid,&Float:x,&Float:y,&Float:z);
+Mines::SetPos(mobid,Float:x,Float:y,Float:z);
+Mines::GetRot(mobid,&Float:rx,&Float:ry,&Float:rz);
+Mines::SetRot(mobid,Float:rx,Float:ry,Float:rz);
+Mines::GetDetectionRange(mobid,&Float:detection_range);
+Mines::SetDetectionRange(mobid,Float:detection_range);
+Mines::GetExplodeRadius(mobid,&Float:explode_radius);
+Mines::SetExplodeRadius(mobid,Float:explode_radius);
+Mines::GetHealth(mobid,&Float:health);
+Mines::SetHealth(mobid,Float:health);
+Mines::GetMaxHealth(mobid,&Float:health);
+Mines::SetMaxHealth(mobid,Float:health);
+Mines::GetVirtualWorld(mobid);
+Mines::SetVirtualWorld(mobid,worldid);
+Mines::GetInterior(mobid);
+Mines::SetInterior(mobid,interiorid);
+Mines::GetStreamDistance(mobid,&Float:streamdistance);
+Mines::SetStreamDistance(mobid,Float:streamdistance);
+Mines::GetTeam(mobid);
+Mines::SetTeam(mobid,teamid);
+Mines::GetType(mobid);
+Mines::SetType(mobid,type);
+Mines::GetRespawnTime(mobid);
+Mines::SetRespawnTime(mobid,respawntime);
+Mines::GetDamage(mobid);
+Mines::SetDamage(mobid,Float:damage);
+Mines::GetVehicleDamage(mobid);
+Mines::SetVehicleDamage(mobid,Float:damage);
+Mines::Update(variable);
+
+Extended Grenade Functions:
+Mines::GetEffectVisibility();
+Mines::SetEffectVisibility(Float:streamdistance);
+Mines::GetSpecialWeapon(mobid);
+Mines::SetSpecialWeapon(mobid,special_weaponid);
+Mines::GetEffectID(mobid);
+Mines::SetEffectID(mobid,effectid);
+Mines::GetEffectDMG(mobid);
+Mines::SetEffectDMG(mobid,Float:damage);
+Mines::GetEffectVDMG(mobid);
+Mines::SetEffectVDMG(mobid,Float:veh_damage);
+Mines::GetEffectTime(mobid);
+Mines::SetEffectTime(mobid,seconds);
+[/code]
 
 [b]Callbacks:[/b]
-[php]
+[code]
 OnMineDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,Float:radius,damagerid);
 
 types:
 MINE_DESTROY_TYPE_DETECT  //When mine has been destroyed by detection range
 MINE_DESTROY_TYPE_KILL    //When mine has been destroyed by player shoot
-[/php]
+[/code]
 
 [b]Mine Object:[/b]
-[php]
+[code]
 MINE_OBJECT_STANDARD //default
 MINE_OBJECT_UNDERWATER
 MINE_OBJECT_LASER
 MINE_OBJECT_PIZZA
-[/php]
+[/code]
 
 [b]Example Pawn Code:[/b]
-[php]
+[code]
 #include <a_samp>
 #include <streamer>
-#include <ADM/3DTryg>
+#include <3DTryg>
 #include <Mines>
 
 public OnFilterScriptInit(){
@@ -72,10 +117,10 @@ public OnFilterScriptInit(){
 
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Example Command:[/b]
-[php]
+[code]
 CMD:addmine(playerid,params[]){
 	if(!IsPlayerAdmin(playerid)) return 0;
 	
@@ -119,16 +164,13 @@ CMD:delmine(playerid,params[]){
 	}
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/Mines.inc]Mines.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=http://adm.ct8.pl/d/ExtendedGrenade.inc]ExtendedGrenade.inc[/url] [url=https://adm.ct8.pl/r/ExtendedGrenade][color=#003D00][b]Thread[/b][/color][/url]
+[url=https://adm.ct8.pl/cloud/Libs/Mines/Mines.inc]Mines.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
 
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=Mines%20Bug]Bug Report[/url][/i]

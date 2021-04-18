@@ -8,32 +8,32 @@ What is that ? This is the script allows you to store much object offsets for al
 
 [b]Installation:[/b]
 - Create directory /scriptfiles/SOI
-[php]
+[code]
 #include <ADM/SOI>
-[/php]
+[/code]
 
 [b]Functions:[/b]
-[php]
+[code]
 SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);
-[/php]
+[/code]
 
 [b]Cache Functions (For edit SOI files):[/b]
-[php]
+[code]
 SOI::GetDefaultSkinOffset(&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);
 SOI::SetDefaultSkinOffset(bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0);
 SOI::GetTempSkinOffset(skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=1.0,&Float:sy=1.0,&Float:sz=1.0);
 SOI::SetTempSkinOffset(skinid,bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0);
 SOI::LoadTempData(modelid);
 SOI::DumpTempData();
-[/php]
+[/code]
 
 [b]Options:[/b]
-[php]
+[code]
 DISABLE_SOI_CACHE - Disable Cache Functions
-[/php]
+[/code]
 
 [b]Example code:[/b]
-[php]
+[code]
 CMD:soinewsession(playerid,params[]){
 	new modelid = strval(params);
 	SOI::LoadTempData(modelid);
@@ -50,7 +50,7 @@ SOI::SetTempSkinOffset(skinid,bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry
 
 //SetPlayerAttachedObject
 SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);
-[/php]
+[/code]
 
 [b]Download[/b]
 [url=http://adm.ct8.pl/d/SOI.inc]SOI.inc[/url]

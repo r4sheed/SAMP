@@ -4,7 +4,7 @@ Hello, I would like to present you the Hunting System.
 [url]https://www.youtube.com/watch?v=gySSTtjFRB0[/url]
 
 [b]Functions:[/b]
-[php]
+[code]
 Hunting::Create(type,Float:x,Float:y,Float:z,Float:health,respawntime,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=200.0,moving_area = 0);
 Hunting::Destroy(mobid);
 Hunting::Respawn(mobid);
@@ -45,19 +45,19 @@ Hunting::IsDead(mobid);
 Hunting::IsScared(mobid);
 Hunting::IsStopped(mobid);
 Hunting::IsMoving(mobid);
-[/php]
+[/code]
 
 [b]Extended Functions:[/b]
-[php]
+[code]
 Hunting::Count();
 Hunting::GetKey();
 Hunting::SetKey(key);
 Hunting::GetFreeID();
 Hunting::GetActiveMob(playerid,mob_state);
-[/php]
+[/code]
 
 [b]Callbacks:[/b]
-[php]
+[code]
 OnPlayerTakeHuntDrop(playerid,mobid,drop);
 OnPlayerKillHuntAnimal(playerid,mobid);
 OnPlayerApproachingAnimal(playerid,mobid,mob_state);
@@ -66,10 +66,10 @@ OnAnimalTakeDamage(mobid,playerid,Float:amount,weaponid);
 OnHuntAnimalRespawn(mobid);
 OnAnimalScareStateChanged(mobid,playerid,isscared);
 OnPlayerHuntDropStateChange(playerid,mobid,drop_state); //only called if press time > 0
-[/php]
+[/code]
 
 [b]Definitions:[/b]
-[php]
+[code]
 //Config
 MAX_HUNTING_ANIMALS     //default is 100 allowed to redefine
 HUNTING_UPDATE_INTERVAL //default is 500 allowed to redefine
@@ -91,14 +91,14 @@ HUNTING_DROP_STATE_INTERRUPT
 //Other
 INVALID_HUNTING_ID
 HUNTING_NO_AUTO_RESPAWN //disable auto respawn (respawntime param)
-[/php]
+[/code]
 
 [b]Example Pawn Code:[/b]
-[php]
+[code]
 #include <a_samp>
 #include <streamer>
 #include <ColAndreas>
-#include <ADM/3DTryg>
+#include <3DTryg>
 #include <Hunting>
 
 public OnFilterScriptInit(){
@@ -175,16 +175,13 @@ public OnPlayerHuntDropStateChange(playerid,mobid,drop_state){
 	}
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/Hunting.inc]Hunting.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
+[url=https://adm.ct8.pl/cloud/Libs/Hunting/Hunting.inc]Hunting.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
 
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=Hunting%20Bug]Bug Report[/url][/i]

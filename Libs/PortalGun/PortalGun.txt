@@ -5,43 +5,40 @@ Hello, I would like to present you the Portal Gun Script
 [url]https://www.youtube.com/watch?v=wDBgtBY-cPs[/url]
 
 [b]Download:[/b]
-[url=http://adm.ct8.pl/d/PortalGun.inc]PortalGun.inc[/url]
-[url=http://adm.ct8.pl/d/3DTryg.inc]3DTryg.inc[/url] [url=https://adm.ct8.pl/r/3DTryg][color=#003D00][b]Thread[/b][/color][/url]
-[url=https://github.com/Pottus/ColAndreas/releases]ColAndreas Plugin[/url]
+[url=https://adm.ct8.pl/cloud/Libs/PortalGun/PortalGun.inc]PortalGun.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
 
 [b]Installation:[/b]
-[php]
-#include <ADM/3DTryg>
+[code]
+#include <3DTryg>
 #include <PortalGun>
-[/php]
+[/code]
 
 [b]Functions:[/b]
-[php]
-TogglePrivatePortalGun(bool:toggle);//default: false
+[code]
+TogglePrivatePortalGun(bool:toggle);            //default: false
 bool:IsTogglePrivatePortalGun();
-TogglePortalGunForAll(bool:toggle); //default: true
+ToggleUseTeamPortalGun(bool:toggle);            //default: false
+bool:IsToggleUseTeamPortalGun();
+TogglePortalGunForAll(bool:toggle);             //default: true
 bool:IsTogglePortalGunForAll();
-TogglePortalGunForPlayer(playerid,bool:toggle); //default: false
-bool:IsTogglePortalGunForPlayer(playerid);
+TogglePortalGunForPlayer(playerid,toggle);      //default: 0
+IsTogglePortalGunForPlayer(playerid);
 Float:GetPortalGunSpeed(playerid);
 SetPortalGunSpeed(playerid,Float:speed);
 Float:GetPortalGunStreamDistance();
 SetPortalGunStreamDistance(Float:streamdistance);
 ForceOpenPortalGunRing(playerid,portal_id,Float:ox,Float:oy,Float:oz,Float:tx,Float:ty,Float:tz,worldid,interiorid);
 ForceClosePortalGunRing(playerid);
-ToggleUseTeamPortalGun(bool:toggle);
-IsToggleUseTeamPortalGun();
-[/php]
+[/code]
 
 [b]Activation:[/b]
-[php]
+[code]
 Weapon: Country Rifle
 Y - Change Ring
-[/php]
+[/code]
 
 [i][b]Notice:[/b]
 Filterscript not exist because filterscripts have [b]limits.[/b]
 This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
-
-[i][b]Non-Registered Users:[/b]
-[url=http://adm.ct8.pl/report/?title=PortalGun%20Bug]Bug Report[/url][/i]

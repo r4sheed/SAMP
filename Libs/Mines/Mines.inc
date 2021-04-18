@@ -1,82 +1,73 @@
-/**********************************************************************************************************************************
- *                                                                                                                                *
- *                                                 Military Dynamic Mines System                                                  *
- *                                                                                                                                *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                            *
- *                                                                                                                                *
- * Website: https://adm.ct8.pl                                                                                                    *
- *                                                                                                                                *
- * Plugins: Streamer                                                                                                              *
- * Modules: 3DTryg                                                                                                                *
- *                                                                                                                                *
- * File Version: 2.2.1                                                                                                            *
- * Streamer Version: 2.9.4                                                                                                        *
- * 3DTryg Version: 4.8.6                                                                                                          *
- *                                                                                                                                *
- * Functions:                                                                                                                     *
- * Mines::Create(type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,                *
- *                   worldid,interiorid,playerid,Float:streamdistance,mine_object = MINE_OBJECT_STANDARD,teamid = ANY_TEAM,       *
- *                   detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,                         *
- *                   Float:vehicle_damage=-1.0);                                                                                  *
- * Mines::CreateEx(objectid,type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,     *
- *                     Float:rx,Float:ry,Float:rz,worldid,interiorid,playerid,Float:streamdistance,teamid = ANY_TEAM,             *
- *                     detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,                       *
- *                     Float:vehicle_damage=-1.0);                                                                                *
- * Mines::Destroy(mobid);                                                                                                         *
- * Mines::GetExplodeVisibility();                                                                                                 *
- * Mines::SetExplodeVisibility(Float:streamdistance);                                                                             *
- * Mines::ForceRespawn(mobid);                                                                                                    *
- * Mines::Count();                                                                                                                *
- * Mines::GetObjectID(mobid);                                                                                                     *
- * Mines::GetAreaID(mobid);                                                                                                       *
- * Mines::GetPos(mobid,&Float:x,&Float:y,&Float:z);                                                                               *
- * Mines::SetPos(mobid,Float:x,Float:y,Float:z);                                                                                  *
- * Mines::GetRot(mobid,&Float:rx,&Float:ry,&Float:rz);                                                                            *
- * Mines::SetRot(mobid,Float:rx,Float:ry,Float:rz);                                                                               *
- * Mines::GetDetectionRange(mobid,&Float:detection_range);                                                                        *
- * Mines::SetDetectionRange(mobid,Float:detection_range);                                                                         *
- * Mines::GetExplodeRadius(mobid,&Float:explode_radius);                                                                          *
- * Mines::SetExplodeRadius(mobid,Float:explode_radius);                                                                           *
- * Mines::GetHealth(mobid,&Float:health);                                                                                         *
- * Mines::SetHealth(mobid,Float:health);                                                                                          *
- * Mines::GetMaxHealth(mobid,&Float:health);                                                                                      *
- * Mines::SetMaxHealth(mobid,Float:health);                                                                                       *
- * Mines::GetVirtualWorld(mobid);                                                                                                 *
- * Mines::SetVirtualWorld(mobid,worldid);                                                                                         *
- * Mines::GetInterior(mobid);                                                                                                     *
- * Mines::SetInterior(mobid,interiorid);                                                                                          *
- * Mines::GetStreamDistance(mobid,&Float:streamdistance);                                                                         *
- * Mines::SetStreamDistance(mobid,Float:streamdistance);                                                                          *
- * Mines::GetTeam(mobid);                                                                                                         *
- * Mines::SetTeam(mobid,teamid);                                                                                                  *
- * Mines::GetType(mobid);                                                                                                         *
- * Mines::SetType(mobid,type);                                                                                                    *
- * Mines::GetRespawnTime(mobid);                                                                                                  *
- * Mines::SetRespawnTime(mobid,respawntime);                                                                                      *
- * Mines::GetDamage(mobid);                                                                                                       *
- * Mines::SetDamage(mobid,Float:damage);                                                                                          *
- * Mines::GetVehicleDamage(mobid);                                                                                                *
- * Mines::SetVehicleDamage(mobid,Float:damage);                                                                                   *
- * Mines::Update(variable);                                                                                                       *
- *                                                                                                                                *
- * Extended Grenade Functions:                                                                                                    *
- * Mines::GetEffectVisibility();                                                                                                  *
- * Mines::SetEffectVisibility(Float:streamdistance);                                                                              *
- * Mines::GetSpecialWeapon(mobid);                                                                                                *
- * Mines::SetSpecialWeapon(mobid,special_weaponid);                                                                               *
- * Mines::GetEffectID(mobid);                                                                                                     *
- * Mines::SetEffectID(mobid,effectid);                                                                                            *
- * Mines::GetEffectDMG(mobid);                                                                                                    *
- * Mines::SetEffectDMG(mobid,Float:damage);                                                                                       *
- * Mines::GetEffectVDMG(mobid);                                                                                                   *
- * Mines::SetEffectVDMG(mobid,Float:veh_damage);                                                                                  *
- * Mines::GetEffectTime(mobid);                                                                                                   *
- * Mines::SetEffectTime(mobid,seconds);                                                                                           *
- *                                                                                                                                *
- * Callbacks:                                                                                                                     *
- * OnMineDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,Float:radius,damagerid);                                             *
- *                                                                                                                                *
- **********************************************************************************************************************************/
+/*
+ Mines.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer
+ Modules: 3DTryg
+
+ File Version: 2.2.1
+ Streamer Version: 2.9.4
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ Mines::Create(type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,mine_object = MINE_OBJECT_STANDARD,teamid = ANY_TEAM,detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,Float:vehicle_damage=-1.0);
+ Mines::CreateEx(objectid,type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,worldid,interiorid,playerid,Float:streamdistance,teamid = ANY_TEAM,detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,Float:vehicle_damage=-1.0);
+ Mines::Destroy(mobid);
+ Mines::GetExplodeVisibility();
+ Mines::SetExplodeVisibility(Float:streamdistance);
+ Mines::ForceRespawn(mobid);
+ Mines::Count();
+ Mines::GetObjectID(mobid);
+ Mines::GetAreaID(mobid);
+ Mines::GetPos(mobid,&Float:x,&Float:y,&Float:z);
+ Mines::SetPos(mobid,Float:x,Float:y,Float:z);
+ Mines::GetRot(mobid,&Float:rx,&Float:ry,&Float:rz);
+ Mines::SetRot(mobid,Float:rx,Float:ry,Float:rz);
+ Mines::GetDetectionRange(mobid,&Float:detection_range);
+ Mines::SetDetectionRange(mobid,Float:detection_range);
+ Mines::GetExplodeRadius(mobid,&Float:explode_radius);
+ Mines::SetExplodeRadius(mobid,Float:explode_radius);
+ Mines::GetHealth(mobid,&Float:health);
+ Mines::SetHealth(mobid,Float:health);
+ Mines::GetMaxHealth(mobid,&Float:health);
+ Mines::SetMaxHealth(mobid,Float:health);
+ Mines::GetVirtualWorld(mobid);
+ Mines::SetVirtualWorld(mobid,worldid);
+ Mines::GetInterior(mobid);
+ Mines::SetInterior(mobid,interiorid);
+ Mines::GetStreamDistance(mobid,&Float:streamdistance);
+ Mines::SetStreamDistance(mobid,Float:streamdistance);
+ Mines::GetTeam(mobid);
+ Mines::SetTeam(mobid,teamid);
+ Mines::GetType(mobid);
+ Mines::SetType(mobid,type);
+ Mines::GetRespawnTime(mobid);
+ Mines::SetRespawnTime(mobid,respawntime);
+ Mines::GetDamage(mobid);
+ Mines::SetDamage(mobid,Float:damage);
+ Mines::GetVehicleDamage(mobid);
+ Mines::SetVehicleDamage(mobid,Float:damage);
+ Mines::Update(variable);
+
+ Extended Grenade Functions:
+ Mines::GetEffectVisibility();
+ Mines::SetEffectVisibility(Float:streamdistance);
+ Mines::GetSpecialWeapon(mobid);
+ Mines::SetSpecialWeapon(mobid,special_weaponid);
+ Mines::GetEffectID(mobid);
+ Mines::SetEffectID(mobid,effectid);
+ Mines::GetEffectDMG(mobid);
+ Mines::SetEffectDMG(mobid,Float:damage);
+ Mines::GetEffectVDMG(mobid);
+ Mines::SetEffectVDMG(mobid,Float:veh_damage);
+ Mines::GetEffectTime(mobid);
+ Mines::SetEffectTime(mobid,seconds);
+
+ Callbacks:
+ OnMineDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,Float:radius,damagerid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)

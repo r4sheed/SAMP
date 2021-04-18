@@ -1,6 +1,6 @@
 ﻿Hello, I would like to present include allowing encrypt file.
 
-[php]
+[code]
 /**********************************************************************************************************************************
  *                                                                                                                                *
  *                                                 )(   ADM Encryption File   )(                                                  *
@@ -81,10 +81,10 @@
  * adm.ct8.pl/admkg                                                                                                               *
  *                                                                                                                                *
  **********************************************************************************************************************************/
-[/php]
+[/code]
 
 [b]Return values:[/b]
-[php]
+[code]
 ADM_ERROR_CODE_UNEXEC       //function unexecutable
 ADM_ERROR_CODE_OK           //success
 ADM_ERROR_CODE_INPUT        //input file not exist
@@ -99,10 +99,10 @@ ADM_ERROR_CODE_PASSWORD     //invalid password length
 ADM_ERROR_CODE_MD5          //invalid MD5 Load
 ADM_ERROR_CODE_DMP_NAME     //invalid dump file name
 ADM_ERROR_CODE_DMP_IDX      //invalid dump file index
-[/php]
+[/code]
 
 [b]Key types:[/b]
-[php]
+[code]
 KEY_TYPE_UNKNOWN            //invalid key type
 KEY_TYPE_HEXNEGATIVE
 KEY_TYPE_ROLLX
@@ -110,10 +110,10 @@ KEY_TYPE_ADMx32
 KEY_TYPE_ADMx64
 KEY_TYPE_ADMx128
 KEY_TYPE_ADMx256
-[/php]
+[/code]
 
 [b]Max key length:[/b]
-[php]
+[code]
 MAX_KEY_LEN_HEXNEGATIVE
 MAX_KEY_LEN_ROLLX
 MAX_KEY_LEN_ADMx32
@@ -121,10 +121,10 @@ MAX_KEY_LEN_ADMx64
 MAX_KEY_LEN_ADMx128
 MAX_KEY_LEN_ADMx256
 MAX_KEY_LEN_ADMx512
-[/php]
+[/code]
 
 [b]Example (ADMx32):[/b]
-[php]
+[code]
 Encrypt Key: 191 12 239 86
 Decrypt Key: 65 244 17 170
 
@@ -137,10 +137,10 @@ b = 256-a
 256 - 12 = 244
 256 - 239 = 17
 256 - 86 = 170
-[/php]
+[/code]
 
 [b]Pawn Code for File:[/b]
-[php]new edi;
+[code]new edi;
 
 edi = ADM::ADMx32("test.txt","test.adm","191 12 239 86");
 
@@ -155,10 +155,10 @@ switch(edi){
 		printf("%s",ADM::GetErrorName(edi));
 	}
 }
-[/php]
+[/code]
 
 [b]Pawn Code for String:[/b]
-[php]
+[code]
 new buffer[256];
 
 ADM::ADMx32String("This is test string", buffer, "191 12 239 86");
@@ -167,10 +167,10 @@ printf("Binary data: '%s'",buffer); // 'tXÉßubv3qbĘßcČ(zV'
 new buffer2[512]; //2 * sizeof(buffer)
 ADM::StringToHexString(buffer,buffer2);
 printf("Hex data: '%s'",buffer2); // '137458C9DF756276337162CADF7F63C8287A56'
-[/php]
+[/code]
 
 [b]Pawn Code for Dump File:[/b]
-[php]
+[code]
 #define SCRIPT_DUMP_KEY	"191 12 239 86"
 
 new GameModeLog = INVALID_DUMP_FILE,
@@ -211,10 +211,10 @@ public OnGameModeExit(){ //OnFilterScriptExit
 	
 	return 1;
 }
-[/php]
+[/code]
 
 [b]Pawn code for Split/Merge File:[/b]
-[php]
+[code]
 new upperbound_index, edi;
 
 edi = ADM::SplitFile("test.db","test_part",512,upperbound_index);
@@ -222,7 +222,7 @@ printf("[SplitFile] %d upp: %d",edi,upperbound_index);
 
 edi = ADM::MergeFileGroup("test_part","new.db",upperbound_index);
 printf("[MergeFileGroup] %d",edi);
-[/php]
+[/code]
 
 [b]Comments:[/b]
 a) Max file size:
@@ -239,14 +239,14 @@ b) File coding
 [url=http://adm.ct8.pl/d/SA:MP%20Dump%20File.zip]Dump File Open[/url]
 
 [b]Install:[/b]
-[php]
+[code]
 #include <MD5>
 #include <ADM/ADM>
-[/php]
+[/code]
 
 [b]Key Generator:[/b]
 [url]http://adm.ct8.pl/admkg[/url]
 
 
-[i][b]Non-Registered Users:[/b]
+
 [url=http://adm.ct8.pl/report/?title=ADM%20Bug]Bug Report[/url][/i]

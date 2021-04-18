@@ -1,6 +1,6 @@
 ﻿This include contain function for fast loop for player.
 
-[php]
+[code]
 /****************************************************************************************************
  *                                                                                                  *
  *                                      )(   FoX Foreach   )(                                       *
@@ -47,12 +47,12 @@
  * bool:FoxRemoveCharacter(playerid);                                                               *
  *                                                                                                  *
  ****************************************************************************************************/
-[/php]
+[/code]
 
 Differences between foreach.inc and FoxForeach.inc
 
 foreach.inc:
-[php]
+[code]
 foreach(new i : Player){
 	SendClientMessage(i,0xFFFFFFFF,"Hello players!");
 }
@@ -64,10 +64,10 @@ foreach(new i : Bot){
 foreach(new i : Character){
 	SendClientMessage(i,0xFFFFFFFF,"Hello all!");
 }
-[/php]
+[/code]
 
 FoxForeach.inc:
-[php]
+[code]
 FoxForeach(i,Player){
 	SendClientMessage(i,0xFFFFFFFF,"Hello players!");
 }
@@ -79,7 +79,7 @@ FoxForeach(i,Bot){
 FoxForeach(i,Character){
 	SendClientMessage(i,0xFFFFFFFF,"Hello all!");
 }
-[/php]
+[/code]
 
 Speed Test for Operation:
 
@@ -99,5 +99,5 @@ Test #2 Server Crash. Why ?
 
 [url=http://adm.ct8.pl/d/FoxForeach.inc]FoxForeach.inc][img]http://i.imgur.com/BustGcF.gif[/img][/url]
 
-[i][b]Non-Registered Users:[/b]
+
 [url=http://adm.ct8.pl/report/?title=FoxForeach%20Bug]Bug Report[/url][/i]

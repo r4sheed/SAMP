@@ -1,36 +1,33 @@
-/************************************************************************************************************************************
- *                                                                                                                                  *
- *                                                        Portal Gun Script                                                         *
- *                                                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                              *
- *                                                                                                                                  *
- * Website: https://adm.ct8.pl                                                                                                      *
- *                                                                                                                                  *
- * Plugins: Streamer, ColAndreas                                                                                                    *
- * Modules: 3DTryg                                                                                                                  *
- *                                                                                                                                  *
- * File Version: 1.2.1                                                                                                              *
- * Streamer Version: 2.9.4                                                                                                          *
- * ColAndreas Version: 1.4.0                                                                                                        *
- * 3DTryg Version: 4.8.6                                                                                                            *
- *                                                                                                                                  *
- * Functions:                                                                                                                       *
- * TogglePrivatePortalGun(bool:toggle);            //default: false                                                                 *
- * bool:IsTogglePrivatePortalGun();                                                                                                 *
- * ToggleUseTeamPortalGun(bool:toggle);            //default: false                                                                 *
- * bool:IsToggleUseTeamPortalGun();                                                                                                 *
- * TogglePortalGunForAll(bool:toggle);             //default: true                                                                  *
- * bool:IsTogglePortalGunForAll();                                                                                                  *
- * TogglePortalGunForPlayer(playerid,toggle);      //default: 0                                                                     *
- * IsTogglePortalGunForPlayer(playerid);                                                                                            *
- * Float:GetPortalGunSpeed(playerid);                                                                                               *
- * SetPortalGunSpeed(playerid,Float:speed);                                                                                         *
- * Float:GetPortalGunStreamDistance();                                                                                              *
- * SetPortalGunStreamDistance(Float:streamdistance);                                                                                *
- * ForceOpenPortalGunRing(playerid,portal_id,Float:ox,Float:oy,Float:oz,Float:tx,Float:ty,Float:tz,worldid,interiorid);             *
- * ForceClosePortalGunRing(playerid);                                                                                               *
- *                                                                                                                                  *
- ************************************************************************************************************************************/
+/*
+ PortalGun.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer, ColAndreas
+ Modules: 3DTryg
+
+ File Version: 1.2.1
+ Streamer Version: 2.9.4
+ ColAndreas Version: 1.4.0
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ TogglePrivatePortalGun(bool:toggle);            //default: false
+ bool:IsTogglePrivatePortalGun();
+ ToggleUseTeamPortalGun(bool:toggle);            //default: false
+ bool:IsToggleUseTeamPortalGun();
+ TogglePortalGunForAll(bool:toggle);             //default: true
+ bool:IsTogglePortalGunForAll();
+ TogglePortalGunForPlayer(playerid,toggle);      //default: 0
+ IsTogglePortalGunForPlayer(playerid);
+ Float:GetPortalGunSpeed(playerid);
+ SetPortalGunSpeed(playerid,Float:speed);
+ Float:GetPortalGunStreamDistance();
+ SetPortalGunStreamDistance(Float:streamdistance);
+ ForceOpenPortalGunRing(playerid,portal_id,Float:ox,Float:oy,Float:oz,Float:tx,Float:ty,Float:tz,worldid,interiorid);
+ ForceClosePortalGunRing(playerid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
