@@ -45,7 +45,7 @@
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
-		#error [ADM] This include requires SA:MP version 0.3.7 (adm.ct8.pl/r/download)
+		#error [ADM] This include requires SA:MP version 0.3.7
 	#endif
 #else
 	#error [ADM] This include requires SA:MP Include
@@ -60,7 +60,7 @@
 #endif
 
 #if !defined _route_rand
-	#error [ADM] This include requires route_rand.inc and route_rand.bin (adm.ct8.pl/r/download)
+	#error [ADM] This include requires route_rand.inc and route_rand.bin
 #endif
 
 //Check Version 3DTryg.inc

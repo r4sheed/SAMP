@@ -649,9 +649,3 @@ c) Rotated Chunk:
 - SphericalSector
 - Cube3D
 - Cone3D
-
-Available for:
-[code]
-SA:MP 0.3.7
-SA:MP 0.3 DL
-[/code]

@@ -73,9 +73,6 @@
  * ADM_ERROR_CODE_DMP_NAME     //Invalid dump file name                                                                           *
  * ADM_ERROR_CODE_DMP_IDX      //Invalid dump file index                                                                          *
  *                                                                                                                                *
- * Key Generator:                                                                                                                 *
- * adm.ct8.pl/admkg                                                                                                               *
- *                                                                                                                                *
  **********************************************************************************************************************************/
 
 #if !defined sscanf

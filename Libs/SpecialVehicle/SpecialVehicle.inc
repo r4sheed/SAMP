@@ -1,65 +1,62 @@
-/****************************************************************************************************************************************************
- *                                                                                                                                                  *
- *                                                                 Special Vehicle                                                                  *
- *                                                                                                                                                  *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                                              *
- * Contributors: TDI97, rasheed                                                                                                                     *
- *                                                                                                                                                  *
- * Website: https://adm.ct8.pl                                                                                                                      *
- *                                                                                                                                                  *
- * Plugins: ColAndreas, Streamer                                                                                                                    *
- * Modules: 3DTryg, EVF, Missile, VehPara, Mines, ExtendedGrenade                                                                                   *
- *                                                                                                                                                  *
- * File Version: 1.0.0                                                                                                                              *
- * ColAndreas Version: 1.4.0                                                                                                                        *
- * Streamer Version: 2.9.4                                                                                                                          *
- * 3DTryg Version: 4.8.6                                                                                                                            *
- *                                                                                                                                                  *
- * Functions:                                                                                                                                       *
- * SpecialVehicle::IsToggledSpecialAbility(vehicleid);                                                                                              *
- * SpecialVehicle::ToggleSpecialAbility(vehicleid,bool:toggle);                                                                                     *
- * SpecialVehicle::GetSpecialVehicleHealth(vehicleid);                                                                                              *
- * SpecialVehicle::SetDefaultDamage(vehicleid);                                                                                                     *
- * SpecialVehicle::EnterPlayer(playerid);                                                                                                           *
- * SpecialVehicle::ExitPlayer(playerid);                                                                                                            *
- * SpecialVehicle::IsPlayerInSpecialVeh(playerid);                                                                                                  *
- * SpecialVehicle::GetPlayerSpecialVehType(playerid);                                                                                               *
- * SpecialVehicle::GetVehicleAmmo(vehicleid);                                                                                                       *
- * SpecialVehicle::SetVehicleAmmo(vehicleid,ammo);                                                                                                  *
- * SpecialVehicle::GetVehicleSecondaryAmmo(vehicleid);                                                                                              *
- * SpecialVehicle::SetVehicleSecondaryAmmo(vehicleid,ammo);                                                                                         *
- * SpecialVehicle::GetDamage(vehicleid);                                                                                                            *
- * SpecialVehicle::SetDamage(vehicleid,Float:damage);                                                                                               *
- * SpecialVehicle::GetVehicleDamage(vehicleid);                                                                                                     *
- * SpecialVehicle::SetVehicleDamage(vehicleid,Float:vehicle_damage);                                                                                *
- * SpecialVehicle::IsToggledTrunkInterior();                                                                                                        *
- * SpecialVehicle::ToggleTrunkInterior(bool:toggle);                                                                                                *
- * SpecialVehicle::IsToggledTrailerInterior();                                                                                                      *
- * SpecialVehicle::ToggleTrailerInterior(bool:toggle);                                                                                              *
- * SpecialVehicle::IsToggledMaverickMinigun(vehicleid);                                                                                             *
- * SpecialVehicle::ToggleMaverickMinigun(vehicleid,bool:toggle);                                                                                    *
- * SpecialVehicle::Create(modelid,Float:x,Float:y,Float:z,Float:angle,color1,color2,respawn_delay = -1,addsiren = 0,worldid = 0,interiorid = 0);    *
- * SpecialVehicle::CreateMOC(Float:x,Float:y,Float:z,Float:z_angle,respawn_delay = -1,addsiren = 0,worldid = 0,interiorid = 0);                     *
- * SpecialVehicle::CreateMOCIncluded(vehicleid,respawn_delay = -1,addsiren = 0);                                                                    *
- *                                                                                                                                                  *
- * Callbacks:                                                                                                                                       *
- * OnPlayerEnterVehIntRequest(playerid,vehicleid);                                                                                                  *
- * OnPlayerEnterSpecialSeat(playerid);                                                                                                              *
- * OnPlayerEnterOppressor(playerid);                                                                                                                *
- * OnPlayerUseCannonFail(playerid);                                                                                                                 *
- * OnPlayerShootRocketFail(playerid);                                                                                                               *
- * OnSpecialTrailerNotConnected(playerid);                                                                                                          *
- * OnPlayerShootOPRocketFail(playerid);                                                                                                             *
- * OnPlayerEnterVehInterior(playerid,vehicleid,with_vehicle);                                                                                       *
- * OnPlayerExitVehInterior(playerid,vehicleid,with_vehicle);                                                                                        *
- * OnSpecialVehicleHasNoAmmo(playerid,vehicleid);                                                                                                   *
- * OnSpecialTrailerAttachFail(playerid,vehicleid,trailerid);                                                                                        *
- *                                                                                                                                                  *
- ****************************************************************************************************************************************************/
+/*
+ SpecialVehicle.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: TDI97, rasheed
+
+ Website: https://adm.ct8.pl
+
+ Plugins: ColAndreas, Streamer
+ Modules: 3DTryg, EVF, Missile, VehPara, Mines, ExtendedGrenade
+
+ File Version: 1.0.0
+ ColAndreas Version: 1.4.0
+ Streamer Version: 2.9.4
+ 3DTryg Version: 4.8.6
+
+ Functions:
+ SpecialVehicle::IsToggledSpecialAbility(vehicleid);
+ SpecialVehicle::ToggleSpecialAbility(vehicleid,bool:toggle);
+ SpecialVehicle::GetSpecialVehicleHealth(vehicleid);
+ SpecialVehicle::SetDefaultDamage(vehicleid);
+ SpecialVehicle::EnterPlayer(playerid);
+ SpecialVehicle::ExitPlayer(playerid);
+ SpecialVehicle::IsPlayerInSpecialVeh(playerid);
+ SpecialVehicle::GetPlayerSpecialVehType(playerid);
+ SpecialVehicle::GetVehicleAmmo(vehicleid);
+ SpecialVehicle::SetVehicleAmmo(vehicleid,ammo);
+ SpecialVehicle::GetVehicleSecondaryAmmo(vehicleid);
+ SpecialVehicle::SetVehicleSecondaryAmmo(vehicleid,ammo);
+ SpecialVehicle::GetDamage(vehicleid);
+ SpecialVehicle::SetDamage(vehicleid,Float:damage);
+ SpecialVehicle::GetVehicleDamage(vehicleid);
+ SpecialVehicle::SetVehicleDamage(vehicleid,Float:vehicle_damage);
+ SpecialVehicle::IsToggledTrunkInterior();
+ SpecialVehicle::ToggleTrunkInterior(bool:toggle);
+ SpecialVehicle::IsToggledTrailerInterior();
+ SpecialVehicle::ToggleTrailerInterior(bool:toggle);
+ SpecialVehicle::IsToggledMaverickMinigun(vehicleid);
+ SpecialVehicle::ToggleMaverickMinigun(vehicleid,bool:toggle);
+ SpecialVehicle::Create(modelid,Float:x,Float:y,Float:z,Float:angle,color1,color2,respawn_delay = -1,addsiren = 0,worldid = 0,interiorid = 0);
+ SpecialVehicle::CreateMOC(Float:x,Float:y,Float:z,Float:z_angle,respawn_delay = -1,addsiren = 0,worldid = 0,interiorid = 0);
+ SpecialVehicle::CreateMOCIncluded(vehicleid,respawn_delay = -1,addsiren = 0);
+
+ Callbacks:
+ OnPlayerEnterVehIntRequest(playerid,vehicleid);
+ OnPlayerEnterSpecialSeat(playerid);
+ OnPlayerEnterOppressor(playerid);
+ OnPlayerUseCannonFail(playerid);
+ OnPlayerShootRocketFail(playerid);
+ OnSpecialTrailerNotConnected(playerid);
+ OnPlayerShootOPRocketFail(playerid);
+ OnPlayerEnterVehInterior(playerid,vehicleid,with_vehicle);
+ OnPlayerExitVehInterior(playerid,vehicleid,with_vehicle);
+ OnSpecialVehicleHasNoAmmo(playerid,vehicleid);
+ OnSpecialTrailerAttachFail(playerid,vehicleid,trailerid);
+*/
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
-		#error [ADM] This include requires SA:MP version 0.3.7 (adm.ct8.pl/r/download)
+		#error [ADM] This include requires SA:MP version 0.3.7
 	#endif
 #else
 	#error [ADM] This include requires SA:MP Include

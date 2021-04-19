@@ -71,7 +71,7 @@
 
 #if defined _samp_included
 	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
-		#error [ADM] This include requires SA:MP version 0.3.7 (adm.ct8.pl/r/download)
+		#error [ADM] This include requires SA:MP version 0.3.7
 	#endif
 #else
 	#error [ADM] This include requires SA:MP Include
