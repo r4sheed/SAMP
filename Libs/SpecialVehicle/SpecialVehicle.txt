@@ -1,5 +1,9 @@
 [b]Video:[/b]
-- Unavailable
+Full presentation is unavailable sorry
+
+[b]Shoft videos:[/b]
+- [url=https://www.youtube.com/watch?v=r03wfWj58Vc]SpecialVehicle #1[/url]
+- [url=https://www.youtube.com/watch?v=d26K-oZtHXY]SpecialVehicle #2[/url]
 
 [b]Screenshots:[/b]
 https://imgur.com/a/aNOUwfn
@@ -173,4 +177,5 @@ You can run demonstration script and go to Las Venturas airport for test Special
 [url=https://adm.ct8.pl/cloud/Libs/VehPara/VehPara.inc]VehPara.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/Mines/Mines.inc]Mines.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/SpecialVehicle/SpecialVehicle.inc]SpecialVehicle.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
