@@ -11,7 +11,7 @@ CreateDynamicActorWeapon(actorid,objectid,Float:offset_x,Float:offset_y,Float:of
 	GetDynamicActorFacingAngle(actorid,angle); 
 
 	ShiftOffsetToPosition(x,y,z,0.0,0.0,angle,offset_x,offset_y,offset_z,tx,ty,tz);
-	CreateDynamicObject(objectid,tx,ty,tz,rx,ry,CompRotationFloat(rz+angle)); 
+	CreateDynamicObject(objectid,tx,ty,tz,rx,ry,Tryg3D::CompressRotation(rz+angle)); 
 }
 
 CreateActorWeapon(actorid,objectid,Float:offset_x,Float:offset_y,Float:offset_z,Float:rx,Float:ry,Float:rz){ 
@@ -23,5 +23,5 @@ CreateActorWeapon(actorid,objectid,Float:offset_x,Float:offset_y,Float:offset_z,
 	GetActorFacingAngle(actorid,angle); 
 
 	ShiftOffsetToPosition(x,y,z,0.0,0.0,angle,offset_x,offset_y,offset_z,tx,ty,tz);
-	CreateDynamicObject(objectid,tx,ty,tz,rx,ry,CompRotationFloat(rz+angle)); 
+	CreateDynamicObject(objectid,tx,ty,tz,rx,ry,Tryg3D::CompressRotation(rz+angle)); 
 }
