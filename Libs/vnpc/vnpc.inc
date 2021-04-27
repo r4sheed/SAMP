@@ -7,7 +7,7 @@
  Plugins: FCNPC
  Modules: None
 
- File Version: 1.1.0
+ File Version: 1.2.0
 
  Functions:
  ShowNPCInTabList(npcid);
@@ -35,25 +35,13 @@
 
 new bool:VNPC::IsNPCVisible[MAX_PLAYERS],
 	bool:VNPC::FirstSpawn[MAX_PLAYERS];
-	
-stock VNPC::ShowNPCInTabListForPlayer(playerid,npcid){
-	if(!IsPlayerNPC(npcid)) return 0;
-	FCNPC_ShowInTabListForPlayer(npcid,playerid);
-	return 1;
-}
-
-stock VNPC::HideNPCInTabListForPlayer(playerid,npcid){
-	if(!IsPlayerNPC(npcid)) return 0;
-	FCNPC_HideInTabListForPlayer(npcid,playerid);
-	return 1;
-}
 
 stock ShowNPCInTabList(npcid){
 	if(!IsPlayerNPC(npcid)) return 0;
 	VNPC::IsNPCVisible[npcid] = true;
 	for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++){
 		if(IsPlayerConnected(i) && !IsPlayerNPC(i)){
-			VNPC::ShowNPCInTabListForPlayer(i,npcid);
+			FCNPC_ShowInTabListForPlayer(npcid,i);
 		}
 	}
 	return 1;
@@ -64,7 +52,7 @@ stock HideNPCInTabList(npcid){
 	VNPC::IsNPCVisible[npcid] = false;
 	for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++){
 		if(IsPlayerConnected(i) && !IsPlayerNPC(i)){
-			VNPC::HideNPCInTabListForPlayer(i,npcid);
+			FCNPC_HideInTabListForPlayer(npcid,i);
 		}
 	}
 	return 1;
@@ -99,7 +87,7 @@ public OnPlayerSpawn(playerid){
 		for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++){
 			if(IsPlayerConnected(i) && IsPlayerNPC(i)){
 				if(VNPC::IsNPCVisible[i]){
-					VNPC::ShowNPCInTabListForPlayer(playerid,i);
+					FCNPC_ShowInTabListForPlayer(i,playerid);
 				}
 			}
 		}
