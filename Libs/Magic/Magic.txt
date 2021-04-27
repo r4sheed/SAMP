@@ -17,22 +17,28 @@ Hello, I would like to present you the Magic Wand Script
 
 [b]Functions:[/b]
 [code]
-ToggleUseTeamMagicShoot(bool:toggle);            //default: false
-bool:IsToggleUseTeamMagicShoot();
-ToggleMagicShootForAll(bool:toggle);             //default: false
-bool:IsToggleMagicShootForAll();
-ToggleMagicShootForPlayer(playerid,bool:toggle); //default: false
-bool:IsToggleMagicShootForPlayer(playerid);
-Float:GetMagicShootDamage(playerid);
-SetMagicShootDamage(playerid,Float:amount);
-Float:GetMagicShootSpeed(playerid);
-SetMagicShootSpeed(playerid,Float:speed);
-Float:GetMagicShootRange(playerid);
-SetMagicShootRange(playerid,Float:range);
-GetMagicShootAmmo(playerid);
-SetMagicShootAmmo(playerid,ammo);
-SetMagicProjectile(playerid,modelid=18693,Float:rx=90.0,Float:ry=0.0,Float:rz=0.0,Float:offx=0.0,Float:offy=0.0,Float:offz=0.0);
-GetMagicProjectile(playerid,&modelid,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:offx=0.0,&Float:offy=0.0,&Float:offz=0.0);
+Magic::ToggleUseTeam(bool:toggle);            //default: false
+Magic::IsToggleUseTeam();
+Magic::ToggleForAll(bool:toggle);             //default: false
+Magic::IsToggleForAll();
+Magic::ToggleForPlayer(playerid,bool:toggle); //default: false
+Magic::IsToggleForPlayer(playerid);
+Magic::GetDamage(playerid);
+Magic::SetDamage(playerid,Float:amount);
+Magic::GetSpeed(playerid);
+Magic::SetSpeed(playerid,Float:speed);
+Magic::GetRange(playerid);
+Magic::SetRange(playerid,Float:range);
+Magic::GetAmmo(playerid);
+Magic::SetAmmo(playerid,ammo);
+Magic::TogglePoisoning(playerid,bool:toggle);
+Magic::IsTogglePoisoning(playerid);
+Magic::GetPoisoningTime(playerid);
+Magic::SetPoisoningTime(playerid,seconds);
+Magic::GetPoisoningDamage(playerid);
+Magic::SetPoisoningDamage(playerid,Float:damage);
+Magic::SetProjectile(playerid,modelid=18693,Float:rx=90.0,Float:ry=0.0,Float:rz=0.0,Float:offx=0.0,Float:offy=0.0,Float:offz=0.0);
+Magic::GetProjectile(playerid,&modelid,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:offx=0.0,&Float:offy=0.0,&Float:offz=0.0);
 [/code]
 
 [b]Callbacks:[/b]
@@ -46,7 +52,12 @@ MAGIC_SPEED
 MAGIC_MAX_RADIUS
 MAGIC_REFRESH_ACTION
 MAGIC_DAMAGE
+MAGIC_DOT_POISONING
+MAGIC_POISONING_TIME
 MAGIC_WEAPON_AMMO_INFINITY
+
+WEAPON_MAGIC_BULLET
+WEAPON_MAGIC_POISONING
 [/code]
 
 [b]Activation:[/b]

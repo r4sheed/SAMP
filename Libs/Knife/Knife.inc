@@ -366,8 +366,8 @@ public OnPlayerDeath(playerid, killerid, reason){
 #endif
 
 
-new CRC_KnifeInit = true,
-	CRC_KnifeExit = true;
+new bool:CRC_KnifeInit = true,
+	bool:CRC_KnifeExit = true;
 
 //Hook: OnFilterScriptInit
 public OnFilterScriptInit(){
