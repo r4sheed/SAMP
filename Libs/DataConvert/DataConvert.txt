@@ -10,7 +10,7 @@ Hello, I would like to present a simple include to convert numbers between syste
  Plugins: SScanf
  Modules: None
 
- File Version: 2.1.1
+ File Version: 2.2.0
  SScanf Version: 2.8.2
 
  Definitions:
@@ -32,8 +32,8 @@ Hello, I would like to present a simple include to convert numbers between syste
  code128(const input[],output[]);
  swap_int({Float,_}:int1,{Float,_}:int2);
  swap_string(string1[], string2[], dest1 = sizeof(string1), dest2 = sizeof(string2));
- bool:ContainInSeries(value,...);
- bool:ContainInSeriesFloat(Float:value,Float:...);
+ ContainInSeries(value,...);
+ ContainInSeriesFloat(Float:value,Float:...);
  StringEqual(string1[],string2[],ignorecase);
  StringNotEqual(string1[],string2[],ignorecase);
  base64_decode(const input[],output[]); //d:base64
@@ -42,23 +42,30 @@ Hello, I would like to present a simple include to convert numbers between syste
  strreplace(string[],const search[],const replacement[],bool:ignorecase = false,pos = 0,limit = -1,maxlength = sizeof(string));
  strlower(string[]);
  strupper(string[]);
+ DataConvert::InvertString(const input[], output[], maxdest = sizeof(output));
+ DataConvert::StringToHexString(const input[], output[], maxdest = sizeof(output));
+ DataConvert::HexStringToString(const input[], output[], maxdest = sizeof(output));
 
  File functions:
  GetFileHandleID(File:handle);
  GetFileID(File:handle);
  fcopy(const input[],output[]);
  frename(oldname[],newname[]);
+ DataConvert::FileCreate(const name[]);
+ DataConvert::MergeFile(const first_file[],const second_file[],bool:erase_second=false);
+ DataConvert::MergeFileGroup(const group_name[],const output[],upperbound_index,bool:erase_input=false);
+ DataConvert::SplitFile(const input[],const output[],max_size,&upperbound_index=0);
 
  Validators:
- bool:IsDecimalNumber(const string[]);
- bool:IsHexNumber(const string[]);
- bool:IsBinaryNumber(const string[]);
- bool:IsOctalNumber(const string[]);
- bool:IsFloatNumber(const string[]);
+ IsDecimalNumber(const string[]);
+ IsHexNumber(const string[]);
+ IsBinaryNumber(const string[]);
+ IsOctalNumber(const string[]);
+ IsFloatNumber(const string[]);
 
  Convert to Bool:
- bool:StringToBool(const string[]);
- bool:IntToBool(value);
+ StringToBool(const string[]);
+ IntToBool(value);
 
  Convert to Int:
  StringToInt(const string[]);
@@ -86,10 +93,10 @@ Hello, I would like to present a simple include to convert numbers between syste
 
  Binary Data Convert:
  FloatToInt(Float:value); //Convert Float binary data to Integer binary data !
- Float:IntToFloat(value); //Convert Integer binary data to Float binary data !
+ IntToFloat(value); //Convert Integer binary data to Float binary data !
 [/code]
 
-Examples:
+[b]Examples:[/b]
 [code]
 new File:edi = fopen("test.txt",io_readwrite);
 new id = GetFileID(edi); //returns the number of open file: 1, 2, 3, 4, ...

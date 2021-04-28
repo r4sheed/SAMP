@@ -2,6 +2,8 @@
  *                                                                                                                                *
  *                                                 )(   ADM Encryption File   )(                                                  *
  *                                                                                                                                *
+ * !!! THIS INCLUDE IS DEPRECATED !!!                                                                                             *
+ *                                                                                                                                *
  * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                            *
  *                                                                                                                                *
  * Website: https://adm.ct8.pl                                                                                                    *

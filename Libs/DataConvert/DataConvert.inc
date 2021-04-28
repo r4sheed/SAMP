@@ -8,7 +8,7 @@
  Plugins: SScanf
  Modules: None
 
- File Version: 2.1.1
+ File Version: 2.2.0
  SScanf Version: 2.8.2
 
  Definitions:
@@ -30,8 +30,8 @@
  code128(const input[],output[]);
  swap_int({Float,_}:int1,{Float,_}:int2);
  swap_string(string1[], string2[], dest1 = sizeof(string1), dest2 = sizeof(string2));
- bool:ContainInSeries(value,...);
- bool:ContainInSeriesFloat(Float:value,Float:...);
+ ContainInSeries(value,...);
+ ContainInSeriesFloat(Float:value,Float:...);
  StringEqual(string1[],string2[],ignorecase);
  StringNotEqual(string1[],string2[],ignorecase);
  base64_decode(const input[],output[]); //d:base64
@@ -40,23 +40,30 @@
  strreplace(string[],const search[],const replacement[],bool:ignorecase = false,pos = 0,limit = -1,maxlength = sizeof(string));
  strlower(string[]);
  strupper(string[]);
+ DataConvert::InvertString(const input[], output[], maxdest = sizeof(output));
+ DataConvert::StringToHexString(const input[], output[], maxdest = sizeof(output));
+ DataConvert::HexStringToString(const input[], output[], maxdest = sizeof(output));
 
  File functions:
  GetFileHandleID(File:handle);
  GetFileID(File:handle);
  fcopy(const input[],output[]);
  frename(oldname[],newname[]);
+ DataConvert::FileCreate(const name[]);
+ DataConvert::MergeFile(const first_file[],const second_file[],bool:erase_second=false);
+ DataConvert::MergeFileGroup(const group_name[],const output[],upperbound_index,bool:erase_input=false);
+ DataConvert::SplitFile(const input[],const output[],max_size,&upperbound_index=0);
 
  Validators:
- bool:IsDecimalNumber(const string[]);
- bool:IsHexNumber(const string[]);
- bool:IsBinaryNumber(const string[]);
- bool:IsOctalNumber(const string[]);
- bool:IsFloatNumber(const string[]);
+ IsDecimalNumber(const string[]);
+ IsHexNumber(const string[]);
+ IsBinaryNumber(const string[]);
+ IsOctalNumber(const string[]);
+ IsFloatNumber(const string[]);
 
  Convert to Bool:
- bool:StringToBool(const string[]);
- bool:IntToBool(value);
+ StringToBool(const string[]);
+ IntToBool(value);
 
  Convert to Int:
  StringToInt(const string[]);
@@ -84,7 +91,7 @@
 
  Binary Data Convert:
  FloatToInt(Float:value); //Convert Float binary data to Integer binary data !
- Float:IntToFloat(value); //Convert Integer binary data to Float binary data !
+ IntToFloat(value); //Convert Integer binary data to Float binary data !
 
 */
 
@@ -151,6 +158,7 @@ new const DataConvert::Decoder[] = {
 #define HEX_NUMBER_LEN					12
 #define BIN_NUMBER_LEN					36
 #define OCT_NUMBER_LEN					14
+#define DC_MAX_FILE_SIZE				(68157440)	//64 MB
 
 #define FIRST_FILE_ADDRESS				(0x004E5A18)
 #define INVALID_FILE_ID					(0xFFB1A5E7)
@@ -552,6 +560,171 @@ stock base64_encode(const input[],output[]){
 			Position += format(output[Position], len, "%c", SpaceReplacer);
 		}
 	}
+}
+
+stock DataConvert::FileCreate(const name[]){
+	if(!fexist(name)){
+		new File:cfile = fopen(name,io_readwrite);
+		fwrite(cfile,"");
+		fclose(cfile);
+		return 1;
+	}
+	return 0;
+}
+
+stock DataConvert::InvertString(const input[], output[], maxdest = sizeof(output)){
+	new asize = strlen(input);
+	if(maxdest < asize) return 0;
+	for(new i = 0; i < asize; i++) output[i] = (input[i] ^ 0xFF);
+	output[asize] = EOS;
+	return1;
+}
+
+stock DataConvert::StringToHexString(const input[], output[], maxdest = sizeof(output)){
+	new asize = strlen(input), offset = 0;
+	if((asize*2) > maxdest) return 0;
+	for(new i = 0; i < asize; i++){
+		output[offset] = (0xF & (input[i] >> 4));
+		if(output[offset] < 10){
+			output[offset] += 48;
+		} else {
+			output[offset] += 55;
+		}
+		output[offset+1] = (0xF & input[i]);
+		if(output[offset+1] < 10){
+			output[offset+1] += 48;
+		} else {
+			output[offset+1] += 55;
+		}
+		offset += 2;
+	}
+	output[asize*2] = EOS;
+	return 1;
+}
+
+stock DataConvert::HexStringToString(const input[], output[], maxdest = sizeof(output)){
+	new asize = (strlen(input)/2), offset = 0, unit[2];
+	if(asize > maxdest) return 0;
+	for(new i = 0; i < asize; i++){
+		if(input[offset] >= 97){
+			unit[0] = (input[offset]-87);
+		} else if(input[offset] < 58){
+			unit[0] = (input[offset]-48);
+		} else {
+			unit[0] = (input[offset]-55);
+		}
+		if(input[offset+1] >= 97){
+			unit[1] = (input[offset+1]-87);
+		} else if(input[offset+1] < 58){
+			unit[1] = (input[offset+1]-48);
+		} else {
+			unit[1] = (input[offset+1]-55);
+		}
+		output[i] = (unit[0]*16)+unit[1];
+		offset += 2;
+	}
+	output[asize] = EOS;
+	return 1;
+}
+
+stock DataConvert::MergeFile(const first_file[],const second_file[],bool:erase_second=false){
+	if(!fexist(first_file)) return 0;
+	if(!fexist(second_file)) return 0;
+	
+	new File:inpf = fopen(second_file,io_read);
+	if(!inpf) return 0;
+	new asize = flength(inpf), idx = 0;
+	if(asize > DC_MAX_FILE_SIZE || asize < 0){
+		fclose(inpf);
+		return 0;
+	}
+	new File:outf = fopen(first_file,io_append);
+	if(!outf){
+		fclose(inpf);
+		return 0;
+	}
+	while(idx < asize){
+		fputchar(outf,fgetchar(inpf,0,false),false);
+		idx++;
+	}
+	fclose(inpf);
+	fclose(outf);
+	if(erase_second){
+		fremove(second_file);
+	}
+	return 1;
+}
+
+stock DataConvert::MergeFileGroup(const group_name[],const output[],upperbound_index,bool:erase_input=false){
+	if(fexist(output)) return 0;
+	DataConvert::FileCreate(output);
+	new part_file[256], File:inpf, idx, asize;
+	for(new i = 0; i <= upperbound_index; i++){
+		new File:outf = fopen(output,io_append);
+		format(part_file,sizeof(part_file),"%s_%04d",group_name,i);
+		if(!fexist(part_file)){
+			fclose(inpf);
+			return 0;
+		}
+		inpf = fopen(part_file,io_read);
+		idx = 0, asize = flength(inpf);
+		
+		while(idx < asize){
+			fputchar(outf,fgetchar(inpf,0,false),false);
+			idx++;
+		}
+		fclose(inpf);
+		fclose(outf);
+		if(erase_input){
+			fremove(part_file);
+		}
+	}
+	return 1;
+}
+
+stock DataConvert::SplitFile(const input[],const output[],max_size,&upperbound_index=0){
+	if(!fexist(input)) return 0;
+	new File:inpf = fopen(input,io_read);
+	if(!inpf) return 0;
+	new asize = flength(inpf), idx = 0;
+	if(asize > DC_MAX_FILE_SIZE || asize < 0){
+		fclose(inpf);
+		return 0;
+	}
+	new used_mem = 0, part_file[256], current_status = false;
+	
+	upperbound_index = 0;
+	
+	format(part_file,sizeof(part_file),"%s_%04d",output,upperbound_index);
+	DataConvert::FileCreate(part_file);
+
+	new File:outf = fopen(part_file,io_write);
+	if(!outf){
+		fclose(inpf);
+		return 0;
+	}
+	current_status = true;
+	
+	while(idx < asize){
+		fputchar(outf,fgetchar(inpf,0,false),false);
+		used_mem++;
+		idx++;
+		if(used_mem >= max_size){
+			used_mem = 0;
+			fclose(outf);
+			current_status = false;
+			if(idx < asize){
+				upperbound_index++;
+				format(part_file,sizeof(part_file),"%s_%04d",output,upperbound_index);
+				DataConvert::FileCreate(part_file);
+				outf = fopen(part_file,io_write);
+				current_status = true;
+			}
+		}
+	}
+	fclose(inpf);
+	if(current_status) fclose(outf);
+	return 1;
 }
 
 #define e:base64 					base64_encode

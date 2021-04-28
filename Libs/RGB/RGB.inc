@@ -64,10 +64,10 @@
 #define RGB_GetBFromRGBA(%0)			((%0) & 0x0000FF00)
 #define RGB_GetAFromRGBA(%0)			((%0) & 0x000000FF)
 
-#define RGB_GetRHexFromRGBA(%0)		(((%0) >>> 24) & 0xFF)
-#define RGB_GetGHexFromRGBA(%0)		(((%0) >>> 16) & 0xFF)
-#define RGB_GetBHexFromRGBA(%0)		(((%0) >>> 8) & 0xFF)
-#define RGB_GetAHexFromRGBA(%0)		((%0) & 0xFF)
+#define RGB_GetRHexFromRGBA(%0)			(((%0) >>> 24) & 0xFF)
+#define RGB_GetGHexFromRGBA(%0)			(((%0) >>> 16) & 0xFF)
+#define RGB_GetBHexFromRGBA(%0)			(((%0) >>> 8) & 0xFF)
+#define RGB_GetAHexFromRGBA(%0)			((%0) & 0xFF)
 
 stock RGB::GetColorRGBA(color){
     new rgb_string[10];
