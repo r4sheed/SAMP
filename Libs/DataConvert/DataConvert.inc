@@ -115,7 +115,7 @@
 	#define DATACONVERT_SAMP_VERSION				"0.3.7"
 #endif
 
-#define DataConvert::								DataConvert_
+#define DataConvert::								DC_
 
 new const DataConvert::LettersTable[] = {
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
