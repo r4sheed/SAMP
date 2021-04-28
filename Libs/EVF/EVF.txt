@@ -252,9 +252,3 @@ Some options will only work if the player is in a vehicle.
 
 [b]Download:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/EVF/EVF.inc]EVF.inc[/url]
-
-Available for:
-[code]
-SA:MP 0.3.7
-SA:MP 0.3 DL
-[/code]

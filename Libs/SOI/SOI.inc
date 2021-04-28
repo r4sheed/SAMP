@@ -1,39 +1,31 @@
-/**********************************************************************************************************************************
- *                                                                                                                                *
- *                                                  )(   Skin Offset Image   )(                                                   *
- *                                                                                                                                *
- * Copyright © 2021 Abyss Morgan. All rights reserved.                                                                            *
- *                                                                                                                                *
- * Website: https://adm.ct8.pl                                                                                                    *
- *                                                                                                                                *
- * Plugins: None                                                                                                                  *
- * Modules: None                                                                                                                  *
- *                                                                                                                                *
- * File Version: 1.0.0                                                                                                            *
- *                                                                                                                                *
- * Notice:                                                                                                                        *
- * Required directory /scriptfiles/SOI                                                                                            *
- *                                                                                                                                *
- * Options:                                                                                                                       *
- * DISABLE_SOI_CACHE - Disable Cache Functions                                                                                    *
- *                                                                                                                                *
- * Functions:                                                                                                                     *
- * SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,                  *
- *                    &Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);                                                                 *
- *                                                                                                                                *
- * Cache Functions:                                                                                                               *
- * SOI::GetDefaultSkinOffset(&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,                          *
- *                           &Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);                                                          *
- * SOI::SetDefaultSkinOffset(bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,                                 *
- *                           Float:sx=1.0,Float:sy=1.0,Float:sz=1.0);                                                             *
- * SOI::GetTempSkinOffset(skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,                      *
- *                        &Float:sx=1.0,&Float:sy=1.0,&Float:sz=1.0);                                                             *
- * SOI::SetTempSkinOffset(skinid,bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,                             *
- *                        Float:sx=1.0,Float:sy=1.0,Float:sz=1.0);                                                                *
- * SOI::LoadTempData(modelid);                                                                                                    *
- * SOI::DumpTempData();                                                                                                           *
- *                                                                                                                                *
- **********************************************************************************************************************************/
+/*
+ SOI.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+
+ Website: https://adm.ct8.pl
+
+ Plugins: None
+ Modules: None
+
+ File Version: 1.0.0
+
+ Notice:
+ Required directory /scriptfiles/SOI
+
+ Options:
+ DISABLE_SOI_CACHE - Disable Cache Functions
+
+ Functions:
+ SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);
+
+ Cache Functions:
+ SOI::GetDefaultSkinOffset(&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);
+ SOI::SetDefaultSkinOffset(bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0);
+ SOI::GetTempSkinOffset(skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=1.0,&Float:sy=1.0,&Float:sz=1.0);
+ SOI::SetTempSkinOffset(skinid,bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0);
+ SOI::LoadTempData(modelid);
+ SOI::DumpTempData();
+*/
 
 #if defined _SOI_FILES
 	#endinput
@@ -83,7 +75,7 @@
 		SOI::DefaultValues[SOI::SkinsTemp],
 		SOI::TempFileData[SOI::TempFile];
 	
-	SOI::Function:: SOI::GetDefaultSkinOffset(&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0){
+	stock SOI::GetDefaultSkinOffset(&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0){
 		if(!SOI::TempFileData[SOI::active]) return 0;
 		bone = SOI::DefaultValues[SOI::bone];
 		x = SOI::DefaultValues[SOI::x];
@@ -98,7 +90,7 @@
 		return 1;
 	}
 	
-	SOI::Function:: SOI::SetDefaultSkinOffset(bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0){
+	stock SOI::SetDefaultSkinOffset(bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0){
 		if(!SOI::TempFileData[SOI::active]) return 0;
 		SOI::DefaultValues[SOI::bone] = bone;
 		SOI::DefaultValues[SOI::x] = x;
@@ -113,7 +105,7 @@
 		return 1;
 	}
 	
-	SOI::Function:: SOI::GetTempSkinOffset(skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=1.0,&Float:sy=1.0,&Float:sz=1.0){
+	stock SOI::GetTempSkinOffset(skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=1.0,&Float:sy=1.0,&Float:sz=1.0){
 		if(!SOI::TempFileData[SOI::active]) return 0;
 		if(skinid < 0 || skinid >= MAX_SKINS) return 0;
 		bone = SOI::TempSkinsData[skinid][SOI::bone];
@@ -129,7 +121,7 @@
 		return 1;
 	}
 	
-	SOI::Function:: SOI::SetTempSkinOffset(skinid,bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0){
+	stock SOI::SetTempSkinOffset(skinid,bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0){
 		if(!SOI::TempFileData[SOI::active]) return 0;
 		if(skinid < 0 || skinid >= MAX_SKINS) return 0;
 		SOI::TempSkinsData[skinid][SOI::set] = true;
@@ -146,7 +138,7 @@
 		return 1;
 	}
 	
-	SOI::Function:: SOI::LoadTempData(modelid){
+	stock SOI::LoadTempData(modelid){
 		new file_name[64];
 		format(file_name,sizeof(file_name),"/SOI/%d.soi",modelid);
 		if(!fexist(file_name)){
@@ -182,16 +174,16 @@
 		h_key[h_len] = EOS;
 		if(!strcmp(h_key,SOI_HEADER_KEY,true)){
 			for(new skinid = 0; skinid < MAX_SKINS; skinid++){
-				SOI_MergeValue(SOI::TempSkinsData[skinid][SOI::bone],0,0,0,fgetchar(inpf,0,false));
-				SOI_MergeFloat(SOI::TempSkinsData[skinid][SOI::x],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-				SOI_MergeFloat(SOI::TempSkinsData[skinid][SOI::y],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-				SOI_MergeFloat(SOI::TempSkinsData[skinid][SOI::z],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-				SOI_MergeFloat(SOI::TempSkinsData[skinid][SOI::rx],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-				SOI_MergeFloat(SOI::TempSkinsData[skinid][SOI::ry],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-				SOI_MergeFloat(SOI::TempSkinsData[skinid][SOI::rz],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-				SOI_MergeFloat(SOI::TempSkinsData[skinid][SOI::sx],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-				SOI_MergeFloat(SOI::TempSkinsData[skinid][SOI::sy],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-				SOI_MergeFloat(SOI::TempSkinsData[skinid][SOI::sz],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+				SOI::MergeValue(SOI::TempSkinsData[skinid][SOI::bone],0,0,0,fgetchar(inpf,0,false));
+				SOI::MergeFloat(SOI::TempSkinsData[skinid][SOI::x],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+				SOI::MergeFloat(SOI::TempSkinsData[skinid][SOI::y],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+				SOI::MergeFloat(SOI::TempSkinsData[skinid][SOI::z],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+				SOI::MergeFloat(SOI::TempSkinsData[skinid][SOI::rx],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+				SOI::MergeFloat(SOI::TempSkinsData[skinid][SOI::ry],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+				SOI::MergeFloat(SOI::TempSkinsData[skinid][SOI::rz],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+				SOI::MergeFloat(SOI::TempSkinsData[skinid][SOI::sx],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+				SOI::MergeFloat(SOI::TempSkinsData[skinid][SOI::sy],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+				SOI::MergeFloat(SOI::TempSkinsData[skinid][SOI::sz],fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
 				SOI::TempSkinsData[skinid][SOI::set] = true;
 			}
 			SOI::TempFileData[SOI::active] = true;
@@ -204,7 +196,7 @@
 		}
 	}
 	
-	SOI::Function:: SOI::DumpTempData(){
+	stock SOI::DumpTempData(){
 		if(!SOI::TempFileData[SOI::active]) return 0;
 		new file_name[64];
 		format(file_name,sizeof(file_name),"/SOI/%d.soi",SOI::TempFileData[SOI::modelid]);
@@ -225,34 +217,34 @@
 			}
 		}
 		for(new skinid = 0; skinid < MAX_SKINS; skinid++){
-			SOI_ExtractValue(SOI::TempSkinsData[skinid][SOI::bone],int1,int2,int3,int4);
+			SOI::ExtractValue(SOI::TempSkinsData[skinid][SOI::bone],int1,int2,int3,int4);
 			fputchar(outf,int4,false);
 			
-			SOI_ExtractFloat(SOI::TempSkinsData[skinid][SOI::x],int1,int2,int3,int4);
+			SOI::ExtractFloat(SOI::TempSkinsData[skinid][SOI::x],int1,int2,int3,int4);
 			fputchar(outf,int1,false), fputchar(outf,int2,false), fputchar(outf,int3,false), fputchar(outf,int4,false);
 			
-			SOI_ExtractFloat(SOI::TempSkinsData[skinid][SOI::y],int1,int2,int3,int4);
+			SOI::ExtractFloat(SOI::TempSkinsData[skinid][SOI::y],int1,int2,int3,int4);
 			fputchar(outf,int1,false), fputchar(outf,int2,false), fputchar(outf,int3,false), fputchar(outf,int4,false);
 			
-			SOI_ExtractFloat(SOI::TempSkinsData[skinid][SOI::z],int1,int2,int3,int4);
+			SOI::ExtractFloat(SOI::TempSkinsData[skinid][SOI::z],int1,int2,int3,int4);
 			fputchar(outf,int1,false), fputchar(outf,int2,false), fputchar(outf,int3,false), fputchar(outf,int4,false);
 			
-			SOI_ExtractFloat(SOI::TempSkinsData[skinid][SOI::rx],int1,int2,int3,int4);
+			SOI::ExtractFloat(SOI::TempSkinsData[skinid][SOI::rx],int1,int2,int3,int4);
 			fputchar(outf,int1,false), fputchar(outf,int2,false), fputchar(outf,int3,false), fputchar(outf,int4,false);
 			
-			SOI_ExtractFloat(SOI::TempSkinsData[skinid][SOI::ry],int1,int2,int3,int4);
+			SOI::ExtractFloat(SOI::TempSkinsData[skinid][SOI::ry],int1,int2,int3,int4);
 			fputchar(outf,int1,false), fputchar(outf,int2,false), fputchar(outf,int3,false), fputchar(outf,int4,false);
 			
-			SOI_ExtractFloat(SOI::TempSkinsData[skinid][SOI::rz],int1,int2,int3,int4);
+			SOI::ExtractFloat(SOI::TempSkinsData[skinid][SOI::rz],int1,int2,int3,int4);
 			fputchar(outf,int1,false), fputchar(outf,int2,false), fputchar(outf,int3,false), fputchar(outf,int4,false);
 			
-			SOI_ExtractFloat(SOI::TempSkinsData[skinid][SOI::sx],int1,int2,int3,int4);
+			SOI::ExtractFloat(SOI::TempSkinsData[skinid][SOI::sx],int1,int2,int3,int4);
 			fputchar(outf,int1,false), fputchar(outf,int2,false), fputchar(outf,int3,false), fputchar(outf,int4,false);
 			
-			SOI_ExtractFloat(SOI::TempSkinsData[skinid][SOI::sy],int1,int2,int3,int4);
+			SOI::ExtractFloat(SOI::TempSkinsData[skinid][SOI::sy],int1,int2,int3,int4);
 			fputchar(outf,int1,false), fputchar(outf,int2,false), fputchar(outf,int3,false), fputchar(outf,int4,false);
 			
-			SOI_ExtractFloat(SOI::TempSkinsData[skinid][SOI::sz],int1,int2,int3,int4);
+			SOI::ExtractFloat(SOI::TempSkinsData[skinid][SOI::sz],int1,int2,int3,int4);
 			fputchar(outf,int1,false), fputchar(outf,int2,false), fputchar(outf,int3,false), fputchar(outf,int4,false);
 		}
 		fclose(outf);
@@ -261,7 +253,7 @@
 
 #endif
 
-SOI::Function:: SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0){
+stock SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0){
 	if(skinid < 0 || skinid >= MAX_SKINS) return 0;
 	new file_name[64];
 	format(file_name,sizeof(file_name),"/SOI/%d.soi",modelid);
@@ -274,16 +266,16 @@ SOI::Function:: SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float
 	}
 
 	fseek(inpf,11+(skinid*37),seek_start);
-	SOI_MergeValue(bone,0,0,0,fgetchar(inpf,0,false));
-	SOI_MergeFloat(x,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-	SOI_MergeFloat(y,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-	SOI_MergeFloat(z,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-	SOI_MergeFloat(rx,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-	SOI_MergeFloat(ry,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-	SOI_MergeFloat(rz,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-	SOI_MergeFloat(sx,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-	SOI_MergeFloat(sy,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-	SOI_MergeFloat(sz,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+	SOI::MergeValue(bone,0,0,0,fgetchar(inpf,0,false));
+	SOI::MergeFloat(x,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+	SOI::MergeFloat(y,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+	SOI::MergeFloat(z,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+	SOI::MergeFloat(rx,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+	SOI::MergeFloat(ry,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+	SOI::MergeFloat(rz,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+	SOI::MergeFloat(sx,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+	SOI::MergeFloat(sy,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
+	SOI::MergeFloat(sz,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
 	fclose(inpf);
 	return 1;
 }

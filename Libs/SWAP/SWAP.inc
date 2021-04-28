@@ -16,7 +16,7 @@
  * String -  X bytes string                                                                                                          *
  * Block -   the same as string but don't check EOS on R/W functions                                                                 *
  * Array -   4 bytes array cells                                                                                                     *
- * Float -   4 bytes flaot value                                                                                                     *
+ * Float -   4 bytes float value                                                                                                     *
  * Integer - 4 bytes integer value                                                                                                   *
  * Enum -    full enum read/write (Required ZeeX Compiler + #define SWAP_ENABLE_ENUM_SUPPORT )                                       *
  *                                                                                                                                   *

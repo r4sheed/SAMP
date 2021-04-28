@@ -18,7 +18,7 @@
 * FerilanS (Beta Tester 2014 - 2017)
 * Unrea1 (Beta Tester 2017 - 2018)
 * TDI97 (Mapper 2015 - 2018)
-* Switel12 (Beta Tester 2017 - 2018, Distribution Manager 2018)
+* Switel12 (Beta Tester 2015 - 2018, Distribution Manager 2018)
 * Marichuanka (TeamSpeak 3 Manager 2015 - 2017)
 * W1z4rD (Beta Tester 2017 - 2018)
 
