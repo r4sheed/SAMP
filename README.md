@@ -16,13 +16,11 @@
 ### ADM Team:
 * Banan (Beta Tester 2014 - 2017)
 * FerilanS (Beta Tester 2014 - 2017)
-* MuchomoE (In-game Bug Manager)
 * Unrea1 (Beta Tester 2017 - 2018)
-* TDI97 (Mapper)
-* Switel12 (Distribution Manager)
-* Marichuanka (TeamSpeak 3 Manager)
+* TDI97 (Mapper 2015 - 2018)
+* Switel12 (Beta Tester 2017 - 2018, Distribution Manager 2018)
+* Marichuanka (TeamSpeak 3 Manager 2015 - 2017)
 * W1z4rD (Beta Tester 2017 - 2018)
-
 
 
 ### Contributors:
@@ -63,4 +61,6 @@
 * Mr.Reus (3DTryg)
 * Robin (Graffiti)
 * Wizzard2H (Mines)
+* rasheed (SpecialVehicle)
+* TDI97 (SpecialVehicle)
 * [Y_Less](https://www.burgershot.gg/member.php?action=profile&uid=6) (MD5)
