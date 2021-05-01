@@ -1,0 +1,77 @@
+[b]Update v5.0.0:[/b]
+
+- Fixed functions:
+[code]
+Random::PointInCylinder3D (rewriting function now 99.5% efficiency)
+Tryg3D::RandomFloat
+Random::PointInCone3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius_a,Float:radius_b,&Float:tx,&Float:ty,&Float:tz) (rewriting function now 74.8% efficiency)
+Item::OnPlayerScreen(playerid,TRYG3D_ELEMENT_TAG:targetid,Item3D_Type:target_type=item_player,element_orientation:orientation=o_front,Float:rx=INVALID_ROTATION,Float:rz=INVALID_ROTATION,Float:vrx=VERTICAL_CAMERA_RADIUS,Float:vrz=HORIZONTAL_CAMERA_RADIUS,bool:testLOS=true,bool:testVW=true,bool:veh_col=false); //fixed orientations
+[/code]
+
+- New random alghoritm has been tested by Area:: test and with Draw3D functions
+
+- Some deprecated functions alias removed
+
+- Added Draw3D functions (available only after #define ENABLE_3D_TRYG_DRAW3D before include 3DTryg)
+[code]
+Draw3D::Circle3D(Float:x,Float:y,Float:z,Float:radius,Float:points[][3],max_sector = 36,Float:rx = 90.0,Float:ry = 0.0,max_points = sizeof(points));
+Draw3D::Cylinder3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius,Float:points[][3],max_sector = 36,max_circles = 5,max_points = sizeof(points));
+Draw3D::Sphere(Float:x,Float:y,Float:z,Float:radius,Float:points[][3],max_sector = 36,max_circles = 5,max_points = sizeof(points));
+Draw3D::Cone3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius,Float:points[][3],max_sector = 36,max_circles = 5,max_points = sizeof(points));
+Draw3D::Rectangle2D(Float:minx,Float:miny,Float:maxx,Float:maxy,Float:points[][2],points_per_wall = 36,max_points = sizeof(points));
+Draw3D::Cube2D(Float:minx,Float:miny,Float:minz,Float:maxx,Float:maxy,Float:maxz,Float:points[][3],points_per_wall = 36,max_points = sizeof(points));
+Draw3D::Polygon2D(const Float:polygon_points[],Float:points[][2],points_per_line = 36,max_polygon_points = sizeof(polygon_points),max_points = sizeof(points));
+[code]
+
+- Added functions:
+[code]
+Random::PointInCone2D(Float:x,Float:y,Float:minz,Float:maxz,Float:radius_a,Float:radius_b,&Float:tx,&Float:ty,&Float:tz);
+Area::PointInCone2D(Float:px,Float:py,Float:pz,Float:x,Float:y,Float:minz,Float:maxz,Float:radius_a,Float:radius_b);
+SendGravityInRadius(Float:x,Float:y,Float:z,Float:radius,Float:power = 1.0,worldid = -1,interiorid = -1,playerid = -1,byplayerid = INVALID_PLAYER_ID);
+[/code]
+
+- Added new orientations:
+[code]
+o_front_left              - Orientation Front left (diagonal)
+o_front_right             - Orientation Front right (diagonal)
+o_back_left               - Orientation Back left (diagonal)
+o_back_right              - Orientation Back right (diagonal)
+[code]
+
+- Updated functions for new orientations:
+[code]
+Item::OnPlayerScreen(playerid,TRYG3D_ELEMENT_TAG:targetid,Item3D_Type:target_type=item_player,element_orientation:orientation=o_front,Float:rx=INVALID_ROTATION,Float:rz=INVALID_ROTATION,Float:vrx=VERTICAL_CAMERA_RADIUS,Float:vrz=HORIZONTAL_CAMERA_RADIUS,bool:testLOS=true,bool:testVW=true,bool:veh_col=false);
+Item::GetOrientationPos(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_type,element_orientation:orientation,Float:distance,&Float:tx,&Float:ty,&Float:tz);
+Item::GetOrientationPosCol(elementid,Item3D_Type:element_type,element_orientation:orientation,Float:distance,&Float:tx,&Float:ty,&Float:tz);
+[/code]
+
+- Renamed function:
+[code]
+Item::InCone -> Item::InCone3D
+[/code]
+
+- Added macro:
+[code]
+IsProbableEx(chance,poolsize); //by default IsProbable using 100
+[/code]
+
+- Added definitions:
+[code]
+CHARACTER_GROUND_Z_DIFF
+TRYG3D_RANDOM_MAX_ANGLE
+[/code]
+
+- Example Draw3D::Polygon2D
+[code]
+new Float:zones_points_0[] = {
+	10.0,36.0,20.0,67.0,81.0,29.0,73.0,-45.0,10.0,36.0
+}; //SAMP Zone Editor
+
+new Float:points[1000][2], point_count = Draw3D::Polygon2D(zones_points_0,points,16);
+for(new i = 0; i < point_count; i++){
+	CreateDynamicObject(19197,points[i][0],points[i][1],5.0,0.0,0.0,0.0);
+}
+[/code]
+
+[b]Screenshots:[/b]
+https://imgur.com/a/ZBzVmpi

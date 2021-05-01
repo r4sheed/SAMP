@@ -11,7 +11,7 @@
  File Version: 1.4.2
  Streamer Version: 2.9.4
  ColAndreas Version: 1.4.0
- 3DTryg Version: 4.8.6
+ 3DTryg Version: 5.0.0
 
  Functions:
  Hunting::Create(type,Float:x,Float:y,Float:z,Float:health,respawntime,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=200.0,moving_area = 0);
@@ -83,11 +83,11 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v4.8.6
+	#error [ADM] You need 3DTryg.inc v5.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v4.8.6
-#elseif (TRYG3D_VERSION < 40806)
-	#error [ADM] Update you 3DTryg.inc to v4.8.6
+	#error [ADM] Update you 3DTryg.inc to v5.0.0
+#elseif (TRYG3D_VERSION < 50000)
+	#error [ADM] Update you 3DTryg.inc to v5.0.0
 #endif
 
 #if defined _hunting_system

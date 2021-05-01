@@ -39,9 +39,9 @@ Include contain professional functions for manipulating (coordinates / rotations
 
  Plugins: ColAndreas, YSF, Streamer, FCNPC, VehicleStreamer
  Modules: FoxForeach, Foreach
- Internal Modules: Actor, Anims, VehicleCollision
+ Internal Modules: Actor, VehicleCollision, Draw3D
 
- File Version: 4.8.6
+ File Version: 5.0.0
  ColAndreas Version: 1.4.0
  YSF Version: R19 (kurta999)
  Streamer Version: 2.9.4
@@ -65,7 +65,8 @@ Include contain professional functions for manipulating (coordinates / rotations
  DISABLE_3D_TRYG_FCNPC        //Use before 3DTryg.inc for disable FCNPC Module
  DISABLE_3D_TRYG_VEHSTREAMER  //Use before 3DTryg.inc for disable VehicleStreamer Module
  ENABLE_3D_TRYG_YSI_SUPPORT   //Use before 3DTryg.inc for enable YSI Support (use only when 3DTryg say error for this)
-
+ ENABLE_3D_TRYG_DRAW3D        //Use before 3DTryg.inc for enable Draw3D internal module
+ 
  Complementary Functions:
  Float:sqrtN(Float:value,Float:exponent);
  abs(value);
@@ -142,15 +143,16 @@ Include contain professional functions for manipulating (coordinates / rotations
  IsPointBetween2Points2D(Float:px,Float:py,Float:xA,Float:yA,Float:xB,Float:yB);
  IsPointBetween2Points3D(Float:px,Float:py,Float:pz,Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB);
  Area::PointInCircle(Float:px,Float:py,Float:x,Float:y,Float:radius);
- Area::PointInCylinder3D(Float:px,Float:py,Float:pz,Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius);
  Area::PointInCylinder2D(Float:px,Float:py,Float:pz,Float:x,Float:y,Float:minz,Float:maxz,Float:radius);
+ Area::PointInCylinder3D(Float:px,Float:py,Float:pz,Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius);
  Area::PointInSphere(Float:px,Float:py,Float:pz,Float:x,Float:y,Float:z,Float:radius);
  Area::PointInRectangle(Float:x,Float:y,Float:minx,Float:miny,Float:maxx,Float:maxy);
  Area::PointInCube(Float:x,Float:y,Float:z,Float:minx,Float:miny,Float:minz,Float:maxx,Float:maxy,Float:maxz);
  Area::PointInPolygon(Float:x,Float:y,Float:points[],maxpoints=sizeof(points));
  Area::PointInCircularSector(Float:px,Float:py,Float:x,Float:y,Float:rz,Float:radius,Float:view_angle);
  Area::PointInSphericalSector(Float:px,Float:py,Float:pz,Float:x,Float:y,Float:z,Float:rx,Float:rz,Float:radius,Float:vrx,Float:vrz);
- Area::PointInCone3D(Float:px,Float:py,Float:pz,Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:pointA_radius,Float:pointB_radius);
+ Area::PointInCone2D(Float:px,Float:py,Float:pz,Float:x,Float:y,Float:minz,Float:maxz,Float:radius_a,Float:radius_b);
+ Area::PointInCone3D(Float:px,Float:py,Float:pz,Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius_a,Float:radius_b);
  Area::PointInCube3D(Float:px,Float:py,Float:pz,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:size_x,Float:size_y,Float:size_z);
  Area::PointInEllipse(Float:px,Float:py,Float:cx,Float:cy,Float:size_x,Float:size_y);
  Area::PointInEllipticalCylinder(Float:px,Float:py,Float:pz,Float:cx,Float:cy,Float:minz,Float:maxz,Float:size_x,Float:size_y);
@@ -164,7 +166,8 @@ Include contain professional functions for manipulating (coordinates / rotations
  Random::PointInPolygon(Float:points[],&Float:tx,&Float:ty,maxpoints=sizeof(points));
  Random::PointInCircularSector(Float:x,Float:y,Float:rz,Float:radius,Float:view_angle,&Float:tx,&Float:ty);
  Random::PointInSphericalSector(Float:x,Float:y,Float:z,Float:rx,Float:rz,Float:radius,Float:vrx,Float:vrz,&Float:tx,&Float:ty,&Float:tz);
- Random::PointInCone3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:pointA_radius,Float:pointB_radius,&Float:tx,&Float:ty,&Float:tz);
+ Random::PointInCone2D(Float:x,Float:y,Float:minz,Float:maxz,Float:radius_a,Float:radius_b,&Float:tx,&Float:ty,&Float:tz)
+ Random::PointInCone3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius_a,Float:radius_b,&Float:tx,&Float:ty,&Float:tz);
  Random::PointInCube3D(Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:size_x,Float:size_y,Float:size_z,&Float:tx,&Float:ty,&Float:tz);
  Random::PointInEllipse(Float:cx,Float:cy,Float:size_x,Float:size_y,&Float:tx,&Float:ty);
  Random::PointInEllipticalCyl2D(Float:cx,Float:cy,Float:minz,Float:maxz,Float:size_x,Float:size_y,&Float:tx,&Float:ty,&Float:tz);
@@ -176,12 +179,13 @@ Include contain professional functions for manipulating (coordinates / rotations
  Random::PointOnCube(Float:minx,Float:miny,Float:minz,Float:maxx,Float:maxy,Float:maxz,&Float:tx,&Float:ty,&Float:tz);
  Random::PointOnCircularSector(Float:x,Float:y,Float:rz,Float:radius,Float:view_angle,&Float:tx,&Float:ty);
  Random::PointOnSphericalSector(Float:x,Float:y,Float:z,Float:rx,Float:rz,Float:radius,Float:vrx,Float:vrz,&Float:tx,&Float:ty,&Float:tz);
- Random::PointOnCone3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:pointA_radius,Float:pointB_radius,&Float:tx,&Float:ty,&Float:tz);
+ Random::PointOnCone3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius_a,Float:radius_b,&Float:tx,&Float:ty,&Float:tz);
  Random::PointOnCube3D(Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:size_x,Float:size_y,Float:size_z,&Float:tx,&Float:ty,&Float:tz);
  Random::PointOnEllipse(Float:cx,Float:cy,Float:size_x,Float:size_y,&Float:tx,&Float:ty);
  Random::PointOnEllipticalCyl2D(Float:cx,Float:cy,Float:minz,Float:maxz,Float:size_x,Float:size_y,&Float:tx,&Float:ty,&Float:tz);
  Random::PointOnClock(Float:x,Float:y,Float:radius,&Float:tx,&Float:ty,&Float:trz,Float:rz=INVALID_ROTATION);
  IsProbable(chance);
+ IsProbableEx(chance,poolsize); //by default IsProbable using 100
  Float:CalculatePercent(Float:value,Float:maxvalue);
  Float:GetPlayerTargetAngle(playerid,Float:x,Float:y,&Float:rz=0.0);
  Float:SetPlayerTargetAngle(playerid,Float:x,Float:y,&Float:rz=0.0);
@@ -193,6 +197,7 @@ Include contain professional functions for manipulating (coordinates / rotations
  CreateDynamicExplosion(Float:x,Float:y,Float:z,type,Float:radius,worldid=-1,interiorid=-1,playerid=-1,Float:distance=200.0);
  CreateDynamicExplosionDMG(Float:x,Float:y,Float:z,type,Float:radius,worldid=-1,interiorid=-1,playerid=-1,Float:distance=200.0,Float:damage=82.5,Float:vehicle_damage=82.5,byplayerid=INVALID_PLAYER_ID);
  SendFakeDamageInRadius(weaponid,bodypart,Float:damage,Float:vehicle_damage,Float:x,Float:y,Float:z,Float:radius,worldid=-1,interiorid=-1,playerid=-1,byplayerid=INVALID_PLAYER_ID);
+ SendGravityInRadius(Float:x,Float:y,Float:z,Float:radius,Float:power = 1.0,worldid = -1,interiorid = -1,playerid = -1,byplayerid = INVALID_PLAYER_ID);
  GetVehicleFlags(vehicleid);
  GetVehicleDefaultFlagsByModel(modelid);
  GetVehicleFlagsByModel(modelid);
@@ -204,19 +209,19 @@ Include contain professional functions for manipulating (coordinates / rotations
  GetPlayerCameraLookAt(playerid,&Float:x,&Float:y,&Float:z);
  IsPlayerLookAtSky(playerid);
  GetQuatUpVector(Float:qw,Float:qx,Float:qy,Float:qz,&Float:vx,&Float:vy,&Float:vz);
- Float:GetLineSize2D(Float:points[][],maxpoints=sizeof(points));
- Float:GetLineSize3D(Float:points[][],maxpoints=sizeof(points));
+ Float:GetLineSize2D(Float:points[][2],maxpoints=sizeof(points));
+ Float:GetLineSize3D(Float:points[][3],maxpoints=sizeof(points));
  IsVehicleInRangeOfPoint(vehicleid,Float:range,Float:x,Float:y,Float:z);
  IsActorInRangeOfPoint(actorid,Float:range,Float:x,Float:y,Float:z);
  IsObjectInRangeOfPoint(objectid,Float:range,Float:x,Float:y,Float:z);
  ShiftLineRotation(Float:sX,Float:sY,Float:sZ,Float:eX,Float:eY,Float:eZ,Float:rx,Float:ry,Float:rz,&Float:nX,&Float:nY,&Float:nZ);
  ShiftLineRotationVector(Float:sX,Float:sY,Float:sZ,Float:eX,Float:eY,Float:eZ,Float:rx,Float:ry,Float:rz,&Float:nX,&Float:nY,&Float:nZ);
  Float:GetEllipseRadius(Float:x,Float:y,Float:angle);
- GetArcPoints3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:ry,Float:height,Float:points[][],max_points=sizeof(points));
- GetArcPointsFloor3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:spread,Float:points[][],max_points=sizeof(points));
- GetArcPointsCellar3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:spread,Float:points[][],max_points=sizeof(points));
- GetArcPointsLarboard3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:spread,Float:points[][],max_points=sizeof(points));
- GetArcPointsStarboard3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:spread,Float:points[][],max_points=sizeof(points));
+ GetArcPoints3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:ry,Float:height,Float:points[][3],max_points=sizeof(points));
+ GetArcPointsFloor3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:spread,Float:points[][3],max_points=sizeof(points));
+ GetArcPointsCellar3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:spread,Float:points[][3],max_points=sizeof(points));
+ GetArcPointsLarboard3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:spread,Float:points[][3],max_points=sizeof(points));
+ GetArcPointsStarboard3D(Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:spread,Float:points[][3],max_points=sizeof(points));
  Float:GetDistanceFromPointToLine(Float:px,Float:py,Float:pz,Float:sX,Float:sY,Float:sZ,Float:eX,Float:eY,Float:eZ,&Float:iX=0.0,&Float:iY=0.0,&Float:iZ=0.0);
  ShiftOffsetToPosition(Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:offset_x,Float:offset_y,Float:offset_z,&Float:tx,&Float:ty,&Float:tz);
  ShiftPositionToOffset(Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,&Float:offset_x,&Float:offset_y,&Float:offset_z,Float:tx,Float:ty,Float:tz);
@@ -250,13 +255,23 @@ Include contain professional functions for manipulating (coordinates / rotations
  Item::InPolygon(elementid,Item3D_Type:element_type,Float:points[],maxpoints=sizeof(points));
  Item::InCircularSector(elementid,Item3D_Type:element_type,Float:x,Float:y,Float:rz,Float:radius,Float:view_angle);
  Item::InSphericalSector(elementid,Item3D_Type:element_type,Float:x,Float:y,Float:z,Float:rx,Float:rz,Float:radius,Float:vrx,Float:vrz);
- Item::InCone(elementid,Item3D_Type:element_type,Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:pointA_radius,Float:pointB_radius);
+ Item::InCone2D(Float:px,Float:py,Float:pz,Float:x,Float:y,Float:minz,Float:maxz,Float:radius_a,Float:radius_b);
+ Item::InCone3D(elementid,Item3D_Type:element_type,Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius_a,Float:radius_b);
  Item::InCube3D(elementid,Item3D_Type:element_type,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:size_x,Float:size_y,Float:size_z);
  Item::GetToPointVector(elementid,Item3D_Type:element_type,Float:tx,Float:ty,Float:tz,&Float:vx,&Float:vy,&Float:vz);
  Item::GetRotatedVector(elementid,Item3D_Type:element_type,Float:tx,Float:ty,Float:tz,&Float:vx,&Float:vy,&Float:vz,bool:return_vector=true,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0);
  Item::GetOrientationPos(elementid,Item3D_Type:element_type,element_orientation:orientation,Float:distance,&Float:tx,&Float:ty,&Float:tz);
  Item::InEllipse(elementid,Item3D_Type:element_type,Float:cx,Float:cy,Float:size_x,Float:size_y);
  Item::InEllipticalCylinder2D(elementid,Item3D_Type:element_type,Float:cx,Float:cy,Float:minz,Float:maxz,Float:size_x,Float:size_y);
+ 
+ Draw3D Module functions:
+ Draw3D::Circle3D(Float:x,Float:y,Float:z,Float:radius,Float:points[][3],max_sector = 36,Float:rx = 90.0,Float:ry = 0.0,max_points = sizeof(points));
+ Draw3D::Cylinder3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius,Float:points[][3],max_sector = 36,max_circles = 5,max_points = sizeof(points));
+ Draw3D::Sphere(Float:x,Float:y,Float:z,Float:radius,Float:points[][3],max_sector = 36,max_circles = 5,max_points = sizeof(points));
+ Draw3D::Cone3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius,Float:points[][3],max_sector = 36,max_circles = 5,max_points = sizeof(points));
+ Draw3D::Rectangle2D(Float:minx,Float:miny,Float:maxx,Float:maxy,Float:points[][2],points_per_wall = 36,max_points = sizeof(points));
+ Draw3D::Cube2D(Float:minx,Float:miny,Float:minz,Float:maxx,Float:maxy,Float:maxz,Float:points[][3],points_per_wall = 36,max_points = sizeof(points));
+ Draw3D::Polygon2D(const Float:polygon_points[],Float:points[][2],points_per_line = 36,max_polygon_points = sizeof(polygon_points),max_points = sizeof(points));
  
  Universal Functions (ColAndreas):
  Item::ToItemIsWall(elementid,Item3D_Type:element_type,targetid,Item3D_Type:target_type);
@@ -506,6 +521,10 @@ Include contain professional functions for manipulating (coordinates / rotations
  # o_down                    - Orientation Down
  # o_front                   - Orientation Front
  # o_back                    - Orientation Back
+ # o_front_left              - Orientation Front left (diagonal)
+ # o_front_right             - Orientation Front right (diagonal)
+ # o_back_left               - Orientation Back left (diagonal)
+ # o_back_right              - Orientation Back right (diagonal)
 
  enum 'Item3D_Type'
  # item_player
@@ -562,21 +581,6 @@ Include contain professional functions for manipulating (coordinates / rotations
  #        T3D:VW            - Virtual World ID
  #        T3D:INT           - Interior ID
  # Float: T3D:SPEED         - Speed
-
- enum 'StreamType'
- # s_invalid
- # s_circle
- # s_cylinder2d
- # s_cylinder3d
- # s_sphere
- # s_rectangle
- # s_cube2d
- # s_cube3d
- # s_circularsector
- # s_sphericalsector
- # s_cone
- # s_ellipse
- # s_ellipticalcyl2d
 
  enum 'OrientationCube3D'
  # o_left_back_down
@@ -637,6 +641,7 @@ a) Geometric Figures:
 - Polygon
 - CircularSector
 - Ellipse
+- Cone2D
 
 b) Chunk:
 - Cylinder2D
