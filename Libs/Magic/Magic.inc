@@ -11,7 +11,7 @@
  File Version: 1.3.0
  Streamer Version: 2.9.4
  ColAndreas Version: 1.4.0
- 3DTryg Version: 5.0.0
+ 3DTryg Version: 5.1.0
 
  Functions:
  Magic::ToggleUseTeam(bool:toggle);            //default: false
@@ -59,11 +59,11 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v5.0.0
+	#error [ADM] You need 3DTryg.inc v5.1.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v5.0.0
-#elseif (TRYG3D_VERSION < 50000)
-	#error [ADM] Update you 3DTryg.inc to v5.0.0
+	#error [ADM] Update you 3DTryg.inc to v5.1.0
+#elseif (TRYG3D_VERSION < 50100)
+	#error [ADM] Update you 3DTryg.inc to v5.1.0
 #endif
 
 #if defined _magic_shot

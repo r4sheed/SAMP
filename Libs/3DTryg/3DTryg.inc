@@ -7,10 +7,9 @@
  Website: https://adm.ct8.pl
 
  Plugins: ColAndreas, YSF, Streamer, FCNPC, VehicleStreamer
- Modules: FoxForeach, Foreach
- Internal Modules: Actor, VehicleCollision, Draw3D
+ Internal Modules: Actor, VehicleCollision, Draw3D, CatchItems
 
- File Version: 5.0.0
+ File Version: 5.1.0
  ColAndreas Version: 1.4.0
  YSF Version: R19 (kurta999)
  Streamer Version: 2.9.4
@@ -19,22 +18,25 @@
 
  Foreach Types:
  1. FoxForeach
- 2. YSIForeach
- 3. GetPlayerPoolSize
+ 2. StandaloneForeach
+ 3. YSI Foreach
+ 4. GetPlayerPoolSize
 
  Compiler Options:
- DISABLE_3D_TRYG_INIT         //Use before 3DTryg.inc for disable ColAndreas Auto Init
- DISABLE_3D_TRYG_ACTOR        //Use before 3DTryg.inc for disable Actors Module
- DISABLE_3D_TRYG_FOXFOREACH   //Use before 3DTryg.inc for disable FoxForeach Module
- DISABLE_3D_TRYG_YSIFOREACH   //Use before 3DTryg.inc for disable Foreach Module
- DISABLE_3D_TRYG_VEHICLECOL   //Use before 3DTryg.inc for disable VehicleCollision Module
- DISABLE_3D_TRYG_COLANDREAS   //Use before 3DTryg.inc for disable ColAndreas Module
- DISABLE_3D_TRYG_YSF          //Use before 3DTryg.inc for disable YSF Module
- DISABLE_3D_TRYG_STREAMER     //Use before 3DTryg.inc for disable Streamer Module
- DISABLE_3D_TRYG_FCNPC        //Use before 3DTryg.inc for disable FCNPC Module
- DISABLE_3D_TRYG_VEHSTREAMER  //Use before 3DTryg.inc for disable VehicleStreamer Module
- ENABLE_3D_TRYG_YSI_SUPPORT   //Use before 3DTryg.inc for enable YSI Support (use only when 3DTryg say error for this)
- ENABLE_3D_TRYG_DRAW3D        //Use before 3DTryg.inc for enable Draw3D internal module
+ DISABLE_3D_TRYG_INIT          //Use before 3DTryg.inc for disable ColAndreas Auto Init
+ DISABLE_3D_TRYG_ACTOR         //Use before 3DTryg.inc for disable Actors Module
+ DISABLE_3D_TRYG_FOREACH_FOX   //Use before 3DTryg.inc for disable FoxForeach Module
+ DISABLE_3D_TRYG_FOREACH_STAND //Use before 3DTryg.inc for disable StandaloneForeach Module
+ DISABLE_3D_TRYG_FOREACH_YSI   //Use before 3DTryg.inc for disable YSI Foreach Module
+ DISABLE_3D_TRYG_VEHICLECOL    //Use before 3DTryg.inc for disable VehicleCollision Module
+ DISABLE_3D_TRYG_COLANDREAS    //Use before 3DTryg.inc for disable ColAndreas Module
+ DISABLE_3D_TRYG_YSF           //Use before 3DTryg.inc for disable YSF Module
+ DISABLE_3D_TRYG_STREAMER      //Use before 3DTryg.inc for disable Streamer Module
+ DISABLE_3D_TRYG_FCNPC         //Use before 3DTryg.inc for disable FCNPC Module
+ DISABLE_3D_TRYG_VEHSTREAMER   //Use before 3DTryg.inc for disable VehicleStreamer Module
+ ENABLE_3D_TRYG_YSI_SUPPORT    //Use before 3DTryg.inc for enable YSI Support (use only when 3DTryg say error for this)
+ ENABLE_3D_TRYG_DRAW3D         //Use before 3DTryg.inc for enable Draw3D internal module
+ ENABLE_3D_TRYG_CATCH_ITEMS    //Use before 3DTryg.inc for enable CatchItems internal module
  
  Complementary Functions:
  Float:sqrtN(Float:value,Float:exponent);
@@ -208,11 +210,15 @@
  Item::GetInvalidID(Item3D_Type:item_type);
  Item::GetPos(elementid,Item3D_Type:element_type,&Float:x,&Float:y,&Float:z);
  Item::GetVirtualWorld(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_type);
+ Item::GetInterior(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_type);
  Item::GetRotationQuat(elementid,Item3D_Type:element_type,&Float:qw,&Float:qx,&Float:qy,&Float:qz);
  Item::GetUpVector(elementid,Item3D_Type:element_type,&Float:vx,&Float:vy,&Float:vz);
  Item::GetUpPos(elementid,Item3D_Type:element_type,Float:radius,&Float:x,&Float:y,&Float:z,bool:reverse=false);
  Item::GetDistance(elementid,Item3D_Type:element_type,targetid,Item3D_Type:target_type);
  Item::GetDistanceFromPoint(elementid,Item3D_Type:element_type,Float:x,Float:y,Float:z);
+ Item::GetToPointVector(elementid,Item3D_Type:element_type,Float:tx,Float:ty,Float:tz,&Float:vx,&Float:vy,&Float:vz);
+ Item::GetRotatedVector(elementid,Item3D_Type:element_type,Float:tx,Float:ty,Float:tz,&Float:vx,&Float:vy,&Float:vz,bool:return_vector=true,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0);
+ Item::GetOrientationPos(elementid,Item3D_Type:element_type,element_orientation:orientation,Float:distance,&Float:tx,&Float:ty,&Float:tz);
  Item::OnPlayerScreen(playerid,targetid,Item3D_Type:target_type=item_player,element_orientation:orientation=o_front,Float:rx=INVALID_ROTATION,Float:rz=INVALID_ROTATION,Float:vrx=VERTICAL_CAMERA_RADIUS,Float:vrz=HORIZONTAL_CAMERA_RADIUS,bool:testLOS=true,bool:testVW=true,bool:veh_col=false);
  Item::OnFakeScreen(Float:x,Float:y,Float:z,targetid,Item3D_Type:target_type,Float:rx,Float:rz,Float:vrx=VERTICAL_CAMERA_RADIUS,Float:vrz=HORIZONTAL_CAMERA_RADIUS,bool:testLOS=true,bool:veh_col=false);
  Item::InCircle(elementid,Item3D_Type:element_type,Float:x,Float:y,Float:radius);
@@ -227,9 +233,6 @@
  Item::InCone2D(Float:px,Float:py,Float:pz,Float:x,Float:y,Float:minz,Float:maxz,Float:radius_a,Float:radius_b);
  Item::InCone3D(elementid,Item3D_Type:element_type,Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius_a,Float:radius_b);
  Item::InCube3D(elementid,Item3D_Type:element_type,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:size_x,Float:size_y,Float:size_z);
- Item::GetToPointVector(elementid,Item3D_Type:element_type,Float:tx,Float:ty,Float:tz,&Float:vx,&Float:vy,&Float:vz);
- Item::GetRotatedVector(elementid,Item3D_Type:element_type,Float:tx,Float:ty,Float:tz,&Float:vx,&Float:vy,&Float:vz,bool:return_vector=true,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0);
- Item::GetOrientationPos(elementid,Item3D_Type:element_type,element_orientation:orientation,Float:distance,&Float:tx,&Float:ty,&Float:tz);
  Item::InEllipse(elementid,Item3D_Type:element_type,Float:cx,Float:cy,Float:size_x,Float:size_y);
  Item::InEllipticalCylinder2D(elementid,Item3D_Type:element_type,Float:cx,Float:cy,Float:minz,Float:maxz,Float:size_x,Float:size_y);
  
@@ -241,6 +244,28 @@
  Draw3D::Rectangle2D(Float:minx,Float:miny,Float:maxx,Float:maxy,Float:points[][2],points_per_wall = 36,max_points = sizeof(points));
  Draw3D::Cube2D(Float:minx,Float:miny,Float:minz,Float:maxx,Float:maxy,Float:maxz,Float:points[][3],points_per_wall = 36,max_points = sizeof(points));
  Draw3D::Polygon2D(const Float:polygon_points[],Float:points[][2],points_per_line = 36,max_polygon_points = sizeof(polygon_points),max_points = sizeof(points));
+ 
+ Catch Module functions:
+ CatchItems::Circle(Float:x,Float:y,Float:radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::Cylinder2D(Float:x,Float:y,Float:minz,Float:maxz,Float:radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::Cylinder3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::Sphere(Float:x,Float:y,Float:z,Float:radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::Rectangle(Float:minx,Float:miny,Float:maxx,Float:maxy,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::StreamCube(Float:minx,Float:miny,Float:minz,Float:maxx,Float:maxy,Float:maxz,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::Polygon(const Float:points[],Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list),maxpoints = sizeof(points));
+ CatchItems::CircularSector(Float:x,Float:y,Float:rz,Float:radius,Float:view_angle,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::SphericalSector(Float:x,Float:y,Float:z,Float:rx,Float:rz,Float:radius,Float:vrx,Float:vrz,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::Cone2D(Float:x,Float:y,Float:minz,Float:maxz,Float:radius_a,Float:radius_b,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::Cone3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:pointA_radius,Float:pointB_radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::Cube3D(Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:size_x,Float:size_y,Float:size_z,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::Ellipse(Float:cx,Float:cy,Float:size_x,Float:size_y,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::EllipticalCylinder2D(Float:cx,Float:cy,Float:minz,Float:maxz,Float:size_x,Float:size_y,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::SphericalSectorEx(Float:x,Float:y,Float:z,Float:rx,Float:rz,Float:radius,Float:vrx,Float:vrz,bool:testLOS,bool:veh_col,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::PointInStream(Float:x,Float:y,Float:z,const Stream:AreaData[Stream3D]);
+ CatchItems::InStream(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_type,const Stream:AreaData[Stream3D],worldid = -1,interiorid = -1);
+ CatchItems::GetInStream(const Stream:AreaData[Stream3D],Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list));
+ CatchItems::GetStreamType(Stream:data);
+ CatchItems::IsValidStream(Stream:data);
  
  Universal Functions (ColAndreas):
  Item::ToItemIsWall(elementid,Item3D_Type:element_type,targetid,Item3D_Type:target_type);
@@ -457,7 +482,9 @@
  PLAYER_SPEED_MULTIPLIER     - (modifiable)
  INVALID_MOVE_TIME           - (modifiable)
  INVALID_MOVE_SPEED          - (modifiable)
- INVALID_VIRTUAL_WORLD
+ INVALID_VIRTUAL_WORLD       - (modifiable)
+ CHARACTER_GROUND_Z_DIFF     - (modifiable)
+ TRYG3D_RANDOM_MAX_ANGLE
 
  Position Flags:
  POSITION_FLAG_WORLD
@@ -510,6 +537,24 @@
  # item_dynamic_actor
  # item_dynamic_vehicle
  # item_fcnpc
+ 
+ enum 'StreamType'
+ # s_invalid
+ # s_circle
+ # s_cylinder2d
+ # s_cylinder3d
+ # s_sphere
+ # s_rectangle
+ # s_cube2d
+ # s_cube3d
+ # s_polygon
+ # s_circularsector
+ # s_sphericalsector
+ # s_cone2d
+ # s_cone3d
+ # s_ellipse
+ # s_ellipticalcyl2d
+ # a_sphericalsectorex
 
  enum 'Vectors3D'
  # Float: T3D:X             - Position X
@@ -566,11 +611,11 @@
 /*
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v5.0.0
+	#error [ADM] You need 3DTryg.inc v5.1.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v5.0.0
-#elseif (TRYG3D_VERSION < 50000)
-	#error [ADM] Update you 3DTryg.inc to v5.0.0
+	#error [ADM] Update you 3DTryg.inc to v5.1.0
+#elseif (TRYG3D_VERSION < 50100)
+	#error [ADM] Update you 3DTryg.inc to v5.1.0
 #endif
 */
 
@@ -589,7 +634,7 @@
 #define _3D_Tryg
 #define TRYG3D_SAMP_INCLUDE
 
-#define TRYG3D_VERSION									(50000) //a.b.c 10000*a+100*b+c
+#define TRYG3D_VERSION									(50100) //a.b.c 10000*a+100*b+c
 #if defined GetPlayerCustomSkin
 	#define TRYG3D_SAMP_VERSION							"0.3 DL"
 #else
@@ -654,16 +699,24 @@
 	#error [ADM] Module already defined: TRYG3D_YSI
 #endif
 
-#if defined TRYG3D_YSIFOREACH
-	#error [ADM] Module already defined: TRYG3D_YSIFOREACH
+#if defined TRYG3D_FOREACH_STANDALONE
+	#error [ADM] Module already defined: TRYG3D_FOREACH_STANDALONE
 #endif
 
-#if defined TRYG3D_FOXFOREACH
-	#error [ADM] Module already defined: TRYG3D_FOXFOREACH
+#if defined TRYG3D_FOREACH_FOX
+	#error [ADM] Module already defined: TRYG3D_FOREACH_FOX
+#endif
+
+#if defined TRYG3D_FOREACH_YSI
+	#error [ADM] Module already defined: TRYG3D_FOREACH_YSI
 #endif
 
 #if defined TRYG3D_DRAW3D
 	#error [ADM] Module already defined: TRYG3D_DRAW3D
+#endif
+
+#if defined TRYG3D_CATCHITEMS
+	#error [ADM] Module already defined: TRYG3D_CATCHITEMS
 #endif
 
 //Detect ColAndreas Plugin
@@ -672,7 +725,7 @@
 #endif
 
 #if ((defined COLANDREAS) && (!defined DISABLE_3D_TRYG_COLANDREAS))
-	#define TRYG3D_COLANDREAS							"ColAndreas"
+	#define TRYG3D_COLANDREAS							"ColAndreas v1.4.0"
 	#define TRYG3D_COLANDREAS_VERSION					(10400) //a.b.c 10000*a+100*b+c
 	
 	#if !defined COLANDREAS_VERSION
@@ -682,7 +735,7 @@
 
 //Detect YSF Plugin
 #if ((defined _YSF_included) && (!defined DISABLE_3D_TRYG_YSF))
-	#define TRYG3D_YSF									"YSF"
+	#define TRYG3D_YSF									"YSF R19"
 	#if (!defined RemovePlayerForPlayer)
 		#error [ADM] You need YSF R19 (github.com/kurta999/YSF/releases)
 	#endif
@@ -690,7 +743,7 @@
 
 //Detect Streamer Plugin
 #if ((defined Streamer_AppendArrayData) && (defined INVALID_STREAMER_ID) && (!defined DISABLE_3D_TRYG_STREAMER))
-	#define TRYG3D_STREAMER								"Streamer"
+	#define TRYG3D_STREAMER								"Streamer v2.9.4"
 	#define TRYG3D_STREAMERVersion						(0x294)
 	#if (!defined Streamer_GetItemPos)
 		#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
@@ -702,21 +755,23 @@
 	#define TRYG3D_VEHICLESTREAMER						"VehicleStreamer"
 #endif
 
-//Detect FoxForeach Include
-//Detect YSIForeach Include
-#if ((defined _FoX_Foreach) && (!defined DISABLE_3D_TRYG_FOXFOREACH))
+//Detect foreach
+#if ((defined _FoX_Foreach) && (!defined DISABLE_3D_TRYG_FOREACH_FOX))
 	#define T3DV5_Foreach(%0) 							FoxForeach(%0,Character)
-	#define TRYG3D_FOXFOREACH							"FoxForeach"
-#elseif ((defined _FOREACH_LOCAL_VERSION) && (!defined DISABLE_3D_TRYG_YSIFOREACH))
+	#define TRYG3D_FOREACH_FOX							"foreach:fox"
+#elseif ((defined _FOREACH_LOCAL_VERSION) && (!defined DISABLE_3D_TRYG_FOREACH_STAND))
 	#define T3DV5_Foreach(%0)							foreach(new %0 : Character)
-	#define TRYG3D_YSIFOREACH							"foreach"
+	#define TRYG3D_FOREACH_STANDALONE					"foreach:standalone"
+#elseif ((defined _Y_ITERATE_LOCAL_VERSION) && (!defined DISABLE_3D_TRYG_FOREACH_YSI))
+	#define T3DV5_Foreach(%0)							foreach(new %0 : Character)
+	#define TRYG3D_FOREACH_YSI							"foreach:ysi"
 #else
 	#define T3DV5_Foreach(%0)							for(new %0 = 0, p_%0 = GetPlayerPoolSize(); %0 <= p_%0; %0++) if(IsPlayerConnected(%0))
 #endif
 
 //Detect FCNPC Plugin
 #if ((defined _FCNPC_included) && (defined FCNPC_INCLUDE_VERSION) && (!defined DISABLE_3D_TRYG_FCNPC))
-	#define TRYG3D_FCNPC								"FCNPC"
+	#define TRYG3D_FCNPC								"FCNPC v2.0.0"
 	#define TRYG3D_FCNPC_VERSION						(200) //a.b.c 100*a+10*b+c
 	#if (FCNPC_INCLUDE_VERSION < TRYG3D_FCNPC_VERSION)
 		#error [ADM] You need FCNPC v2.0.0 (github.com/ziggi/FCNPC/releases)
@@ -742,6 +797,10 @@
 	#define TRYG3D_DRAW3D								"Draw3D"
 #endif
 
+#if defined ENABLE_3D_TRYG_CATCH_ITEMS
+	#define TRYG3D_CATCHITEMS							"CatchItems"
+#endif
+
 #if (defined _INC_y_utils && defined RandomFloat && !defined ENABLE_3D_TRYG_YSI_SUPPORT)
 	#error [ADM] Include collision detected 'YSI/YSI_Core/y_utils.inc' use #define ENABLE_3D_TRYG_YSI_SUPPORT before 3DTryg.inc for fix this
 #elseif (defined ENABLE_3D_TRYG_YSI_SUPPORT && defined _INC_y_utils)
@@ -754,6 +813,7 @@
 #define Area::											A3D_
 #define Random::										R3D_
 #define Draw3D::										D3D_
+#define CatchItems::									C3D_
 #define FCNPC::											FCNPC_
 #define ColAndreas:: 									CA_
 #define Streamer:: 										Streamer_
@@ -806,6 +866,9 @@
 #if !defined MAX_POLYGON_POINTS
 	#define MAX_POLYGON_POINTS 							(256)
 #endif
+#if MAX_POLYGON_POINTS < 10
+	#error [ADM] Definition MAX_POLYGON_POINTS must be greater or equal 10
+#endif
 
 #if !defined VEHICLE_SPEED_MULTIPLIER
 	#define VEHICLE_SPEED_MULTIPLIER 					(170.0)
@@ -817,6 +880,9 @@
 
 #if !defined INVALID_MOVE_TIME
 	#define INVALID_MOVE_TIME 							(-1)
+#endif
+#if INVALID_MOVE_TIME > -1
+	#error [ADM] Definition INVALID_MOVE_TIME must be less or equal -1
 #endif
 
 #if !defined INVALID_MOVE_SPEED
@@ -833,6 +899,9 @@
 
 #if !defined INVALID_VIRTUAL_WORLD
 	#define	INVALID_VIRTUAL_WORLD						(-2000)
+#endif
+#if INVALID_VIRTUAL_WORLD > -1
+	#error [ADM] Definition INVALID_VIRTUAL_WORLD must be less than -1
 #endif
 
 #if !defined CHARACTER_GROUND_Z_DIFF
@@ -971,6 +1040,36 @@ enum OrientationCube3D {
 	o_right_front_up,
 	o_left_front_up
 }
+
+#if defined TRYG3D_CATCHITEMS
+	enum StreamType {
+		s_invalid,
+		s_circle,
+		s_cylinder2d,
+		s_cylinder3d,
+		s_sphere,
+		s_rectangle,
+		s_cube2d,
+		s_cube3d,
+		s_polygon,
+		s_circularsector,
+		s_sphericalsector,
+		s_cone2d,
+		s_cone3d,
+		s_ellipse,
+		s_ellipticalcyl2d,
+		a_sphericalsectorex
+	}
+
+	enum Stream3D {
+		StreamType:	T3D:type,
+		Float:		T3D:Poly[MAX_POLYGON_POINTS * 2],
+					T3D:INT,
+					T3D:VW,
+		bool: 		T3D:bA,
+		bool: 		T3D:bB
+	}
+#endif
 
 static const Float:Cube3DOffset[OrientationCube3D][3] = {
 	{-1.0,-1.0,-1.0},	//left - back - down
@@ -2963,6 +3062,46 @@ stock Item::GetVirtualWorld(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_typ
 	return INVALID_VIRTUAL_WORLD;
 }
 
+stock Item::GetInterior(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_type){
+	switch(element_type){
+		case item_player: return GetPlayerInterior(_:elementid);
+		case item_npc: {
+			#if defined TRYG3D_FCNPC
+				if(FCNPC::IsValid(_:elementid)) return FCNPC::GetInterior(_:elementid);
+				return GetPlayerInterior(_:elementid);
+			#else
+				return GetPlayerInterior(_:elementid);
+			#endif
+		}
+		#if defined TRYG3D_ACTOR
+			case item_actor: return -1;
+		#endif
+		case item_vehicle: {
+			#if defined GetVehicleInterior
+				return GetVehicleInterior(_:elementid);
+			#else
+				return -1;
+			#endif
+		}
+		#if defined TRYG3D_STREAMER
+			case item_dynamic_object: return Streamer::GetIntData(STREAMER_TYPE_OBJECT,_:elementid,E_STREAMER_INTERIOR_ID);
+			case item_dynamic_pickup: return Streamer::GetIntData(STREAMER_TYPE_PICKUP,_:elementid,E_STREAMER_INTERIOR_ID);
+			case item_dynamic_cp: return Streamer::GetIntData(STREAMER_TYPE_CP,_:elementid,E_STREAMER_INTERIOR_ID);
+			case item_dynamic_racecp: return Streamer::GetIntData(STREAMER_TYPE_RACE_CP,_:elementid,E_STREAMER_INTERIOR_ID);
+			case item_dynamic_mapicon: return Streamer::GetIntData(STREAMER_TYPE_MAP_ICON,_:elementid,E_STREAMER_INTERIOR_ID);
+			case item_dynamic_3dtext: return Streamer::GetIntData(STREAMER_TYPE_3D_TEXT_LABEL,_:elementid,E_STREAMER_INTERIOR_ID);
+			case item_dynamic_actor: return Streamer::GetIntData(STREAMER_TYPE_ACTOR,_:elementid,E_STREAMER_INTERIOR_ID);
+		#endif
+		#if defined TRYG3D_VEHICLESTREAMER
+			case item_dynamic_vehicle: return GetDynamicVehicleInterior(STREAMER_TAG_VEHICLE:elementid);
+		#endif
+		#if defined TRYG3D_FCNPC
+			case item_fcnpc: return FCNPC::GetInterior(_:elementid);
+		#endif
+	}
+	return INVALID_VIRTUAL_WORLD;
+}
+
 stock Item::GetRotationQuat(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_type,&Float:qw,&Float:qx,&Float:qy,&Float:qz){
 	new Float:rx,Float:ry,Float:rz;
 	qw = qx = qy = qz = 0.0;
@@ -3414,7 +3553,7 @@ stock Animation::IsPlayerRunning(playerid){
 #define T3DV5_GetActiveCount() 							GetSVarInt("ADM:3DTryg:ACTIVE")
 #define T3DV5_GetErrorCount() 							GetSVarInt("ADM:3DTryg:Error")
 #define T3DV5_ResetErrorCount() 						SetSVarInt("ADM:3DTryg:Error",0)
-#define Update3DTrygErrorCount() 						SetSVarInt("ADM:3DTryg:Error",Tryg3D::GetErrorCount()+1)
+#define T3DV5_UpdateErrorCount() 						SetSVarInt("ADM:3DTryg:Error",Tryg3D::GetErrorCount()+1)
 
 #define T3DV5_SetStreamDistance(%0)						Tryg3D::StreamDistance = (%0)
 #define T3DV5_GetStreamDistance()						Tryg3D::StreamDistance
@@ -4452,8 +4591,7 @@ stock Animation::IsPlayerRunning(playerid){
 		#if defined TRYG3D_STREAMER
 			stock FCNPC::RandomMoveInDynamicArea(npcid,STREAMER_TAG_AREA:areaid,Float:climbing = 2.0,type = FCNPC_MOVE_TYPE_AUTO,Float:speed = FCNPC_MOVE_SPEED_AUTO,mode = FCNPC_MOVE_MODE_AUTO,bool:set_angle = true,Float:min_distance = 0.0,stopdelay = 250){
 				if(!FCNPC::IsValid(npcid) || FCNPC::IsDead(npcid)) return 0;
-				new Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:T3D:tmp,cnt;
-				cnt = 0;
+				new Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:T3D:tmp,cnt = 0;
 				FCNPC::GetPosition(npcid,x,y,z);
 				do {
 					if(cnt >= 100) return 0;
@@ -4874,6 +5012,397 @@ stock Animation::IsPlayerRunning(playerid){
 
 /************************************************************************************************************************************
  *                                                                                                                                  *
+ * Catch Functions                                                                                                                 *
+ *                                                                                                                                  *
+ ************************************************************************************************************************************/
+
+#if defined TRYG3D_CATCHITEMS
+	
+	#define C3D_GetStreamType(%0) 						(%0[T3D:type])
+	#define C3D_IsValidStream(%0)						(%0[T3D:type] != s_invalid)
+	
+	stock CatchItems::PointInStream(Float:x,Float:y,Float:z,const Stream:AreaData[Stream3D]){
+		switch(AreaData[T3D:type]){
+			case s_circle:				return Area::PointInCircle(x,y,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][9]);
+			case s_cylinder2d:			return Area::PointInCylinder2D(x,y,z,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][5],AreaData[T3D:Poly][8],AreaData[T3D:Poly][9]);
+			case s_cylinder3d:			return Area::PointInCylinder3D(x,y,z,AreaData[T3D:Poly][3],AreaData[T3D:Poly][4],AreaData[T3D:Poly][5],AreaData[T3D:Poly][6],AreaData[T3D:Poly][7],AreaData[T3D:Poly][8],AreaData[T3D:Poly][9]);
+			case s_sphere:				return Area::PointInSphere(x,y,z,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][2],AreaData[T3D:Poly][9]);
+			case s_rectangle:			return Area::PointInRectangle(x,y,AreaData[T3D:Poly][3],AreaData[T3D:Poly][4],AreaData[T3D:Poly][6],AreaData[T3D:Poly][7]);
+			case s_cube2d:				return Area::PointInCube(x,y,z,AreaData[T3D:Poly][3],AreaData[T3D:Poly][4],AreaData[T3D:Poly][5],AreaData[T3D:Poly][6],AreaData[T3D:Poly][7],AreaData[T3D:Poly][8]);
+			case s_polygon:				return Area::PointInPolygon(x,y,AreaData[T3D:Poly],MAX_POLYGON_POINTS * 2);
+			case s_circularsector:		return Area::PointInCircularSector(x,y,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][5],AreaData[T3D:Poly][9],AreaData[T3D:Poly][8]);
+			case s_sphericalsector:		return Area::PointInSphericalSector(x,y,z,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][2],AreaData[T3D:Poly][3],AreaData[T3D:Poly][5],AreaData[T3D:Poly][9],AreaData[T3D:Poly][6],AreaData[T3D:Poly][8]);
+			case s_cone2d:				return Area::PointInCone2D(x,y,z,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][5],AreaData[T3D:Poly][8],AreaData[T3D:Poly][9],AreaData[T3D:Poly][2]);
+			case s_cone3d:				return Area::PointInCone3D(x,y,z,AreaData[T3D:Poly][3],AreaData[T3D:Poly][4],AreaData[T3D:Poly][5],AreaData[T3D:Poly][6],AreaData[T3D:Poly][7],AreaData[T3D:Poly][8],AreaData[T3D:Poly][0],AreaData[T3D:Poly][1]);
+			case s_cube3d:				return Area::PointInCube3D(x,y,z,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][2],AreaData[T3D:Poly][3],AreaData[T3D:Poly][4],AreaData[T3D:Poly][5],AreaData[T3D:Poly][6],AreaData[T3D:Poly][7],AreaData[T3D:Poly][8]);
+			case s_ellipse:				return Area::PointInEllipse(x,y,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][3],AreaData[T3D:Poly][4]);
+			case s_ellipticalcyl2d: 	return Area::PointInEllipticalCylinder(x,y,z,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][5],AreaData[T3D:Poly][8],AreaData[T3D:Poly][3],AreaData[T3D:Poly][4]);
+			case a_sphericalsectorex:	return Area::PointInSphericalSectorEx(x,y,z,AreaData[T3D:Poly][0],AreaData[T3D:Poly][1],AreaData[T3D:Poly][2],AreaData[T3D:Poly][3],AreaData[T3D:Poly][4],AreaData[T3D:Poly][9],AreaData[T3D:Poly][6],AreaData[T3D:Poly][7],AreaData[T3D:bA],AreaData[T3D:bB]);
+		}
+		return 0;
+	}
+
+	stock CatchItems::InStream(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_type,const Stream:AreaData[Stream3D],worldid = -1,interiorid = -1){
+		new Float:px,Float:py,Float:pz;
+		if(!Item::GetPos(elementid,element_type,px,py,pz)) return 0;
+		if((worldid == -1 || worldid == Item::GetVirtualWorld(elementid,element_type)) && (interiorid == -1 || interiorid == Item::GetInterior(elementid,element_type))){
+			return CatchItems::PointInStream(px,py,pz,AreaData);
+		}
+		return 0;
+	}
+
+	stock CatchItems::GetInStream(const Stream:AreaData[Stream3D],Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		if(!CatchItems::IsValidStream(AreaData)) return 0;
+		new T3D:cnt = 0, T3D:upp = -1;
+		switch(element_type){
+			case item_player: {
+				Tryg3D::Foreach(i){
+					if(T3D:upp >= max_element) break;
+					if(!IsPlayerNPC(i)){
+						if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+							element_list[T3D:upp++] = _:i;
+							T3D:cnt++;
+						}
+					}
+				}
+			}
+			
+			case item_npc: {
+				Tryg3D::Foreach(i){
+					if(T3D:upp >= max_element) break;
+					if(IsPlayerNPC(i)){
+						if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+							element_list[T3D:upp++] = i;
+							T3D:cnt++;
+						}
+					}
+				}
+			}
+			
+			#if defined TRYG3D_ACTOR
+				case item_actor: {
+					for(new i = 0, j = GetActorPoolSize(); i <= j; i++){
+						if(T3D:upp >= max_element) break;
+						if(IsValidActor(i) && CatchItems::InStream(i,element_type,AreaData)){
+							element_list[T3D:upp++] = i;
+							T3D:cnt++;
+						}
+					}
+				}
+			#endif
+			
+			case item_object: {
+				for(new i = 0; i < MAX_OBJECTS; i++){
+					if(T3D:upp >= max_element) break;
+					if(IsValidObject(i) && CatchItems::InStream(i,element_type,AreaData)){
+						element_list[T3D:upp++] = i;
+						T3D:cnt++;
+					}
+				}
+			}
+			
+			case item_vehicle: {
+				for(new i = 0, j = GetVehiclePoolSize(); i <= j; i++){
+					if(T3D:upp >= max_element) break;
+					if(IsValidVehicle(i) && CatchItems::InStream(i,element_type,AreaData)){
+						element_list[T3D:upp++] = i;
+						T3D:cnt++;
+					}
+				}
+			}
+			
+			#if defined TRYG3D_STREAMER
+				case item_dynamic_object: {
+					for(new i = 1, j = Streamer::GetUpperBound(STREAMER_TYPE_OBJECT); i <= j; i++){
+						if(IsValidDynamicObject(STREAMER_TAG_OBJECT:i)){
+							if(T3D:upp >= max_element) break;
+							if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+								element_list[T3D:upp++] = i;
+								T3D:cnt++;
+							}
+						}
+					}
+				}
+				case item_dynamic_pickup: {
+					for(new i = 1, j = Streamer::GetUpperBound(STREAMER_TYPE_PICKUP); i <= j; i++){
+						if(IsValidDynamicPickup(STREAMER_TAG_PICKUP:i)){
+							if(T3D:upp >= max_element) break;
+							if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+								element_list[T3D:upp++] = i;
+								T3D:cnt++;
+							}
+						}
+					}
+				}
+				case item_dynamic_cp: {
+					for(new i = 1, j = Streamer::GetUpperBound(STREAMER_TYPE_CP); i <= j; i++){
+						if(IsValidDynamicCP(STREAMER_TAG_CP:i)){
+							if(T3D:upp >= max_element) break;
+							if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+								element_list[T3D:upp++] = i;
+								T3D:cnt++;
+							}
+						}
+					}
+				}
+				case item_dynamic_racecp: {
+					for(new i = 1, j = Streamer::GetUpperBound(STREAMER_TYPE_RACE_CP); i <= j; i++){
+						if(IsValidDynamicRaceCP(STREAMER_TAG_RACE_CP:i)){
+							if(T3D:upp >= max_element) break;
+							if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+								element_list[T3D:upp++] = i;
+								T3D:cnt++;
+							}
+						}
+					}
+				}
+				case item_dynamic_mapicon: {
+					for(new i = 1, j = Streamer::GetUpperBound(STREAMER_TYPE_MAP_ICON); i <= j; i++){
+						if(IsValidDynamicMapIcon(STREAMER_TAG_MAP_ICON:i)){
+							if(T3D:upp >= max_element) break;
+							if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+								element_list[T3D:upp++] = i;
+								T3D:cnt++;
+							}
+						}
+					}
+				}
+				case item_dynamic_3dtext: {
+					for(new i = 1, j = Streamer::GetUpperBound(STREAMER_TYPE_3D_TEXT_LABEL); i <= j; i++){
+						if(IsValidDynamic3DTextLabel(STREAMER_TAG_3D_TEXT_LABEL:i)){
+							if(T3D:upp >= max_element) break;
+							if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+								element_list[T3D:upp++] = i;
+								T3D:cnt++;
+							}
+						}
+					}
+				}
+				case item_dynamic_actor: {
+					for(new i = 1, j = Streamer::GetUpperBound(STREAMER_TYPE_ACTOR); i <= j; i++){
+						if(IsValidDynamicActor(STREAMER_TAG_ACTOR:i)){
+							if(T3D:upp >= max_element) break;
+							if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+								element_list[T3D:upp++] = i;
+								T3D:cnt++;
+							}
+						}
+					}
+				}
+			#endif
+			
+			#if defined TRYG3D_VEHICLESTREAMER
+				case item_dynamic_vehicle: {
+					for(new i = 1, j = Streamer::GetUpperBound(STREAMER_TYPE_VEHICLE); i <= j; i++){
+						if(IsValidDynamicVehicle(STREAMER_TAG_VEHICLE:i)){
+							if(T3D:upp >= max_element) break;
+							if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+								element_list[T3D:upp++] = i;
+								T3D:cnt++;
+							}
+						}
+					}
+				}
+			#endif
+			
+			#if defined TRYG3D_FCNPC
+				case item_fcnpc: {
+					Tryg3D::Foreach(i){
+						if(T3D:upp >= max_element) break;
+						if(IsPlayerNPC(i) && FCNPC::IsValid(i)){
+							if(CatchItems::InStream(i,element_type,AreaData,worldid,interiorid)){
+								element_list[T3D:upp++] = i;
+								T3D:cnt++;
+							}
+						}
+					}
+				}
+			#endif
+		}
+		return T3D:cnt;
+	}
+
+	stock CatchItems::Circle(Float:x,Float:y,Float:radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_circle;
+		AreaData[T3D:Poly][0] = x;
+		AreaData[T3D:Poly][1] = y;
+		AreaData[T3D:Poly][9] = radius;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::Cylinder2D(Float:x,Float:y,Float:minz,Float:maxz,Float:radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_cylinder2d;
+		AreaData[T3D:Poly][0] = x;
+		AreaData[T3D:Poly][1] = y;
+		AreaData[T3D:Poly][5] = minz;
+		AreaData[T3D:Poly][8] = maxz;
+		AreaData[T3D:Poly][9] = radius;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::Cylinder3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_cylinder3d;
+		AreaData[T3D:Poly][3] = xA;
+		AreaData[T3D:Poly][4] = yA;
+		AreaData[T3D:Poly][5] = zA;
+		AreaData[T3D:Poly][6] = xB;
+		AreaData[T3D:Poly][7] = yB;
+		AreaData[T3D:Poly][8] = zB;
+		AreaData[T3D:Poly][9] = radius;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::Sphere(Float:x,Float:y,Float:z,Float:radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_sphere;
+		AreaData[T3D:Poly][0] = x;
+		AreaData[T3D:Poly][1] = y;
+		AreaData[T3D:Poly][2] = z;
+		AreaData[T3D:Poly][9] = radius;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::Rectangle(Float:minx,Float:miny,Float:maxx,Float:maxy,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_rectangle;
+		AreaData[T3D:Poly][3] = minx;
+		AreaData[T3D:Poly][4] = miny;
+		AreaData[T3D:Poly][6] = maxx;
+		AreaData[T3D:Poly][7] = maxy;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::StreamCube(Float:minx,Float:miny,Float:minz,Float:maxx,Float:maxy,Float:maxz,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_cube2d;
+		AreaData[T3D:Poly][3] = minx;
+		AreaData[T3D:Poly][4] = miny;
+		AreaData[T3D:Poly][5] = minz;
+		AreaData[T3D:Poly][6] = maxx;
+		AreaData[T3D:Poly][7] = maxy;
+		AreaData[T3D:Poly][8] = maxz;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::Polygon(const Float:points[],Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list),maxpoints = sizeof(points)){
+		if(maxpoints > MAX_POLYGON_POINTS * 2) return 0;
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_polygon;
+		for(new i = 0; i < maxpoints; i++) AreaData[T3D:Poly][i] = points[i];
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::CircularSector(Float:x,Float:y,Float:rz,Float:radius,Float:view_angle,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_circularsector;
+		AreaData[T3D:Poly][0] = x;
+		AreaData[T3D:Poly][1] = y;
+		AreaData[T3D:Poly][5] = rz;
+		AreaData[T3D:Poly][9] = radius;
+		AreaData[T3D:Poly][8] = view_angle;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::SphericalSector(Float:x,Float:y,Float:z,Float:rx,Float:rz,Float:radius,Float:vrx,Float:vrz,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_sphericalsector;
+		AreaData[T3D:Poly][0] = x;
+		AreaData[T3D:Poly][1] = y;
+		AreaData[T3D:Poly][2] = z;
+		AreaData[T3D:Poly][3] = rx;
+		AreaData[T3D:Poly][5] = rz;
+		AreaData[T3D:Poly][9] = radius;
+		AreaData[T3D:Poly][6] = vrx;
+		AreaData[T3D:Poly][8] = vrz;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::Cone2D(Float:x,Float:y,Float:minz,Float:maxz,Float:radius_a,Float:radius_b,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_cone2d;
+		AreaData[T3D:Poly][0] = x;
+		AreaData[T3D:Poly][1] = y;
+		AreaData[T3D:Poly][5] = minz;
+		AreaData[T3D:Poly][8] = maxz;
+		AreaData[T3D:Poly][9] = radius_a;
+		AreaData[T3D:Poly][2] = radius_b;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::Cone3D(Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:pointA_radius,Float:pointB_radius,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_cone3d;
+		AreaData[T3D:Poly][3] = xA;
+		AreaData[T3D:Poly][4] = yA;
+		AreaData[T3D:Poly][5] = zA;
+		AreaData[T3D:Poly][6] = xB;
+		AreaData[T3D:Poly][7] = yB;
+		AreaData[T3D:Poly][8] = zB;
+		AreaData[T3D:Poly][0] = pointA_radius;
+		AreaData[T3D:Poly][1] = pointB_radius;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::Cube3D(Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:size_x,Float:size_y,Float:size_z,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_cube3d;
+		AreaData[T3D:Poly][0] = x;
+		AreaData[T3D:Poly][1] = y;
+		AreaData[T3D:Poly][2] = z;
+		AreaData[T3D:Poly][3] = rx;
+		AreaData[T3D:Poly][4] = ry;
+		AreaData[T3D:Poly][5] = rz;
+		AreaData[T3D:Poly][6] = size_x;
+		AreaData[T3D:Poly][7] = size_y;
+		AreaData[T3D:Poly][8] = size_z;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::Ellipse(Float:cx,Float:cy,Float:size_x,Float:size_y,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_ellipse;
+		AreaData[T3D:Poly][0] = cx;
+		AreaData[T3D:Poly][1] = cy;
+		AreaData[T3D:Poly][3] = size_x;
+		AreaData[T3D:Poly][4] = size_y;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::EllipticalCylinder2D(Float:cx,Float:cy,Float:minz,Float:maxz,Float:size_x,Float:size_y,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = s_ellipticalcyl2d;
+		AreaData[T3D:Poly][0] = cx;
+		AreaData[T3D:Poly][1] = cy;
+		AreaData[T3D:Poly][5] = minz;
+		AreaData[T3D:Poly][8] = maxz;
+		AreaData[T3D:Poly][3] = size_x;
+		AreaData[T3D:Poly][4] = size_y;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+
+	stock CatchItems::SphericalSectorEx(Float:x,Float:y,Float:z,Float:rx,Float:rz,Float:radius,Float:vrx,Float:vrz,bool:testLOS,bool:veh_col,Item3D_Type:element_type,element_list[],worldid = -1,interiorid = -1,max_element=sizeof(element_list)){
+		new Stream:AreaData[Stream3D];
+		AreaData[T3D:type] = a_sphericalsectorex;
+		AreaData[T3D:Poly][0] = x;
+		AreaData[T3D:Poly][1] = y;
+		AreaData[T3D:Poly][2] = z;
+		AreaData[T3D:Poly][3] = rx;
+		AreaData[T3D:Poly][4] = rz;
+		AreaData[T3D:Poly][9] = radius;
+		AreaData[T3D:Poly][6] = vrx;
+		AreaData[T3D:Poly][7] = vrz;
+		AreaData[T3D:bA] = testLOS;
+		AreaData[T3D:bB] = veh_col;
+		return CatchItems::GetInStream(AreaData,element_type,element_list,max_element,worldid,interiorid);
+	}
+	
+#endif
+
+/************************************************************************************************************************************
+ *                                                                                                                                  *
  * Functions extra names                                                                                                            *
  *                                                                                                                                  *
  ************************************************************************************************************************************/
@@ -4951,7 +5480,7 @@ new bool:CRC_Tryg3DInit = true,
 		if(!Tryg3D::IsColAndreasInit()){
 			print("[ADM] Error: ColAndreas failed to initiated.");
 			print("[ADM] Error: Cannot load /scriptfiles/colandreas/ColAndreas.cadb");
-			Update3DTrygErrorCount();
+			Tryg3D::UpdateErrorCount();
 		} else {
 			if(ColAndreasLastStat){
 				print("[ADM] Info: ColAndreas successfully init.");
@@ -4967,43 +5496,51 @@ stock Tryg3D::Init(){
 	
 	new T3D:modules[200];
 	#if defined TRYG3D_COLANDREAS
-		format(T3D:modules,200,"%s ColAndreas,",T3D:modules);
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_COLANDREAS);
 	#endif
 
 	#if defined TRYG3D_YSF
-		format(T3D:modules,200,"%s YSF,",T3D:modules);
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_YSF);
 	#endif
 
 	#if defined TRYG3D_STREAMER
-		format(T3D:modules,200,"%s Streamer,",T3D:modules);
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_STREAMER);
 	#endif
 
 	#if defined TRYG3D_VEHICLESTREAMER
-		format(T3D:modules,200,"%s VehicleStreamer,",T3D:modules);
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_VEHICLESTREAMER);
 	#endif
 
 	#if defined TRYG3D_FCNPC
-		format(T3D:modules,200,"%s FCNPC,",T3D:modules);
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_FCNPC);
 	#endif
 
 	#if defined TRYG3D_ACTOR
-		format(T3D:modules,200,"%s Actor,",T3D:modules);
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_ACTOR);
 	#endif
 
 	#if defined TRYG3D_VEHICLECOLLISION
-		format(T3D:modules,200,"%s VehicleCollision,",T3D:modules);
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_VEHICLECOLLISION);
 	#endif
 	
-	#if defined TRYG3D_YSIFOREACH
-		format(T3D:modules,200,"%s YSIForeach,",T3D:modules);
+	#if defined TRYG3D_FOREACH_STANDALONE
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_FOREACH_STANDALONE);
 	#endif
 	
-	#if defined TRYG3D_FOXFOREACH
-		format(T3D:modules,200,"%s FoxForeach,",T3D:modules);
+	#if defined TRYG3D_FOREACH_YSI
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_FOREACH_YSI);
+	#endif
+	
+	#if defined TRYG3D_FOREACH_FOX
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_FOREACH_FOX);
 	#endif
 
 	#if defined TRYG3D_DRAW3D
-		format(T3D:modules,200,"%s Draw3D,",T3D:modules);
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_DRAW3D);
+	#endif
+	
+	#if defined TRYG3D_CATCHITEMS
+		format(T3D:modules,200,"%s %s,",T3D:modules,TRYG3D_CATCHITEMS);
 	#endif
 	
 	//Welcome to 3DTryg
@@ -5029,13 +5566,44 @@ stock Tryg3D::Init(){
 	#if defined TRYG3D_FCNPC
 		if(!fexist("FCNPC/nodes")){
 			print("[ADM] Error: Plugin data not found /scriptfiles/FCNPC/nodes/*.dat");
-			Update3DTrygErrorCount();
+			Tryg3D::UpdateErrorCount();
 		}
 	#endif
 	
-	for(new i = 400; i <= 611; i++){
-		SetVehicleFlagsByModel(i,GetVehicleDefaultFlagsByModel(i));
+	print("[ADM] Info: Reset vehicle flags cache in 3DTryg.inc");
+	for(new i = 400; i <= 611; i++) SetVehicleFlagsByModel(i,GetVehicleDefaultFlagsByModel(i));
+	
+	if(INVALID_ROTATION > -1.0){
+		print("[ADM] Error: Definition INVALID_ROTATION must be less or equal -1.0");
+		Tryg3D::UpdateErrorCount();
 	}
+	if(VEHICLE_SPEED_MULTIPLIER < 1.0){
+		print("[ADM] Error: Definition VEHICLE_SPEED_MULTIPLIER must be greater or equal 1.0");
+		Tryg3D::UpdateErrorCount();
+	}
+	if(PLAYER_SPEED_MULTIPLIER < 1.0){
+		print("[ADM] Error: Definition PLAYER_SPEED_MULTIPLIER must be greater or equal 1.0");
+		Tryg3D::UpdateErrorCount();
+	}
+	if(INVALID_MOVE_SPEED > 0.0){
+		print("[ADM] Error: Definition INVALID_MOVE_SPEED must be less than 0.0");
+		Tryg3D::UpdateErrorCount();
+	}
+	if(VERTICAL_CAMERA_RADIUS < 1.0){
+		print("[ADM] Error: Definition VERTICAL_CAMERA_RADIUS must be greater or equal 1.0");
+		Tryg3D::UpdateErrorCount();
+	}
+	if(HORIZONTAL_CAMERA_RADIUS < 1.0){
+		print("[ADM] Error: Definition HORIZONTAL_CAMERA_RADIUS must be greater or equal 1.0");
+		Tryg3D::UpdateErrorCount();
+	}
+	if(CHARACTER_GROUND_Z_DIFF < 0.0){
+		print("[ADM] Error: Definition CHARACTER_GROUND_Z_DIFF must be greater or equal 0.0");
+		Tryg3D::UpdateErrorCount();
+	}
+	
+	new T3D:errors = Tryg3D::GetErrorCount();
+	if(T3D:errors > 0) printf("[ADM] Info: 3DTryg running with %d errors detected, see above",T3D:errors);
 }
 
 stock Tryg3D::Exit(){
@@ -5150,6 +5718,6 @@ public OnGameModeExit(){
 #pragma unused T3DV5_OrientationRotation
 #pragma unused v3DFSAT
 
-#undef Update3DTrygErrorCount
+#undef T3DV5_UpdateErrorCount
 
 //EOF
