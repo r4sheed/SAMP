@@ -30,7 +30,6 @@ Include contain professional functions for manipulating (coordinates / rotations
 - [url=https://www.youtube.com/watch?v=xjMHYBKYo1g]Prototype Grenade Detection[/url]
 
 [code]
-/*
  3DTryg.inc
  Copyright © 2021 Abyss Morgan. All rights reserved.
  Contributors: Crayder, IllidanS4, Nero_3D, RyDeR, Zoutdaxv, hesambia, Neil Lamoureux, Ivan_Ino, Ralfie, Unrea1, Katarina Calzaghe
@@ -637,8 +636,6 @@ Include contain professional functions for manipulating (coordinates / rotations
  # o_right_back_up
  # o_right_front_up
  # o_left_front_up
-
-*/
 [/code]
 
 [b]Download:[/b]
