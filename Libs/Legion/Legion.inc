@@ -2,7 +2,11 @@
 Legion V3.5 Copyright © 2021 Abyss Morgan, Unrea1
 */
 
-#define Legion::					Legion_
+#define Legion::						Legion_
+
+#if !defined MAX_LEGION_NPC
+	#define MAX_LEGION_NPC 				900
+#endif
 
 #if !defined LEGION_DEFAULT_HEALTH
 	#define LEGION_DEFAULT_HEALTH		(200.0)
@@ -118,7 +122,9 @@ new Legion::WeaponList[][Legion::EnumWeapon] = {
 	{WEAPON_M4,0.70},
 	{WEAPON_TEC9,0.80},
 	{WEAPON_RIFLE,0.65},
-	{WEAPON_SNIPER,0.90}
+	{WEAPON_SNIPER,0.90},
+	{WEAPON_ROCKETLAUNCHER,0.10},
+	{WEAPON_MINIGUN,0.10}
 };
 
 //No encryption required
@@ -341,9 +347,44 @@ stock Legion::MoveWithPath(npcid,Float:x,Float:y,Float:z,Float:tx,Float:ty,Float
 	Legion::ClearMovePath(npcid);
 	Legion::Data[npcid][Legion::MovePath] = FCNPC::CreateMovePath();
 	FCNPC::AddPointToMovePath(Legion::Data[npcid][Legion::MovePath],x,y,z);
-	CalculatePath(NearestNodeFromPoint(x,y,z),NearestNodeFromPoint(tx,ty,tz),(npcid+2000),false,_,true);
+	
+	new MapNode:nodeid[2];
+	GetClosestMapNodeToPoint(x,y,z,nodeid[0]);
+	GetClosestMapNodeToPoint(tx,ty,tz,nodeid[1]);
+	
+	FindPathThreaded(nodeid[0],nodeid[1],"OnLegionPathCalculated","d",npcid);
+	
+	//CalculatePath(NearestNodeFromPoint(x,y,z),NearestNodeFromPoint(tx,ty,tz),(npcid+2000),false,_,true);
 }
 
+T3D:function OnLegionPathCalculated(Path:pathid, npcid, start_time) {
+    if(!IsValidPath(pathid)) return 0;
+	new amount_of_nodes, MapNode:nodeid, Float:x, Float:y, Float:z;
+    GetPathSize(pathid,amount_of_nodes);
+	if(IsPlayerConnected(npcid)){
+		new Float:ox,Float:oy,Float:oz;
+		if(IsPlayerInAnyVehicle(npcid)){
+			GetVehicleModelInfo(GetVehicleModel(FCNPC::GetVehicleID(npcid)),VEHICLE_MODEL_INFO_SIZE,ox,oy,oz);
+			oz /= 2.0;
+		} else {
+			oz = LEGION_Z_DIFF;
+			GetPathNode(pathid,0,nodeid);
+			GetMapNodePos(nodeid,x,y,z);
+			FCNPC::SetTargetAngle(npcid,x,y);
+		}
+		for(new i = 0; i < amount_of_nodes; i++){
+			GetPathNode(pathid,0,nodeid);
+			GetMapNodePos(nodeid,x,y,z);
+			InteriorFindZ(x,y,z,2.0);
+			FCNPC::AddPointToMovePath(Legion::Data[npcid][Legion::MovePath],x,y,z+oz);
+		}
+		FCNPC::GoByMovePath(npcid,Legion::Data[npcid][Legion::MovePath],0,Legion::Data[npcid][Legion::MoveType],Legion::Data[npcid][Legion::MoveSpeed],FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
+	}
+    DestroyPath(pathid);
+    return 1;
+}
+
+/*
 public GPS_WhenRouteIsCalculated(routeid,node_id_array[],amount_of_nodes,Float:distance,Float:Polygon[],Polygon_Size,Float:NodePosX[],Float:NodePosY[],Float:NodePosZ[]){
 	new npcid = routeid - 2000;
 	if(IsPlayerConnected(npcid)){
@@ -363,6 +404,7 @@ public GPS_WhenRouteIsCalculated(routeid,node_id_array[],amount_of_nodes,Float:d
 	}
 	return 1;
 }
+*/
 
 stock Legion::Create(const name[],skinid,color,Float:x,Float:y,Float:z,Float:angle,worldid=0,interiorid=0,Float:health=LEGION_DEFAULT_HEALTH,Float:armour=LEGION_DEFAULT_ARMOUR,weaponid=LEGION_WEAPON_AUTO,Float:accuracy=LEGION_WEAPON_ACC_AUTO,teamid=LEGION_TEAM_ID){
 	new npcid = FCNPC::Create(name);
