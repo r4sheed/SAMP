@@ -10,7 +10,7 @@ Include contain function for chat @mentiones system
  Plugins: SScanf
  Modules: RGB, DataConvert
 
- File Version: 1.2.0
+ File Version: 1.3.0
 
  Functions:
  GetMentiones(playerid,text[],mention_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));
@@ -34,6 +34,9 @@ public OnPlayerText(playerid,text[]){
 //Hi @Johny and @Alena how are you ?
 //Two existing players got notice and nick color has been changed to 0xCC0000FF
 [/code]
+
+[b]Screenshot:[/b]
+https://i.imgur.com/dhkbMWV.png
 
 [b]Download:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/mentiones/mentiones.inc]mentiones.inc[/url]
