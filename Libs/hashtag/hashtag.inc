@@ -28,11 +28,11 @@
 
 //Check Version DataConvert.inc
 #if !defined _Data_Convert
-	#error [ADM] You need DataConvert.inc v2.1.1
+	#error [ADM] You need DataConvert.inc v2.3.0
 #elseif !defined Data_Convert_Version
-	#error [ADM] Update you DataConvert.inc to v2.1.1
-#elseif (Data_Convert_Version < 20101)
-	#error [ADM] Update you DataConvert.inc to v2.1.1
+	#error [ADM] Update you DataConvert.inc to v2.3.0
+#elseif (Data_Convert_Version < 20300)
+	#error [ADM] Update you DataConvert.inc to v2.3.0
 #endif
 
 #if defined _text_hashtag

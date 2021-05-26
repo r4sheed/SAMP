@@ -8,7 +8,7 @@
  Plugins: SScanf
  Modules: None
 
- File Version: 2.2.0
+ File Version: 2.3.0
  SScanf Version: 2.8.2
 
  Definitions:
@@ -21,7 +21,7 @@
  OCT_NUMBER_LEN
 
  Functions:
- strcopy(const input[],output[]);  //string copy for warning 224: indeterminate array size
+ DataConvert::strcopy(const input[],output[]);  //string copy for warning 224: indeterminate array size
  fstrcopy(const input[],output[],maxdest = sizeof(output));   //fast string copy
  ABCToCBA(const input[],output[]);
  AnyToInt(string[],type,&bool:flag);
@@ -108,7 +108,7 @@
 	#error [ADM] Please remove deprecated file base64.inc
 #endif
 
-#define Data_Convert_Version						(20101) //a.b.c 10000*a+100*b+c
+#define Data_Convert_Version						(20300) //a.b.c 10000*a+100*b+c
 #if defined GetPlayerCustomSkin
 	#define DATACONVERT_SAMP_VERSION				"0.3 DL"
 #else
@@ -230,12 +230,14 @@ stock IntToAny(value,output[],type){
 	ABCToCBA(val,output);
 }
 
-stock strcopy(const input[],output[]){
-	for(new i = 0, j = strlen(input); i < j; i++){
-		output[i] = input[i];
-	}
+stock DataConvert::strcopy(const input[],output[]){
+	for(new i = 0, j = strlen(input); i < j; i++) output[i] = input[i];
 	output[strlen(input)] = EOS;
 }
+
+#if !defined strcopy
+	#define strcopy DataConvert::strcopy
+#endif
 
 stock fstrcopy(const input[],output[],maxdest = sizeof(output)){
 	output[0] = EOS;
@@ -729,4 +731,5 @@ stock DataConvert::SplitFile(const input[],const output[],max_size,&upperbound_i
 
 #define e:base64 					base64_encode
 #define d:base64 					base64_decode
+
 //EOF

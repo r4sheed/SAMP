@@ -27,7 +27,7 @@ public OnPlayerMentioned(playerid,targetid){
 }
 
 public OnPlayerText(playerid,text[]){
-	GetMentiones(playerid,text,0xCC0000FF,0x00AA00FF); //back_color the same as first chat color
+	GetMentiones(playerid,text,0xCC0000FF,0x00AA00FF,2048); //back_color the same as first chat color
 	SendClientMessageToAll(0x00AA00FF,text);
 	return 0;
 }
