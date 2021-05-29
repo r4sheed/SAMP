@@ -9,7 +9,7 @@
  Plugins: ColAndreas, YSF, Streamer, FCNPC, VehicleStreamer
  Internal Modules: Actor, VehicleCollision, Draw3D, CatchItems
 
- File Version: 5.1.0
+ File Version: 5.1.1
  ColAndreas Version: 1.4.0
  YSF Version: R19 (kurta999)
  Streamer Version: 2.9.4
@@ -611,11 +611,11 @@
 /*
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v5.1.0
+	#error [ADM] You need 3DTryg.inc v5.1.1
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
-#elseif (TRYG3D_VERSION < 50100)
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
+	#error [ADM] Update you 3DTryg.inc to v5.1.1
+#elseif (TRYG3D_VERSION < 50101)
+	#error [ADM] Update you 3DTryg.inc to v5.1.1
 #endif
 */
 
@@ -634,7 +634,7 @@
 #define _3D_Tryg
 #define TRYG3D_SAMP_INCLUDE
 
-#define TRYG3D_VERSION									(50100) //a.b.c 10000*a+100*b+c
+#define TRYG3D_VERSION									(50101) //a.b.c 10000*a+100*b+c
 #if defined GetPlayerCustomSkin
 	#define TRYG3D_SAMP_VERSION							"0.3 DL"
 #else
@@ -1838,6 +1838,10 @@ stock Tryg3D::EulerToQuat(Float:rx,Float:ry,Float:rz,&Float:qw,&Float:qx,&Float:
 }
 
 stock Tryg3D::QuatToEuler(&Float:rx,&Float:ry,&Float:rz,Float:qw,Float:qx,Float:qy,Float:qz){
+	qw = floatround(qw*10000.0)/10000.0;
+	qx = floatround(qx*10000.0)/10000.0;
+	qy = floatround(qy*10000.0)/10000.0;
+	qz = floatround(qz*10000.0)/10000.0;
 	rx = Tryg3D::CompressRotation(asin(2*qy*qz-2*qx*qw));
 	ry = Tryg3D::CompressRotation(-atan2(qx*qz+qy*qw,0.5-qx*qx-qy*qy));
 	rz = Tryg3D::CompressRotation(-atan2(qx*qy+qz*qw,0.5-qx*qx-qz*qz));
