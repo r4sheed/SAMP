@@ -2,6 +2,44 @@
 Legion V3.5 Copyright © 2021 Abyss Morgan, Unrea1
 */
 
+#if defined _samp_included
+	#if (!defined GetPlayerPoolSize || !defined GetSVarInt)
+		#error [ADM] This include requires SA:MP version 0.3.7
+	#endif
+#else
+	#error [ADM] This include requires SA:MP Include
+#endif
+
+#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
+	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+#endif
+
+#if !defined COLANDREAS
+	#error [ADM] You need ColAndreas v1.4.0 (github.com/Pottus/ColAndreas/releases)
+#endif
+
+#if !defined _FCNPC_included
+	#error [ADM] You need FCNPC v2.0.0 (github.com/ziggi/FCNPC/releases)
+#endif
+
+//Check Version 3DTryg.inc
+#if !defined TRYG3D_SAMP_INCLUDE
+	#error [ADM] You need 3DTryg.inc v5.1.1
+#elseif !defined TRYG3D_VERSION
+	#error [ADM] Update you 3DTryg.inc to v5.1.1
+#elseif (TRYG3D_VERSION < 50101)
+	#error [ADM] Update you 3DTryg.inc to v5.1.1
+#endif
+
+//Check Version SWAP.inc
+#if !defined _SWAP_include
+	#error [ADM] You need SWAP.inc v1.3.0 (adm.ct8.pl/d/SWAP.inc)
+#elseif !defined SWAP_Version
+	#error [ADM] Update you SWAP.inc to v1.3.0 (adm.ct8.pl/d/SWAP.inc)
+#elseif (SWAP_Version < 10300)
+	#error [ADM] Update you SWAP.inc to v1.3.0 (adm.ct8.pl/d/SWAP.inc)
+#endif
+
 #define Legion::						Legion_
 
 #if !defined MAX_LEGION_NPC
@@ -787,7 +825,7 @@ public FCNPC::OnUpdate(npcid){
 											Legion::SyncArea(npcid);
 										} else {
 											Legion::Data[npcid][Legion::InCheckPoint] = true;
-											OnPlayerEnterDynamicCP(npcid,Legion::Data[npcid][Legion::CheckPoint]); //server side
+											CallRemoteFunction("OnPlayerEnterDynamicCP","dd",npcid,Legion::Data[npcid][Legion::CheckPoint]);
 										}
 										FCNPC::Stop(npcid);
 										FCNPC::ClearAnimations(npcid);
