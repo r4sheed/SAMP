@@ -78,16 +78,16 @@
 #endif
 
 #if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v5.1.0
+	#error [ADM] This include required 3DTryg.inc v5.1.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.1.0
 #elseif (TRYG3D_VERSION < 50100)
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.1.0
 #endif
 
 #if defined _dynamic_mine_system
@@ -98,7 +98,7 @@
 
 #if defined _GRENADE_INCLUDE
 	#if (EXTENDED_GRENADE_VERSION < 10100)
-		#error [ADM] Update you ExtendedGrenade.inc to v1.1.0
+		#error [ADM] Update your ExtendedGrenade.inc to v1.1.0
 	#else
 		#define DYNAMIC_MINES_GRENADE
 	#endif

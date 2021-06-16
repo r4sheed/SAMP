@@ -380,7 +380,7 @@
 #endif
 
 #if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
 #if defined _streamer_spec

@@ -9,7 +9,7 @@
 
  File Version: 1.0.0
  Streamer Version: 2.9.4
- ColAndreas Version: 1.4.0
+ ColAndreas Version: 1.5.0
  3DTryg Version: 5.1.0
  Missile Version: 2.3.0
  Progress Version: 1.3.1.0
@@ -39,33 +39,43 @@
 #endif
 
 #if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
-#if !defined COLANDREAS
-	#error [ADM] You need ColAndreas v1.4.0 (github.com/Pottus/ColAndreas/releases)
+#if !defined COLANDREAS_VERSION
+	#error [ADM] This include required ColAndreas v1.5.0 (github.com/Pottus/ColAndreas/releases)
+#elseif (COLANDREAS_VERSION < 10500)
+	#error [ADM] Update your ColAndreas v1.5.0 (github.com/Pottus/ColAndreas/releases)
+#endif
+
+#if !defined CA_CreateDynamicObject_SC
+	#error [ADM] This include required include Streamer before ColAndreas for use ColAndreas Streamer Functions
 #endif
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v5.1.0
+	#error [ADM] This include required 3DTryg.inc v5.1.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.1.0
 #elseif (TRYG3D_VERSION < 50100)
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.1.0
+#endif
+
+#if !defined TRYG3D_STREAMER
+	#error [ADM] Module not initialized: TRYG3D_STREAMER
 #endif
 
 //Check Version Missile.inc
 #if !defined _missile_launcher
-	#error [ADM] You need Missile.inc v2.3.0
+	#error [ADM] This include required Missile.inc v2.3.0
 #elseif !defined Missile_Version
-	#error [ADM] Update you Missile.inc to v2.3.0
+	#error [ADM] Update your Missile.inc to v2.3.0
 #elseif (Missile_Version < 20300)
-	#error [ADM] Update you Missile.inc to v2.3.0
+	#error [ADM] Update your Missile.inc to v2.3.0
 #endif
 
 #if !defined _progress_included
-	#error [ADM] You need progress.inc
+	#error [ADM] This include required progress.inc
 #endif
 
 #define Hyperion::						Hyperion_

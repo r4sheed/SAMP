@@ -11,33 +11,60 @@ Legion V3.5 Copyright © 2021 Abyss Morgan, Unrea1
 #endif
 
 #if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
-#if !defined COLANDREAS
-	#error [ADM] You need ColAndreas v1.4.0 (github.com/Pottus/ColAndreas/releases)
+#if !defined COLANDREAS_VERSION
+	#error [ADM] This include required ColAndreas v1.5.0 (github.com/Pottus/ColAndreas/releases)
+#elseif (COLANDREAS_VERSION < 10500)
+	#error [ADM] Update your ColAndreas v1.5.0 (github.com/Pottus/ColAndreas/releases)
 #endif
 
 #if !defined _FCNPC_included
-	#error [ADM] You need FCNPC v2.0.0 (github.com/ziggi/FCNPC/releases)
-#endif
-
-//Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v5.1.1
-#elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v5.1.1
-#elseif (TRYG3D_VERSION < 50101)
-	#error [ADM] Update you 3DTryg.inc to v5.1.1
+	#error [ADM] This include required FCNPC v2.0.0 (github.com/ziggi/FCNPC/releases)
 #endif
 
 //Check Version SWAP.inc
 #if !defined _SWAP_include
-	#error [ADM] You need SWAP.inc v1.3.0 (adm.ct8.pl/d/SWAP.inc)
+	#error [ADM] This include required SWAP.inc v1.3.0 (adm.ct8.pl/d/SWAP.inc)
 #elseif !defined SWAP_Version
-	#error [ADM] Update you SWAP.inc to v1.3.0 (adm.ct8.pl/d/SWAP.inc)
+	#error [ADM] Update your SWAP.inc to v1.3.0 (adm.ct8.pl/d/SWAP.inc)
 #elseif (SWAP_Version < 10300)
-	#error [ADM] Update you SWAP.inc to v1.3.0 (adm.ct8.pl/d/SWAP.inc)
+	#error [ADM] Update your SWAP.inc to v1.3.0 (adm.ct8.pl/d/SWAP.inc)
+#endif
+
+//Check Version EVF.inc
+#if !defined _EVF_include
+	#error [ADM] This include required EVF.inc v3.3.3
+#elseif !defined EVF_Version
+	#error [ADM] Update your EVF.inc to v3.3.3
+#elseif (EVF_Version < 30303)
+	#error [ADM] Update your EVF.inc to v3.3.3
+#endif
+
+//Check Version 3DTryg.inc
+#if !defined TRYG3D_SAMP_INCLUDE
+	#error [ADM] This include required 3DTryg.inc v5.1.1
+#elseif !defined TRYG3D_VERSION
+	#error [ADM] Update your 3DTryg.inc to v5.1.1
+#elseif (TRYG3D_VERSION < 50101)
+	#error [ADM] Update your 3DTryg.inc to v5.1.1
+#endif
+
+#if !defined TRYG3D_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#endif
+
+#if !defined TRYG3D_FCNPC
+	#error [ADM] Module not initialized: TRYG3D_FCNPC
+#endif
+
+#if !defined TRYG3D_STREAMER
+	#error [ADM] Module not initialized: TRYG3D_STREAMER
+#endif
+
+#if !defined TRYG3D_VEHICLECOLLISION
+	#error [ADM] Module not initialized: TRYG3D_VEHICLECOLLISION
 #endif
 
 #if defined _LEGION_INCLUDE
@@ -221,6 +248,7 @@ stock Legion::Init(){
 	for(new Legion::vehicleid = 0; Legion::vehicleid < MAX_VEHICLES; Legion::vehicleid++){
 		Legion::VehicleLock[Legion::vehicleid] = INVALID_PLAYER_ID;
 	}
+	SetTimer("Legion_OnProtocolUpdate",1000,true);
 }
 
 T3D:function Legion::OnProtocolUpdate(){

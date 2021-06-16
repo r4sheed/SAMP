@@ -2,11 +2,11 @@
 
 //Check Version SAOI.inc
 #if !defined _SAOI_LOADER
-	#error You need SAOI.inc v2.2.0 (8.ct8.pl/d/SAOI)
+	#error This include required SAOI.inc v2.2.0 (8.ct8.pl/d/SAOI)
 #elseif !defined SAOI_LOADER_VERSION
-	#error Update you SAOI.inc to v2.2.0 (8.ct8.pl/d/SAOI)
+	#error Update your SAOI.inc to v2.2.0 (8.ct8.pl/d/SAOI)
 #elseif (SAOI_LOADER_VERSION < 20200)
-	#error Update you SAOI.inc to v2.2.0 (8.ct8.pl/d/SAOI)
+	#error Update your SAOI.inc to v2.2.0 (8.ct8.pl/d/SAOI)
 #endif
 
 YCMD:saoisave(playerid,params[]){

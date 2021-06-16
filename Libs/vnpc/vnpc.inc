@@ -23,7 +23,7 @@
 #endif
 
 #if !defined _FCNPC_included
-	#error [ADM] You need FCNPC v2.0.0 (github.com/ziggi/FCNPC/releases)
+	#error [ADM] This include required FCNPC v2.0.0 (github.com/ziggi/FCNPC/releases)
 #endif
 
 #if defined _visible_npc_inc

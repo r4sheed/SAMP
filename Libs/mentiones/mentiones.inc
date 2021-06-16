@@ -18,20 +18,20 @@
 */
 
 #if !defined sscanf
-	#error [ADM] You need SScanf v2.8.2
+	#error [ADM] This include required SScanf v2.8.2
 #endif
 
 #if !defined _rgb_function
-	#error [ADM] You need RGB.inc
+	#error [ADM] This include required RGB.inc
 #endif
 
 //Check Version DataConvert.inc
 #if !defined _Data_Convert
-	#error [ADM] You need DataConvert.inc v2.3.0
+	#error [ADM] This include required DataConvert.inc v2.3.0
 #elseif !defined Data_Convert_Version
-	#error [ADM] Update you DataConvert.inc to v2.3.0
+	#error [ADM] Update your DataConvert.inc to v2.3.0
 #elseif (Data_Convert_Version < 20300)
-	#error [ADM] Update you DataConvert.inc to v2.3.0
+	#error [ADM] Update your DataConvert.inc to v2.3.0
 #endif
 
 #if defined _text_mentiones

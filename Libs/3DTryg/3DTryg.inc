@@ -10,7 +10,7 @@
  Internal Modules: Actor, VehicleCollision, Draw3D, CatchItems
 
  File Version: 5.1.1
- ColAndreas Version: 1.4.0
+ ColAndreas Version: 1.5.0
  YSF Version: R19 (kurta999)
  Streamer Version: 2.9.4
  VehicleStreamer Version: 2.9.4
@@ -611,11 +611,11 @@
 /*
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v5.1.1
+	#error [ADM] This include required 3DTryg.inc v5.1.1
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v5.1.1
+	#error [ADM] Update your 3DTryg.inc to v5.1.1
 #elseif (TRYG3D_VERSION < 50101)
-	#error [ADM] Update you 3DTryg.inc to v5.1.1
+	#error [ADM] Update your 3DTryg.inc to v5.1.1
 #endif
 */
 
@@ -725,8 +725,12 @@
 #endif
 
 #if ((defined COLANDREAS) && (!defined DISABLE_3D_TRYG_COLANDREAS))
-	#define TRYG3D_COLANDREAS							"ColAndreas v1.4.0"
-	#define TRYG3D_COLANDREAS_VERSION					(10400) //a.b.c 10000*a+100*b+c
+	#define TRYG3D_COLANDREAS							"ColAndreas v1.5.0"
+	#define TRYG3D_COLANDREAS_VERSION					(10500) //a.b.c 10000*a+100*b+c
+	
+	#if (COLANDREAS_VERSION < TRYG3D_COLANDREAS_VERSION)
+		#error [ADM] Update your ColAndreas to v1.5.0 (github.com/Pottus/ColAndreas/releases)
+	#endif
 	
 	#if !defined COLANDREAS_VERSION
 		#define COLANDREAS_VERSION						(0)
@@ -737,7 +741,7 @@
 #if ((defined _YSF_included) && (!defined DISABLE_3D_TRYG_YSF))
 	#define TRYG3D_YSF									"YSF R19"
 	#if (!defined RemovePlayerForPlayer)
-		#error [ADM] You need YSF R19 (github.com/kurta999/YSF/releases)
+		#error [ADM] Update your YSF to R19 (github.com/kurta999/YSF/releases)
 	#endif
 #endif
 
@@ -746,7 +750,7 @@
 	#define TRYG3D_STREAMER								"Streamer v2.9.4"
 	#define TRYG3D_STREAMERVersion						(0x294)
 	#if (!defined Streamer_GetItemPos)
-		#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+		#error [ADM] Update your Streamer to v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
 	#endif
 #endif
 
@@ -774,7 +778,7 @@
 	#define TRYG3D_FCNPC								"FCNPC v2.0.0"
 	#define TRYG3D_FCNPC_VERSION						(200) //a.b.c 100*a+10*b+c
 	#if (FCNPC_INCLUDE_VERSION < TRYG3D_FCNPC_VERSION)
-		#error [ADM] You need FCNPC v2.0.0 (github.com/ziggi/FCNPC/releases)
+		#error [ADM] Update your FCNPC to v2.0.0 (github.com/ziggi/FCNPC/releases)
 	#endif
 #endif
 
@@ -4317,7 +4321,12 @@ stock Animation::IsPlayerRunning(playerid){
 		GetPointInFront2D(x,y,angle,T3D:dist,tx,ty);
 		GetArcPoints3D(x,y,z,tx,ty,z,0.0,(T3D:dist/6.0),points,sizeof(points));
 		for(new i = 0; i < 15; i++){
-			vehicleid = MovePointColWithVehicle(points[i][0],points[i][1],points[i][2], points[i+1][0],points[i+1][1],points[i+1][2],ftx,fty,ftz);
+			#if defined TRYG3D_VEHICLECOLLISION
+				vehicleid = MovePointColWithVehicle(points[i][0],points[i][1],points[i][2], points[i+1][0],points[i+1][1],points[i+1][2],ftx,fty,ftz);
+			#else
+				MovePointCol(points[i][0],points[i][1],points[i][2], points[i+1][0],points[i+1][1],points[i+1][2],ftx,fty,ftz);
+				vehicleid = INVALID_VEHICLE_ID;
+			#endif
 			if(vehicleid != INVALID_VEHICLE_ID){
 				//vehicle collision
 				ftz = InteriorFindZ(ftx,fty,ftz,2.0);

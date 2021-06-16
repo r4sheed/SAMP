@@ -9,7 +9,7 @@
 
  File Version: 1.1.0
  Streamer Version: 2.9.4
- ColAndreas Version: 1.4.0
+ ColAndreas Version: 1.5.0
  3DTryg Version: 5.1.0
 
  Functions:
@@ -52,11 +52,13 @@
 #endif
 
 #if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
-#if !defined COLANDREAS
-	#error [ADM] You need ColAndreas v1.4.0 (github.com/Pottus/ColAndreas/releases)
+#if !defined COLANDREAS_VERSION
+	#error [ADM] This include required ColAndreas v1.5.0 (github.com/Pottus/ColAndreas/releases)
+#elseif (COLANDREAS_VERSION < 10500)
+	#error [ADM] Update your ColAndreas v1.5.0 (github.com/Pottus/ColAndreas/releases)
 #endif
 
 #if !defined _route_rand
@@ -65,11 +67,15 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v5.1.0
+	#error [ADM] This include required 3DTryg.inc v5.1.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.1.0
 #elseif (TRYG3D_VERSION < 50100)
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.1.0
+#endif
+
+#if !defined TRYG3D_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
 #endif
 
 #if defined _MISSIONS_INCLUDE
@@ -752,7 +758,7 @@ stock Missions::OnBombUpdate(){
 			GetPointInWallForPoint(x,y,z+1.5,5000.0,tx,ty,tz);
 			GetRotationFor2Point2D(tx,ty,x,y,rz);
 			Missions::BombData[mobid][f_text] = CreateDynamic3DTextLabel("EMP Explosive",0xFF0000FF,tx,ty,tz,35.0,INVALID_PLAYER_ID,INVALID_VEHICLE_ID,0,0,0);
-			Missions::BombData[mobid][f_object] = CreateDynamicObject(363,tx,ty,tz,0.0,0.0,CompRotationFloat(rz+180.0));
+			Missions::BombData[mobid][f_object] = CreateDynamicObject(363,tx,ty,tz,0.0,0.0,Tryg3D::CompressRotation(rz+180.0));
 			Missions::BombData[mobid][f_icon] = CreateDynamicMapIcon(tx,ty,tz,37,1,0,0,-1,300.0);
 			Missions::BombData[mobid][f_area] = CreateDynamicSphere(tx,ty,tz,25.0,0,0,-1);
 			Missions::BombData[mobid][f_active] = true;
@@ -1079,9 +1085,9 @@ stock Missions::CreateRandomCorpse(){
 	
 	new rand = random(3);
 	for(new i = 1; i <= rand; i++){
-		GetRandomPointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
+		Random::PointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
 		while(IsPointInWater(tx,ty,0.0)){
-			GetRandomPointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
+			Random::PointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
 		}
 		ColAndreas::FindZ_For2DCoord(tx,ty,tz);
 		Missions::CreateCorpse(tx,ty,tz+1.0);
@@ -1308,9 +1314,9 @@ stock Missions::CreateRandomFire(){
 	
 	new rand = random(6);
 	for(new i = 1; i <= rand; i++){
-		GetRandomPointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
+		Random::PointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
 		while(IsPointInWater(tx,ty,0.0)){
-			GetRandomPointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
+			Random::PointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
 		}
 		ColAndreas::FindZ_For2DCoord(tx,ty,tz);
 		Missions::CreateFire(tx,ty,tz+0.2);
@@ -1468,7 +1474,7 @@ stock Missions::CreateRadar(Float:x,Float:y,Float:z,Float:rz,worldid=0,interiori
 	
 	Missions::RadarData[mobid][f_active] = true;
 	
-	Missions::RadarData[mobid][f_object] = CreateDynamicObject(18880,x,y,z-1.0,0.0,0.0,CompRotationFloat(rz+180.0),worldid,interiorid,-1,100.0);
+	Missions::RadarData[mobid][f_object] = CreateDynamicObject(18880,x,y,z-1.0,0.0,0.0,Tryg3D::CompressRotation(rz+180.0),worldid,interiorid,-1,100.0);
 	Missions::RadarData[mobid][f_area] = CreateDynamicCircle(x,y,20.0,worldid,interiorid);
 	Missions::RadarData[mobid][f_speed] = speed;
 	

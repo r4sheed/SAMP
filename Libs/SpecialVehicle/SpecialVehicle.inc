@@ -9,7 +9,7 @@
  Modules: 3DTryg, EVF, Missile, VehPara, Mines, ExtendedGrenade
 
  File Version: 1.0.0
- ColAndreas Version: 1.4.0
+ ColAndreas Version: 1.5.0
  Streamer Version: 2.9.4
  3DTryg Version: 5.1.0
 
@@ -63,60 +63,66 @@
 #endif
 
 #if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
-#if !defined COLANDREAS
-	#error [ADM] You need ColAndreas v1.4.0 (github.com/Pottus/ColAndreas/releases)
+#if !defined COLANDREAS_VERSION
+	#error [ADM] This include required ColAndreas v1.5.0 (github.com/Pottus/ColAndreas/releases)
+#elseif (COLANDREAS_VERSION < 10500)
+	#error [ADM] Update your ColAndreas v1.5.0 (github.com/Pottus/ColAndreas/releases)
 #endif
 
 //Check Version EVF.inc
 #if !defined _EVF_include
-	#error [ADM] You need EVF.inc v3.3.3
+	#error [ADM] This include required EVF.inc v3.3.3
 #elseif !defined EVF_Version
-	#error [ADM] Update you EVF.inc to v3.3.3
+	#error [ADM] Update your EVF.inc to v3.3.3
 #elseif (EVF_Version < 30303)
-	#error [ADM] Update you EVF.inc to v3.3.3
+	#error [ADM] Update your EVF.inc to v3.3.3
 #endif
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] You need 3DTryg.inc v5.1.0
+	#error [ADM] This include required 3DTryg.inc v5.1.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.1.0
 #elseif (TRYG3D_VERSION < 50100)
-	#error [ADM] Update you 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.1.0
+#endif
+
+#if !defined TRYG3D_STREAMER
+	#error [ADM] Module not initialized: TRYG3D_STREAMER
 #endif
 
 //Check Version Missile.inc
 #if !defined _missile_launcher
-	#error [ADM] You need Missile.inc v2.3.1
+	#error [ADM] This include required Missile.inc v2.3.1
 #elseif !defined Missile_Version
-	#error [ADM] Update you Missile.inc to v2.3.1
+	#error [ADM] Update your Missile.inc to v2.3.1
 #elseif (Missile_Version < 20301)
-	#error [ADM] Update you Missile.inc to v2.3.1
+	#error [ADM] Update your Missile.inc to v2.3.1
 #endif
 
 //Check Version ExtendedGrenade.inc
 #if !defined _GRENADE_INCLUDE
-	#error [ADM] You need ExtendedGrenade.inc v1.1.0
+	#error [ADM] This include required ExtendedGrenade.inc v1.1.0
 #elseif !defined EXTENDED_GRENADE_VERSION
-	#error [ADM] Update you ExtendedGrenade.inc to v1.1.0
+	#error [ADM] Update your ExtendedGrenade.inc to v1.1.0
 #elseif (EXTENDED_GRENADE_VERSION < 10100)
-	#error [ADM] Update you ExtendedGrenade.inc to v1.1.0
+	#error [ADM] Update your ExtendedGrenade.inc to v1.1.0
 #endif
 
 //Check Version Mines.inc
 #if !defined _dynamic_mine_system
-	#error [ADM] You need Mines.inc v2.2.1
+	#error [ADM] This include required Mines.inc v2.2.1
 #elseif !defined DYNAMIC_MINE_VERSION
-	#error [ADM] Update you Mines.inc to v2.2.1
+	#error [ADM] Update your Mines.inc to v2.2.1
 #elseif (DYNAMIC_MINE_VERSION < 20201)
-	#error [ADM] Update you Mines.inc to v2.2.1
+	#error [ADM] Update your Mines.inc to v2.2.1
 #endif
 
 #if !defined _vehicle_parachute
-	#error [ADM] You need VehPara v1.2.0
+	#error [ADM] This include required VehPara v1.2.0
 #endif
 
 #if defined _SPECIAL_VEH_INCLUDE

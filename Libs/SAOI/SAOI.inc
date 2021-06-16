@@ -92,15 +92,15 @@
 #endif
 
 #if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] You need Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
 #if !defined sscanf
-	#error [ADM] You need SScanf v2.8.2
+	#error [ADM] This include required SScanf v2.8.2
 #endif
 
 #if ((!defined _MD5_HASH) || (!defined MD5_HashFile))
-	#error [ADM] You need MD5.inc
+	#error [ADM] This include required MD5.inc
 #endif
 
 #if defined _streamer_spec

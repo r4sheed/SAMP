@@ -78,7 +78,7 @@
  **********************************************************************************************************************************/
 
 #if !defined sscanf
-	#error [ADM] You need SScanf v2.8.2
+	#error [ADM] This include required SScanf v2.8.2
 #endif
 
 #if defined _adm_encryption
