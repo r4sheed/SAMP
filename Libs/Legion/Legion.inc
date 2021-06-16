@@ -24,6 +24,10 @@ Legion V3.5 Copyright © 2021 Abyss Morgan, Unrea1
 	#error [ADM] This include required FCNPC v2.0.0 (github.com/ziggi/FCNPC/releases)
 #endif
 
+#if !defined _gps_included
+	#error [ADM] This include required GPS v1.4.0 (github.com/kristoisberg/samp-gps-plugin/releases)
+#endif
+
 //Check Version SWAP.inc
 #if !defined _SWAP_include
 	#error [ADM] This include required SWAP.inc v1.3.0 (adm.ct8.pl/d/SWAP.inc)
