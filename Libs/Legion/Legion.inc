@@ -40,6 +40,13 @@ Legion V3.5 Copyright © 2021 Abyss Morgan, Unrea1
 	#error [ADM] Update you SWAP.inc to v1.3.0 (adm.ct8.pl/d/SWAP.inc)
 #endif
 
+#if defined _LEGION_INCLUDE
+	#endinput
+#endif
+#define _LEGION_INCLUDE
+
+#define LEGION_VERSION					(30501) //a.b.c 10000*a+100*b+c
+
 #define Legion::						Legion_
 
 #if !defined MAX_LEGION_NPC
@@ -208,11 +215,11 @@ stock Legion::Init(){
 	if(!fexist(LEGION_SWAP_FILE)){
 		SWAP::reserve(LEGION_SWAP_FILE,MAX_PLAYERS*4);
 	}
-	for(new npcid = 0; npcid < MAX_PLAYERS; npcid++){
-		Legion::Fresh(npcid);
+	for(new Legion::npcid = 0; Legion::npcid < MAX_PLAYERS; Legion::npcid++){
+		Legion::Fresh(Legion::npcid);
 	}
-	for(new vehicleid = 0; vehicleid < MAX_VEHICLES; vehicleid++){
-		Legion::VehicleLock[vehicleid] = INVALID_PLAYER_ID;
+	for(new Legion::vehicleid = 0; Legion::vehicleid < MAX_VEHICLES; Legion::vehicleid++){
+		Legion::VehicleLock[Legion::vehicleid] = INVALID_PLAYER_ID;
 	}
 }
 
