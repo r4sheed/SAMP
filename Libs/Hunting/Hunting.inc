@@ -8,7 +8,7 @@
  Plugins: Streamer, ColAndreas
  Modules: 3DTryg
 
- File Version: 1.4.2
+ File Version: 1.4.3
  Streamer Version: 2.9.4
  ColAndreas Version: 1.5.0
  3DTryg Version: 5.1.0
@@ -636,7 +636,7 @@ T3D:function Hunting::OnUpdate(){
 							if(cnt >= 100) return 0;
 							vx = vy = vz = 0.0;
 							Random::PointInCircle(x,y,RandomFloat(5.0,25.0),vx,vy);
-							if(GetDistanceBetweenPoints2D(x,y,vx,vy) <= 2.0 || IsPointInWater(vx,vy) || IsPointInUnderground(x,y,z)) continue;
+							if(GetDistanceBetweenPoints2D(x,y,vx,vy) <= 2.0 || IsPointInWater(vx,vy) || IsPointInUnderground(x,y,z+1.0)) continue;
 							ColAndreas::FindZ_For2DCoord(vx,vy,vz);
 							vz += 1.0;
 							if(ColAndreas::RayCastLine(x,y,z+1.0,vx,vy,vz,tmp_float,tmp_float,tmp_float)) continue;
