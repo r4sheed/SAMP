@@ -10,10 +10,12 @@ Include contain function for chat #hashtag system
  Plugins: SScanf
  Modules: RGB
 
- File Version: 1.2.0
+ File Version: 1.2.1
 
  Functions:
  GetHashTag(playerid,text[],hashtag_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));
+ GetAllowedHashTag();
+ SetAllowedHashTag(number);
  HashTag::name(playerid);
 
  Callbacks:
