@@ -7,7 +7,7 @@
  Plugins: Streamer, ColAndreas
  Modules: 3DTryg
 
- File Version: 1.1.0
+ File Version: 1.1.1
  Streamer Version: 2.9.4
  ColAndreas Version: 1.5.0
  3DTryg Version: 5.1.0
@@ -207,46 +207,46 @@ stock Grenade::CreateGrenadeEffect(special_weaponid,effectid,Float:x,Float:y,Flo
 	if(special_weaponid == GRENADE_SPECIAL_WEAPON_GRENADE){
 		switch(effectid){
 			case GRENADE_EFFECT_CLUSTER_BOMB_1: {
-				for(new i = 0; i < 10; i++){
+				for(new Grenade::i = 0; Grenade::i < 10; Grenade::i++){
 					Random::PointInCircle(x,y,5.0,tx,ty);
 					ColAndreas::FindZ_For2DCoord(tx,ty,tz);
 					CreateDynamicExplosionDMG(tx,ty,tz+0.2,12,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
 				}
 			}
 			case GRENADE_EFFECT_CLUSTER_BOMB_2: {
-				for(new i = 0; i < 8; i++){
+				for(new Grenade::i = 0; Grenade::i < 8; Grenade::i++){
 					Random::PointInCircle(x,y,15.0,tx,ty);
 					ColAndreas::FindZ_For2DCoord(tx,ty,tz);
 					CreateDynamicExplosionDMG(tx,ty,tz+0.2,2,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
 				}
 			}
 			case GRENADE_EFFECT_CLUSTER_BOMB_3: {
-				for(new i = 0; i < 6; i++){
+				for(new Grenade::i = 0; Grenade::i < 6; Grenade::i++){
 					Random::PointInCircle(x,y,15.0,tx,ty);
 					ColAndreas::FindZ_For2DCoord(tx,ty,tz);
 					CreateDynamicExplosionDMG(tx,ty,tz+0.2,6,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
 				}
 			}
 			case GRENADE_EFFECT_CLUSTER_BOMB_4: {
-				for(new i = 0; i < 6; i++){
+				for(new Grenade::i = 0; Grenade::i < 6; Grenade::i++){
 					Random::PointInCircle(x,y,20.0,tx,ty);
 					ColAndreas::FindZ_For2DCoord(tx,ty,tz);
 					CreateDynamicExplosionDMG(tx,ty,tz+0.2,7,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
 				}
 			}
 			case GRENADE_EFFECT_BANG_GRENADE: {
-				Tryg3D::Foreach(i){
-					GetPlayerPos(i,tx,ty,tz);
-					GetPlayerCameraRotation(i,rx,rz);
+				Tryg3D::Foreach(eg_playerid){
+					GetPlayerPos(eg_playerid,tx,ty,tz);
+					GetPlayerCameraRotation(eg_playerid,rx,rz);
 					if(Area::PointInSphericalSectorEx(x,y,z,tx,ty,tz,rx,rz,100.0,VERTICAL_CAMERA_RADIUS,HORIZONTAL_CAMERA_RADIUS,true,true)){
-						if(Grenade::PlayerData[i][Grenade::StunTime] == 0){
-							Grenade::PlayerData[i][Grenade::StunTime] = GetTickCount() + 5000;
+						if(Grenade::PlayerData[eg_playerid][Grenade::StunTime] == 0){
+							Grenade::PlayerData[eg_playerid][Grenade::StunTime] = GetTickCount() + 5000;
 						} else {
-							Grenade::PlayerData[i][Grenade::StunTime] += 5000;
+							Grenade::PlayerData[eg_playerid][Grenade::StunTime] += 5000;
 						}
-						TextDrawShowForPlayer(i,Grenade::TextDrawFlash[0]);
-						TextDrawHideForPlayer(i,Grenade::TextDrawFlash[1]);
-						TextDrawHideForPlayer(i,Grenade::TextDrawFlash[2]);
+						TextDrawShowForPlayer(eg_playerid,Grenade::TextDrawFlash[0]);
+						TextDrawHideForPlayer(eg_playerid,Grenade::TextDrawFlash[1]);
+						TextDrawHideForPlayer(eg_playerid,Grenade::TextDrawFlash[2]);
 					}
 				}
 			}
@@ -375,17 +375,17 @@ stock Grenade::GrenadeEffectByPlayer(playerid,special_weaponid,Float:x,Float:y,F
 }
 
 stock Grenade::DestroyEffect(mobid){
-	for(new i = 0; i < 9; i++){
-		if(IsValidDynamicObject(Grenade::EffectData[mobid][Grenade::Object][i])){
-			DestroyDynamicObject(Grenade::EffectData[mobid][Grenade::Object][i]);
-			Grenade::EffectData[mobid][Grenade::Object][i] = STREAMER_TAG_OBJECT:INVALID_STREAMER_ID;
+	for(new Grenade::i = 0; Grenade::i < 9; Grenade::i++){
+		if(IsValidDynamicObject(Grenade::EffectData[mobid][Grenade::Object][Grenade::i])){
+			DestroyDynamicObject(Grenade::EffectData[mobid][Grenade::Object][Grenade::i]);
+			Grenade::EffectData[mobid][Grenade::Object][Grenade::i] = STREAMER_TAG_OBJECT:INVALID_STREAMER_ID;
 		}
 	}
 	if(Grenade::EffectData[mobid][Grenade::Type] == GRENADE_SPECIAL_WEAPON_MOLTOV){
-		for(new i = 9; i < 17; i++){
-			if(IsValidDynamicObject(Grenade::EffectData[mobid][Grenade::Object][i])){
-				DestroyDynamicObject(Grenade::EffectData[mobid][Grenade::Object][i]);
-				Grenade::EffectData[mobid][Grenade::Object][i] = STREAMER_TAG_OBJECT:INVALID_STREAMER_ID;
+		for(new Grenade::i = 9; Grenade::i < 17; Grenade::i++){
+			if(IsValidDynamicObject(Grenade::EffectData[mobid][Grenade::Object][Grenade::i])){
+				DestroyDynamicObject(Grenade::EffectData[mobid][Grenade::Object][Grenade::i]);
+				Grenade::EffectData[mobid][Grenade::Object][Grenade::i] = STREAMER_TAG_OBJECT:INVALID_STREAMER_ID;
 			}
 		}
 	}
