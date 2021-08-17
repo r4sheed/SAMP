@@ -1,4 +1,4 @@
-Hello, I would like to present you the Knife Shot Script
+Здравствуйте, я хотел бы представить вам сценарий выстрела скрипт 
 
 [b]видео:[/b]
 [url]https://www.youtube.com/watch?v=WJZCn3XXRHY[/url]
@@ -9,7 +9,7 @@ Hello, I would like to present you the Knife Shot Script
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://github.com/Pottus/ColAndreas]ColAndreas Plugin[/url]
 
-[b]Installation:[/b]
+[b]Установка:[/b]
 [code]
 #include <colandreas>
 #include <3DTryg>
@@ -40,9 +40,9 @@ Knife::GetPoisoningDamage(playerid);
 Knife::SetPoisoningDamage(playerid,Float:damage);
 [/code]
 
-[b]Callbacks:[/b]
+[b]Обратные вызовы:[/b]
 [code]
-OnPlayerRequestKnifeShot(playerid,targetid); //return 0 - prevent to use knife shoot (this callback is called also if ammo is 0)
+OnPlayerRequestKnifeShot(playerid,targetid); //return 0 - не допустить стрелять из ножа (этот обратный вызов вызывается также, если боеприпасы 0)
 [/code]
 
 [b]Определения:[/b]
@@ -60,12 +60,12 @@ WEAPON_KNIFE_THROWN
 WEAPON_KNIFE_POISONING
 [/code]
 
-[b]Activation:[/b]
+[b]Активация:[/b]
 [code]
-Weapon: Knife
+Оружие: нож
 
-Step 1: Right Mouse Button
-Step 2: Left Mouse Button
+Шаг 1: правая кнопка мыши
+Шаг 2: левая кнопка мыши
 [/code]
 
 [i][b]Уведомление:[/b]

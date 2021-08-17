@@ -6,7 +6,7 @@ It is a war of two large warships in which between 6 and 42 players can particip
 [b]видео:[/b]
 [url]https://www.youtube.com/watch?v=Ut7iBj7SRGk[/url]
 
-[b]Installation:[/b]
+[b]Установка:[/b]
 [code]
 #include <streamer>
 #include <colandreas>
@@ -112,7 +112,7 @@ Hyperion::IsPlayerOnArea(playerid);
 Hyperion::CountPlayers();
 [/code]
 
-[b]Callbacks:[/b]
+[b]Обратные вызовы:[/b]
 [code]
 IsAllowedToJoinHyperion(playerid);
 OnHyperionBattleResults(playerid,isdead,iswinner);

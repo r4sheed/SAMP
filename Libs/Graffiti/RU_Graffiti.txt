@@ -3,7 +3,7 @@ Hello, I would like to present you the Los Santos Gang Graffiti.
 [b]видео:[/b]
 [url=https://i.imgur.com/c0RgnwW.gif][img]https://i.imgur.com/c0RgnwW.gif[/img][/url]
 
-[b]Installation:[/b]
+[b]Установка:[/b]
 [code]
 #include <streamer>
 #include <3DTryg>

@@ -73,7 +73,7 @@ Mines::GetEffectTime(mobid);
 Mines::SetEffectTime(mobid,seconds);
 [/code]
 
-[b]Callbacks:[/b]
+[b]Обратные вызовы:[/b]
 [code]
 OnMineDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,Float:radius,damagerid);
 

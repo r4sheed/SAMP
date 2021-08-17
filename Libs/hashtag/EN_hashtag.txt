@@ -35,9 +35,12 @@ HashTag::banned(playerid){
 	return 1;
 }
 
-public OnPlayerText(playerid,text[]){
-	GetHashTag(playerid,text,0xCC0000FF,0x00AA00FF,2048); //back_color the same as first chat color
-	SendClientMessageToAll(0x00AA00FF,text);
+public OnPlayerText(playerid,text[]){	
+	new chat_text[2048], p_name[MAX_PLAYER_NAME];
+	GetPlayerName(playerid,p_name,MAX_PLAYER_NAME);
+	format(chat_text,sizeof(chat_text),"%s: %s",p_name,text);
+	GetHashTag(playerid,chat_text,0xCC0000FF,0x00AA00FF,2048); //back_color the same as first chat color
+	SendClientMessageToAll(0x00AA00FF,chat_text);
 	return 0;
 }
 [/code]

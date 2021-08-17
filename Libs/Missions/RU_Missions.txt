@@ -197,7 +197,7 @@ Missions::SetSpawnRectangle(mission_type,Float:minx,Float:miny,Float:maxx,Float:
 Missions::SetSpawnPolygon(mission_type,Float:points[],maxpoints=sizeof(points),bool:spawn_validation=true);
 [/code]
 
-[b]Callbacks:[/b]
+[b]Обратные вызовы:[/b]
 [code]
 OnPlayerEnterPatrol(playerid,mobid);
 OnPlayerDestroyPatrol(playerid,mobid);

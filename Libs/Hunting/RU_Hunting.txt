@@ -56,7 +56,7 @@ Hunting::GetFreeID();
 Hunting::GetActiveMob(playerid,mob_state);
 [/code]
 
-[b]Callbacks:[/b]
+[b]Обратные вызовы:[/b]
 [code]
 OnPlayerTakeHuntDrop(playerid,mobid,drop);
 OnPlayerKillHuntAnimal(playerid,mobid);

@@ -1,4 +1,4 @@
-Hi I would like to present include for Missile Launcher.
+Привет, я хотел бы представить включают для ракетной установки.
 
 [b]видео:[/b]
 - [url=https://www.youtube.com/watch?v=ZCThAi3FKyU]Sniper Missile[/url]
@@ -16,24 +16,24 @@ Hi I would like to present include for Missile Launcher.
 [code]
 Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);
 
-type - explosion type //https://wiki.sa-mp.com/wiki/Explosion_List
-Float:detection_range - detection range player/vehicle
-Float:explode_radius - the explosion range (the same as in CreateExplosion)
-Float:speed - projectile speed
-Float:x, Float:y, Float:z - Starting position
-worldid, interiorid, playerid, Float:streamdistance - the same as in CreateDynamicObject
+type - тип взрыва
+Float:detection_range - дальность обнаружения игрок / транспортное средство
+Float:explode_radius - диапазон взрыва (такой же, как в CreateExplosion)
+Float:speed - скорость снаряда
+Float:x, Float:y, Float:z - Начальная позиция
+worldid, interiorid, playerid, Float:streamdistance - так же, как в CreateDynamicObject
 missile_object: MISSILE_OBJECT_NORMAL / MISSILE_OBJECT_BIG / MISSILE_OBJECT_HYDRA / MISSILE_OBJECT_BOMB / MISSILE_OBJECT_BOMB_STATIC / MISSILE_OBJECT_FLARE
-Float:tx, Float:ty, Float:tz - Target position
-byplayerid - selected player will be immune to detection range
-teamid - player team will be immune to detection range
+Float:tx, Float:ty, Float:tz - Целевая позиция
+byplayerid - выбранный игрок будет невосприимчив к дальности обнаружения
+teamid - команда игрока будет невосприимчива к дальности обнаружения
 remote - enable remote targeting (for Vehicle Missile Mortar)
-remote_count - number of remote targeting 1 - 32
-remote_height - arc height
-arc_roll - rotation Y axis
-Float:damage - player damage on explosion created
-Float:vehicle_damage - vehicle damage on explosion created
+remote_count - количество удаленного наведения 1 - 32
+remote_height - высота дуги
+arc_roll - ось Y вращения
+Float:damage - нанесен урон игроку при взрыве
+Float:vehicle_damage - повреждение транспортного средства при взрыве нанесено
 
-Rotation: Auto!
+Вращение: Авто!
 
 Missile::LaunchAimPlayer(targetid,type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,Float:damage=-1.0,Float:vehicle_damage=-1.0);
 
@@ -59,16 +59,16 @@ Misile::GetDamage(mobid);
 Misile::GetVehicleDamage(mobid);
 [/code]
 
-[b]Callbacks:[/b]
+[b]Обратные вызовы:[/b]
 [code]
 OnMissileDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,byplayerid);
 
 types:
-MISSILE_DESTROY_TYPE_TARGET  //When rocket reaches its destination (always killerid=INVALID_PLAYER_ID)
-MISSILE_DESTROY_TYPE_DETECT  //When rocket has been destroyed by detection range
-MISSILE_DESTROY_TYPE_KILL    //When rocket has been destroyed by player
+MISSILE_DESTROY_TYPE_TARGET  //Когда ракета достигает пункта назначения (всегда killerid=INVALID_PLAYER_ID)
+MISSILE_DESTROY_TYPE_DETECT  //Когда ракета уничтожена дальностью обнаружения
+MISSILE_DESTROY_TYPE_KILL    //Когда ракета была уничтожена игроком
 
-OnMissileDetectPlayer(playerid,killerid); //called when a player is within range of detection range
+OnMissileDetectPlayer(playerid,killerid); //вызывается, когда игрок находится в пределах диапазона обнаружения
 
 OnMissileRequestLaunch(Float:x,Float:y,Float:z,playerid,targetid);
 [/code]
@@ -108,12 +108,12 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 }
 [/code]
 
-[b]Bullet example:[/b]
+[b]Пример пули:[/b]
 [code]
 Missile::Launch(MISSILE_TYPE_EXPLODE_NONE,1.0,1.0,20.0,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,MISSILE_OBJECT_BULLET,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,.damage=5.0,.vehicle_damage=25.0);
 [/code]
 
-[b]How to check is player kill by missile (this is not required if you using custom missile damage):[/b]
+[b]Как проверить, убит ли игрок ракетой (это не требуется, если вы используете настраиваемый урон от ракет):[/b]
 [code]
 enums:
 last_missile_shot

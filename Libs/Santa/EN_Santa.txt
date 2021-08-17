@@ -1,12 +1,8 @@
 Hello, I would like to present a simple script to automatically deploy gifts on the map.
 
 [b]Description:[/b]
-- On the map there is a prescribed amount of gifts. (Default 100)
-- They appear in random locations on the map, in addition to water.
-- What definite time reset location. (Default 2 hours)
-- After collecting gifts a player receives award. (To set)
-- After collecting gift changing locations.
-- Nobody, not even the admin does not know gift location.
+- Gifts will appear randomly on the map, exclude water.
+- After collecting, a player receives award, gift change location.
 
 [b]The script can be used to:[/b]
 - Christmas

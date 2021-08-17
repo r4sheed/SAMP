@@ -7,7 +7,7 @@ Hello, I would like to present you the Stingers Script (Cops and Robbers)
 [url=https://adm.ct8.pl/cloud/Libs/Stingers/Stingers.inc]Stingers.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 
-[b]Installation:[/b]
+[b]Установка:[/b]
 [code]
 #include <3DTryg>
 #include <Stingers>
@@ -28,7 +28,7 @@ GetPlayerActiveDynamicStinger(playerid);
 ToggleDynamicStingerDamage(mobid,bool:toggle);
 [/code]
 
-[b]Callbacks:[/b]
+[b]Обратные вызовы:[/b]
 [code]
 //called on vehicle damage updated by stinger
 OnVehicleDamageByStinger(playerid,killerid,mobid,old_tires,new_tires);

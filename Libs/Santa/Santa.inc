@@ -7,7 +7,7 @@
  Plugins: Streamer, ColAndreas
  Modules: 3DTryg, StreamerFunction
 
- File Version: 1.4.3
+ File Version: 1.4.4
  Streamer Version: 2.9.4
  ColAndreas Version: 1.5.0
  3DTryg Version: 5.1.0
@@ -57,10 +57,15 @@
 #endif
 #define _santa_gifts
 
-#define Santa::					Santa_
+#define Santa::						Santa_
 
-#define	MAX_SANTAGIFTS			(100)
-#define REFRESH_SANTAGIFTS		(2*60*60*1000)	//2 hour
+#if !defined MAX_SANTAGIFTS
+	#define	MAX_SANTAGIFTS			(100)
+#endif
+
+#if !defined REFRESH_SANTAGIFTS
+	#define REFRESH_SANTAGIFTS		(2*60*60*1000)	//2 hour
+#endif
 
 new STREAMER_TAG_PICKUP:Santa::Pickup[MAX_SANTAGIFTS],
 	Float:				Santa::SpawnZoneRectangle[4],

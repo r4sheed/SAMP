@@ -1,22 +1,22 @@
-Hello, I would like to present a simple script to automatically deploy gifts on the map.
+Здравствуйте, хочу представить простой скрипт для автоматического размещения подарков на карте.
 
-[b]Description:[/b]
-- On the map there is a prescribed amount of gifts. (Default 100)
-- They appear in random locations on the map, in addition to water.
-- What definite time reset location. (Default 2 hours)
-- After collecting gifts a player receives award. (To set)
-- After collecting gift changing locations.
-- Nobody, not even the admin does not know gift location.
+[b]Описание:[/b]
+- Подарки будут появляться на карте случайным образом, исключая воду.
+- После сбора игрок получает награду, подарок изменить местоположение
 
-[b]The script can be used to:[/b]
-- Christmas
-- Easter
-- Halloween
+[b]Скрипт можно использовать для:[/b]
+- Рождество
+- Пасхальный
+- Хэллоуин
 
-[b]Installation:[/b]
+[b]Установка:[/b]
 [code]
-//#define SANTA_IS_EASTER_EVENT     //Change to Easter Event
-//#define SANTA_IS_EASTER_HALLOWEEN //Change to Halloween Event
+//#define SANTA_IS_EASTER_EVENT     //Изменять к пасхальному событию
+//#define SANTA_IS_EASTER_HALLOWEEN //Изменять к событию Хэллоуина
+
+//#define MAX_SANTAGIFTS (100)
+//#define REFRESH_SANTAGIFTS (2*60*60*1000)	//2 hour
+
 #include <streamer>
 #include <ColAndreas>
 #include <3DTryg>
@@ -32,7 +32,6 @@ public OnGameModeInit(){
 
 public OnSantaPickupReward(playerid){
 
-	//edit this
 	GivePlayerMoney(playerid,250);
 	
 	return 1;

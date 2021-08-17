@@ -1,4 +1,4 @@
-Include contain function for chat @mentiones system
+Включают содержать функция для системы чата @mentiones
 
 [code]
  mentiones.inc
@@ -24,7 +24,7 @@ Include contain function for chat @mentiones system
 [b]Пример:[/b]
 [code]
 public OnPlayerMentioned(playerid,targetid){
-	//create your own notice with TextDraw/sound
+	//cсоздать собственное уведомление с помощью TextDraw / звук
 	return 1;
 }
 
@@ -32,12 +32,12 @@ public OnPlayerText(playerid,text[]){
 	new chat_text[2048], p_name[MAX_PLAYER_NAME];
 	GetPlayerName(playerid,p_name,MAX_PLAYER_NAME);
 	format(chat_text,sizeof(chat_text),"%s: %s",p_name,text);
-	GetMentiones(playerid,chat_text,0xCC0000FF,0x00AA00FF,2048); //back_color the same as first chat color
+	GetMentiones(playerid,chat_text,0xCC0000FF,0x00AA00FF,2048); //back_color такой же, как и цвет первого чата
 	SendClientMessageToAll(0x00AA00FF,chat_text);
 	return 0;
 }
-//Hi @Johny and @Alena how are you ?
-//Two existing players got notice and nick color has been changed to 0xCC0000FF
+//Привет, @Johny и @Alena, как дела?
+//Два существующих игрока получили уведомление, а цвет ника был изменен на 0xCC0000FF.
 [/code]
 
 [b]Скриншот:[/b]

@@ -37,7 +37,7 @@ SpecialVehicle::CreateMOC(Float:x,Float:y,Float:z,Float:z_angle,respawn_delay = 
 SpecialVehicle::CreateMOCIncluded(vehicleid,respawn_delay = -1,addsiren = 0);
 [/code]
 
-[b]Callbacks:[/b]
+[b]Обратные вызовы:[/b]
 [code]
 OnPlayerEnterVehIntRequest(playerid,vehicleid);
 OnPlayerEnterSpecialSeat(playerid);

@@ -1,4 +1,4 @@
-Hello, I would like to present you the Magic Wand Script
+Здравствуйте, хочу представить вам Волшебная палочка скрипт
 
 [b]видео:[/b]
 [url]https://www.youtube.com/watch?v=aaHfVz-UxR8[/url]
@@ -8,7 +8,7 @@ Hello, I would like to present you the Magic Wand Script
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://github.com/Pottus/ColAndreas]ColAndreas Plugin[/url]
 
-[b]Installation:[/b]
+[b]Установка:[/b]
 [code]
 #include <colandreas>
 #include <3DTryg>
@@ -41,9 +41,9 @@ Magic::SetProjectile(playerid,modelid=18693,Float:rx=90.0,Float:ry=0.0,Float:rz=
 Magic::GetProjectile(playerid,&modelid,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:offx=0.0,&Float:offy=0.0,&Float:offz=0.0);
 [/code]
 
-[b]Callbacks:[/b]
+[b]Обратные вызовы:[/b]
 [code]
-OnPlayerRequestMagicShot(playerid,targetid); //return 0 - prevent to use magic shoot (this callback is called also if ammo is 0)
+OnPlayerRequestMagicShot(playerid,targetid); //return 0 - не допустить использовать волшебную стрельбу (этот обратный вызов вызывается также, если боеприпасы 0)
 [/code]
 
 [b]Определения:[/b]
@@ -60,10 +60,10 @@ WEAPON_MAGIC_BULLET
 WEAPON_MAGIC_POISONING
 [/code]
 
-[b]Activation:[/b]
+[b]Активация:[/b]
 [code]
-Weapon: Fist
-Left Mouse Button
+Оружие: Кулак
+Левая кнопка мыши
 [/code]
 
 [i][b]Уведомление:[/b]
