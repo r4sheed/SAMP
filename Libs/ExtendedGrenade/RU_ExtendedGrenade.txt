@@ -3,7 +3,7 @@ Hello, I would like to present you the Extended Granade.
 [b]видео:[/b]
 https://www.youtube.com/watch?v=wlFEwpE0j7k
 
-[b]Functions:[/b]
+[b]Функции:[/b]
 [code]
 Grenade::IsWeaponEnable(playerid,special_weaponid);
 Grenade::WeaponEnable(playerid,special_weaponid,bool:enable);
@@ -70,3 +70,5 @@ GRENADE_EFFECT_NAPALM
 [url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

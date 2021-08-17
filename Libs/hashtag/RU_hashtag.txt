@@ -47,3 +47,4 @@ public OnPlayerText(playerid,text[]){
 [url=https://adm.ct8.pl/cloud/Libs/RGB/RGB.inc]RGB.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc]DataConvert.inc[/url]
 
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

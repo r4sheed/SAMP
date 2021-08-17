@@ -71,3 +71,5 @@ new tmp = 0;
 MergeValue(tmp,a,b,c,d);
 printf("%x",tmp); //prints 89ABCDEF
 [/code]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

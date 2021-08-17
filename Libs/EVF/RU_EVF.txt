@@ -252,3 +252,5 @@ Some options will only work if the player is in a vehicle.
 
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/EVF/EVF.inc]EVF.inc[/url]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

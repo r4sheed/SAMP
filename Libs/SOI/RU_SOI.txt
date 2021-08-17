@@ -12,7 +12,7 @@ What is that ? This is the script allows you to store much object offsets for al
 #include <SOI>
 [/code]
 
-[b]Functions:[/b]
+[b]Функции:[/b]
 [code]
 SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);
 [/code]
@@ -54,3 +54,5 @@ SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0
 
 [b]Download[/b]
 [url=https://adm.ct8.pl/cloud/Libs/SOI/SOI.inc]SOI.inc[/url]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

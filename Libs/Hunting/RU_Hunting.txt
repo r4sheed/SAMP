@@ -3,7 +3,7 @@ Hello, I would like to present you the Hunting System.
 [b]видео:[/b]
 [url]https://www.youtube.com/watch?v=gySSTtjFRB0[/url]
 
-[b]Functions:[/b]
+[b]Функции:[/b]
 [code]
 Hunting::Create(type,Float:x,Float:y,Float:z,Float:health,respawntime,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=200.0,moving_area = 0);
 Hunting::Destroy(mobid);
@@ -182,6 +182,8 @@ public OnPlayerHuntDropStateChange(playerid,mobid,drop_state){
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
 
-[i][b]Notice:[/b]
-Filterscript not exist because filterscripts have [b]limits.[/b]
-This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
+[i][b]Уведомление:[/b]
+Скрипт фильтров не существует, потому что скрипты фильтров имеют [b]ограничения.[/b]
+Он был заменен на include, имеющий [b] автоматическую установку [/b], эффективный GameMode / FilterScript.[/i]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

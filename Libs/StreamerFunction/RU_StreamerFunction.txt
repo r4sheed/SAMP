@@ -376,8 +376,4 @@ Include contain additional functions for [b]Incognito Streamer Plugin[/b]
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/StreamerFunction/StreamerFunction.inc]StreamerFunction.inc[/url]
 
-Available for:
-[code]
-SA:MP 0.3.7
-SA:MP 0.3 DL
-[/code]
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

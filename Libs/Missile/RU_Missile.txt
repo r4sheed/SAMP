@@ -12,7 +12,7 @@ Hi I would like to present include for Missile Launcher.
 - [url=https://www.youtube.com/watch?v=NDWkGCxCJuA]New Vehicle Missile[/url]
 - [url=https://www.youtube.com/watch?v=qQ1T2NszDkc]Flares[/url]
 
-[b]Functions:[/b]
+[b]Функции:[/b]
 [code]
 Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);
 
@@ -152,3 +152,5 @@ public OnPlayerDeath(playerid, killerid, reason){
 [url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

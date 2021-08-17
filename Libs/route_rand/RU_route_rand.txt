@@ -10,3 +10,5 @@ GetRandomRoutePoint(const file_name[],&Float:x,&Float:y,&Float:z,max_points=MAX_
 
 [b]Data Base (put in /scriptfiles):[/b]
 [url=https://adm.ct8.pl/cloud/Libs/route_rand/route_rand.bin]route_rand.bin[/url]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

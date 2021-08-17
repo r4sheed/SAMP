@@ -8,7 +8,7 @@ Full presentation is unavailable sorry
 [b]Screenshots:[/b]
 https://imgur.com/a/aNOUwfn
 
-[b]Functions:[/b]
+[b]Функции:[/b]
 [code]
 SpecialVehicle::IsToggledSpecialAbility(vehicleid);
 SpecialVehicle::ToggleSpecialAbility(vehicleid,bool:toggle);
@@ -179,3 +179,5 @@ You can run demonstration script and go to Las Venturas airport for test Special
 [url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/SpecialVehicle/SpecialVehicle.inc]SpecialVehicle.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

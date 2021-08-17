@@ -40,23 +40,25 @@ Include contain functions for color conversion
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/RGB/RGB.inc]RGB.inc[/url]
 
-[b]Example 1:[/b]
+[b]Пример 1:[/b]
 [code]
 new col = RGB::RGBAToARGB(0xFF6600FF); //return 0xFFFF6600;
 [/code]
 
-[b]Example 2:[/b]
+[b]Пример 2:[/b]
 [code]
 new red, green, blue, alpha;
 RGB::RGBAToHex(0xFF6600AA,red,green,blue,alpha); //return red = 0xFF; green = 0x66; blue = 0x00; alpha = 0xAA;
 [/code]
 
-[b]Example 3:[/b]
+[b]Пример 3:[/b]
 [code]
 new r = RGB::GetRHexFromRGBA(0xFF6600AA); //return 0xFF;
 [/code]
 
-[b]Example 4:[/b]
+[b]Пример 4:[/b]
 [code]
 new r = RGB::GetRFromRGBA(0xFF6600AA); //return 0xFF000000;
 [/code]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

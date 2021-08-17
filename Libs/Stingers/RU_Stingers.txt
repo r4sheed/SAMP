@@ -13,7 +13,7 @@ Hello, I would like to present you the Stingers Script (Cops and Robbers)
 #include <Stingers>
 [/code]
 
-[b]Functions:[/b]
+[b]Функции:[/b]
 [code]
 CreateDynamicStinger(type,Float:x,Float:y,Float:z,Float:rx,Float:ty,Float:rz,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=100.0,teamid=ANY_TEAM,byplayerid=INVALID_PLAYER_ID);
 DestroyDynamicStinger(mobid);
@@ -95,6 +95,8 @@ CMD:stinger(playerid,params[]){
 [b]Issues:[/b]
 - Stinger can not be located near to another stinger
 
-[i][b]Notice:[/b]
-Filterscript not exist because filterscripts have [b]limits.[/b]
-This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
+[i][b]Уведомление:[/b]
+Скрипт фильтров не существует, потому что скрипты фильтров имеют [b]ограничения.[/b]
+Он был заменен на include, имеющий [b] автоматическую установку [/b], эффективный GameMode / FilterScript.[/i]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

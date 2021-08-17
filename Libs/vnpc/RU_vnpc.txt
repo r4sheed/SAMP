@@ -1,19 +1,21 @@
 This include allowing to enable/disable FCNPC HP + Nick Bars
 
-[b]Screen:[/b]
+[b]Скриншот:[/b]
 https://i.imgur.com/BEyhX5d.png
 
-[b]Functions:[/b]
+[b]Функции:[/b]
 [code]
 ShowNPCInTabList(npcid);
 HideNPCInTabList(npcid);
 [/code]
 
-[b]Issues:[/b]
-- Sometimes, npc need respawn after visible toggling.
+[b]Проблемы:[/b]
+- Иногда npc нужно возродиться после видимого переключения.
 
-[b]Notice:[/b]
-- This function don't display an NPC on player list in SA:MP application.
+[b]Уведомление:[/b]
+- Эта функция не отображает NPC в списке игроков в приложении SA: MP.
 
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/vnpc/vnpc.inc]vnpc.inc[/url]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

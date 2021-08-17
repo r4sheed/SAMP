@@ -15,7 +15,7 @@ Hello, I would like to present you the Portal Gun Script
 #include <PortalGun>
 [/code]
 
-[b]Functions:[/b]
+[b]Функции:[/b]
 [code]
 TogglePrivatePortalGun(bool:toggle);            //default: false
 bool:IsTogglePrivatePortalGun();
@@ -39,6 +39,8 @@ Weapon: Country Rifle
 Y - Change Ring
 [/code]
 
-[i][b]Notice:[/b]
-Filterscript not exist because filterscripts have [b]limits.[/b]
-This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]
+[i][b]Уведомление:[/b]
+Скрипт фильтров не существует, потому что скрипты фильтров имеют [b]ограничения.[/b]
+Он был заменен на include, имеющий [b] автоматическую установку [/b], эффективный GameMode / FilterScript.[/i]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

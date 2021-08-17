@@ -35,7 +35,7 @@ Hello, I would like to present the function to use the "unsigned long", or at le
  IsLYBiggerThanOrEqual(prefix,suffix,from_prefix,from_suffix);
 [/code]
 
-[b]Example for bank system:[/b]
+[b]Пример:[/b]
 [code]
 pVar[playerid][pMoney] - your variable suffix 
 pVar[playerid][pMoneyLY] - your variable prefix 
@@ -58,3 +58,5 @@ SendClientMessage(playerid,-1,buffer);
 
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/LY/LY.inc]LY.inc[/url]
+
+[b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]
