@@ -1,9 +1,9 @@
-Hello, I would like to present you the Faction Mini Missions.
+Здравствуйте, я хотел бы представить вам мини-миссии фракции.
 
 [b]видео:[/b]
 https://www.youtube.com/watch?v=uMpS2SaWmB0
 
-[b]Example Code:[/b]
+[b]Пример кода:[/b]
 [code]
 #include <Streamer>
 #include <colandreas>
@@ -12,8 +12,8 @@ https://www.youtube.com/watch?v=uMpS2SaWmB0
 #include <Missions>
 
 public OnPlayerEnterPatrol(playerid,mobid){
-	if(GetPlayerTeam(playerid) == TEAM_POLICEMAN) return 1; //policeman clear unsafe zone 
-	return 0; //player get robbed
+	if(GetPlayerTeam(playerid) == TEAM_POLICEMAN) return 1; //полицейский очистить опасную зону
+	return 0; //игрока ограбят
 }
 
 public OnPlayerDestroyPatrol(playerid,mobid){
@@ -149,7 +149,7 @@ public OnGameModeInit(){
 	Missions::SetSpawnRectangle(MISSIONS_TYPE_DMGROUTE,-3000.0,-3000.0,3000.0,3000.0);
 	Missions::SetSpawnRectangle(MISSIONS_TYPE_PATROL,-3000.0,-3000.0,3000.0,3000.0);
 	
-	Missions::Generate(); //force mission generate after server restart
+	Missions::Generate(); //принудительно сгенерировать миссию после перезапуска сервера
 	
 	return 1;
 }
