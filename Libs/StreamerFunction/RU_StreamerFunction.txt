@@ -1,4 +1,4 @@
-Include contain additional functions for [b]Incognito Streamer Plugin[/b]
+Включают дополнительные функции для [b]Incognito Streamer Plugin[/b]
 
 [code]
  StreamerFunction.inc

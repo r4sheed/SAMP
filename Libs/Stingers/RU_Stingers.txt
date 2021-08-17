@@ -34,7 +34,7 @@ ToggleDynamicStingerDamage(mobid,bool:toggle);
 OnVehicleDamageByStinger(playerid,killerid,mobid,old_tires,new_tires);
 [/code]
 
-[b]Definitions:[/b]
+[b]Определения:[/b]
 [code]
 STINGER_TYPE_SMALL //Object: 2899
 STINGER_TYPE_BIG   //Object: 2892

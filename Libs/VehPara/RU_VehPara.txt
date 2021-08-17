@@ -6,7 +6,7 @@ Hello, I would like to present you the Vehicle Parachute Script
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/VehPara/VehPara.inc]VehPara.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
-[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+[url=https://github.com/Pottus/ColAndreas]ColAndreas Plugin[/url]
 
 [b]Installation:[/b]
 [code]

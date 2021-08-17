@@ -6,7 +6,7 @@ Hello, I would like to present you the Magic Wand Script
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Magic/Magic.inc]Magic.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
-[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+[url=https://github.com/Pottus/ColAndreas]ColAndreas Plugin[/url]
 
 [b]Installation:[/b]
 [code]
@@ -46,7 +46,7 @@ Magic::GetProjectile(playerid,&modelid,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0
 OnPlayerRequestMagicShot(playerid,targetid); //return 0 - prevent to use magic shoot (this callback is called also if ammo is 0)
 [/code]
 
-[b]Definitions:[/b]
+[b]Определения:[/b]
 [code]
 MAGIC_SPEED
 MAGIC_MAX_RADIUS

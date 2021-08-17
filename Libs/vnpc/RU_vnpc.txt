@@ -1,4 +1,4 @@
-This include allowing to enable/disable FCNPC HP + Nick Bars
+Это включает возможность включения / отключения FCNPC здоровье + прозвища
 
 [b]Скриншот:[/b]
 https://i.imgur.com/BEyhX5d.png

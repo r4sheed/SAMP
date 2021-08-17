@@ -135,7 +135,7 @@ rot = rot13("San Andreas Multiplayer"); //return "Fna Naqernf Zhygvcynlre"
 new myvalue = 431;
 	
 //if(myvalue == 425 || myvalue == 430 || myvalue == 432 || myvalue == 447 || myvalue == 464 || myvalue == 476 || myvalue == 520)
-if(ContainInSeries(myvalue,425,430,432,447,464,476,520)){ //millitary vehicles
+if(ContainInSeries(myvalue,425,430,432,447,464,476,520)){ //military vehicles
 	printf("#1 YES");
 } else {
 	printf("#1 NO"); //<-- print this

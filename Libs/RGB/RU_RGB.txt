@@ -1,4 +1,4 @@
-Include contain functions for color conversion
+Включить содержат функции для преобразования цвета
 
 [code]
  RGB.inc

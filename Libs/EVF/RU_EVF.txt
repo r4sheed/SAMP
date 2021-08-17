@@ -1,7 +1,7 @@
-Include contains additional functions for vehicles.
+Включает содержит дополнительные функции для автомобилей.
 
-New Extended Vehicle Functions (EVF V3)
-Simple functions for GetVehicleDamageStatus, UpdateVehicleDamageStatus and more.
+Новый Extended Vehicle Functions (EVF V3)
+Простые функции для GetVehicleDamageStatus, UpdateVehicleDamageStatus и больше.
 
 [code]
  EVF.inc
@@ -248,7 +248,7 @@ Simple functions for GetVehicleDamageStatus, UpdateVehicleDamageStatus and more.
  # VEHICLE_TYPE_OBJECTIVE
 [/code]
 
-Some options will only work if the player is in a vehicle.
+Некоторые функции будут работать, только если игрок находится в транспортном средстве.
 
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/EVF/EVF.inc]EVF.inc[/url]

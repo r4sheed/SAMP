@@ -1,4 +1,4 @@
-Hello, I would like to present a simple include to convert numbers between systems, decimal, hexadecimal, binary, octal.
+Здравствуйте, я хотел бы представить простой включают для преобразования чисел между системами, десятичными, шестнадцатеричными, двоичными, восьмеричными.
 
 [code]
  DataConvert.inc
@@ -96,22 +96,22 @@ Hello, I would like to present a simple include to convert numbers between syste
  IntToFloat(value); //Convert Integer binary data to Float binary data !
 [/code]
 
-[b]Examples:[/b]
+[b]Примеры:[/b]
 [code]
 new File:edi = fopen("test.txt",io_readwrite);
-new id = GetFileID(edi); //returns the number of open file: 1, 2, 3, 4, ...
+new id = GetFileID(edi); //возвращает номер открытого файла: 1, 2, 3, 4, ...
 
-new a = BinToInt("1010"); //return 10
+new a = BinToInt("1010"); //возвращение 10
 
 new hex[10];
-hex = IntToHex(15); //return 00000F
-hex = IntToHexEx(15); //return F
+hex = IntToHex(15); //возвращение 00000F
+hex = IntToHexEx(15); //возвращение F
 
 new g = 15, Float:h = 15.0;
-if(IsIdentical(g,h)){ //This operator can only be used on variables
+if(IsIdentical(g,h)){ //Этот оператор можно использовать только с переменными
 	printf("YES");
 } else {
-	printf("NO"); //<-- print this
+	printf("NO"); //<-- распечатать это
 }
 
 new buf[128];
@@ -122,28 +122,28 @@ new v1 = 15, v2 = 19;
 swap_int(v1,v2); //swapvars by Crayder
 //after operation: v1 = 19, v2 = 15
 
-new test = FloatToInt(25666.000000); //return 1187546112
+new test = FloatToInt(25666.000000); //возвращение 1187546112
 
-new Float:test2 = IntToFloat(1084227584); //return 5.0
+new Float:test2 = IntToFloat(1084227584); //возвращение 5.0
 
 //http://www.rot13.com
 new rot[64];
-rot = rot13("San Andreas Multiplayer"); //return "Fna Naqernf Zhygvcynlre"
+rot = rot13("San Andreas Multiplayer"); //возвращение "Fna Naqernf Zhygvcynlre"
 
 //ContainInSeries(Float)
 
 new myvalue = 431;
 	
 //if(myvalue == 425 || myvalue == 430 || myvalue == 432 || myvalue == 447 || myvalue == 464 || myvalue == 476 || myvalue == 520)
-if(ContainInSeries(myvalue,425,430,432,447,464,476,520)){ //millitary vehicles
+if(ContainInSeries(myvalue,425,430,432,447,464,476,520)){ //военная техника
 	printf("#1 YES");
 } else {
-	printf("#1 NO"); //<-- print this
+	printf("#1 NO"); //<-- распечатать это
 }
 
 //if(myvalue != 425 && myvalue != 430 && myvalue != 432 && myvalue != 447 && myvalue != 464 && myvalue != 476 && myvalue != 520)
 if(!ContainInSeries(myvalue,425,430,432,447,464,476,520)){
-	printf("#2 YES"); //<-- print this
+	printf("#2 YES"); //<-- распечатать это
 } else {
 	printf("#2 NO");
 }
@@ -152,7 +152,7 @@ new Float:myfloatvalue = 15.0;
 if(ContainInSeriesFloat(myfloatvalue,12.0,1.0)){
 	printf("#3 YES");
 } else {
-	printf("#3 NO"); //<-- print this
+	printf("#3 NO"); //<-- распечатать это
 }
 [/code]
 

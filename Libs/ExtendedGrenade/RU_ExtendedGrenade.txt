@@ -25,7 +25,7 @@ Grenade::CreateGrenadeEffect(special_weaponid,effectid,Float:x,Float:y,Float:z,w
 Grenade::DestroyEffect(mobid);
 [/code]
 
-[b]Definitions:[/b]
+[b]Определения:[/b]
 [code]
 MAX_GRENADE_EFFECT
 
@@ -69,6 +69,6 @@ GRENADE_EFFECT_NAPALM
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
-[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+[url=https://github.com/Pottus/ColAndreas]ColAndreas Plugin[/url]
 
 [b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

@@ -52,7 +52,7 @@ OnSpecialVehicleHasNoAmmo(playerid,vehicleid);
 OnSpecialTrailerAttachFail(playerid,vehicleid,trailerid);
 [/code]
 
-[b]Definitions:[/b]
+[b]Определения:[/b]
 [code]
 WEAPON_VEHICLE_INTERIOR - after vehicle destroyed players inside vehicle interior got death by this reason
 SPECIAL_VEH_AMMO_INFINITY - infinity ammo (default)
@@ -178,6 +178,6 @@ You can run demonstration script and go to Las Venturas airport for test Special
 [url=https://adm.ct8.pl/cloud/Libs/Mines/Mines.inc]Mines.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/SpecialVehicle/SpecialVehicle.inc]SpecialVehicle.inc[/url]
-[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+[url=https://github.com/Pottus/ColAndreas]ColAndreas Plugin[/url]
 
 [b]Эта тема переведена, автор не может полностью помочь на русском языке.[/b]

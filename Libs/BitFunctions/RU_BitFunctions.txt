@@ -1,4 +1,4 @@
-Include contains functions for manipulating bits / cells.
+Включают содержит функции для управления битами / ячейками.
 
 [code]
  BitFunctions.inc
@@ -61,7 +61,7 @@ IsToggleConfigInformation(ExampleConfig,playerid);
 ToggleConfigInformation(ExampleConfig,playerid,1);
 [/code]
 
-[b]Value Extract/Merge:[/b]
+[b]Извлечение / объединение значений[/b]
 [code]
 new val = 0x89ABCDEF;
 new a, b, c, d;

@@ -68,7 +68,7 @@ OnAnimalScareStateChanged(mobid,playerid,isscared);
 OnPlayerHuntDropStateChange(playerid,mobid,drop_state); //only called if press time > 0
 [/code]
 
-[b]Definitions:[/b]
+[b]Определения:[/b]
 [code]
 //Config
 MAX_HUNTING_ANIMALS     //default is 100 allowed to redefine
@@ -180,7 +180,7 @@ public OnPlayerHuntDropStateChange(playerid,mobid,drop_state){
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Hunting/Hunting.inc]Hunting.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
-[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+[url=https://github.com/Pottus/ColAndreas]ColAndreas Plugin[/url]
 
 [i][b]Уведомление:[/b]
 Скрипт фильтров не существует, потому что скрипты фильтров имеют [b]ограничения.[/b]

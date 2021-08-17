@@ -1,4 +1,4 @@
-Hello, I would like to present the function to use the "unsigned long", or at least to increase the limit of numbers to
+Здравствуйте, я хотел бы представить функцию для использования "unsigned long" или, по крайней мере, для увеличения лимита чисел до
 2 147 483 647 000 000 000
 
 [code]
@@ -37,19 +37,19 @@ Hello, I would like to present the function to use the "unsigned long", or at le
 
 [b]Пример:[/b]
 [code]
-pVar[playerid][pMoney] - your variable suffix 
-pVar[playerid][pMoneyLY] - your variable prefix 
-//adding money to the bank 
-UpdateLY(pVar[playerid][pMoneyLY], pVar[playerid][pMoney], amount); //<-- set your amount 
+pVar[playerid][pMoney] - ваша переменная суффикс 
+pVar[playerid][pMoneyLY] - ваша переменная префикс 
+//добавление денег в банк
+UpdateLY(pVar[playerid][pMoneyLY], pVar[playerid][pMoney], amount); //<-- установите вашу сумму
 GivePlayerMoney(playerid,-amount); 
-//the payment from the bank 
-if(IsValueContainLY(pVar[playerid][pMoneyLY], pVar[playerid][pMoney], amount)){ //<-- set your amount 
+//платеж из банка
+if(IsValueContainLY(pVar[playerid][pMoneyLY], pVar[playerid][pMoney], amount)){ //<-- установите вашу сумму
     UpdateLY(pVar[playerid][pMoneyLY], pVar[playerid][pMoney], -amount); 
     GivePlayerMoney(playerid,amount); 
 } else { 
-    //you do not have enough money 
+    //У тебя не достаточно денег
 }
-//The amount of money in bank 
+//Количество денег в банке
 new mymoney[LY_STRING_LEN], buffer[128]; 
 GetLYString(pVar[playerid][pMoneyLY], pVar[playerid][pMoney], mymoney); 
 format(buffer,sizeof buffer,"You money in bank: %s",mymoney); 

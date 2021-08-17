@@ -266,7 +266,7 @@ Havoc Rocket - Y
 Ground Bomb - Y
 [/code]
 
-[b]Definitions:[/b]
+[b]Определения:[/b]
 [code]
 //Vehicle Missile Types:
 VEHICLE_MISSILE_TYPE_MINI
@@ -559,7 +559,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
 [url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
-[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+[url=https://github.com/Pottus/ColAndreas]ColAndreas Plugin[/url]
 
 [i][b]Уведомление:[/b]
 Скрипт фильтров не существует, потому что скрипты фильтров имеют [b]ограничения.[/b]
