@@ -63,4 +63,5 @@
 * Wizzard2H (Mines)
 * rasheed (SpecialVehicle)
 * TDI97 (SpecialVehicle)
+* $continue$ (Russian distribution helper)
 * [Y_Less](https://www.burgershot.gg/member.php?action=profile&uid=6) (MD5)
