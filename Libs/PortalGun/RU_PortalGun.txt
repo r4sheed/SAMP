@@ -1,4 +1,4 @@
-Hello, I would like to present you the Portal Gun Script
+Здравствуйте, я хотел бы представить Portal Gun Script
 
 [b]видео:[/b]
 [url]https://www.youtube.com/watch?v=pHGUVNh9y3c[/url]
@@ -33,10 +33,10 @@ ForceOpenPortalGunRing(playerid,portal_id,Float:ox,Float:oy,Float:oz,Float:tx,Fl
 ForceClosePortalGunRing(playerid);
 [/code]
 
-[b]Activation:[/b]
+[b]Активация:[/b]
 [code]
-Weapon: Country Rifle
-Y - Change Ring
+Оружие: Country Rifle
+Y - Сменить кольцо
 [/code]
 
 [i][b]Уведомление:[/b]

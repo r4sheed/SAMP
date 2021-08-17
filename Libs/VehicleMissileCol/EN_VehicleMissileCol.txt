@@ -350,8 +350,8 @@ VEHICLE_MISSILE_TYPE_MINI - Any vehicle
 VEHICLE_MISSILE_TYPE_HEAVY - All air vehicles (Causes turbulence)
 VEHICLE_MISSILE_TYPE_BOMBER - All air vehicles
 VEHICLE_MISSILE_TYPE_RHINO - Recommended for use only RC Tiger
-VEHICLE_MISSILE_TYPE_MORTAR - Any vehicle (Recomended Air Vehicle)
-VEHICLE_MISSILE_TYPE_MEGA - Any vehicle (Recomended Air Vehicle)
+VEHICLE_MISSILE_TYPE_MORTAR - Any vehicle (Recommended Air Vehicle)
+VEHICLE_MISSILE_TYPE_MEGA - Any vehicle (Recommended Air Vehicle)
 VEHICLE_MISSILE_TYPE_CON - Hydra
 VEHICLE_MISSILE_TYPE_HAVOC - Andromada
 VEHICLE_MISSILE_TYPE_BOMB - Rustler

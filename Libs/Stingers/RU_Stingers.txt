@@ -1,4 +1,4 @@
-Hello, I would like to present you the Stingers Script (Cops and Robbers)
+Здравствуйте, я хотел бы представить вам скрипт "Stingers" (Полицейские и грабители).
 
 [b]видео:[/b]
 [url]https://www.youtube.com/watch?v=nslVT5RC3J0[/url]
@@ -40,7 +40,7 @@ STINGER_TYPE_SMALL //Object: 2899
 STINGER_TYPE_BIG   //Object: 2892
 [/code]
 
-[b]Example code:[/b]
+[b]Пример кода:[/b]
 [code]
 public OnVehicleDamageByStinger(playerid,killerid,mobid,old_tires,new_tires){
 	if(killerid != INVALID_PLAYER_ID){
@@ -92,8 +92,8 @@ CMD:stinger(playerid,params[]){
 }
 [/code]
 
-[b]Issues:[/b]
-- Stinger can not be located near to another stinger
+[b]Проблемы:[/b]
+- Стингер не может находиться рядом с другим жалом
 
 [i][b]Уведомление:[/b]
 Скрипт фильтров не существует, потому что скрипты фильтров имеют [b]ограничения.[/b]

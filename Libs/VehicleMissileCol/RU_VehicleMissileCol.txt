@@ -1,4 +1,4 @@
-Hi I would like to present include for Vehicle Missile Launcher.
+Здравствуйте. Представляю вашему вниманию библиотеку, которая помогает Вам установить ракетную установку на автомобиль
 
 [b]видео:[/b]
 - [url=https://www.youtube.com/watch?v=Pd5HmlL8uXw]Vehicle Missile (Beta)[/url]
@@ -253,7 +253,7 @@ OnVehicleMissileRequestLaunch(playerid,type,vehicleid);
 OnVehicleMissileLaunched(playerid,type,vehicleid);
 [/code]
 
-[b]Default control:[/b]
+[b]Контроль по умолчанию:[/b]
 [code]
 Mini Missile - LALT
 Rhino Missile - LALT
@@ -344,21 +344,21 @@ VEHICLE_MISSILE_SALVO_FLARE     // default salvo (number of projectiles) for Fla
 VEHICLE_WEAPON_AMMO_INFINITY
 [/code]
 
-[b]Weapon Vehicle Recommendation:[/b]
+[b]Рекомендация по боевой машине:[/b]
 [code]
-VEHICLE_MISSILE_TYPE_MINI - Any vehicle
-VEHICLE_MISSILE_TYPE_HEAVY - All air vehicles (Causes turbulence)
-VEHICLE_MISSILE_TYPE_BOMBER - All air vehicles
-VEHICLE_MISSILE_TYPE_RHINO - Recommended for use only RC Tiger
-VEHICLE_MISSILE_TYPE_MORTAR - Any vehicle (Recomended Air Vehicle)
-VEHICLE_MISSILE_TYPE_MEGA - Any vehicle (Recomended Air Vehicle)
+VEHICLE_MISSILE_TYPE_MINI - Любой автомобиль
+VEHICLE_MISSILE_TYPE_HEAVY - Все воздушные транспортные средства (Вызывает турбулентность)
+VEHICLE_MISSILE_TYPE_BOMBER - Все воздушные транспортные средства
+VEHICLE_MISSILE_TYPE_RHINO - RC Tiger
+VEHICLE_MISSILE_TYPE_MORTAR - Любой автомобиль (Рекомендуемый воздушный транспорт)
+VEHICLE_MISSILE_TYPE_MEGA - Любой автомобиль (Рекомендуемый воздушный транспорт)
 VEHICLE_MISSILE_TYPE_CON - Hydra
 VEHICLE_MISSILE_TYPE_HAVOC - Andromada
 VEHICLE_MISSILE_TYPE_BOMB - Rustler
 VEHICLE_MISSILE_TYPE_FLARE - Hydra
 [/code]
 
-[b]Example Code:[/b]
+[b]Пример кода:[/b]
 [code]
 public OnGameModeInit(){
 	
@@ -453,7 +453,7 @@ public OnVehicleArmed(playerid,vehicleid){
 
 [/code]
 
-[b]Remaining Time / Ammo detection:[/b]
+[b]Оставшееся время / обнаружение боеприпасов:[/b]
 [code]
 public OnVehicleMissileRequestLaunch(playerid,type,vehicleid){
 	
@@ -486,7 +486,7 @@ public OnVehicleMissileLaunched(playerid,type,vehicleid){
 }
 [/code]
 
-[b]Advanced Mortar Control (if AimSys is disabled):[/b]
+[b]Расширенный контроль минометов (если AimSys отключен):[/b]
 [code]
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
 	if(IsToggleVehicleMegaMissile(GetPlayerVehicleID(playerid))){

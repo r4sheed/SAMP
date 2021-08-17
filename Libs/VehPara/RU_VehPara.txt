@@ -1,4 +1,4 @@
-Hello, I would like to present you the Vehicle Parachute Script
+Здравствуйте, я хотел бы представить вам скрипт парашюта для автомобиля 
 
 [b]видео:[/b]
 [url]https://www.youtube.com/watch?v=TrxYkMeBtsU[/url]
@@ -30,12 +30,12 @@ OnVehicleParachuteOpened(playerid,vehicleid);
 OnVehicleParachuteOpenFail(playerid,vehicleid);
 [/code]
 
-[b]Activation:[/b]
+[b]Активация:[/b]
 [code]
-H - Open/thrown parachute
+H - Открытый / брошенный парашют
 [/code]
 
-[b]Example Code:[/b]
+[b]Пример кода:[/b]
 [code]
 CMD:vehpara(playerid){
 

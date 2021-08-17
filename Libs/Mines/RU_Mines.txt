@@ -1,4 +1,4 @@
-Hello, I would like to present a dynamic system landmines.
+Здравствуйте, я хотел бы представить вам динамическую систему наземных мин.
 
 [b]видео:[/b]
 [url]https://www.youtube.com/watch?v=SXwb26E-kkU[/url]
@@ -82,7 +82,7 @@ MINE_DESTROY_TYPE_DETECT  //When mine has been destroyed by detection range
 MINE_DESTROY_TYPE_KILL    //When mine has been destroyed by player shoot
 [/code]
 
-[b]Mine Object:[/b]
+[b]Шахтный объект:[/b]
 [code]
 MINE_OBJECT_STANDARD //default
 MINE_OBJECT_UNDERWATER
@@ -90,7 +90,7 @@ MINE_OBJECT_LASER
 MINE_OBJECT_PIZZA
 [/code]
 
-[b]Example Pawn Code:[/b]
+[b]Пример:[/b]
 [code]
 #include <a_samp>
 #include <streamer>
@@ -119,7 +119,7 @@ public OnFilterScriptInit(){
 }
 [/code]
 
-[b]Example Command:[/b]
+[b]Пример команды:[/b]
 [code]
 CMD:addmine(playerid,params[]){
 	if(!IsPlayerAdmin(playerid)) return 0;

@@ -1,11 +1,11 @@
 [b]видео:[/b]
-Full presentation is unavailable sorry
+Полная презентация недоступна. Приношу свои извенения.
 
-[b]Короткий Видео:[/b]
+[b]короткое видео:[/b]
 - [url=https://www.youtube.com/watch?v=r03wfWj58Vc]SpecialVehicle #1[/url]
 - [url=https://www.youtube.com/watch?v=d26K-oZtHXY]SpecialVehicle #2[/url]
 
-[b]Screenshots:[/b]
+[b]Скриншоты:[/b]
 https://imgur.com/a/aNOUwfn
 
 [b]Функции:[/b]
@@ -58,12 +58,12 @@ WEAPON_VEHICLE_INTERIOR - after vehicle destroyed players inside vehicle interio
 SPECIAL_VEH_AMMO_INFINITY - infinity ammo (default)
 [/code]
 
-[b]Informations[/b]
+[b]Информация:[/b]
 [code]
-By pressing KEY_ACTION you can use Cargobob/Leviathan magnet when you toggling SecialVehicle
+Нажав KEY_ACTION, вы можете использовать магнит Cargobob / Leviathan при переключении SecialVehicle.
 [/code]
 
-[b]Instalation:[/b]
+[b]Установка:[/b]
 [i]Due to high library requipments, make sure you install libs in right order.[/i]
 [code]
 #include <streamer>
@@ -80,7 +80,7 @@ By pressing KEY_ACTION you can use Cargobob/Leviathan magnet when you toggling S
 #include <SpecialVehicle>
 [/code]
 
-[b]Example code:[/b]
+[b]Пример кода:[/b]
 [code]
 public OnPlayerEnterVehIntRequest(playerid,vehicleid){
 	//if vehicle is owned by another team you can block enter to interior here by return 0;
@@ -166,9 +166,9 @@ CMD:spawn_moc(playerid){
 }
 [/code]
 
-[b]Demonstration script:[/b]
+[b]Демонстрационный сценарий:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/SpecialVehicle/sv_demo.pwn]sv_demo.pwn[/url]
-You can run demonstration script and go to Las Venturas airport for test Special Vehicles
+Вы можете запустить демонстрационный скрипт и поехать в аэропорт Лас-Вентурас для тестирования Special Vehicles.
 
 [b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]

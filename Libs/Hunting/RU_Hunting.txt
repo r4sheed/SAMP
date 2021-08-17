@@ -1,4 +1,4 @@
-Hello, I would like to present you the Hunting System.
+Здравствуйте, я хотел бы представить вам  Hunting System.
 
 [b]видео:[/b]
 [url]https://www.youtube.com/watch?v=gySSTtjFRB0[/url]
@@ -47,7 +47,7 @@ Hunting::IsStopped(mobid);
 Hunting::IsMoving(mobid);
 [/code]
 
-[b]Extended Functions:[/b]
+[b]Расширенные функции:[/b]
 [code]
 Hunting::Count();
 Hunting::GetKey();
@@ -93,7 +93,7 @@ INVALID_HUNTING_ID
 HUNTING_NO_AUTO_RESPAWN //disable auto respawn (respawntime param)
 [/code]
 
-[b]Example Pawn Code:[/b]
+[b]Пример:[/b]
 [code]
 #include <a_samp>
 #include <streamer>
