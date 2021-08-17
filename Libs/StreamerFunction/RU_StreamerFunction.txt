@@ -1,4 +1,4 @@
-Включают дополнительные функции для [b]Incognito Streamer Plugin[/b]
+библиотека дополнительные функции для [b]Incognito Streamer Plugin[/b]
 
 [code]
  StreamerFunction.inc
