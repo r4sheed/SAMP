@@ -15,5 +15,5 @@ HideNPCInTabList(npcid);
 [b]Notice:[/b]
 - This function don't display an NPC on player list in SA:MP application.
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/vnpc/vnpc.inc]vnpc.inc[/url]

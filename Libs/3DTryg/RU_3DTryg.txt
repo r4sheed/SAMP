@@ -1,6 +1,6 @@
 Включает профессиональные функции для управления (координаты / вращения / векторы / дуги / области / смещение), поддерживаемые (2D / 3D)
 
-[b]Videos:[/b]
+[b]Видео:[/b]
 - [url=https://www.youtube.com/watch?v=WJZCn3XXRHY]Knife Shoot[/url]
 - [url=https://www.youtube.com/watch?v=fTvbNnZpogY]EngineV6[/url]
 - [url=https://www.youtube.com/watch?v=PtJCS-3EGY0]EngineX[/url]
@@ -40,8 +40,8 @@
  Plugins: ColAndreas, YSF, Streamer, FCNPC, VehicleStreamer
  Internal Modules: Actor, VehicleCollision, Draw3D, CatchItems
 
- File Version: 5.1.0
- ColAndreas Version: 1.4.0
+ File Version: 5.1.1
+ ColAndreas Version: 1.5.0
  YSF Version: R19 (kurta999)
  Streamer Version: 2.9.4
  VehicleStreamer Version: 2.9.4
@@ -638,34 +638,34 @@
  # o_left_front_up
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 
-[b]More functions available with plugins:[/b]
-ColAndreas (Recommended 1GB RAM for server by using this plugin)
+[b]Дополнительные функции доступны с плагинами:[/b]
+ColAndreas (Рекомендуется 1 ГБ ОЗУ для сервера при использовании этого плагина)
 YSF
 Streamer
 FCNPC
 VehicleStreamer
 
-[b]Compatibility includes:[/b]
-rotation.inc by Nero_3D
-i_quat.inc by IllidanS4
-YSI Libraries (with #define ENABLE_3D_TRYG_YSI_SUPPORT if you got error)
+[b]Совместимость включает:[/b]
+rotation.inc по Nero_3D
+i_quat.inc по IllidanS4
+YSI Libraries (с #define ENABLE_3D_TRYG_YSI_SUPPORT, если у вас есть ошибка)
 
-[b]Supported elements:[/b]
-1. Character Elements:
+[b]Поддерживаемые элементы:[/b]
+1. Персонаж Элементы:
 - Player's
 - NPC's
 - Actor's
 - FCNPC's
 
-2. Static Elements:
+2. Статический Элементы:
 - Object's
 - Vehicle's
 - GangZone's
 
-3. Dynamic Elements:
+3. Динамический Элементы:
 - DynamicObject's
 - DynamicPickup's
 - DynamicCP's
@@ -675,23 +675,23 @@ YSI Libraries (with #define ENABLE_3D_TRYG_YSI_SUPPORT if you got error)
 - DynamicActor's
 - DynamicVehicles's
 
-4. Areas 2D / 3D:
-a) Geometric Figures:
-- Circle
-- Rectangle
-- Polygon
-- CircularSector
-- Ellipse
-- Cone2D
+4. Области 2D / 3D:
+a) Геометрические фигуры:
+- Круг
+- прямоугольник
+- многоугольник
+- Круговой сектор
+- Эллипс
+- Конус 2D
 
-b) Chunk:
-- Cylinder2D
-- Sphere
-- Cube
-- EllipticalCylinder2D
+b) Чанк:
+- Цилиндр 2D
+- Сфера
+- Куб
+- Эллиптический цилиндр 2D
 
-c) Rotated Chunk:
-- Cylinder3D
-- SphericalSector
-- Cube3D
-- Cone3D
+c) Повернутый кусок:
+- Цилиндр 3D
+- Сферический сектор
+- Куб 3D
+- Конус 3D

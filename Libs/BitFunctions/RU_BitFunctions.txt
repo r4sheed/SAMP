@@ -49,10 +49,10 @@ Include contains functions for manipulating bits / cells.
  ToggleConfigInformation(variable,itemid,value); //values: 1/0
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/BitFunctions/BitFunctions.inc]BitFunctions.inc[/url]
 
-[b]Example:[/b]
+[b]Пример:[/b]
 [code]
 new ExampleConfig[GetConfigSize(MAX_PLAYERS)];
 //get:

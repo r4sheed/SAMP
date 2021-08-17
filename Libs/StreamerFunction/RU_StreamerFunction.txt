@@ -373,7 +373,7 @@ Include contain additional functions for [b]Incognito Streamer Plugin[/b]
  AttachDynamicObjectToObject  -> Changes the priority of the parent to be greater than the priority of sub-objects.
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/StreamerFunction/StreamerFunction.inc]StreamerFunction.inc[/url]
 
 Available for:

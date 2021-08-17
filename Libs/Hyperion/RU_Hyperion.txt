@@ -3,7 +3,7 @@ It is a war of two large warships in which between 6 and 42 players can particip
 
 [IMG]https://i.imgur.com/lDN2lRH.png[/IMG]
 
-[b]Video:[/b]
+[b]видео:[/b]
 [url]https://www.youtube.com/watch?v=Ut7iBj7SRGk[/url]
 
 [b]Installation:[/b]
@@ -123,7 +123,7 @@ OnHyperionBattleFinished(teamid);
 OnHyperionHelpPresented(playerid);
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Hyperion/Hyperion.inc]Hyperion.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]

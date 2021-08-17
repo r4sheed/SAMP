@@ -40,8 +40,8 @@ Include contain professional functions for manipulating (coordinates / rotations
  Plugins: ColAndreas, YSF, Streamer, FCNPC, VehicleStreamer
  Internal Modules: Actor, VehicleCollision, Draw3D, CatchItems
 
- File Version: 5.1.0
- ColAndreas Version: 1.4.0
+ File Version: 5.1.1
+ ColAndreas Version: 1.5.0
  YSF Version: R19 (kurta999)
  Streamer Version: 2.9.4
  VehicleStreamer Version: 2.9.4

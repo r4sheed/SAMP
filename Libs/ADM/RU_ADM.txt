@@ -232,7 +232,7 @@ b) File coding
 - ASCII/ANSI (8 bit) for SA:MP
 - Any for Windows application
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=http://adm.ct8.pl/d/ADM.inc]ADM.inc[/url]
 [url=http://adm.ct8.pl/d/MD5.inc]MD5.inc[/url]
 [url=http://adm.ct8.pl/d/ADM%20Console%20Applications.zip]ADM Console Applications[/url]

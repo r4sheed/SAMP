@@ -1,9 +1,9 @@
 Hello, I would like to present you the Stingers Script (Cops and Robbers)
 
-[b]Video:[/b]
+[b]видео:[/b]
 [url]https://www.youtube.com/watch?v=nslVT5RC3J0[/url]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Stingers/Stingers.inc]Stingers.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 

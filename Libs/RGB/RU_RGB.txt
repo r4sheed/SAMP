@@ -37,7 +37,7 @@ Include contain functions for color conversion
  RGB::AdjustColorLuminance(color,Float:adjust);
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/RGB/RGB.inc]RGB.inc[/url]
 
 [b]Example 1:[/b]

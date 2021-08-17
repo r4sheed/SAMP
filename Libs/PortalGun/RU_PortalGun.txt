@@ -1,10 +1,10 @@
 Hello, I would like to present you the Portal Gun Script
 
-[b]Video:[/b]
+[b]видео:[/b]
 [url]https://www.youtube.com/watch?v=pHGUVNh9y3c[/url]
 [url]https://www.youtube.com/watch?v=wDBgtBY-cPs[/url]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/PortalGun/PortalGun.inc]PortalGun.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

@@ -1,6 +1,6 @@
 Hi I would like to present include for Missile Launcher.
 
-[b]Video:[/b]
+[b]видео:[/b]
 - [url=https://www.youtube.com/watch?v=ZCThAi3FKyU]Sniper Missile[/url]
 - [url=https://www.youtube.com/watch?v=Pd5HmlL8uXw]Vehicle Missile (MapAndreas Version)[/url]
 - [url=https://www.youtube.com/watch?v=HTHinI1IGhY]Vehicle Missile (ColAndreas Update)[/url]
@@ -148,7 +148,7 @@ public OnPlayerDeath(playerid, killerid, reason){
 }
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

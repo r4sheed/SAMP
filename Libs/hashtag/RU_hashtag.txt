@@ -22,7 +22,7 @@ Include contain function for chat #hashtag system
  OnHashTagPresented(hashtag[]);
 [/code]
 
-[b]Example:[/b]
+[b]Пример:[/b]
 [code]
 //I want #suicide now :D
 HashTag::suicide(playerid){
@@ -42,7 +42,7 @@ public OnPlayerText(playerid,text[]){
 }
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/hashtag/hashtag.inc]hashtag.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/RGB/RGB.inc]RGB.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc]DataConvert.inc[/url]

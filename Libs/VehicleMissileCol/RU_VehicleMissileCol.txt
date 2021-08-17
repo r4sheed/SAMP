@@ -1,6 +1,6 @@
 Hi I would like to present include for Vehicle Missile Launcher.
 
-[b]Video:[/b]
+[b]видео:[/b]
 - [url=https://www.youtube.com/watch?v=Pd5HmlL8uXw]Vehicle Missile (Beta)[/url]
 - [url=https://www.youtube.com/watch?v=HTHinI1IGhY]Vehicle Missile (ColAndreas)[/url]
 - [url=https://www.youtube.com/watch?v=B4pfX39bIwM]Marica Mortar V1[/url]
@@ -554,7 +554,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
 }
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/VehicleMissileCol/VehicleMissileCol.inc]VehicleMissileCol.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]

@@ -1,9 +1,9 @@
 Hello, I would like to present you the Magic Wand Script
 
-[b]Video:[/b]
+[b]видео:[/b]
 [url]https://www.youtube.com/watch?v=aaHfVz-UxR8[/url]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Magic/Magic.inc]Magic.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

@@ -1,6 +1,6 @@
 Hello, I would like to present a dynamic system landmines.
 
-[b]Video:[/b]
+[b]видео:[/b]
 [url]https://www.youtube.com/watch?v=SXwb26E-kkU[/url]
 [url]https://www.youtube.com/watch?v=_E3tw_qYzhI[/url]
 
@@ -166,7 +166,7 @@ CMD:delmine(playerid,params[]){
 }
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Mines/Mines.inc]Mines.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]

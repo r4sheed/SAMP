@@ -94,7 +94,7 @@ Foreach:
 Test #1 For 500000 iteration in 500 ms
 Test #2 Server Crash. Why ?
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=http://adm.ct8.pl/d/FoxForeach.inc]FoxForeach.inc[/url]
 
 [url=http://adm.ct8.pl/d/FoxForeach.inc]FoxForeach.inc][img]http://i.imgur.com/BustGcF.gif[/img][/url]

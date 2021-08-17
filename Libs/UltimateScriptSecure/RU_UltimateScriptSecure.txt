@@ -51,6 +51,6 @@ $ACK_FALSE =  'Fuck you thief :P'; //anything
 [ADM] Error: The script did not get permission to activation.
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/UltimateScriptSecure/UltimateScriptSecure.inc]UltimateScriptSecure.inc[/url]
 [url=http://adm.ct8.pl/d/Script%20Secure%20ADM%20WebACK.zip]Web ACK System[/url]

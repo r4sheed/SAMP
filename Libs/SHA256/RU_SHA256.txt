@@ -29,10 +29,10 @@ Include contains [url=https://wikipedia.org/wiki/SHA-2]SHA256[/url] Hash Generat
  ****************************************************************************************************/
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=http://adm.ct8.pl/d/SHA256.inc]SHA256.inc[/url]
 
-[b]Example:[/b]
+[b]Пример:[/b]
 [code]
 #define PASSWORD_SALT	"d2b03dcb"
 new hash[65], buffer[256];

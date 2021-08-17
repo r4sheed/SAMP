@@ -21,7 +21,7 @@ Include contain function for chat @mentiones system
  OnPlayerMentioned(playerid,targetid);
 [/code]
 
-[b]Example:[/b]
+[b]Пример:[/b]
 [code]
 public OnPlayerMentioned(playerid,targetid){
 	//create your own notice with TextDraw/sound
@@ -40,10 +40,10 @@ public OnPlayerText(playerid,text[]){
 //Two existing players got notice and nick color has been changed to 0xCC0000FF
 [/code]
 
-[b]Screenshot:[/b]
+[b]Скриншот:[/b]
 https://i.imgur.com/dhkbMWV.png
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/mentiones/mentiones.inc]mentiones.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/RGB/RGB.inc]RGB.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc]DataConvert.inc[/url]

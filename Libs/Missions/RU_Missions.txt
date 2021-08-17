@@ -1,6 +1,6 @@
 Hello, I would like to present you the Faction Mini Missions.
 
-[b]Video:[/b]
+[b]видео:[/b]
 https://www.youtube.com/watch?v=uMpS2SaWmB0
 
 [b]Example Code:[/b]
@@ -217,7 +217,7 @@ OnPlayerDisarmBomb(playerid,mobid,mission_state);
 OnPlayerFixedRoad(playerid,mobid);
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Missions/Missions.inc]Missions.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/route_rand/route_rand.inc]route_rand.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/route_rand/route_rand.bin]route_rand.bin[/url] (put in /scriptfiles)

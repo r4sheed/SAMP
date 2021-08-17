@@ -250,5 +250,5 @@ Simple functions for GetVehicleDamageStatus, UpdateVehicleDamageStatus and more.
 
 Some options will only work if the player is in a vehicle.
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/EVF/EVF.inc]EVF.inc[/url]

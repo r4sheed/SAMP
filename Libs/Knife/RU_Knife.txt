@@ -1,10 +1,10 @@
 Hello, I would like to present you the Knife Shot Script
 
-[b]Video:[/b]
+[b]видео:[/b]
 [url]https://www.youtube.com/watch?v=WJZCn3XXRHY[/url]
 [url]https://www.youtube.com/watch?v=PSfgKwm3Mc8[/url]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Knife/Knife.inc]Knife.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

@@ -1,6 +1,6 @@
 Hello, I would like to present you the Extended Granade.
 
-[b]Video:[/b]
+[b]видео:[/b]
 https://www.youtube.com/watch?v=wlFEwpE0j7k
 
 [b]Functions:[/b]
@@ -66,7 +66,7 @@ GRENADE_EFFECT_HUGE_SMOKE_3
 GRENADE_EFFECT_NAPALM
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
 [url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

@@ -56,5 +56,5 @@ format(buffer,sizeof buffer,"You money in bank: %s",mymoney);
 SendClientMessage(playerid,-1,buffer);  
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/LY/LY.inc]LY.inc[/url]

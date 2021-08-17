@@ -1,6 +1,6 @@
 Hello, I would like to present you the Los Santos Gang Graffiti.
 
-[b]Video:[/b]
+[b]видео:[/b]
 [url=https://i.imgur.com/c0RgnwW.gif][img]https://i.imgur.com/c0RgnwW.gif[/img][/url]
 
 [b]Installation:[/b]
@@ -42,7 +42,7 @@ public OnGraffitiTagCreated(mobid,gangid){
 }
 [/code]
 
-[b]Download:[/b]
+[b]Скачать:[/b]
 [url=https://adm.ct8.pl/cloud/Libs/Graffiti/Graffiti.inc]Graffiti.inc[/url]
 [url=https://adm.ct8.pl/cloud/Libs/Graffiti/graffiti.bin]graffiti.bin[/url] (put in /scriptfiles)
 [url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
