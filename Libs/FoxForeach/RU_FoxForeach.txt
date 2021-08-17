@@ -1,0 +1,103 @@
+This include contain function for fast loop for player.
+
+[code]
+/****************************************************************************************************
+ *                                                                                                  *
+ *                                      )(   FoX Foreach   )(                                       *
+ *                                                                                                  *
+ * Copyright © 2019 Abyss Morgan. All rights reserved.                                              *
+ *                                                                                                  *
+ * Website:  adm.ct8.pl                                                                             *
+ * Download: adm.ct8.pl/r/download                                                                  *
+ *                                                                                                  *
+ * Plugins: None                                                                                    *
+ * Modules: None                                                                                    *
+ *                                                                                                  *
+ * File Version: 1.2.1                                                                              *
+ *                                                                                                  *
+ * Functions:                                                                                       *
+ * FoxForeach(variable,tag); //Tags: Player, Bot, Character                                         *
+ *                                                                                                  *
+ * Player Functions:                                                                                *
+ * CountFoxPlayer();                                                                                *
+ * FoxForeachRandomPlayer();                                                                        *
+ * bool:IsPlayerInFoxPool(playerid);                                                                *
+ *                                                                                                  *
+ * Bot Functions:                                                                                   *
+ * CountFoxBot();                                                                                   *
+ * FoxForeachRandomBot();                                                                           *
+ * bool:IsBotInFoxPool(playerid);                                                                   *
+ *                                                                                                  *
+ * Character Functions:                                                                             *
+ * CountFoxCharacter();                                                                             *
+ * FoxForeachRandomCharacter();                                                                     *
+ * bool:IsCharacterInFoxPool(playerid);                                                             *
+ *                                                                                                  *
+ * Extended functions:                                                                              *
+ * foX(variable,beginning,end);                                                                     *
+ * PoolForeach(variable);                                                                           *
+ *                                                                                                  *
+ * Auto functions:                                                                                  *
+ * FoxForeachInit();                                                                                *
+ * bool:FoxAddPlayer(playerid);                                                                     *
+ * bool:FoxRemovePlayer(playerid);                                                                  *
+ * bool:FoxAddBot(playerid);                                                                        *
+ * bool:FoxRemoveBot(playerid);                                                                     *
+ * bool:FoxAddCharacter(playerid);                                                                  *
+ * bool:FoxRemoveCharacter(playerid);                                                               *
+ *                                                                                                  *
+ ****************************************************************************************************/
+[/code]
+
+Differences between foreach.inc and FoxForeach.inc
+
+foreach.inc:
+[code]
+foreach(new i : Player){
+	SendClientMessage(i,0xFFFFFFFF,"Hello players!");
+}
+
+foreach(new i : Bot){
+	SendClientMessage(i,0xFFFFFFFF,"Hello bot!");
+}
+
+foreach(new i : Character){
+	SendClientMessage(i,0xFFFFFFFF,"Hello all!");
+}
+[/code]
+
+FoxForeach.inc:
+[code]
+FoxForeach(i,Player){
+	SendClientMessage(i,0xFFFFFFFF,"Hello players!");
+}
+
+FoxForeach(i,Bot){
+	SendClientMessage(i,0xFFFFFFFF,"Hello bots!");
+}
+
+FoxForeach(i,Character){
+	SendClientMessage(i,0xFFFFFFFF,"Hello all!");
+}
+[/code]
+
+Speed Test for Operation:
+
+Test #1 Foreach for 500 players, 1000 operations per player
+Test #2 Foreach for 400 players, 1000 operations per player (Players id 0 - 99 left the server)
+
+FoxForeach:
+Test #1 For 500000 iteration in 489 ms
+Test #2 For 400000 iteration in 393 ms
+
+Foreach:
+Test #1 For 500000 iteration in 500 ms
+Test #2 Server Crash. Why ?
+
+[b]Download:[/b]
+[url=http://adm.ct8.pl/d/FoxForeach.inc]FoxForeach.inc[/url]
+
+[url=http://adm.ct8.pl/d/FoxForeach.inc]FoxForeach.inc][img]http://i.imgur.com/BustGcF.gif[/img][/url]
+
+
+[url=http://adm.ct8.pl/report/?title=FoxForeach%20Bug]Bug Report[/url][/i]

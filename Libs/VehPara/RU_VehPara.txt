@@ -1,0 +1,69 @@
+Hello, I would like to present you the Vehicle Parachute Script
+
+[b]Video:[/b]
+[url]https://www.youtube.com/watch?v=TrxYkMeBtsU[/url]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/VehPara/VehPara.inc]VehPara.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+
+[b]Installation:[/b]
+[code]
+#include <ColAndreas>
+#include <3DTryg>
+#include <VehPara>
+[/code]
+
+[b]Functions:[/b]
+[code]
+bool:IsPlayerUsingVehPara(playerid);
+bool:IsToggleVehicleParachute(vehicleid);
+ToggleVehicleParachute(vehicleid,bool:toggle);
+SetVehicleParachuteKey(key);
+[/code]
+
+[b]Callbacks:[/b]
+[code]
+OnVehicleParachuteThrown(playerid,vehicleid);
+OnVehicleParachuteOpened(playerid,vehicleid);
+OnVehicleParachuteOpenFail(playerid,vehicleid);
+[/code]
+
+[b]Activation:[/b]
+[code]
+H - Open/thrown parachute
+[/code]
+
+[b]Example Code:[/b]
+[code]
+CMD:vehpara(playerid){
+
+	new vid = GetPlayerVehicleID(playerid);
+	if(IsToggleVehicleParachute(vid)) return SendClientMessage(playerid,0xCC0000FF,"Your vehicle already has a parachute");
+	if(!IsVehicleFlag(GetVehicleFlags(vid),VF_STREET)) return SendClientMessage(playerid,0xCC0000FF,"For this vehicle can not be mounted parachute");
+	
+	ToggleVehicleParachute(vid,true);
+	return 1;
+}
+
+//Callbacks:
+public OnVehicleParachuteThrown(playerid,vehicleid){
+	GameTextForPlayer(playerid,"~g~Parachute has been thrown",2500,3);
+	return 1;
+}
+
+public OnVehicleParachuteOpened(playerid,vehicleid){
+	GameTextForPlayer(playerid,"~g~Parachute has been opened",2500,3);
+	return 1;
+}
+
+public OnVehicleParachuteOpenFail(playerid,vehicleid){
+	GameTextForPlayer(playerid,"~g~Cannot use parachute",2500,3);
+	return 1;
+}
+[/code]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]

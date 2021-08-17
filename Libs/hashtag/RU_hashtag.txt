@@ -1,0 +1,49 @@
+Include contain function for chat #hashtag system
+
+[code]
+ hashtag.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: None
+
+ Website: https://adm.ct8.pl
+
+ Plugins: SScanf
+ Modules: RGB
+
+ File Version: 1.2.1
+
+ Functions:
+ GetHashTag(playerid,text[],hashtag_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));
+ GetAllowedHashTag();
+ SetAllowedHashTag(number);
+ HashTag::name(playerid);
+
+ Callbacks:
+ OnHashTagPresented(hashtag[]);
+[/code]
+
+[b]Example:[/b]
+[code]
+//I want #suicide now :D
+HashTag::suicide(playerid){
+	SetPlayerHealth(playerid,0.0);
+	return 1;
+}
+
+HashTag::banned(playerid){
+	PlayAudioStreamForPlayer(playerid,"example.com");
+	return 1;
+}
+
+public OnPlayerText(playerid,text[]){
+	GetHashTag(playerid,text,0xCC0000FF,0x00AA00FF,2048); //back_color the same as first chat color
+	SendClientMessageToAll(0x00AA00FF,text);
+	return 0;
+}
+[/code]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/hashtag/hashtag.inc]hashtag.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/RGB/RGB.inc]RGB.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc]DataConvert.inc[/url]
+

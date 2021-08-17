@@ -1,0 +1,71 @@
+Hello, I would like to present you the Magic Wand Script
+
+[b]Video:[/b]
+[url]https://www.youtube.com/watch?v=aaHfVz-UxR8[/url]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/Magic/Magic.inc]Magic.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+
+[b]Installation:[/b]
+[code]
+#include <colandreas>
+#include <3DTryg>
+#include <Magic>
+[/code]
+
+[b]Functions:[/b]
+[code]
+Magic::ToggleUseTeam(bool:toggle);            //default: false
+Magic::IsToggleUseTeam();
+Magic::ToggleForAll(bool:toggle);             //default: false
+Magic::IsToggleForAll();
+Magic::ToggleForPlayer(playerid,bool:toggle); //default: false
+Magic::IsToggleForPlayer(playerid);
+Magic::GetDamage(playerid);
+Magic::SetDamage(playerid,Float:amount);
+Magic::GetSpeed(playerid);
+Magic::SetSpeed(playerid,Float:speed);
+Magic::GetRange(playerid);
+Magic::SetRange(playerid,Float:range);
+Magic::GetAmmo(playerid);
+Magic::SetAmmo(playerid,ammo);
+Magic::TogglePoisoning(playerid,bool:toggle);
+Magic::IsTogglePoisoning(playerid);
+Magic::GetPoisoningTime(playerid);
+Magic::SetPoisoningTime(playerid,seconds);
+Magic::GetPoisoningDamage(playerid);
+Magic::SetPoisoningDamage(playerid,Float:damage);
+Magic::SetProjectile(playerid,modelid=18693,Float:rx=90.0,Float:ry=0.0,Float:rz=0.0,Float:offx=0.0,Float:offy=0.0,Float:offz=0.0);
+Magic::GetProjectile(playerid,&modelid,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:offx=0.0,&Float:offy=0.0,&Float:offz=0.0);
+[/code]
+
+[b]Callbacks:[/b]
+[code]
+OnPlayerRequestMagicShot(playerid,targetid); //return 0 - prevent to use magic shoot (this callback is called also if ammo is 0)
+[/code]
+
+[b]Definitions:[/b]
+[code]
+MAGIC_SPEED
+MAGIC_MAX_RADIUS
+MAGIC_REFRESH_ACTION
+MAGIC_DAMAGE
+MAGIC_DOT_POISONING
+MAGIC_POISONING_TIME
+MAGIC_WEAPON_AMMO_INFINITY
+
+WEAPON_MAGIC_BULLET
+WEAPON_MAGIC_POISONING
+[/code]
+
+[b]Activation:[/b]
+[code]
+Weapon: Fist
+Left Mouse Button
+[/code]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]

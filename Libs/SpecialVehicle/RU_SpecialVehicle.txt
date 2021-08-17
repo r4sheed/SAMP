@@ -1,0 +1,181 @@
+[b]Video:[/b]
+Full presentation is unavailable sorry
+
+[b]Shoft videos:[/b]
+- [url=https://www.youtube.com/watch?v=r03wfWj58Vc]SpecialVehicle #1[/url]
+- [url=https://www.youtube.com/watch?v=d26K-oZtHXY]SpecialVehicle #2[/url]
+
+[b]Screenshots:[/b]
+https://imgur.com/a/aNOUwfn
+
+[b]Functions:[/b]
+[code]
+SpecialVehicle::IsToggledSpecialAbility(vehicleid);
+SpecialVehicle::ToggleSpecialAbility(vehicleid,bool:toggle);
+SpecialVehicle::GetSpecialVehicleHealth(vehicleid);
+SpecialVehicle::SetDefaultDamage(vehicleid);
+SpecialVehicle::EnterPlayer(playerid);
+SpecialVehicle::ExitPlayer(playerid);
+SpecialVehicle::IsPlayerInSpecialVeh(playerid);
+SpecialVehicle::GetPlayerSpecialVehType(playerid);
+SpecialVehicle::GetVehicleAmmo(vehicleid);
+SpecialVehicle::SetVehicleAmmo(vehicleid,ammo);
+SpecialVehicle::GetVehicleSecondaryAmmo(vehicleid);
+SpecialVehicle::SetVehicleSecondaryAmmo(vehicleid,ammo);
+SpecialVehicle::GetDamage(vehicleid);
+SpecialVehicle::SetDamage(vehicleid,Float:damage);
+SpecialVehicle::GetVehicleDamage(vehicleid);
+SpecialVehicle::SetVehicleDamage(vehicleid,Float:vehicle_damage);
+SpecialVehicle::IsToggledTrunkInterior();
+SpecialVehicle::ToggleTrunkInterior(bool:toggle);
+SpecialVehicle::IsToggledTrailerInterior();
+SpecialVehicle::ToggleTrailerInterior(bool:toggle);
+SpecialVehicle::IsToggledMaverickMinigun(vehicleid);
+SpecialVehicle::ToggleMaverickMinigun(vehicleid,bool:toggle);
+SpecialVehicle::Create(modelid,Float:x,Float:y,Float:z,Float:angle,color1,color2,respawn_delay = -1,addsiren = 0,worldid = 0,interiorid = 0);
+SpecialVehicle::CreateMOC(Float:x,Float:y,Float:z,Float:z_angle,respawn_delay = -1,addsiren = 0,worldid = 0,interiorid = 0);
+SpecialVehicle::CreateMOCIncluded(vehicleid,respawn_delay = -1,addsiren = 0);
+[/code]
+
+[b]Callbacks:[/b]
+[code]
+OnPlayerEnterVehIntRequest(playerid,vehicleid);
+OnPlayerEnterSpecialSeat(playerid);
+OnPlayerEnterOppressor(playerid);
+OnPlayerUseCannonFail(playerid);
+OnPlayerShootRocketFail(playerid);
+OnSpecialTrailerNotConnected(playerid);
+OnPlayerShootOPRocketFail(playerid);
+OnPlayerEnterVehInterior(playerid,vehicleid,with_vehicle);
+OnPlayerExitVehInterior(playerid,vehicleid,with_vehicle);
+OnSpecialVehicleHasNoAmmo(playerid,vehicleid);
+OnSpecialTrailerAttachFail(playerid,vehicleid,trailerid);
+[/code]
+
+[b]Definitions:[/b]
+[code]
+WEAPON_VEHICLE_INTERIOR - after vehicle destroyed players inside vehicle interior got death by this reason
+SPECIAL_VEH_AMMO_INFINITY - infinity ammo (default)
+[/code]
+
+[b]Informations[/b]
+[code]
+By pressing KEY_ACTION you can use Cargobob/Leviathan magnet when you toggling SecialVehicle
+[/code]
+
+[b]Instalation:[/b]
+[i]Due to high library requipments, make sure you install libs in right order.[/i]
+[code]
+#include <streamer>
+#include <colandreas>
+
+#include <EVF>
+#include <3DTryg>
+#include <ExtendedGrenade> //Extension using by Mines and Missile
+#include <Mines>
+#include <Missile>
+#include <VehPara>
+
+#define SPECIAL_VEH_USE_TEAMS	//atention if you turn on teams NO_TEAM is treated as an ordinary team
+#include <SpecialVehicle>
+[/code]
+
+[b]Example code:[/b]
+[code]
+public OnPlayerEnterVehIntRequest(playerid,vehicleid){
+	//if vehicle is owned by another team you can block enter to interior here by return 0;
+	return 1;
+}
+
+public OnPlayerEnterSpecialSeat(playerid){
+	GameTextForPlayer(playerid,"Press ~k~~VEHICLE_HORN~ to enable/disable special weapon",2500,4);
+	return 1;
+}
+
+public OnPlayerEnterOppressor(playerid){
+	GameTextForPlayer(playerid,"Hold ~k~~VEHICLE_FIREWEAPON_ALT~ for use booster",1000,4);
+	return 1;
+}
+
+public OnPlayerUseCannonFail(playerid){
+	GameTextForPlayer(playerid,"You cannot use cannon now",1000,4);
+	return 1;
+}
+
+public OnPlayerEnterVehInterior(playerid,vehicleid,with_vehicle){
+	GameTextForPlayer(playerid,"You entered to vehicle interior, press ~k~~GROUP_CONTROL_BWD~ to exit",2500,4);
+	return 1;
+}
+
+public OnPlayerExitVehInterior(playerid,vehicleid,with_vehicle){
+	GameTextForPlayer(playerid,"You exit from vehicle interior",2500,4);
+	return 1;
+}
+
+public OnPlayerShootRocketFail(playerid){
+	GameTextForPlayer(playerid,"You can shoot only aerial targets",1000,4);
+	return 1;
+}
+
+public OnSpecialTrailerNotConnected(playerid){
+	GameTextForPlayer(playerid,"Trailer is not connected to Truck",1000,4);
+	return 1;
+}
+
+public OnPlayerShootOPRocketFail(playerid){
+	GameTextForPlayer(playerid,"You can shoot only when you on air",1000,4);
+	return 1;
+}
+
+public OnSpecialVehicleHasNoAmmo(playerid,vehicleid){
+	GameTextForPlayer(playerid,"You don't have ammo",1000,4);
+	return 1;
+}
+
+public OnSpecialTrailerAttachFail(playerid,vehicleid,trailerid){
+	SendClientMessage(playerid,0xFFFFFFFF,"You can only attach MOC trailer by MOC Truck");
+	return 1;
+}
+
+CMD:e(playerid){
+	switch(SpecialVehicle::EnterPlayer(playerid)){
+		case SPECIAL_VEH_ENTER_FAIL: {
+			SendClientMessage(playerid,0xFFFFFFFF,"You are not near a special vehicle");
+		}
+		case SPECIAL_VEH_ENTER_SUCCES: {
+			
+		}
+		case SPECIAL_VEH_ENTER_ONFOOT: {
+			SendClientMessage(playerid,0xFFFFFFFF,"You must be on foot");
+		}
+		case SPECIAL_VEH_ENTER_NOT_ALLOWED: {
+			SendClientMessage(playerid,0xFFFFFFFF,"You can't enter a special vehicle");
+		}
+	}
+	return 1;
+}
+
+CMD:spawn_moc(playerid){
+	
+	new Float:x,Float:y,Float:z,Float:z_angle;
+	GetPlayerPos(playerid,x,y,z);
+	GetPlayerFacingAngle(playerid,z_angle);
+	SpecialVehicle::CreateMOC(x,y,z,z_angle,-1,0,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid)); 
+	
+	return 1;
+}
+[/code]
+
+[b]Demonstration script:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/SpecialVehicle/sv_demo.pwn]sv_demo.pwn[/url]
+You can run demonstration script and go to Las Venturas airport for test Special Vehicles
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/EVF/EVF.inc]EVF.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/VehPara/VehPara.inc]VehPara.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/Mines/Mines.inc]Mines.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/ExtendedGrenade.inc]ExtendedGrenade.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/SpecialVehicle/SpecialVehicle.inc]SpecialVehicle.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

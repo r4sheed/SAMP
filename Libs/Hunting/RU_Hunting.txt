@@ -1,0 +1,187 @@
+Hello, I would like to present you the Hunting System.
+
+[b]Video:[/b]
+[url]https://www.youtube.com/watch?v=gySSTtjFRB0[/url]
+
+[b]Functions:[/b]
+[code]
+Hunting::Create(type,Float:x,Float:y,Float:z,Float:health,respawntime,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=200.0,moving_area = 0);
+Hunting::Destroy(mobid);
+Hunting::Respawn(mobid);
+Hunting::ForceRespawn(mobid,Float:x,Float:y,Float:z);
+Hunting::Kill(mobid,playerid=INVALID_PLAYER_ID);
+Hunting::Stop(mobid,delay=-1);
+Hunting::GoTo(mobid,Float:x,Float:y,bool:disable_moving=false);
+Hunting::GetDrop(mobid);
+Hunting::SetDrop(mobid,drop);
+Hunting::GetPos(mobid,Float:x,Float:y,Float:z);
+Hunting::SetPos(mobid,Float:x,Float:y,Float:z,bool:disable_moving=false);
+Hunting::GetScaredRange(mobid);
+Hunting::SetScaredRange(mobid,Float:range);
+Hunting::GetHealth(mobid);
+Hunting::SetHealth(mobid,Float:health);
+Hunting::GetSpawnHealth(mobid);
+Hunting::SetSpawnHealth(mobid,Float:health);
+Hunting::GetRespawnTime(mobid);
+Hunting::SetRespawnTime(mobid,respawntime);
+Hunting::GetSpawn(mobid,&Float:x,&Float:y,&Float:z);
+Hunting::SetSpawn(mobid,Float:x,Float:y,Float:z);
+Hunting::GetInterior(mobid);
+Hunting::SetInterior(mobid,interiorid);
+Hunting::GetVirtualWorld(mobid);
+Hunting::SetVirtualWorld(mobid,worldid);
+Hunting::GetSpeed(mobid);
+Hunting::SetSpeed(mobid,Float:speed);
+Hunting::GetPressTime(mobid);
+Hunting::SetPressTime(mobid,miliseconds);
+Hunting::GetFacingAngle(mobid);
+Hunting::SetCalmTime(mobid,time=0);
+Hunting::IsPlayerInRange(playerid,mobid,Float:range);
+Hunting::IsToggledMoving(mobid);
+Hunting::ToggleMoving(mobid,toggle);
+Hunting::IsValid(mobid);
+Hunting::IsSpawned(mobid);
+Hunting::IsDead(mobid);
+Hunting::IsScared(mobid);
+Hunting::IsStopped(mobid);
+Hunting::IsMoving(mobid);
+[/code]
+
+[b]Extended Functions:[/b]
+[code]
+Hunting::Count();
+Hunting::GetKey();
+Hunting::SetKey(key);
+Hunting::GetFreeID();
+Hunting::GetActiveMob(playerid,mob_state);
+[/code]
+
+[b]Callbacks:[/b]
+[code]
+OnPlayerTakeHuntDrop(playerid,mobid,drop);
+OnPlayerKillHuntAnimal(playerid,mobid);
+OnPlayerApproachingAnimal(playerid,mobid,mob_state);
+OnPlayerExitApproachingAnimal(playerid,mobid,mob_state);
+OnAnimalTakeDamage(mobid,playerid,Float:amount,weaponid);
+OnHuntAnimalRespawn(mobid);
+OnAnimalScareStateChanged(mobid,playerid,isscared);
+OnPlayerHuntDropStateChange(playerid,mobid,drop_state); //only called if press time > 0
+[/code]
+
+[b]Definitions:[/b]
+[code]
+//Config
+MAX_HUNTING_ANIMALS     //default is 100 allowed to redefine
+HUNTING_UPDATE_INTERVAL //default is 500 allowed to redefine
+
+//Animal types
+HUNTING_TYPE_COW
+HUNTING_TYPE_DEER
+
+//Animal state
+HUNTING_STATE_DESTROYED //animal not exist
+HUNTING_STATE_SPAWNED   //animal is spawned
+HUNTING_STATE_DEAD      //animal is dead
+
+//Drop State
+HUNTING_DROP_STATE_FINISH
+HUNTING_DROP_STATE_START
+HUNTING_DROP_STATE_INTERRUPT
+
+//Other
+INVALID_HUNTING_ID
+HUNTING_NO_AUTO_RESPAWN //disable auto respawn (respawntime param)
+[/code]
+
+[b]Example Pawn Code:[/b]
+[code]
+#include <a_samp>
+#include <streamer>
+#include <ColAndreas>
+#include <3DTryg>
+#include <Hunting>
+
+public OnFilterScriptInit(){
+
+	new my_zone = CreateDynamicRectangle(-100.0,-100.0,100.0,100.0);
+	for(new i = 0; i < 5; i++){
+		Hunting::Create(HUNTING_TYPE_COW,0.0,0.0,3.0,55.0,30,.moving_area=my_zone);
+	
+		Hunting::Create(HUNTING_TYPE_DEER,5.0,0.0,3.0,55.0,30,.moving_area=my_zone);
+	}
+
+	return 1;
+}
+
+public OnPlayerTakeHuntDrop(playerid,mobid,drop){
+	
+	if(drop){
+		SendClientMessage(playerid,-1,"You received $2500");
+		GivePlayerMoney(playerid,2500);
+	}
+	return 0; //set drop flag 0
+}
+
+public OnPlayerKillHuntAnimal(playerid,mobid){
+	
+	SendClientMessage(playerid,-1,"Animal has been killed !");
+	
+	return 1;
+}
+
+public OnPlayerApproachingAnimal(playerid,mobid,mob_state){
+
+	if(mob_state == HUNTING_STATE_DEAD){
+		SendClientMessage(playerid,-1,"Press Y to raise prize.");
+	}
+	
+	return 1;
+}
+
+public OnPlayerExitApproachingAnimal(playerid,mobid,mob_state){
+
+	return 1;
+}
+
+public OnAnimalTakeDamage(mobid,playerid,Float:amount,weaponid){
+	
+	if(weaponid != 34) return 0; //sniper only :D
+	
+	return 1;
+}
+
+public OnHuntAnimalRespawn(mobid){
+	
+	return 1;
+}
+
+public OnAnimalScareStateChanged(mobid,playerid,isscared){
+
+	return 1;
+}
+
+//only called if press time > 0
+public OnPlayerHuntDropStateChange(playerid,mobid,drop_state){
+	switch(drop_state){
+		case HUNTING_DROP_STATE_FINISH: {
+			//your code
+		}
+		case HUNTING_DROP_STATE_START: {
+			//your code
+		}
+		case HUNTING_DROP_STATE_INTERRUPT: {
+			//your code
+		}
+	}
+	return 1;
+}
+[/code]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/Hunting/Hunting.inc]Hunting.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]

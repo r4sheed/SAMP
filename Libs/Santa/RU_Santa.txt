@@ -1,0 +1,49 @@
+Hello, I would like to present a simple script to automatically deploy gifts on the map.
+
+[b]Description:[/b]
+- On the map there is a prescribed amount of gifts. (Default 100)
+- They appear in random locations on the map, in addition to water.
+- What definite time reset location. (Default 2 hours)
+- After collecting gifts a player receives award. (To set)
+- After collecting gift changing locations.
+- Nobody, not even the admin does not know gift location.
+
+[b]The script can be used to:[/b]
+- Christmas
+- Easter
+- Halloween
+
+[b]Installation:[/b]
+[code]
+//#define SANTA_IS_EASTER_EVENT     //Change to Easter Event
+//#define SANTA_IS_EASTER_HALLOWEEN //Change to Halloween Event
+#include <streamer>
+#include <ColAndreas>
+#include <3DTryg>
+#include <Santa>
+
+public OnGameModeInit(){
+	
+	//Santa::SetSpawnRectangle(Float:minx,Float:miny,Float:maxx,Float:maxy,bool:reset=true);
+	//Santa::SetSpawnPolygon(Float:points[],maxpoints=sizeof(points),bool:reset=true);
+	
+	return 1;
+}
+
+public OnSantaPickupReward(playerid){
+
+	//edit this
+	GivePlayerMoney(playerid,250);
+	
+	return 1;
+}
+[/code]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/Santa/Santa.inc]Santa.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]

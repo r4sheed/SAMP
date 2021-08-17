@@ -1,0 +1,135 @@
+Hello, I would like to present you the Hyperion Mega Ship Battle.
+It is a war of two large warships in which between 6 and 42 players can participate (21 per ship)
+
+[IMG]https://i.imgur.com/lDN2lRH.png[/IMG]
+
+[b]Video:[/b]
+[url]https://www.youtube.com/watch?v=Ut7iBj7SRGk[/url]
+
+[b]Installation:[/b]
+[code]
+#include <streamer>
+#include <colandreas>
+#include <3DTryg>
+#include <Missile>
+#include <progress>
+
+//#define HYPERION_START_TIME 90
+//#define HYPERION_VW 0
+#include <Hyperion>
+
+public IsAllowedToJoinHyperion(playerid){
+	
+	return 1;
+}
+
+public OnHyperionPlayerDeath(playerid,killerid){
+	SendDeathMessage(killerid,playerid,51);
+	return 1;
+}
+
+public OnHyperionHelpPresented(playerid){
+	ShowPlayerDialog(playerid,0,DIALOG_STYLE_MSGBOX,"Hyperion Mega Ship","Control:\nUse your mouse to aim\nUse LMB or Ctrl to shot","OK","");
+	return 1;
+}
+
+public OnPlayerEnteringHyperion(playerid,teamid){
+	//player teleported to Hyperion Battle
+	return 1;
+}
+
+public OnPlayerExitHyperion(playerid){
+	//player death on hyperion or battle is finished
+	return 1;
+}
+
+public OnHyperionStateChange(hyperion_state){
+	switch(hyperion_state){
+		case HYPERION_STATE_OFF: { //attention this state cannot call when Hyperion battle finish
+			SendClientMessageToAll(0xFFFFFFFF,"Hyperion Battle cannot start due to lack of players.");
+		}
+		case HYPERION_STATE_STARTING: {
+			new buffer[128];
+			format(buffer,sizeof(buffer),"Hyperion Battle will start in %d seconds.",HYPERION_START_TIME);
+			SendClientMessageToAll(0xFFFFFFFF,buffer);
+		}
+		case HYPERION_STATE_ON: {
+			SendClientMessageToAll(0xFFFFFFFF,"Hyperion Battle has been started.");
+		}
+	}
+	return 1;
+}
+
+public OnHyperionBattleFinished(teamid){
+	switch(teamid){
+		case HYPERION_TEAM_BLUE: {
+			SendClientMessageToAll(0xFFFFFFFF,"Hyperion Battle was finished the blue team wins.");
+		}
+		case HYPERION_TEAM_GREEN: {
+			SendClientMessageToAll(0xFFFFFFFF,"Hyperion Battle was finished the green team wins.");
+		}
+		case HYPERION_TEAM_INTERRUPT: {
+			SendClientMessageToAll(0xFFFFFFFF,"Hyperion Battle was interrupted due to a lack of players.");
+		}
+	}
+	return 1;
+}
+
+public OnHyperionBattleResults(playerid,isdead,iswinner){
+	switch(iswinner){
+		case 0: {
+			SendClientMessage(playerid,0xFFFFFFFF,"You team lose the Hyperion Battle.");
+		}
+		case 1: {
+			SendClientMessage(playerid,0xFFFFFFFF,"You team win the Hyperion Battle.");
+		}
+	}
+	return 1;
+}
+
+CMD:hyperion(playerid){
+	if(!CallLocalFunction("IsAllowedToJoinHyperion","d",playerid)) return 1;
+	if(Hyperion::IsPlayerSaved(playerid)) return SendClientMessage(playerid,0xFFFFFFFF,"You are already queued for Hyperion Battle.");
+	if(Hyperion::CountPlayers() >= HYPERION_MAX_QUEUE) return SendClientMessage(playerid,0xFFFFFFFF,"Queue for Hyperion Battle is already full.");
+	Hyperion::SavePlayer(playerid,true);
+	SendClientMessage(playerid,0xFFFFFFFF,"You have signed up for Hyperion Battle Queue.");
+	return 1;
+}
+
+CMD:hyperionexit(playerid){
+	if(!Hyperion::IsPlayerSaved(playerid)) return SendClientMessage(playerid,0xFFFFFFFF,"You are not queued for Hyperion Battle.");
+	Hyperion::SavePlayer(playerid,false);
+	SendClientMessage(playerid,0xFFFFFFFF,"You left the Hyperion Battle queue.");
+	return 1;
+}
+[/code]
+
+[b]Functions:[/b]
+[code]
+Hyperion::IsPlayerSaved(playerid);
+Hyperion::SavePlayer(playerid,bool:state);
+Hyperion::IsPlayerOnArea(playerid);
+Hyperion::CountPlayers();
+[/code]
+
+[b]Callbacks:[/b]
+[code]
+IsAllowedToJoinHyperion(playerid);
+OnHyperionBattleResults(playerid,isdead,iswinner);
+OnPlayerEnteringHyperion(playerid,teamid);
+OnPlayerExitHyperion(playerid);
+OnHyperionStateChange(hyperion_state);
+OnHyperionBattleFinished(teamid);
+OnHyperionHelpPresented(playerid);
+[/code]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/Hyperion/Hyperion.inc]Hyperion.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
+[url=https://pastebin.com/8pv7LCPv]progress.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]

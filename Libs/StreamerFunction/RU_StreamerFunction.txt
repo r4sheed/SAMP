@@ -1,0 +1,383 @@
+Include contain additional functions for [b]Incognito Streamer Plugin[/b]
+
+[code]
+ StreamerFunction.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: Katarina Calzaghe
+
+ Website: https://adm.ct8.pl
+
+ Plugins: Streamer
+ Modules: None
+
+ File Version: 3.0.0
+ Streamer Version: 2.9.4
+
+ Compiler Options:
+ DISABLE_STREAMER_SPEC_CHECK  //Turn off check streamer version
+ ENABLE_BULLET_DYNAMIC_OBJECT //Turn on call OnPlayerWeaponShot when we shoot in a dynamic object
+ DISABLE_STREAMER_SPEC_FIXES  //Turn off fixes (not recommended)
+
+ Objects Functions:
+ GetDynamicObjectModel(objectid);
+ SetDynamicObjectModel(objectid,modelid);
+ GetDynamicObjectVW(objectid);
+ SetDynamicObjectVW(objectid,worldid);
+ GetDynamicObjectINT(objectid);
+ SetDynamicObjectINT(objectid,interiorid);
+ GetDynamicObjectSD(objectid,&Float:streamdistance);
+ SetDynamicObjectSD(objectid,Float:streamdistance);
+ GetDynamicObjectDD(objectid,&Float:drawdistance);
+ SetDynamicObjectDD(objectid,Float:drawdistance);
+ GetDynamicObjectPosAndRot(objectid,&Float:x,&Float:y,&Float:z,&Float:rx,&Float:ry,&Float:rz);
+ SetDynamicObjectPosAndRot(objectid,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz);
+ GetDynamicObjectMoveSpeed(objectid,&Float:speed);
+ SetDynamicObjectMoveSpeed(objectid,Float:speed);
+ GetDynamicObjectMovePos(objectid,&Float:x,&Float:y,&Float:z);
+ GetDynamicObjectMoveRot(objectid,&Float:rx,&Float:ry,&Float:rz);
+ GetDynamicObjectMoveTime(objectid,&objstate,&rtime=0);
+ SetDynamicObjectAttachSync(objectid,syncrotation);
+ RemoveDynamicObjectMaterial(objectid,materialindex);
+ RemoveDynamicObjectMaterialAll(objectid);
+ DeattachObjectDynamicObject(objectid);
+ DeattachDynamicObjectComponent(objectid,type);
+ DestroyDynamicObjectComponent(objectid,type);
+ GetDynamicObjectArea(objectid);
+ SetDynamicObjectArea(objectid,areaid);
+ GetDynamicObjectPriority(objectid);
+ SetDynamicObjectPriority(objectid,priority);
+ GetDynamicObjectDatagram(objectid,data[]);
+ SetDynamicObjectDatagram(objectid,data[]);
+ RemoveDynamicObjectDatagram(objectid);
+ bool:IsSetDynamicObjectDatagram(objectid);
+ GetDynamicObjectInvertArea(objectid);
+ SetDynamicObjectInvertArea(objectid,toggle);
+
+ SAMP Functions:
+ GetObjectPosAndRot(objectid,&Float:x,&Float:y,&Float:z,&Float:rx,&Float:ry,&Float:rz);
+ SetObjectPosAndRot(objectid,Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz);
+ CountObjects();
+ CountPlayerObjects(playerid,bool:streamer = false);
+ DestroyObjects();
+ DestroyPlayerObjects(playerid,bool:streamer = false);
+ GangZoneDestroyAll();
+
+ Vehicle Functions:
+ CountVehicles();
+ DestroyVehicles();
+ DestroyVehicleDynamicObject(vehicleid);
+ DeattachVehicleDynamicObject(vehicleid);
+ GetVehicleDatagram(vehicleid,data[]);
+ SetVehicleDatagram(vehicleid,data[]);
+ RemoveVehicleDatagram(vehicleid);
+ IsSetVehicleDatagram(vehicleid);
+
+ Check Point Functions:
+ GetDynamicCPPos(checkpointid,&Float:x,&Float:y,&Float:z);
+ SetDynamicCPPos(checkpointid,Float:x,Float:y,Float:z);
+ GetDynamicCPSize(checkpointid,&Float:size);
+ SetDynamicCPSize(checkpointid,Float:size);
+ GetDynamicCPVW(checkpointid);
+ SetDynamicCPVW(checkpointid,worldid);
+ GetDynamicCPINT(checkpointid);
+ SetDynamicCPINT(checkpointid,interiorid);
+ GetDynamicCPSD(checkpointid,&Float:streamdistance);
+ SetDynamicCPSD(checkpointid,Float:streamdistance);
+ GetDynamicCPArea(checkpointid);
+ SetDynamicCPArea(checkpointid,areaid);
+ GetDynamicCPPriority(checkpointid);
+ SetDynamicCPPriority(checkpointid,priority);
+ GetDynamicCPDatagram(checkpointid,data[]);
+ SetDynamicCPDatagram(checkpointid,data[]);
+ RemoveDynamicCPDatagram(checkpointid);
+ bool:IsSetDynamicCPDatagram(checkpointid);
+ GetDynamicCPInvertArea(checkpointid);
+ SetDynamicCPInvertArea(checkpointid,toggle);
+
+ Race Check Point Functions:
+ GetDynamicRaceCPPos(checkpointid,&Float:x,&Float:y,&Float:z);
+ SetDynamicRaceCPPos(checkpointid,Float:x,Float:y,Float:z);
+ GetDynamicRaceCPNext(checkpointid,&Float:nextx,&Float:nexty,&Float:nextz);
+ SetDynamicRaceCPNext(checkpointid,Float:nextx,Float:nexty,Float:nextz);
+ GetDynamicRaceCPType(checkpointid);
+ SetDynamicRaceCPType(checkpointid,type);
+ GetDynamicRaceCPSize(checkpointid,&Float:size);
+ SetDynamicRaceCPSize(checkpointid,Float:size);
+ GetDynamicRaceCPVW(checkpointid);
+ SetDynamicRaceCPVW(checkpointid,worldid);
+ GetDynamicRaceCPINT(checkpointid);
+ SetDynamicRaceCPINT(checkpointid,interiorid);
+ GetDynamicRaceCPSD(checkpointid,&Float:streamdistance);
+ SetDynamicRaceCPSD(checkpointid,Float:streamdistance);
+ GetDynamicRaceCPArea(checkpointid);
+ SetDynamicRaceCPArea(checkpointid,areaid);
+ GetDynamicRaceCPPriority(checkpointid);
+ SetDynamicRaceCPPriority(checkpointid,priority);
+ GetDynamicRaceCPDatagram(checkpointid,data[]);
+ SetDynamicRaceCPDatagram(checkpointid,data[]);
+ RemoveDynamicRaceCPDatagram(checkpointid);
+ bool:IsSetDynamicRaceCPDatagram(checkpointid);
+ GetDynamicRaceCPInvertArea(checkpointid);
+ SetDynamicRaceCPInvertArea(checkpointid,toggle);
+
+ Player Functions:
+ DestroyPlayerDynamicObject(playerid);
+ DeattachPlayerDynamicObject(playerid);
+
+ MapIcon Functions:
+ GetDynamicMapIconPos(iconid,&Float:x,&Float:y,&Float:z);
+ SetDynamicMapIconPos(iconid,Float:x,Float:y,Float:z);
+ GetDynamicMapIconType(iconid);
+ SetDynamicMapIconType(iconid,type);
+ GetDynamicMapIconStyle(iconid);
+ SetDynamicMapIconStyle(iconid,style);
+ GetDynamicMapIconVW(iconid);
+ SetDynamicMapIconVW(iconid,worldid);
+ GetDynamicMapIconINT(iconid);
+ SetDynamicMapIconINT(iconid,interiorid);
+ GetDynamicMapIconSD(iconid,&Float:streamdistance);
+ SetDynamicMapIconSD(iconid,Float:streamdistance);
+ SetDynamicMapIconColor(iconid,color);
+ GetDynamicMapIconColor(iconid);
+ GetDynamicMapIconArea(iconid);
+ SetDynamicMapIconArea(iconid,areaid);
+ GetDynamicMapIconPriority(iconid);
+ SetDynamicMapIconPriority(iconid,priority);
+ GetDynamicMapIconDatagram(iconid,data[]);
+ SetDynamicMapIconDatagram(iconid,data[]);
+ RemoveDynamicMapIconDatagram(iconid);
+ bool:IsSetDynamicMapIconDatagram(iconid);
+ GetDynamicMapIconInvertArea(iconid);
+ SetDynamicMapIconInvertArea(iconid,toggle);
+
+ Pickup Functions:
+ GetDynamicPickupPos(pickupid,&Float:x,&Float:y,&Float:z);
+ SetDynamicPickupPos(pickupid,Float:x,Float:y,Float:z);
+ GetDynamicPickupModel(pickupid);
+ SetDynamicPickupModel(pickupid,modelid);
+ GetDynamicPickupVW(pickupid);
+ SetDynamicPickupVW(pickupid,worldid);
+ GetDynamicPickupINT(pickupid);
+ SetDynamicPickupINT(pickupid,interiorid);
+ GetDynamicPickupSD(pickupid,&Float:streamdistance);
+ SetDynamicPickupSD(pickupid,Float:streamdistance);
+ GetDynamicPickupType(pickupid);
+ SetDynamicPickupType(pickupid,type);
+ GetDynamicPickupArea(pickupid);
+ SetDynamicPickupArea(pickupid,areaid);
+ GetDynamicPickupPriority(pickupid);
+ SetDynamicPickupPriority(pickupid,priority);
+ GetDynamicPickupDatagram(pickupid,data[]);
+ SetDynamicPickupDatagram(pickupid,data[]);
+ RemoveDynamicPickupDatagram(pickupid);
+ bool:IsSetDynamicPickupDatagram(pickupid);
+ GetDynamicPickupInvertArea(pickupid);
+ SetDynamicPickupInvertArea(pickupid,toggle);
+
+ 3DText Functions:
+ GetDynamic3DTextPos(id,&Float:x,&Float:y,&Float:z);
+ SetDynamic3DTextPos(id,Float:x,Float:y,Float:z);
+ GetDynamic3DTextDD(id,Float:drawdistance);
+ SetDynamic3DTextDD(id,Float:drawdistance);
+ GetDynamic3DTextSD(id,&Float:streamdistance);
+ SetDynamic3DTextSD(id,Float:streamdistance);
+ GetDynamic3DTextVW(id);
+ SetDynamic3DTextVW(id,worldid);
+ GetDynamic3DTextINT(id);
+ SetDynamic3DTextINT(id,interiorid);
+ GetDynamic3DTextColor(id);
+ SetDynamic3DTextColor(id,color);
+ GetDynamic3DTextArea(id);
+ SetDynamic3DTextArea(id,areaid);
+ GetDynamic3DTextPriority(id);
+ SetDynamic3DTextPriority(id,priority);
+ SetDynamic3DTextTestLos(id,testlos);
+ AttachDynamic3DTextToPlayer(id,attachedplayer);
+ AttachDynamic3DTextToVehicle(id,attachedvehicle);
+ GetDynamic3DTextDatagram(id,data[]);
+ SetDynamic3DTextDatagram(id,data[]);
+ RemoveDynamic3DTextDatagram(id);
+ bool:IsSetDynamic3DTextDatagram(id);
+ GetDynamic3DTextInvertArea(id);
+ SetDynamic3DTextInvertArea(id,toggle);
+
+ Area Functions:
+ GetDynamicCirclePos(areaid,&Float:x,&Float:y);
+ SetDynamicCirclePos(areaid,Float:x,Float:y);
+ GetDynamicCylinderPos(areaid,&Float:x,&Float:y,&Float:minz,&Float:maxz);
+ SetDynamicCylinderPos(areaid,Float:x,Float:y,Float:minz,Float:maxz);
+ GetDynamicSpherePos(areaid,&Float:x,&Float:y,&Float:z);
+ SetDynamicSpherePos(areaid,Float:x,Float:y,Float:z);
+ GetDynamicRectanglePos(areaid,&Float:minx,&Float:miny,&Float:maxx,&Float:maxy);
+ SetDynamicRectanglePos(areaid,Float:minx,Float:miny,Float:maxx,Float:maxy);
+ GetDynamicCubePos(areaid,&Float:minx,&Float:miny,&Float:minz,&Float:maxx,&Float:maxy,&Float:maxz);
+ SetDynamicCubePos(areaid,Float:minx,Float:miny,Float:minz,Float:maxx,Float:maxy,Float:maxz);
+ GetDynamicCuboidPos(areaid,&Float:minx,&Float:miny,&Float:minz,&Float:maxx,&Float:maxy,&Float:maxz);
+ SetDynamicCuboidPos(areaid,Float:minx,Float:miny,Float:minz,Float:maxx,Float:maxy,Float:maxz);
+ GetDynamicAreaVW(areaid);
+ SetDynamicAreaVW(areaid,worldid);
+ GetDynamicAreaINT(areaid);
+ SetDynamicAreaINT(areaid,interiorid);
+ GetDynamicAreaSize(areaid,Float:size);
+ SetDynamicAreaSize(areaid,Float:size);
+ GetDynamicAreaDatagram(areaid,data[]);
+ SetDynamicAreaDatagram(areaid,data[]);
+ RemoveDynamicAreaDatagram(areaid);
+ bool:IsSetDynamicAreaDatagram(areaid);
+
+ Actor Functions:
+ GetDynamicActorModel(actorid);
+ SetDynamicActorModel(actorid,modelid);
+ GetDynamicActorArea(actorid);
+ SetDynamicActorArea(actorid,areaid);
+ GetDynamicActorPriority(actorid);
+ SetDynamicActorPriority(actorid,priority);
+ GetDynamicActorSD(actorid,&Float:streamdistance);
+ SetDynamicActorSD(actorid,Float:streamdistance);
+ GetDynamicActorDatagram(actorid,data[]);
+ SetDynamicActorDatagram(actorid,data[]);
+ RemoveDynamicActorDatagram(actorid);
+ IsSetDynamicActorDatagram(actorid);
+ GetDynamicActorInterior(actorid);
+ SetDynamicActorInterior(actorid,interiorid);
+ DestroyAllDynamicActors();
+ CountDynamicActors();
+ GetDynamicActorInvertArea(actorid);
+ SetDynamicActorInvertArea(actorid,toggle);
+
+ Dynamic Vehicle Functions:
+ SetDynamicVehicleModel(vehicleid,modelid);
+ GetDynamicVehicleSiren(vehicleid);
+ SetDynamicVehicleSiren(vehicleid,siren);
+ GetDynamicVehicleRespawnTime(vehicleid);
+ SetDynamicVehicleRespawnTime(vehicleid,respawndelay);
+ GetDynamicVehicleArea(vehicleid);
+ SetDynamicVehicleArea(vehicleid,areaid);
+ GetDynamicVehiclePriority(vehicleid);
+ SetDynamicVehiclePriority(vehicleid,priority);
+ GetDynamicVehicleSD(vehicleid,&Float:streamdistance);
+ SetDynamicVehicleSD(vehicleid,Float:streamdistance);
+ GetDynamicVehicleInvertArea(vehicleid);
+ SetDynamicVehicleInvertArea(vehicleid,toggle);
+ GetDynamicVehicleDatagram(vehicleid,data[]);
+ SetDynamicVehicleDatagram(vehicleid,data[]);
+ RemoveDynamicVehicleDatagram(vehicleid);
+ IsSetDynamicVehicleDatagram(vehicleid);
+ DestroyAllDynamicVehicles();
+ CountDynamicVehicles();
+
+ Anti Area Functions:
+ IsPointInAntiArea(areaid,Float:x,Float:y,Float:z);
+ IsPlayerInAntiArea(playerid,areaid,recheck = 0);
+ IsPlayerInAnyAntiArea(playerid,recheck = 0);
+ IsAnyPlayerInAntiArea(areaid,recheck = 0);
+ IsAnyPlayerInAnyAntiArea(recheck = 0);
+
+ Anti Area Callbacks:
+ OnPlayerEnterAntiArea(playerid,areaid);
+ OnPlayerLeaveAntiArea(playerid,areaid);
+
+ Pool Size Functions:
+ GetDynamicObjectPoolSize();
+ GetDynamicPickupPoolSize();
+ GetDynamicCPPoolSize();
+ GetDynamicRaceCPPoolSize();
+ GetDynamicMapIconPoolSize();
+ GetDynamic3DTextPoolSize();
+ GetDynamicAreaPoolSize();
+ GetDynamicActorPoolSize();
+ GetDynamicVehiclePoolSize();
+
+ Update Functions:
+ UpdateAllDynamicItem(type);
+ UpdateAllDynamicElements();
+ UpdateAllDynamicObjects();
+ UpdateAllDynamicPickups();
+ UpdateAllDynamicCPs();
+ UpdateAllDynamicRaceCPs();
+ UpdateAllDynamicMapIcons();
+ UpdateAllDynamic3DTextLabels();
+ UpdateAllDynamicAreas();
+ UpdateAllDynamicActors();
+ UpdateAllDynamicVehicles();
+
+ Foreach Functions:
+ ForDynamicObjects(variable);
+ ForDynamicPickups(variable);
+ ForDynamicCPs(variable);
+ ForDynamicRaceCPs(variable);
+ ForDynamicMapIcons(variable);
+ ForDynamic3DTextLabels(variable);
+ ForDynamicAreas(variable);
+ ForDynamicActors(variable);
+ ForDynamicVehicles(variable);
+
+ Nearest Item Functions:
+ GetNearestVisibleItem(playerid,type);
+ GetNearestVisibleObject(playerid);
+ GetNearestVisiblePickup(playerid);
+ GetNearestVisibleCP(playerid);
+ GetNearestVisibleRaceCP(playerid);
+ GetNearestVisibleMapIcon(playerid);
+ GetNearestVisible3DText(playerid);
+ GetNearestVisibleArea(playerid);
+ GetNearestVisibleActor(playerid);
+ GetNearestVisibleVehicle(playerid);
+
+ Extended Functions:
+ bool:IsValidStreamer(version);
+ GetStreamerVersion();
+ GetValidStreamerVersion();
+ GetStreamerVersionName(name[], value = GET_STREAMER_VERSION, maxdest = sizeof name);
+ CheckStreamerVersion();
+ GetStreamerDatagram(type,itemid,data[]);
+ SetStreamerDatagram(type,itemid,data[]);
+ RemoveStreamDatagram(type,itemid);
+ bool:IsSetStreamerDatagram(type,itemid);
+ GetStreamerSpecActiveCount();
+
+ Definitions:
+ DEFAULT_VISIBLE_OBJECT
+ DEFAULT_VISIBLE_PICKUP
+ DEFAULT_VISIBLE_MAP_ICON
+ DEFAULT_VISIBLE_3D_TEXT
+ DEFAULT_VISIBLE_ACTOR
+ INVALID_DYNAMIC_OBJECT_ID
+ INVALID_DYNAMIC_PICKUP_ID
+ INVALID_DYNAMIC_CP_ID
+ INVALID_DYNAMIC_RACE_CP_ID
+ INVALID_DYNAMIC_MAP_ICON_ID
+ INVALID_DYNAMIC_3D_TEXT_ID
+ INVALID_DYNAMIC_AREA_ID
+ INVALID_DYNAMIC_ACTOR_ID
+ INVALID_DYNAMIC_VEHICLE_ID
+ INVALID_PICKUP_ID
+ INVALID_STREAMER_COMPONENT
+ MAX_STREAM_SIZE
+
+ Fixes:
+ DestroyDynamicObject         -> Resets the variable after the destruction of the DynamicObject.
+ DestroyDynamicPickup         -> Resets the variable after the destruction of the DynamicPickup.
+ DestroyDynamicCP             -> Resets the variable after the destruction of the DynamicCP.
+ DestroyDynamicRaceCP         -> Resets the variable after the destruction of the DynamicRaceCP.
+ DestroyDynamicMapIcon        -> Resets the variable after the destruction of the DynamicMapIcon.
+ DestroyDynamic3DTextLabel    -> Resets the variable after the destruction of the Dynamic3DTextLabel.
+ DestroyDynamicArea           -> Resets the variable after the destruction of the DynamicArea.
+ DestroyDynamicActor          -> Resets the variable after the destruction of the DynamicActor.
+ DestroyDynamicVehicle        -> Resets the variable after the destruction of the DynamicVehicle.
+ DestroyObject                -> Resets the variable after the destruction of the Object.
+ DestroyPlayerObject          -> Resets the variable after the destruction of the PlayerObject.
+ DestroyPickup                -> Resets the variable after the destruction of the Pickup.
+ Delete3DTextLabel            -> Resets the variable after the destruction of the 3DTextLabel.
+ DeletePlayer3DTextLabel      -> Resets the variable after the destruction of the Player3DTextLabel.
+ AttachDynamicObjectToObject  -> Changes the priority of the parent to be greater than the priority of sub-objects.
+[/code]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/StreamerFunction/StreamerFunction.inc]StreamerFunction.inc[/url]
+
+Available for:
+[code]
+SA:MP 0.3.7
+SA:MP 0.3 DL
+[/code]

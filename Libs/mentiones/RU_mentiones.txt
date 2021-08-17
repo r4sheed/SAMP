@@ -1,0 +1,49 @@
+Include contain function for chat @mentiones system
+
+[code]
+ mentiones.inc
+ Copyright © 2021 Abyss Morgan. All rights reserved.
+ Contributors: None
+
+ Website: https://adm.ct8.pl
+
+ Plugins: SScanf
+ Modules: RGB, DataConvert
+
+ File Version: 1.3.1
+
+ Functions:
+ GetMentiones(playerid,text[],mention_color=0xCC0000FF,back_color=0xFFFFFFFF,max_len=sizeof(text));
+ GetAllowedMentions();
+ SetAllowedMentions(number);
+
+ Callbacks:
+ OnPlayerMentioned(playerid,targetid);
+[/code]
+
+[b]Example:[/b]
+[code]
+public OnPlayerMentioned(playerid,targetid){
+	//create your own notice with TextDraw/sound
+	return 1;
+}
+
+public OnPlayerText(playerid,text[]){
+	new chat_text[2048], p_name[MAX_PLAYER_NAME];
+	GetPlayerName(playerid,p_name,MAX_PLAYER_NAME);
+	format(chat_text,sizeof(chat_text),"%s: %s",p_name,text);
+	GetMentiones(playerid,chat_text,0xCC0000FF,0x00AA00FF,2048); //back_color the same as first chat color
+	SendClientMessageToAll(0x00AA00FF,chat_text);
+	return 0;
+}
+//Hi @Johny and @Alena how are you ?
+//Two existing players got notice and nick color has been changed to 0xCC0000FF
+[/code]
+
+[b]Screenshot:[/b]
+https://i.imgur.com/dhkbMWV.png
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/mentiones/mentiones.inc]mentiones.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/RGB/RGB.inc]RGB.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc]DataConvert.inc[/url]

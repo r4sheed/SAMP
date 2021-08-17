@@ -1,0 +1,44 @@
+Hello, I would like to present you the Portal Gun Script
+
+[b]Video:[/b]
+[url]https://www.youtube.com/watch?v=pHGUVNh9y3c[/url]
+[url]https://www.youtube.com/watch?v=wDBgtBY-cPs[/url]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/PortalGun/PortalGun.inc]PortalGun.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]
+
+[b]Installation:[/b]
+[code]
+#include <3DTryg>
+#include <PortalGun>
+[/code]
+
+[b]Functions:[/b]
+[code]
+TogglePrivatePortalGun(bool:toggle);            //default: false
+bool:IsTogglePrivatePortalGun();
+ToggleUseTeamPortalGun(bool:toggle);            //default: false
+bool:IsToggleUseTeamPortalGun();
+TogglePortalGunForAll(bool:toggle);             //default: true
+bool:IsTogglePortalGunForAll();
+TogglePortalGunForPlayer(playerid,toggle);      //default: 0
+IsTogglePortalGunForPlayer(playerid);
+Float:GetPortalGunSpeed(playerid);
+SetPortalGunSpeed(playerid,Float:speed);
+Float:GetPortalGunStreamDistance();
+SetPortalGunStreamDistance(Float:streamdistance);
+ForceOpenPortalGunRing(playerid,portal_id,Float:ox,Float:oy,Float:oz,Float:tx,Float:ty,Float:tz,worldid,interiorid);
+ForceClosePortalGunRing(playerid);
+[/code]
+
+[b]Activation:[/b]
+[code]
+Weapon: Country Rifle
+Y - Change Ring
+[/code]
+
+[i][b]Notice:[/b]
+Filterscript not exist because filterscripts have [b]limits.[/b]
+This has been replaced by include, having [b]automatic installation[/b], efficient GameMode/FilterScript.[/i]

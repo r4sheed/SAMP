@@ -1,0 +1,154 @@
+Hi I would like to present include for Missile Launcher.
+
+[b]Video:[/b]
+- [url=https://www.youtube.com/watch?v=ZCThAi3FKyU]Sniper Missile[/url]
+- [url=https://www.youtube.com/watch?v=Pd5HmlL8uXw]Vehicle Missile (MapAndreas Version)[/url]
+- [url=https://www.youtube.com/watch?v=HTHinI1IGhY]Vehicle Missile (ColAndreas Update)[/url]
+- [url=https://www.youtube.com/watch?v=B4pfX39bIwM]Marica Mortar V1[/url]
+- [url=https://www.youtube.com/watch?v=0FlZwi34wIA]Heavy Marica Mortar[/url]
+- [url=https://www.youtube.com/watch?v=bS6jnEebJR4]Missile Launcher Aim Player[/url]
+- [url=https://www.youtube.com/watch?v=Fxp-BDCQ94U]Congreve Rocket[/url]
+- [url=https://www.youtube.com/watch?v=lYS-ryk7n4E]Marica Mortar V2[/url]
+- [url=https://www.youtube.com/watch?v=NDWkGCxCJuA]New Vehicle Missile[/url]
+- [url=https://www.youtube.com/watch?v=qQ1T2NszDkc]Flares[/url]
+
+[b]Functions:[/b]
+[code]
+Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);
+
+type - explosion type //https://wiki.sa-mp.com/wiki/Explosion_List
+Float:detection_range - detection range player/vehicle
+Float:explode_radius - the explosion range (the same as in CreateExplosion)
+Float:speed - projectile speed
+Float:x, Float:y, Float:z - Starting position
+worldid, interiorid, playerid, Float:streamdistance - the same as in CreateDynamicObject
+missile_object: MISSILE_OBJECT_NORMAL / MISSILE_OBJECT_BIG / MISSILE_OBJECT_HYDRA / MISSILE_OBJECT_BOMB / MISSILE_OBJECT_BOMB_STATIC / MISSILE_OBJECT_FLARE
+Float:tx, Float:ty, Float:tz - Target position
+byplayerid - selected player will be immune to detection range
+teamid - player team will be immune to detection range
+remote - enable remote targeting (for Vehicle Missile Mortar)
+remote_count - number of remote targeting 1 - 32
+remote_height - arc height
+arc_roll - rotation Y axis
+Float:damage - player damage on explosion created
+Float:vehicle_damage - vehicle damage on explosion created
+
+Rotation: Auto!
+
+Missile::LaunchAimPlayer(targetid,type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,Float:damage=-1.0,Float:vehicle_damage=-1.0);
+
+Missile::StopAimPlayer(mobid);
+Missile::Destroy(mobid,type,playerid); 
+Missile::RemoteTarget(mobid,Float:tx,Float:ty,Float:tz,Float:speed = 0.0); 
+Missile::GetExplodeVisibility(); 
+Missile::SetExplodeVisibility(Float:explode_stream); 
+Missile::DisableAllAim(playerid);
+
+Misile::GetObject(mobid);
+Misile::GetArea(mobid);
+Misile::GetType(mobid);
+Misile::GetExplode(mobid);
+Misile::GetPlayer(mobid);
+Misile::GetTeamID(mobid);
+Misile::GetVehicle(mobid);
+Misile::GetRemoteCount(mobid);
+Misile::GetRemoteID(mobid);
+Misile::GetSpeed(mobid);
+Misile::GetTargetID(mobid);
+Misile::GetDamage(mobid);
+Misile::GetVehicleDamage(mobid);
+[/code]
+
+[b]Callbacks:[/b]
+[code]
+OnMissileDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,byplayerid);
+
+types:
+MISSILE_DESTROY_TYPE_TARGET  //When rocket reaches its destination (always killerid=INVALID_PLAYER_ID)
+MISSILE_DESTROY_TYPE_DETECT  //When rocket has been destroyed by detection range
+MISSILE_DESTROY_TYPE_KILL    //When rocket has been destroyed by player
+
+OnMissileDetectPlayer(playerid,killerid); //called when a player is within range of detection range
+
+OnMissileRequestLaunch(Float:x,Float:y,Float:z,playerid,targetid);
+[/code]
+
+[b]Example Code:[/b]
+[code]
+public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ){
+	if(weaponid == 34){
+		new Float:x, Float:y, Float:z,
+			Float:tx, Float:ty, Float:tz,
+			Float:rx, Float:rz,
+			vw, int, Float:dist;
+
+		GetPlayerPos(playerid,x,y,z);
+		GetRotationFor2Point3D(x,y,z,fX,fY,fZ,rx,rz);
+
+		dist = GetDistanceBetweenPoints3D(x,y,z,fX,fY,fZ);
+		vw = GetPlayerVirtualWorld(playerid);
+		int = GetPlayerInterior(playerid);
+
+		GetPointInFront3D(x,y,z,rx,rz,4.0,tx,ty,tz);
+		Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,4.0,25.0,35.0,tx,ty,tz,vw,int,-1,300.0,MISSILE_OBJECT_HYDRA,fX,fY,fZ,playerid,.damage=100.0,.vehicle_damage=1000.0);
+
+		GetPointInFront3D(x,y,z,rx,rz,3.0,tx,ty,tz);
+		Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,4.0,25.0,35.0,tx,ty,tz+3.0,vw,int,-1,300.0,MISSILE_OBJECT_HYDRA,fX,fY,fZ+3.0,playerid,.damage=100.0,.vehicle_damage=1000.0);
+		Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,4.0,25.0,35.0,tx,ty,tz-3.0,vw,int,-1,300.0,MISSILE_OBJECT_HYDRA,fX,fY,fZ-3.0,playerid,.damage=100.0,.vehicle_damage=1000.0);
+
+		GetPointInFront3D(tx,ty,tz,rx,rz+90.0,3.0,x,y,z);
+		GetPointInFront3D(x,y,z,rx,rz,dist,fX,fY,fZ);
+		Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,4.0,25.0,35.0,x,y,z,vw,int,-1,300.0,MISSILE_OBJECT_HYDRA,fX,fY,fZ,playerid,.damage=100.0,.vehicle_damage=1000.0);
+		GetPointInFront3D(tx,ty,tz,rx,rz-90.0,3.0,x,y,z);
+		GetPointInFront3D(x,y,z,rx,rz,dist,fX,fY,fZ);
+		Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,4.0,25.0,35.0,x,y,z,vw,int,-1,300.0,MISSILE_OBJECT_HYDRA,fX,fY,fZ,playerid,.damage=100.0,.vehicle_damage=1000.0);
+
+	}
+	return 1;
+}
+[/code]
+
+[b]Bullet example:[/b]
+[code]
+Missile::Launch(MISSILE_TYPE_EXPLODE_NONE,1.0,1.0,20.0,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,MISSILE_OBJECT_BULLET,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,.damage=5.0,.vehicle_damage=25.0);
+[/code]
+
+[b]How to check is player kill by missile (this is not required if you using custom missile damage):[/b]
+[code]
+enums:
+last_missile_shot
+last_missile_player
+
+public OnMissileDestroy(mobid,Float:x,Float:y,Float:z,type,killerid,byplayerid){
+	if(type == MISSILE_DESTROY_TYPE_DETECT && killerid != INVALID_PLAYER_ID){
+		PlayerInfo[killerid][last_missile_shot] = GetTickCount();
+		PlayerInfo[killerid][last_missile_player] = byplayerid;
+	}
+	return 1;
+}
+
+public OnMissileDetectPlayer(playerid,killerid){
+	if(killerid != INVALID_PLAYER_ID){
+		PlayerInfo[playerid][last_missile_shot] = GetTickCount();
+		PlayerInfo[playerid][last_missile_player] = killerid;
+	}
+    return 1;
+}
+
+public OnPlayerDeath(playerid, killerid, reason){
+	if(PlayerInfo[playerid][last_missile_player] != INVALID_PLAYER_ID && reason > 46 && playerid != killerid){
+		if(GetTickCount()-PlayerInfo[playerid][last_missile_shot] < 2000){
+			killerid = PlayerInfo[playerid][last_missile_player];
+			reason = 51;
+		}
+	}
+	
+	//your code
+	return 1;
+}
+[/code]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/Missile/Missile.inc]Missile.inc[/url]
+[url=https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc]3DTryg.inc[/url]
+[url=https://www.burgershot.gg/showthread.php?tid=175]ColAndreas Plugin[/url]

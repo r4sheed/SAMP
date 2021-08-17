@@ -1,0 +1,56 @@
+Hello, I would like to present include allowing us to introduce additional security for our file AMX.
+
+[b]Security Functions:[/b]
+a) AntiDeAMX
+b) ScriptSecureADM
+- IP and PORT checker
+- Expiration date script
+- Control slots server
+- Check rcon password
+- Check server language
+- Web ACK System
+
+[b]How to use UltimateScriptSecure.inc[/b]
+[code]
+//Install
+//1. Open UltimateScriptSecure and find "User Configuration"
+//2. Edit you server information.
+
+public OnGameModeInit(){ //OR OnFilterScriptInit
+	if(!USS_Init()) return 0;
+	return 1;
+}
+[/code]
+
+[b]Web ACK System:[/b]
+PHP File for UltimateScriptSecure.inc
+
+If you want to use the authorization by the website follow the steps:
+1. Edit /secure_adm/index.php
+[code]
+$ANTI_FLOOD = '123'; //the same as SCRIPT_ANTI_FLOOD
+$ACK_TRUE =   '{BOBO_HAHA,ACCESSCONTROL,TRUE}'; //the same as SCRIPT_ACK_KEY
+$ACK_FALSE =  'Fuck you thief :P'; //anything
+[/code]
+
+2. Edit /secure_adm/Server.txt
+[code]
+//add IP:PORT your server, example:
+127.0.0.1:7777
+127.0.0.1:7778
+[/code]
+
+[b]Error List:[/b]
+[code]
+[ADM] Info: Local server detect.
+[ADM] Error: This script is stolen.
+[ADM] Error: Script license has expired.
+[ADM] Error: Invalid server config, check your max players.
+[ADM] Error: Invalid server config, check your rcon password.
+[ADM] Error: Invalid server config, check your language.
+[ADM] Error: The script did not get permission to activation.
+[/code]
+
+[b]Download:[/b]
+[url=https://adm.ct8.pl/cloud/Libs/UltimateScriptSecure/UltimateScriptSecure.inc]UltimateScriptSecure.inc[/url]
+[url=http://adm.ct8.pl/d/Script%20Secure%20ADM%20WebACK.zip]Web ACK System[/url]

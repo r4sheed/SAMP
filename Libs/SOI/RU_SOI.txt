@@ -1,0 +1,56 @@
+Hi I would like to present [b]S[/b]kin [b]O[/b]ffset [b]I[/b]mage.
+What is that ? This is the script allows you to store much object offsets for all skins without big arrays / mysql / ini.
+
+[b]Technical Data:[/b]
+- Simple Static file for all skins [url=http://wiki.sa-mp.com/wiki/SetPlayerAttachedObject]offsets[/url]
+- Fast read without big arrays cache
+- Only 11'555 Bytes disk space for everyone object model
+
+[b]Installation:[/b]
+- Create directory /scriptfiles/SOI
+[code]
+#include <SOI>
+[/code]
+
+[b]Functions:[/b]
+[code]
+SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);
+[/code]
+
+[b]Cache Functions (For edit SOI files):[/b]
+[code]
+SOI::GetDefaultSkinOffset(&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);
+SOI::SetDefaultSkinOffset(bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0);
+SOI::GetTempSkinOffset(skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=1.0,&Float:sy=1.0,&Float:sz=1.0);
+SOI::SetTempSkinOffset(skinid,bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0);
+SOI::LoadTempData(modelid);
+SOI::DumpTempData();
+[/code]
+
+[b]Options:[/b]
+[code]
+DISABLE_SOI_CACHE - Disable Cache Functions
+[/code]
+
+[b]Example code:[/b]
+[code]
+CMD:soinewsession(playerid,params[]){
+	new modelid = strval(params);
+	SOI::LoadTempData(modelid);
+	return 1;	
+}
+
+CMD:soisavesession(playerid){
+	SOI::DumpTempData();
+	return 1;
+}
+
+//OnPlayerEditObject
+SOI::SetTempSkinOffset(skinid,bone,Float:x,Float:y,Float:z,Float:rx=0.0,Float:ry=0.0,Float:rz=0.0,Float:sx=1.0,Float:sy=1.0,Float:sz=1.0);
+
+//SetPlayerAttachedObject
+SOI::GetSkinOffset(modelid,skinid,&bone,&Float:x,&Float:y,&Float:z,&Float:rx=0.0,&Float:ry=0.0,&Float:rz=0.0,&Float:sx=0.0,&Float:sy=0.0,&Float:sz=0.0);
+[/code]
+
+[b]Download[/b]
+[url=https://adm.ct8.pl/cloud/Libs/SOI/SOI.inc]SOI.inc[/url]
