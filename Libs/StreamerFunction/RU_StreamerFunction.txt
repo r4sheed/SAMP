@@ -10,8 +10,8 @@
  Plugins: Streamer
  Modules: None
 
- File Version: 3.0.0
- Streamer Version: 2.9.4
+ File Version: 3.0.1
+ Streamer Version: 2.9.5
 
  Compiler Options:
  DISABLE_STREAMER_SPEC_CHECK  //Turn off check streamer version
@@ -37,7 +37,6 @@
  GetDynamicObjectMoveRot(objectid,&Float:rx,&Float:ry,&Float:rz);
  GetDynamicObjectMoveTime(objectid,&objstate,&rtime=0);
  SetDynamicObjectAttachSync(objectid,syncrotation);
- RemoveDynamicObjectMaterial(objectid,materialindex);
  RemoveDynamicObjectMaterialAll(objectid);
  DeattachObjectDynamicObject(objectid);
  DeattachDynamicObjectComponent(objectid,type);

@@ -8,9 +8,9 @@
  Modules: 3DTryg
 
  File Version: 2.3.1
- Streamer Version: 2.9.4
+ Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.1.0
+ 3DTryg Version: 5.2.0
 
  Functions:
  Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);
@@ -51,8 +51,8 @@
 	#error [ADM] This include requires SA:MP Include
 #endif
 
-#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR) || (!defined RemoveDynamicObjectMaterialText))
+	#error [ADM] This include required Streamer v2.9.5 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
 #if !defined COLANDREAS_VERSION
@@ -63,11 +63,11 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.1.0
+	#error [ADM] This include required 3DTryg.inc v5.2.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.1.0
-#elseif (TRYG3D_VERSION < 50100)
-	#error [ADM] Update your 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.2.0
+#elseif (TRYG3D_VERSION < 50200)
+	#error [ADM] Update your 3DTryg.inc to v5.2.0
 #endif
 
 #if !defined TRYG3D_COLANDREAS

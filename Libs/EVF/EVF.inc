@@ -9,7 +9,7 @@
  Modules: None
 
  File Version: 3.3.3
- Streamer Version: 2.9.4
+ Streamer Version: 2.9.5
 
  Functions:
  IsValidVehicleModelID(modelid);
@@ -282,6 +282,9 @@
 //Detect Streamer Plugin
 #if ((defined Streamer_AppendArrayData) && (defined INVALID_STREAMER_ID))
 	#define EVF_Streamer
+	#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR) || (!defined RemoveDynamicObjectMaterialText))
+		#error [ADM] Update your Streamer to v2.9.5 (github.com/samp-incognito/samp-streamer-plugin/releases)
+	#endif
 #endif
 
 #if !defined IsValidVehicle

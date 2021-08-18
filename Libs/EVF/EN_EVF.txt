@@ -14,7 +14,7 @@ Simple functions for GetVehicleDamageStatus, UpdateVehicleDamageStatus and more.
  Modules: None
 
  File Version: 3.3.3
- Streamer Version: 2.9.4
+ Streamer Version: 2.9.5
 
  Functions:
  IsValidVehicleModelID(modelid);

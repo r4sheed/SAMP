@@ -48,11 +48,11 @@ Legion V3.5 Copyright © 2021 Abyss Morgan, Unrea1
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.1.1
+	#error [ADM] This include required 3DTryg.inc v5.2.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.1.1
-#elseif (TRYG3D_VERSION < 50101)
-	#error [ADM] Update your 3DTryg.inc to v5.1.1
+	#error [ADM] Update your 3DTryg.inc to v5.2.0
+#elseif (TRYG3D_VERSION < 50200)
+	#error [ADM] Update your 3DTryg.inc to v5.2.0
 #endif
 
 #if !defined TRYG3D_COLANDREAS

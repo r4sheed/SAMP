@@ -9,8 +9,8 @@
  Modules: 3DTryg
 
  File Version: 1.0.3
- Streamer Version: 2.9.4
- 3DTryg Version: 5.1.0
+ Streamer Version: 2.9.5
+ 3DTryg Version: 5.2.0
 
  Functions:
  Graffiti::Init();
@@ -32,17 +32,17 @@
 	#error [ADM] This include requires SA:MP Include
 #endif
 
-#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR) || (!defined RemoveDynamicObjectMaterialText))
+	#error [ADM] This include required Streamer v2.9.5 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.1.0
+	#error [ADM] This include required 3DTryg.inc v5.2.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.1.0
-#elseif (TRYG3D_VERSION < 50100)
-	#error [ADM] Update your 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.2.0
+#elseif (TRYG3D_VERSION < 50200)
+	#error [ADM] Update your 3DTryg.inc to v5.2.0
 #endif
 
 #if defined _graffiti_los_santos

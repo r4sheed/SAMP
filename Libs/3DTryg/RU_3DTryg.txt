@@ -40,10 +40,10 @@
  Plugins: ColAndreas, YSF, Streamer, FCNPC, VehicleStreamer
  Internal Modules: Actor, VehicleCollision, Draw3D, CatchItems
 
- File Version: 5.1.1
+ File Version: 5.2.0
  ColAndreas Version: 1.5.0
  YSF Version: R19 (kurta999)
- Streamer Version: 2.9.4
+ Streamer Version: 2.9.5
  VehicleStreamer Version: 2.9.4
  FCNPC Version: 2.0.0
 
@@ -54,20 +54,21 @@
  4. GetPlayerPoolSize
 
  Compiler Options:
- DISABLE_3D_TRYG_INIT          //Use before 3DTryg.inc for disable ColAndreas Auto Init
- DISABLE_3D_TRYG_ACTOR         //Use before 3DTryg.inc for disable Actors Module
- DISABLE_3D_TRYG_FOREACH_FOX   //Use before 3DTryg.inc for disable FoxForeach Module
- DISABLE_3D_TRYG_FOREACH_STAND //Use before 3DTryg.inc for disable StandaloneForeach Module
- DISABLE_3D_TRYG_FOREACH_YSI   //Use before 3DTryg.inc for disable YSI Foreach Module
- DISABLE_3D_TRYG_VEHICLECOL    //Use before 3DTryg.inc for disable VehicleCollision Module
- DISABLE_3D_TRYG_COLANDREAS    //Use before 3DTryg.inc for disable ColAndreas Module
- DISABLE_3D_TRYG_YSF           //Use before 3DTryg.inc for disable YSF Module
- DISABLE_3D_TRYG_STREAMER      //Use before 3DTryg.inc for disable Streamer Module
- DISABLE_3D_TRYG_FCNPC         //Use before 3DTryg.inc for disable FCNPC Module
- DISABLE_3D_TRYG_VEHSTREAMER   //Use before 3DTryg.inc for disable VehicleStreamer Module
- ENABLE_3D_TRYG_YSI_SUPPORT    //Use before 3DTryg.inc for enable YSI Support (use only when 3DTryg say error for this)
- ENABLE_3D_TRYG_DRAW3D         //Use before 3DTryg.inc for enable Draw3D internal module
- ENABLE_3D_TRYG_CATCH_ITEMS    //Use before 3DTryg.inc for enable CatchItems internal module
+ DISABLE_3D_TRYG_INIT            //Use before 3DTryg.inc for disable ColAndreas Auto Init
+ DISABLE_3D_TRYG_ACTOR           //Use before 3DTryg.inc for disable Actors Module
+ DISABLE_3D_TRYG_FOREACH_FOX     //Use before 3DTryg.inc for disable FoxForeach Module
+ DISABLE_3D_TRYG_FOREACH_STAND   //Use before 3DTryg.inc for disable StandaloneForeach Module
+ DISABLE_3D_TRYG_FOREACH_YSI     //Use before 3DTryg.inc for disable YSI Foreach Module
+ DISABLE_3D_TRYG_VEHICLECOL      //Use before 3DTryg.inc for disable VehicleCollision Module
+ DISABLE_3D_TRYG_COLANDREAS      //Use before 3DTryg.inc for disable ColAndreas Module
+ DISABLE_3D_TRYG_YSF             //Use before 3DTryg.inc for disable YSF Module
+ DISABLE_3D_TRYG_STREAMER        //Use before 3DTryg.inc for disable Streamer Module
+ DISABLE_3D_TRYG_FCNPC           //Use before 3DTryg.inc for disable FCNPC Module
+ DISABLE_3D_TRYG_VEHSTREAMER     //Use before 3DTryg.inc for disable VehicleStreamer Module
+ ENABLE_3D_TRYG_YSI_SUPPORT      //Use before 3DTryg.inc for enable YSI Support (use only when 3DTryg say error for this)
+ ENABLE_3D_TRYG_DRAW3D           //Use before 3DTryg.inc for enable Draw3D internal module
+ ENABLE_3D_TRYG_CATCH_ITEMS      //Use before 3DTryg.inc for enable CatchItems internal module
+ ENABLE_3D_TRYG_GRENADEDETECTION //Use before 3DTryg.inc for enable Grenade detection feature
  
  Complementary Functions:
  Float:sqrtN(Float:value,Float:exponent);
@@ -132,9 +133,7 @@
  Float:GetPointInFrontOfVehicle2D(vehicleid,&Float:tx,&Float:ty,Float:radius);
  GetPointInFrontOfVehicle3D(vehicleid,&Float:tx,&Float:ty,&Float:tz,Float:radius,&Float:rx=0.0,&Float:rz=0.0);
  GetPlayerCameraRotation(playerid,&Float:rx,&Float:rz);
- SetPlayerCameraRotation(playerid,Float:rx,Float:rz);
  Float:GetPlayerCameraZAngle(playerid,&Float:rz=0.0);
- SetPlayerCameraZAngle(playerid,Float:rz);
  GetPointFor2Point2D(Float:x1,Float:y1,Float:x2,Float:y2,Float:percent_size,&Float:tx,&Float:ty);
  GetPointFor2Point3D(Float:x1,Float:y1,Float:z1,Float:x2,Float:y2,Float:z2,Float:percent_size,&Float:tx,&Float:ty,&Float:tz);
  GetPointFor2Point2DEx(Float:x1,Float:y1,Float:x2,Float:y2,Float:distance,&Float:tx,&Float:ty);
@@ -207,7 +206,6 @@
  ToggleVehicleModelFlag(modelid,flag,bool:toggle);
  IsVehicleFlag(value,flag);
  GetWeaponShotPos(playerid,hittype,&Float:fx,&Float:fy,&Float:fz);
- SetPlayerLookAtPlayer(playerid,targetid,cut=CAMERA_CUT);
  GetPlayerCameraLookAt(playerid,&Float:x,&Float:y,&Float:z);
  IsPlayerLookAtSky(playerid);
  GetQuatUpVector(Float:qw,Float:qx,Float:qy,Float:qz,&Float:vx,&Float:vy,&Float:vz);
@@ -319,11 +317,13 @@
  Tryg3D::NormCrossProduct(&Float:x,&Float:y,&Float:z,Float:v1x,Float:v1y,Float:v1z,Float:v2x,Float:v2y,Float:v2z);
  
  Nero_3D Rotations Functions:
- Tryg3D::GetRotationMatrixEuler(Float:matrix[][],Float:rx,Float:ry,Float:rz,T3D:eulermode:mode=T3D:euler_default);
+ Tryg3D::GetRotationMatrixEuler(Float:matrix[][],Float:rx,Float:ry,Float:rz);
+ Tryg3D::GetRotationMatrixEulerEx(Float:matrix[][],Float:rx,Float:ry,Float:rz,T3D:eulermode:mode=T3D:euler_default);
  Tryg3D::MatrixRotate(Float:matrix[][],Float:oX,Float:oY,Float:oZ,&Float:x,&Float:y,&Float:z);
  Tryg3D::QuatRotate(Float:qw,Float:qx,Float:qy,Float:qz,Float:oX,Float:oY,Float:oZ,&Float:tx,&Float:ty,&Float:tz);
  Tryg3D::GetQuatFromEuler(Float:rx,Float:ry,Float:rz,&Float:qw,&Float:qx,&Float:qy,&Float:qz,T3D:eulermode:mode=T3D:euler_default);
- Tryg3D::EulerRotate(Float:rX,Float:rY,Float:rZ,Float:oX,Float:oY,Float:oZ,&Float:tx,&Float:ty,&Float:tz,T3D:eulermode:mode=T3D:euler_default);
+ Tryg3D::EulerRotate(Float:rX,Float:rY,Float:rZ,Float:oX,Float:oY,Float:oZ,&Float:tx,&Float:ty,&Float:tz);
+ Tryg3D::EulerRotateEx(Float:rX,Float:rY,Float:rZ,Float:oX,Float:oY,Float:oZ,&Float:tx,&Float:ty,&Float:tz,T3D:eulermode:mode=T3D:euler_default);
  
  VehiclePartPosition Functions:
  GetVehiclePartPos(vehicleid,partid,&Float:tx,&Float:ty,&Float:tz,Float:offset_x=0.0,Float:offset_y=0.0,Float:offset_z=0.0);
@@ -414,6 +414,8 @@
  
  ColAndreas Callbacks:
  OnColAndreasRemoveBuilding();
+ 
+ Grenade Detection Callbacks (ColAndreas):
  OnPlayerDroppingGrenade(playerid,weaponid,Float:x,Float:y,Float:z);
  
  YSF Functions:
@@ -636,6 +638,20 @@
  # o_right_back_up
  # o_right_front_up
  # o_left_front_up
+ 
+ enum 'T3D:eulermode'
+ # T3D:euler_xzx - Proper / Classic Euler angles
+ # T3D:euler_xyx - Proper / Classic Euler angles
+ # T3D:euler_yxy - Proper / Classic Euler angles
+ # T3D:euler_yzy - Proper / Classic Euler angles
+ # T3D:euler_zyz - Proper / Classic Euler angles
+ # T3D:euler_zxz - Proper / Classic Euler angles
+ # T3D:euler_xzy - Tait-Bryan angles
+ # T3D:euler_xyz - Tait-Bryan angles
+ # T3D:euler_yxz - Tait-Bryan angles
+ # T3D:euler_yzx - Tait-Bryan angles
+ # T3D:euler_zyx - pitch roll yaw
+ # T3D:euler_zxy - sa-mp
 [/code]
 
 [b]Скачать:[/b]

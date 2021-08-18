@@ -8,8 +8,8 @@
  Plugins: Streamer
  Modules: None
 
- File Version: 3.0.0
- Streamer Version: 2.9.4
+ File Version: 3.0.1
+ Streamer Version: 2.9.5
 
  Compiler Options:
  DISABLE_STREAMER_SPEC_CHECK  //Turn off check streamer version
@@ -35,7 +35,6 @@
  GetDynamicObjectMoveRot(objectid,&Float:rx,&Float:ry,&Float:rz);
  GetDynamicObjectMoveTime(objectid,&objstate,&rtime=0);
  SetDynamicObjectAttachSync(objectid,syncrotation);
- RemoveDynamicObjectMaterial(objectid,materialindex);
  RemoveDynamicObjectMaterialAll(objectid);
  DeattachObjectDynamicObject(objectid);
  DeattachDynamicObjectComponent(objectid,type);
@@ -379,8 +378,8 @@
 	#error [ADM] This include requires SA:MP Include
 #endif
 
-#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR) || (!defined RemoveDynamicObjectMaterialText))
+	#error [ADM] This include required Streamer v2.9.5 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
 #if defined _streamer_spec
@@ -392,13 +391,13 @@
 	#define SSpec_StreamerVehicle
 #endif
 
-#define Streamer_Spec_Version 					(30000) //a.b.c 10000*a+100*b+c
+#define Streamer_Spec_Version 					(30001) //a.b.c 10000*a+100*b+c
 #if defined GetPlayerCustomSkin
 	#define STREAMER_SPEC_SAMP_VERSION			"0.3 DL"
 #else
 	#define STREAMER_SPEC_SAMP_VERSION			"0.3.7"
 #endif
-#define Valid_Streamer_Version 					(0x294)
+#define Valid_Streamer_Version 					(0x295)
 
 #if defined INVALID_DYNAMIC_OBJECT_ID
 	#if (INVALID_DYNAMIC_OBJECT_ID != INVALID_STREAMER_ID)
@@ -732,8 +731,6 @@
 //extra names
 #define SetDynamic3DTextAttachPlayer			AttachDynamic3DTextToPlayer
 #define SetDynamic3DTextAttachVehicle			AttachDynamic3DTextToVehicle
-#define ResetDynamicObjectMaterial				RemoveDynamicObjectMaterial
-#define ResetDynamicObjectMaterialAll			RemoveDynamicObjectMaterialAll
 
 //Datagram
 stock GetStreamerDatagram(type,STREAMER_ALL_TAGS:itemid,data[]){
@@ -742,7 +739,7 @@ stock GetStreamerDatagram(type,STREAMER_ALL_TAGS:itemid,data[]){
 	GetSVarString(address,data,MAX_STREAM_SIZE);
 }
 
-stock SetStreamerDatagram(type,STREAMER_ALL_TAGS:itemid,data[]){
+stock SetStreamerDatagram(type,STREAMER_ALL_TAGS:itemid,const data[]){
 	new address[32];
 	format(address,sizeof(address),"Stream:%d:%d",type,_:itemid);
 	SetSVarString(address,data);
@@ -1082,18 +1079,12 @@ stock UpdateAllDynamicElements(){
 	for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++) Streamer::Update(i);
 }
 
-stock RemoveDynamicObjectMaterial(STREAMER_TAG_OBJECT:objectid,materialindex){
-	SetDynamicObjectMaterial(objectid,materialindex,0,"","",0);
-	SetDynamicObjectModel(objectid,GetDynamicObjectModel(objectid));
-}
-
 stock RemoveDynamicObjectMaterialAll(STREAMER_TAG_OBJECT:objectid){
 	for(new i = 0; i < 16; i++){
 		if(IsDynamicObjectMaterialUsed(objectid,i)){
-			SetDynamicObjectMaterial(objectid,i,0,"","",0);
+			RemoveDynamicObjectMaterial(objectid,i);
 		}
 	}
-	SetDynamicObjectModel(objectid,GetDynamicObjectModel(objectid));
 }
 
 stock CheckStreamerVersion(){
@@ -1145,11 +1136,11 @@ stock GetNearestVisibleItem(playerid,type){
 		#endif
 
 		case STREAMER_TYPE_CP: {
-			itemid = GetPlayerVisibleDynamicCP(playerid);
+			itemid = _:GetPlayerVisibleDynamicCP(playerid);
 		}
 		
 		case STREAMER_TYPE_RACE_CP: {
-			itemid = GetPlayerVisibleDynamicRaceCP(playerid);
+			itemid = _:GetPlayerVisibleDynamicRaceCP(playerid);
 		}
 		
 		case STREAMER_TYPE_AREA: {

@@ -8,9 +8,9 @@
  Modules: 3DTryg, Missile
 
  File Version: 2.0.0
- Streamer Version: 2.9.4
+ Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.1.0
+ 3DTryg Version: 5.2.0
  Missile Version: 2.3.0
 
  Vehicle Weapons:
@@ -265,8 +265,8 @@
  OnVehicleMissileLaunched(playerid,type,vehicleid);
 */
 
-#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR))
-	#error [ADM] This include required Streamer v2.9.4 (github.com/samp-incognito/samp-streamer-plugin/releases)
+#if ((!defined Streamer_GetItemPos) || (!defined INVALID_STREAMER_ID) || (!defined STREAMER_TYPE_ACTOR) || (!defined RemoveDynamicObjectMaterialText))
+	#error [ADM] This include required Streamer v2.9.5 (github.com/samp-incognito/samp-streamer-plugin/releases)
 #endif
 
 #if !defined COLANDREAS_VERSION
@@ -286,11 +286,11 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.1.0
+	#error [ADM] This include required 3DTryg.inc v5.2.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.1.0
-#elseif (TRYG3D_VERSION < 50100)
-	#error [ADM] Update your 3DTryg.inc to v5.1.0
+	#error [ADM] Update your 3DTryg.inc to v5.2.0
+#elseif (TRYG3D_VERSION < 50200)
+	#error [ADM] Update your 3DTryg.inc to v5.2.0
 #endif
 
 #if defined _veh_missile_launcher
