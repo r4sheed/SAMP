@@ -2,6 +2,7 @@ Hello, I would like to present you the Faction Mini Missions.
 
 [b]Video:[/b]
 https://www.youtube.com/watch?v=uMpS2SaWmB0
+https://www.youtube.com/watch?v=_1mHqL4_KbQ
 
 [b]Example Code:[/b]
 [code]
@@ -9,6 +10,7 @@ https://www.youtube.com/watch?v=uMpS2SaWmB0
 #include <colandreas>
 #include <route_rand>
 #include <3DTryg>
+#include <ExtendedGrenade> //optional for gas pipe
 #include <Missions>
 
 public OnPlayerEnterPatrol(playerid,mobid){

@@ -1340,9 +1340,7 @@ stock Missions::GenerateRoute(){
 		Missions::GasPipeData[mobid][f_area] = CreateDynamicSphere(x,y,z,20.0,worldid,interiorid);
 		Missions::GasPipeData[mobid][f_icon] = CreateDynamicMapIcon(x,y,z,11,1,0,0,-1,100.0);
 		Missions::GasPipeData[mobid][f_tick] = gettime()+2*60*60;
-		Missions::GasPipeData[mobid][f_effect] = Grenade::CreateGrenadeEffect(GRENADE_SPECIAL_WEAPON_TEARGAS,GRENADE_EFFECT_SMALL_SMOKE,x,y,z,worldid,interiorid,-1,100.0,MISSIONS_GASPIPE_DOT,0.0,900,INVALID_PLAYER_ID);
-		
-		printf("%f %f %f",x,y,z);
+		Missions::GasPipeData[mobid][f_effect] = Grenade::CreateGrenadeEffect(GRENADE_SPECIAL_WEAPON_TEARGAS,GRENADE_EFFECT_SMALL_SMOKE,x,y,z,worldid,interiorid,-1,100.0,MISSIONS_GASPIPE_DOT,0.0,7200,INVALID_PLAYER_ID);
 		
 		new buffer[64];
 		format(buffer,sizeof(buffer),"Damaged gas pipe %.1f HP",NMTVF(Missions::GasPipeData[mobid][f_health],Missions::GasPipeData[mobid][f_maxhealth]));
