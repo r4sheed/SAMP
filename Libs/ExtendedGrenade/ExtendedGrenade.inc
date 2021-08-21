@@ -76,6 +76,10 @@
 	#error [ADM] Module not initialized: TRYG3D_GRENADE_DETECTION (add #define ENABLE_3D_TRYG_GRENADEDETECTION before include 3DTryg.inc)
 #endif
 
+#if defined _MISSIONS_INCLUDE
+	#error [ADM] Please include ExtendedGrenade before Missions, for initialize new features.
+#endif
+
 #if defined _GRENADE_INCLUDE
 	#endinput
 #endif
