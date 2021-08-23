@@ -9,7 +9,7 @@
  Plugins: ColAndreas, YSF, Streamer, FCNPC, VehicleStreamer
  Internal Modules: Actor, VehicleCollision, Draw3D, CatchItems
 
- File Version: 5.2.0
+ File Version: 5.2.1
  ColAndreas Version: 1.5.0
  YSF Version: R19 (kurta999)
  Streamer Version: 2.9.5
@@ -627,11 +627,11 @@
 /*
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.2.0
+	#error [ADM] This include required 3DTryg.inc v5.2.1
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
-#elseif (TRYG3D_VERSION < 50200)
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
+	#error [ADM] Update your 3DTryg.inc to v5.2.1
+#elseif (TRYG3D_VERSION < 50201)
+	#error [ADM] Update your 3DTryg.inc to v5.2.1
 #endif
 */
 
@@ -3929,40 +3929,42 @@ stock Animation::IsPlayerRunning(playerid){
 
 	stock ColAndreas::FindGroundZ(Float:x,Float:y,Float:z,&Float:gZ){
 		new Float:gX,Float:gY;
-		ColAndreas::RayCastLine(x,y,z,x,y,z-1000.0,gX,gY,gZ);
+		return ColAndreas::RayCastLine(x,y,z,x,y,z-1000.0,gX,gY,gZ);
 	}
 
 	stock MovePointCol(Float:StartX,Float:StartY,Float:StartZ,Float:EndX,Float:EndY,Float:EndZ,&Float:x,&Float:y,&Float:z){
+		new objectid;
 		x = y = z = FLOAT_INFINITY;
-		ColAndreas::RayCastLine(StartX,StartY,StartZ,EndX,EndY,EndZ,x,y,z);
+		objectid = ColAndreas::RayCastLine(StartX,StartY,StartZ,EndX,EndY,EndZ,x,y,z);
 		if(x == FLOAT_INFINITY) x = EndX;
 		if(y == FLOAT_INFINITY) y = EndY;
 		if(z == FLOAT_INFINITY) z = EndZ;
+		return objectid;
 	}
 
 	stock MovePointColCutLine(Float:sX,Float:sY,Float:sZ,Float:eX,Float:eY,Float:eZ,&Float:x,&Float:y,&Float:z,Float:cut_size=0.0){
-		new Float:radius, Float:rx, Float:rz;
+		new objectid, Float:radius, Float:rx, Float:rz;
 		x = y = z = FLOAT_INFINITY;
-		ColAndreas::RayCastLine(sX,sY,sZ,eX,eY,eZ,x,y,z);
+		objectid = ColAndreas::RayCastLine(sX,sY,sZ,eX,eY,eZ,x,y,z);
 		if(x == FLOAT_INFINITY) x = eX;
 		if(y == FLOAT_INFINITY) y = eY;
 		if(z == FLOAT_INFINITY) z = eZ;
-		if((radius = GetDistanceBetweenPoints3D(sX,sY,sZ,x,y,z)) <= 0.0) return 0;
+		if((radius = GetDistanceBetweenPoints3D(sX,sY,sZ,x,y,z)) <= 0.0) return objectid;
 		rx = Tryg3D::CompressRotation(-(acos((z-sZ)/radius)-90.0));
 		rz = Tryg3D::CompressRotation((atan2(y-sY,x-sX)-90.0));
 		if(radius-cut_size > 0.0) radius -= cut_size;
 		GetPointInFront3D(sX,sY,sZ,rx,rz,radius,x,y,z);
-		return 1;
+		return objectid;
 	}
 
 	stock MovePointColCutLineEx(Float:sX,Float:sY,Float:sZ,Float:eX,Float:eY,Float:eZ,&Float:x,&Float:y,&Float:z,Float:cut_size=0.0){
-		new Float:radius, Float:rx, Float:rz;
+		new objectid, Float:radius, Float:rx, Float:rz;
 		x = y = z = FLOAT_INFINITY;
-		ColAndreas::RayCastLine(sX,sY,sZ,eX,eY,eZ,x,y,z);
+		objectid = ColAndreas::RayCastLine(sX,sY,sZ,eX,eY,eZ,x,y,z);
 		if(x == FLOAT_INFINITY) x = eX;
 		if(y == FLOAT_INFINITY) y = eY;
 		if(z == FLOAT_INFINITY) z = eZ;
-		if((radius = GetDistanceBetweenPoints3D(sX,sY,sZ,x,y,z)) <= 0.0) return 0;
+		if((radius = GetDistanceBetweenPoints3D(sX,sY,sZ,x,y,z)) <= 0.0) return objectid;
 		rx = Tryg3D::CompressRotation(-(acos((z-sZ)/radius)-90.0));
 		rz = Tryg3D::CompressRotation((atan2(y-sY,x-sX)-90.0));
 		if((radius-cut_size > cut_size) && (radius-cut_size > 0.0)){
@@ -3971,19 +3973,19 @@ stock Animation::IsPlayerRunning(playerid){
 			radius = FLOAT_DEFECT;
 		}
 		GetPointInFront3D(sX,sY,sZ,rx,rz,radius,x,y,z);
-		return 1;
+		return objectid;
 	}
 
 	//GetPointInFront3D (ColAndreas)
 	stock GetPointInFront3DCol(Float:x,Float:y,Float:z,Float:rx,Float:rz,Float:radius,&Float:tx,&Float:ty,&Float:tz){
-		MovePointCol(x,y,z,(x - (radius * floatcos(rx,degrees) * floatsin(rz,degrees))),(y + (radius * floatcos(rx,degrees) * floatcos(rz,degrees))),(z + (radius * floatsin(rx,degrees))),tx,ty,tz);
+		return MovePointCol(x,y,z,(x - (radius * floatcos(rx,degrees) * floatsin(rz,degrees))),(y + (radius * floatcos(rx,degrees) * floatcos(rz,degrees))),(z + (radius * floatsin(rx,degrees))),tx,ty,tz);
 	}
 
 	stock GetPointInFront3DColEx(Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Float:radius,&Float:tx,&Float:ty,&Float:tz){
 		new Float:vx,Float:vy,Float:vz,Float:trx,Float:trz;
 		Tryg3D::EulerRotate(rx,ry,rz,0.0,1.0,0.0,vx,vy,vz);
 		GetRotationFor2Point3D(0.0,0.0,0.0,vx,vy,vz,trx,trz);
-		GetPointInFront3DCol(x,y,z,trx,trz,radius,tx,ty,tz);
+		return GetPointInFront3DCol(x,y,z,trx,trz,radius,tx,ty,tz);
 	}
 
 	//GetPointInFrontOfPlayer (ColAndreas)
@@ -4183,8 +4185,8 @@ stock Animation::IsPlayerRunning(playerid){
 
 	stock Item::ToItemIsWall(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_type,TRYG3D_ELEMENT_TAG:targetid,Item3D_Type:target_type){
 		new Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB,Float:T3D:tmp;
-		if(!Item::GetPos(elementid,element_type,xA,yA,zA)) return false;
-		if(!Item::GetPos(targetid,target_type,xB,yB,zB)) return false;
+		if(!Item::GetPos(elementid,element_type,xA,yA,zA)) return 0;
+		if(!Item::GetPos(targetid,target_type,xB,yB,zB)) return 0;
 		return ColAndreas::RayCastLine(xA,yA,zA,xB,yB,zB,T3D:tmp,T3D:tmp,T3D:tmp);
 	}
 
@@ -4202,7 +4204,7 @@ stock Animation::IsPlayerRunning(playerid){
 
 	stock Item::GetOrientationPosCol(TRYG3D_ELEMENT_TAG:elementid,Item3D_Type:element_type,element_orientation:orientation,Float:distance,&Float:tx,&Float:ty,&Float:tz){
 		new Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz;
-		if(!Item::GetPos(elementid,element_type,x,y,z)) return 0;
+		if(!Item::GetPos(elementid,element_type,x,y,z)) return -1;
 		switch(element_type){
 			case item_player: GetPlayerFacingAngle(_:elementid,rz);
 			case item_npc: {
@@ -4231,37 +4233,37 @@ stock Animation::IsPlayerRunning(playerid){
 			#if defined TRYG3D_FCNPC
 				case item_fcnpc: rz = FCNPC::GetAngle(_:elementid);
 			#endif
-			default: return 0;
+			default: return -1;
 		}
 		
 		switch(element_type){
 			case item_player, item_npc, item_actor, item_dynamic_actor, item_fcnpc: {
-				GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(rx+Tryg3D::OrientationRotation[orientation][0]),Tryg3D::CompressRotation(rz+Tryg3D::OrientationRotation[orientation][1]),distance,tx,ty,tz);
+				return GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(rx+Tryg3D::OrientationRotation[orientation][0]),Tryg3D::CompressRotation(rz+Tryg3D::OrientationRotation[orientation][1]),distance,tx,ty,tz);
 			}
 			case item_vehicle, item_object, item_dynamic_object, item_dynamic_vehicle: {
 				switch(orientation){
-					case o_left:		GetPointInFront3DCol(x,y,z,ry,Tryg3D::CompressRotation(rz+90.0),distance,tx,ty,tz);
-					case o_right:		GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(ry+180.0),Tryg3D::CompressRotation(rz+90.0),distance,tx,ty,tz);
+					case o_left:		return GetPointInFront3DCol(x,y,z,ry,Tryg3D::CompressRotation(rz+90.0),distance,tx,ty,tz);
+					case o_right:		return GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(ry+180.0),Tryg3D::CompressRotation(rz+90.0),distance,tx,ty,tz);
 					case o_up:		{
 						new Float:ox,Float:oy,Float:oz;
 						Item::GetUpPos(elementid,element_type,distance,ox,oy,oz);
-						MovePointCol(x,y,z,ox,oy,oz,tx,ty,tz);
+						return MovePointCol(x,y,z,ox,oy,oz,tx,ty,tz);
 					}
 					case o_down:	{
 						new Float:ox,Float:oy,Float:oz;
 						Item::GetUpPos(elementid,element_type,distance,ox,oy,oz,true);
-						MovePointCol(x,y,z,ox,oy,oz,tx,ty,tz);
+						return MovePointCol(x,y,z,ox,oy,oz,tx,ty,tz);
 					}
-					case o_front:		GetPointInFront3DCol(x,y,z,rx,rz,distance,tx,ty,tz);
-					case o_back:		GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(rx+180.0),rz,distance,tx,ty,tz);
-					case o_front_left:	GetPointInFront3DCol(x,y,z,ry,Tryg3D::CompressRotation(rz+45.0),distance,tx,ty,tz);
-					case o_front_right: GetPointInFront3DCol(x,y,z,ry,Tryg3D::CompressRotation(rz-45.0),distance,tx,ty,tz);
-					case o_back_left:	GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(ry+180.0),Tryg3D::CompressRotation(rz-45.0),distance,tx,ty,tz);
-					case o_back_right:	GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(ry+180.0),Tryg3D::CompressRotation(rz+45.0),distance,tx,ty,tz);
+					case o_front:		return GetPointInFront3DCol(x,y,z,rx,rz,distance,tx,ty,tz);
+					case o_back:		return GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(rx+180.0),rz,distance,tx,ty,tz);
+					case o_front_left:	return GetPointInFront3DCol(x,y,z,ry,Tryg3D::CompressRotation(rz+45.0),distance,tx,ty,tz);
+					case o_front_right: return GetPointInFront3DCol(x,y,z,ry,Tryg3D::CompressRotation(rz-45.0),distance,tx,ty,tz);
+					case o_back_left:	return GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(ry+180.0),Tryg3D::CompressRotation(rz-45.0),distance,tx,ty,tz);
+					case o_back_right:	return GetPointInFront3DCol(x,y,z,Tryg3D::CompressRotation(ry+180.0),Tryg3D::CompressRotation(rz+45.0),distance,tx,ty,tz);
 				}
 			}
 		}
-		return 1;
+		return -1;
 	}
 
 	stock GetWallRotation(Float:sx,Float:sy,Float:sz,Float:ex,Float:ey,Float:ez,&Float:rx,&Float:rz,&Float:px=0.0,&Float:py=0.0,&Float:pz=0.0,Float:size=1.0,Float:cut_size=0.0){
@@ -4558,7 +4560,8 @@ stock Animation::IsPlayerRunning(playerid){
 		stock FCNPC::GoToCol(npcid,Float:x,Float:y,Float:z,type = FCNPC_MOVE_TYPE_AUTO,Float:speed = FCNPC_MOVE_SPEED_AUTO,mode = FCNPC_MOVE_MODE_AUTO,Float:cut_size = 0.0,bool:set_angle = true,Float:min_distance = 0.0,stopdelay = 250){
 			new Float:px,Float:py,Float:pz,Float:tx,Float:ty,Float:tz;
 			FCNPC::GetPosition(npcid,px,py,pz);
-			if(MovePointColCutLineEx(px,py,pz,x,y,z,tx,ty,tz,cut_size)){
+			MovePointColCutLineEx(px,py,pz,x,y,z,tx,ty,tz,cut_size);
+			if(GetDistanceBetweenPoints3D(px,py,pz,tx,ty,tz) >= 0.0){
 				FCNPC::GoTo(npcid,tx,ty,tz,type,speed,mode,FCNPC_MOVE_PATHFINDING_NONE,0.0,set_angle,min_distance,stopdelay);
 			}
 		}
@@ -4567,7 +4570,8 @@ stock Animation::IsPlayerRunning(playerid){
 			new Float:px,Float:py,Float:pz,Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz;
 			GetPlayerPos(playerid,x,y,z);
 			FCNPC::GetPosition(npcid,px,py,pz);
-			if(MovePointColCutLineEx(px,py,pz,x,y,z,tx,ty,tz,cut_size)){
+			MovePointColCutLineEx(px,py,pz,x,y,z,tx,ty,tz,cut_size);
+			if(GetDistanceBetweenPoints3D(px,py,pz,tx,ty,tz) >= 0.0){
 				FCNPC::GoTo(npcid,tx,ty,tz,type,speed,mode,FCNPC_MOVE_PATHFINDING_NONE,0.0,set_angle,min_distance,stopdelay);
 			}
 		}
@@ -4577,7 +4581,8 @@ stock Animation::IsPlayerRunning(playerid){
 			GetPlayerPos(playerid,x,y,z);
 			FCNPC::GetPosition(npcid,px,py,pz);
 			if(GetDistanceBetweenPoints1D(pz,z) > climbing) z = pz;
-			if(MovePointColCutLineEx(px,py,pz,x,y,z,tx,ty,tz,cut_size)){
+			MovePointColCutLineEx(px,py,pz,x,y,z,tx,ty,tz,cut_size);
+			if(GetDistanceBetweenPoints3D(px,py,pz,tx,ty,tz) >= 0.0){
 				FCNPC::GoTo(npcid,tx,ty,tz,type,speed,mode,FCNPC_MOVE_PATHFINDING_NONE,0.0,set_angle,min_distance,stopdelay);
 			}
 		}
@@ -4585,7 +4590,8 @@ stock Animation::IsPlayerRunning(playerid){
 		stock FCNPC::GoToAirCol(npcid,Float:x,Float:y,Float:z,type = FCNPC_MOVE_TYPE_AUTO,Float:speed = FCNPC_MOVE_SPEED_AUTO,Float:cut_size = 0.0,Float:min_distance = 0.0,stopdelay = 250){
 			new Float:px,Float:py,Float:pz,Float:tx,Float:ty,Float:tz;
 			GetVehiclePos(FCNPC::GetVehicleID(npcid),px,py,pz);
-			if(MovePointColCutLineEx(px,py,pz,x,y,z,tx,ty,tz,cut_size)){
+			MovePointColCutLineEx(px,py,pz,x,y,z,tx,ty,tz,cut_size);
+			if(GetDistanceBetweenPoints3D(px,py,pz,tx,ty,tz) >= 0.0){
 				FCNPC::SetVehicleTargetRotation(npcid,tx,ty,tz);
 				FCNPC::GoTo(npcid,tx,ty,tz,type,speed,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,false,min_distance,stopdelay);
 			}
@@ -4596,7 +4602,6 @@ stock Animation::IsPlayerRunning(playerid){
 			FCNPC::GetPosition(npcid,x,y,z);
 			ColAndreas::FindGroundZ(x,y,z,target_z);
 			FCNPC::SetPosition(npcid,x,y,target_z+CHARACTER_GROUND_Z_DIFF);
-			return 1;
 		}
 
 		#if defined TRYG3D_VEHICLECOLLISION
@@ -4691,7 +4696,7 @@ stock Animation::IsPlayerRunning(playerid){
 			new Float:ry,Float:x,Float:y,Float:z;
 			GetDynamicVehiclePos(vehicleid,x,y,z);
 			GetDynamicVehicleRotation(vehicleid,rx,ry,rz);
-			GetPointInFront3DCol(x,y,z,rx,rz,radius,tx,ty,tz);
+			return GetPointInFront3DCol(x,y,z,rx,rz,radius,tx,ty,tz);
 		}
 	#endif
 	

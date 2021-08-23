@@ -8,7 +8,7 @@
  Plugins: Streamer, ColAndreas
  Modules: 3DTryg
 
- File Version: 1.4.3
+ File Version: 1.4.4
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
  3DTryg Version: 5.2.0
@@ -277,9 +277,7 @@ stock Hunting::Stop(mobid,delay=-1){
 stock Hunting::IsMoving(mobid){
 	if(mobid <= 0 || mobid >= MAX_HUNTING_ANIMALS) return 0;
 	if(!Hunting::IsValid(mobid)) return 0;
-	new Float:x,Float:y,Float:z;
-	Hunting::GetPos(mobid,x,y,z);
-	return (GetDistanceBetweenPoints2D(Hunting::Data[mobid][Hunting::tX],Hunting::Data[mobid][Hunting::tY],x,y) > 0.0);
+	return IsDynamicObjectMoving(Hunting::Data[mobid][Hunting::objectid]);
 }
 
 stock Hunting::SetSpawn(mobid,Float:x,Float:y,Float:z){
@@ -617,69 +615,73 @@ stock Hunting::GetActiveMob(playerid,mob_state){
 	return INVALID_HUNTING_ID;
 }
 
-T3D:function Hunting::OnUpdate(){
-	static	Float:tmp_float,Float:target_z,
-			Float:x,Float:y,Float:z,
-			Float:vx,Float:vy,Float:vz, cnt;
+stock Hunting::ApplyMovement(mobid){
+	new	Float:tmp_float, Float:x,Float:y,Float:z, Float:vx,Float:vy,Float:vz, Float:target_z;
+	Hunting::GetPos(mobid,x,y,z);
+	if(x == 0.0 && y == 0.0 && z == 0.0) return 0;
+	MovePointCol(x,y,z+1.0,x,y,-100.0,tmp_float,tmp_float,target_z);
 	
+	if(GetTickCount() >= Hunting::Data[mobid][Hunting::calm] && Hunting::Data[mobid][Hunting::calm] != 0){
+		Hunting::SetSpeed(mobid,0.8);
+		#if defined OnAnimalScareStateChanged
+			if(Hunting::IsScared(mobid)){
+				OnAnimalScareStateChanged(mobid,Hunting::Data[mobid][Hunting::last_scared],0);
+			}
+		#endif
+		Hunting::Data[mobid][Hunting::calm] = 0;
+		Hunting::Data[mobid][Hunting::last_scared] = INVALID_PLAYER_ID;
+	}
+	
+	if(Hunting::IsToggledMoving(mobid)){
+		switch(Hunting::Data[mobid][Hunting::type]){
+			case HUNTING_TYPE_COW, HUNTING_TYPE_DEER: {
+				if(GetDistanceBetweenPoints2D(Hunting::Data[mobid][Hunting::tX],Hunting::Data[mobid][Hunting::tY],x,y) == 0.0){
+					vx = vy = vz = 0.0;
+					Random::PointInCircle(x,y,RandomFloat(5.0,25.0),vx,vy);
+					if(GetDistanceBetweenPoints2D(x,y,vx,vy) <= 2.0 || IsPointInWater(vx,vy) || IsPointInUnderground(x,y,z+1.0)) return 0;
+					ColAndreas::FindZ_For2DCoord(vx,vy,vz);
+					vz += 1.0;
+					if(ColAndreas::RayCastLine(x,y,z+1.0,vx,vy,vz,tmp_float,tmp_float,tmp_float)) return 0;
+					if(Hunting::Data[mobid][Hunting::areaid] != STREAMER_TAG_AREA:INVALID_STREAMER_ID){
+						if(!IsPointInDynamicArea(Hunting::Data[mobid][Hunting::areaid],vx,vy,vz)) return 0;
+					}
+					if(Hunting::Data[mobid][Hunting::last_scared] != INVALID_PLAYER_ID){
+						if(IsPlayerInRangeOfPoint(Hunting::Data[mobid][Hunting::last_scared],5.0,vx,vy,vz)) return 0;
+					}
+					Hunting::Data[mobid][Hunting::tX] = vx;
+					Hunting::Data[mobid][Hunting::tY] = vy;
+					GetRotationFor2Point2D(x,y,vx,vy,Hunting::Data[mobid][Hunting::rZ]);
+				}
+			}
+		}
+	} else {
+		if(Hunting::Data[mobid][Hunting::stop_delay] != 0 && GetTickCount() >= Hunting::Data[mobid][Hunting::stop_delay]){
+			Hunting::Data[mobid][Hunting::stop_delay] = 0;
+			Hunting::ToggleMoving(mobid,1);
+		}
+	}
+	
+	switch(Hunting::Data[mobid][Hunting::type]){
+		case HUNTING_TYPE_COW: {
+			SetDynamicObjectPos(Hunting::Data[mobid][Hunting::objectid],x,y,target_z);
+			SetDynamicObjectRot(Hunting::Data[mobid][Hunting::objectid],0.0,0.0,Tryg3D::CompressRotation(Hunting::Data[mobid][Hunting::rZ]+184.0));
+			MoveDynamicObject(Hunting::Data[mobid][Hunting::objectid],Hunting::Data[mobid][Hunting::tX],Hunting::Data[mobid][Hunting::tY],target_z,Hunting::GetSpeed(mobid));
+		}
+		case HUNTING_TYPE_DEER: {
+			target_z += 0.5;
+			SetDynamicObjectPos(Hunting::Data[mobid][Hunting::objectid],x,y,target_z);
+			SetDynamicObjectRot(Hunting::Data[mobid][Hunting::objectid],0.0,0.0,Tryg3D::CompressRotation(Hunting::Data[mobid][Hunting::rZ]+90.0));
+			MoveDynamicObject(Hunting::Data[mobid][Hunting::objectid],Hunting::Data[mobid][Hunting::tX],Hunting::Data[mobid][Hunting::tY],target_z,Hunting::GetSpeed(mobid));
+		}
+	}
+	return 1;
+}
+
+T3D:function Hunting::OnUpdate(){
 	for(new mobid = 1; mobid <= Hunting::Upperbound; mobid++){
 		switch(Hunting::Data[mobid][Hunting::state]){
 			case HUNTING_STATE_SPAWNED: {
-				x = y = z = target_z = 0.0, cnt = 0;
-				Hunting::GetPos(mobid,x,y,z);
-				if(x == 0.0 && y == 0.0 && z == 0.0) continue;
-				MovePointCol(x,y,z+1.0,x,y,-100.0,tmp_float,tmp_float,target_z);
-				if(Hunting::IsToggledMoving(mobid)){
-					if(GetDistanceBetweenPoints2D(Hunting::Data[mobid][Hunting::tX],Hunting::Data[mobid][Hunting::tY],x,y) == 0.0){
-						for(;;){
-							cnt++;
-							if(cnt >= 100) return 0;
-							vx = vy = vz = 0.0;
-							Random::PointInCircle(x,y,RandomFloat(5.0,25.0),vx,vy);
-							if(GetDistanceBetweenPoints2D(x,y,vx,vy) <= 2.0 || IsPointInWater(vx,vy) || IsPointInUnderground(x,y,z+1.0)) continue;
-							ColAndreas::FindZ_For2DCoord(vx,vy,vz);
-							vz += 1.0;
-							if(ColAndreas::RayCastLine(x,y,z+1.0,vx,vy,vz,tmp_float,tmp_float,tmp_float)) continue;
-							if(Hunting::Data[mobid][Hunting::areaid] != STREAMER_TAG_AREA:INVALID_STREAMER_ID){
-								if(!IsPointInDynamicArea(Hunting::Data[mobid][Hunting::areaid],vx,vy,vz)) continue;
-							}
-							if(Hunting::Data[mobid][Hunting::last_scared] != INVALID_PLAYER_ID){
-								if(IsPlayerInRangeOfPoint(Hunting::Data[mobid][Hunting::last_scared],5.0,vx,vy,vz)) continue;
-							}
-							Hunting::Data[mobid][Hunting::tX] = vx;
-							Hunting::Data[mobid][Hunting::tY] = vy;
-							GetRotationFor2Point2D(x,y,vx,vy,Hunting::Data[mobid][Hunting::rZ]);
-							break;
-						}
-					}
-				} else {
-					if(Hunting::Data[mobid][Hunting::stop_delay] != 0 && GetTickCount() >= Hunting::Data[mobid][Hunting::stop_delay]){
-						Hunting::Data[mobid][Hunting::stop_delay] = 0;
-						Hunting::ToggleMoving(mobid,1);
-					}
-				}
-				if(GetTickCount() >= Hunting::Data[mobid][Hunting::calm] && Hunting::Data[mobid][Hunting::calm] != 0){
-					Hunting::SetSpeed(mobid,0.8);
-					#if defined OnAnimalScareStateChanged
-						if(Hunting::IsScared(mobid)){
-							OnAnimalScareStateChanged(mobid,Hunting::Data[mobid][Hunting::last_scared],0);
-						}
-					#endif
-					Hunting::Data[mobid][Hunting::calm] = 0;
-					Hunting::Data[mobid][Hunting::last_scared] = INVALID_PLAYER_ID;
-				}
-				switch(Hunting::Data[mobid][Hunting::type]){
-					case HUNTING_TYPE_COW: {
-						SetDynamicObjectPos(Hunting::Data[mobid][Hunting::objectid],x,y,target_z);
-						SetDynamicObjectRot(Hunting::Data[mobid][Hunting::objectid],0.0,0.0,Tryg3D::CompressRotation(Hunting::Data[mobid][Hunting::rZ]+184.0));
-						MoveDynamicObject(Hunting::Data[mobid][Hunting::objectid],Hunting::Data[mobid][Hunting::tX],Hunting::Data[mobid][Hunting::tY],target_z,Hunting::GetSpeed(mobid));
-					}
-					case HUNTING_TYPE_DEER: {
-						SetDynamicObjectPos(Hunting::Data[mobid][Hunting::objectid],x,y,target_z+0.5);
-						SetDynamicObjectRot(Hunting::Data[mobid][Hunting::objectid],0.0,0.0,Tryg3D::CompressRotation(Hunting::Data[mobid][Hunting::rZ]+90.0));
-						MoveDynamicObject(Hunting::Data[mobid][Hunting::objectid],Hunting::Data[mobid][Hunting::tX],Hunting::Data[mobid][Hunting::tY],target_z+0.5,Hunting::GetSpeed(mobid));
-					}
-				}
+				Hunting::ApplyMovement(mobid);
 			}
 			case HUNTING_STATE_DEAD: {
 				if(Hunting::Data[mobid][Hunting::respawntime] != HUNTING_NO_AUTO_RESPAWN){

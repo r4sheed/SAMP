@@ -1,4 +1,4 @@
-3DTryg.inc;5.2.0;https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc;stable;released
+3DTryg.inc;5.2.1;https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc;stable;released
 ADM.inc;3.0.0;https://adm.ct8.pl/cloud/Libs/ADM/ADM.inc;deprecated;removed
 BitFunctions.inc;1.8.0;https://adm.ct8.pl/cloud/Libs/BitFunctions/BitFunctions.inc;stable;released
 DataConvert.inc;2.3.0;https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc;stable;released
@@ -7,7 +7,7 @@ ExtendedGrenade.inc;1.1.2;https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/Extended
 FoxForeach.inc;1.2.1;https://adm.ct8.pl/cloud/Libs/FoxForeach/FoxForeach.inc;stable;removed
 Graffiti.inc;1.0.3;https://adm.ct8.pl/cloud/Libs/Graffiti/Graffiti.inc;stable;released
 hashtag.inc;1.2.1;https://adm.ct8.pl/cloud/Libs/hashtag/hashtag.inc;stable;released
-Hunting.inc;1.4.3;https://adm.ct8.pl/cloud/Libs/Hunting/Hunting.inc;stable;released
+Hunting.inc;1.4.4;https://adm.ct8.pl/cloud/Libs/Hunting/Hunting.inc;stable;released
 Hyperion.inc;1.0.0;https://adm.ct8.pl/cloud/Libs/Hyperion/Hyperion.inc;stable;released
 Knife.inc;2.7.0;https://adm.ct8.pl/cloud/Libs/Knife/Knife.inc;stable;released
 Legion.inc;3.5.0;https://adm.ct8.pl/cloud/Libs/Legion/Legion.inc;experimental;unreleased
