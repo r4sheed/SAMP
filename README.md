@@ -19,7 +19,6 @@
 * Unrea1 (Beta Tester 2017 - 2018)
 * TDI97 (Mapper 2015 - 2018)
 * Switel12 (Beta Tester 2015 - 2018, Distribution Manager 2018)
-* Marichuanka (TeamSpeak 3 Manager 2015 - 2017)
 * W1z4rD (Beta Tester 2017 - 2018)
 
 
@@ -44,13 +43,11 @@
 * Admigo (EVF)
 * RIDE2DAY (EVF)
 * Ralfie (3DTryg)
-* SteSte (Fireball)
 * Unrea1 (3DTryg, EVF)
 * [dwd222](http://gtao.pl/dwd222,u,44689.htm) (SHA256)
 * [National Security Agency](https://wikipedia.org/wiki/National_Security_Agency) (SHA256)
 * [Ron Rivest](https://wikipedia.org/wiki/Ron_Rivest) (MD5)
 * Colin Plumb (MD5)
-* [DracoBlue](http://dracoblue.com) (DINI)
 * Cueball (Zones)
 * Betamaster (Zones)
 * mabako (Zones)
@@ -63,5 +60,5 @@
 * Wizzard2H (Mines)
 * rasheed (SpecialVehicle)
 * TDI97 (SpecialVehicle)
-* $continue$ (Russian distribution helper)
+* $continue$ (3DTryg, Russian distribution helper)
 * [Y_Less](https://www.burgershot.gg/member.php?action=profile&uid=6) (MD5)
