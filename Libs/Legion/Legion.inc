@@ -48,11 +48,11 @@ Legion V3.5.0 Copyright © 2021 Abyss Morgan, Unrea1
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.2.0
+	#error [ADM] This include required 3DTryg.inc v5.3.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
-#elseif (TRYG3D_VERSION < 50200)
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
+#elseif (TRYG3D_VERSION < 50300)
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
 #endif
 
 #if !defined TRYG3D_COLANDREAS
@@ -68,7 +68,7 @@ Legion V3.5.0 Copyright © 2021 Abyss Morgan, Unrea1
 #endif
 
 #if !defined TRYG3D_VEHICLECOLLISION
-	#error [ADM] Module not initialized: TRYG3D_VEHICLECOLLISION
+	#error [ADM] Module not initialized: TRYG3D_VEHICLECOLLISION (add #define ENABLE_3D_TRYG_VEHICLECOL before include 3DTryg.inc)
 #endif
 
 #if defined _LEGION_INCLUDE
@@ -452,7 +452,7 @@ T3D:function OnLegionPathCalculated(Path:pathid, npcid, start_time) {
 		for(new i = 0; i < amount_of_nodes; i++){
 			GetPathNode(pathid,0,nodeid);
 			GetMapNodePos(nodeid,x,y,z);
-			InteriorFindZ(x,y,z,2.0);
+			InteriorFindZ(x,y,z,2.0,z);
 			FCNPC::AddPointToMovePath(Legion::Data[npcid][Legion::MovePath],x,y,z+oz);
 		}
 		FCNPC::GoByMovePath(npcid,Legion::Data[npcid][Legion::MovePath],0,Legion::Data[npcid][Legion::MoveType],Legion::Data[npcid][Legion::MoveSpeed],FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
@@ -474,7 +474,7 @@ public GPS_WhenRouteIsCalculated(routeid,node_id_array[],amount_of_nodes,Float:d
 			FCNPC::SetTargetAngle(npcid,NodePosX[0],NodePosY[0]);
 		}
 		for(new i = 0; i < amount_of_nodes; i++){
-			InteriorFindZ(NodePosX[i],NodePosY[i],NodePosZ[i],2.0);
+			InteriorFindZ(NodePosX[i],NodePosY[i],NodePosZ[i],2.0,NodePosZ[i]);
 			FCNPC::AddPointToMovePath(Legion::Data[npcid][Legion::MovePath],NodePosX[i],NodePosY[i],NodePosZ[i]+oz);
 		}
 		FCNPC::GoByMovePath(npcid,Legion::Data[npcid][Legion::MovePath],0,Legion::Data[npcid][Legion::MoveType],Legion::Data[npcid][Legion::MoveSpeed],FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);

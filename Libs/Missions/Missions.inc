@@ -10,7 +10,7 @@
  File Version: 1.2.0
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.2.0
+ 3DTryg Version: 5.3.0
  ExtendedGrenade Version: 1.1.0
 
  Functions:
@@ -69,11 +69,11 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.2.0
+	#error [ADM] This include required 3DTryg.inc v5.3.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
-#elseif (TRYG3D_VERSION < 50200)
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
+#elseif (TRYG3D_VERSION < 50300)
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
 #endif
 
 //Check Version ExtendedGrenade.inc
@@ -851,11 +851,11 @@ stock Missions::OnBombUpdate(){
 			if(Missions::BombData[mobid][f_active]){
 				new Float:tx,Float:ty,Float:tz;
 				GetDynamicObjectPos(Missions::BombData[mobid][f_object],tx,ty,tz);
-				CreateDynamicExplosion(tx,ty,tz,7,25.0,0,0,-1,200.0);
-				CreateDynamicExplosion(tx-2.5,ty-2.5,tz,7,25.0,0,0,-1,200.0);
-				CreateDynamicExplosion(tx-2.5,ty+2.5,tz,7,25.0,0,0,-1,200.0);
-				CreateDynamicExplosion(tx+2.5,ty-2.5,tz,7,25.0,0,0,-1,200.0);
-				CreateDynamicExplosion(tx+2.5,ty+2.5,tz,7,25.0,0,0,-1,200.0);
+				Cast3D::Explosion(tx,ty,tz,7,25.0,0,0,-1,200.0);
+				Cast3D::Explosion(tx-2.5,ty-2.5,tz,7,25.0,0,0,-1,200.0);
+				Cast3D::Explosion(tx-2.5,ty+2.5,tz,7,25.0,0,0,-1,200.0);
+				Cast3D::Explosion(tx+2.5,ty-2.5,tz,7,25.0,0,0,-1,200.0);
+				Cast3D::Explosion(tx+2.5,ty+2.5,tz,7,25.0,0,0,-1,200.0);
 				if(IsValidDynamicObject(Missions::BombData[mobid][f_object])){
 					DestroyDynamicObject(Missions::BombData[mobid][f_object]);
 					Missions::BombData[mobid][f_object] = STREAMER_TAG_OBJECT:INVALID_STREAMER_ID;
@@ -1463,7 +1463,7 @@ stock Missions::CreateFire(Float:x,Float:y,Float:z,bool:explode=true,worldid=0,i
 	Streamer::SetIntData(STREAMER_TYPE_AREA,Missions::FireData[mobid][f_area],E_STREAMER_EXTRA_ID,mobid+MISSIONS_EXTRA_ID_FIRE);
 	
 	if(explode){
-		CreateDynamicExplosion(x,y,z,8,5.0,worldid,interiorid,-1,200.0);
+		Cast3D::Explosion(x,y,z,8,5.0,worldid,interiorid,-1,200.0);
 	}
 	return 1;
 }

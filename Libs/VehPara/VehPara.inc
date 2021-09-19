@@ -10,7 +10,7 @@
  File Version: 1.2.0
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.2.0
+ 3DTryg Version: 5.3.0
 
  Functions:
  bool:IsPlayerUsingVehPara(playerid);
@@ -44,11 +44,11 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.2.0
+	#error [ADM] This include required 3DTryg.inc v5.3.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
-#elseif (TRYG3D_VERSION < 50200)
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
+#elseif (TRYG3D_VERSION < 50300)
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
 #endif
 
 #if !defined TRYG3D_COLANDREAS

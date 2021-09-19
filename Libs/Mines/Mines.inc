@@ -9,7 +9,7 @@
 
  File Version: 2.2.1
  Streamer Version: 2.9.5
- 3DTryg Version: 5.2.0
+ 3DTryg Version: 5.3.0
 
  Functions:
  Mines::Create(type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,mine_object = MINE_OBJECT_STANDARD,teamid = ANY_TEAM,detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,Float:vehicle_damage=-1.0);
@@ -83,11 +83,11 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.2.0
+	#error [ADM] This include required 3DTryg.inc v5.3.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
-#elseif (TRYG3D_VERSION < 50200)
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
+#elseif (TRYG3D_VERSION < 50300)
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
 #endif
 
 #if defined _dynamic_mine_system
@@ -401,10 +401,10 @@ stock Mines::OnExplode(mobid,type,playerid){
 	GetDynamicObjectPos(Mines::Data[mobid][Mines::Object],minex,miney,minez);
 	
 	if(Mines::GetDamage(mobid) == -1.0){
-		CreateDynamicExplosion(minex,miney,minez,Mines::Data[mobid][Mines::Type],Mines::Data[mobid][Mines::Explode],worldid,interiorid,-1,Mines::GetExplodeVisibility());
+		Cast3D::Explosion(minex,miney,minez,Mines::Data[mobid][Mines::Type],Mines::Data[mobid][Mines::Explode],worldid,interiorid,-1,Mines::GetExplodeVisibility());
 	} else {
 		if(Mines::GetVehicleDamage(mobid) == -1.0) Mines::Data[mobid][Mines::VehicleDamage] = 750.0;
-		CreateDynamicExplosionDMG(minex,miney,minez,Mines::Data[mobid][Mines::Type],Mines::Data[mobid][Mines::Explode],worldid,interiorid,-1,Mines::GetExplodeVisibility(),Mines::GetDamage(mobid),Mines::GetVehicleDamage(mobid),Mines::Data[mobid][Mines::PlayerID]);
+		Cast3D::ExplosionDMG(minex,miney,minez,Mines::Data[mobid][Mines::Type],Mines::Data[mobid][Mines::Explode],worldid,interiorid,-1,Mines::GetExplodeVisibility(),Mines::GetDamage(mobid),Mines::GetVehicleDamage(mobid),Mines::Data[mobid][Mines::PlayerID]);
 	}
 	
 	#if defined DYNAMIC_MINES_GRENADE

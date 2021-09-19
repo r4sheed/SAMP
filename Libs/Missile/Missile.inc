@@ -10,7 +10,7 @@
  File Version: 2.3.1
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.2.0
+ 3DTryg Version: 5.3.0
 
  Functions:
  Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);
@@ -63,11 +63,11 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.2.0
+	#error [ADM] This include required 3DTryg.inc v5.3.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
-#elseif (TRYG3D_VERSION < 50200)
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
+#elseif (TRYG3D_VERSION < 50300)
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
 #endif
 
 #if !defined TRYG3D_COLANDREAS
@@ -493,17 +493,17 @@ stock Missile::Destroy(mobid,type,playerid){
 				}
 			} else {
 				if(Missile::Data[mobid][Missile::Damage] == -1.0){
-					CreateDynamicExplosion(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility());
+					Cast3D::Explosion(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility());
 				} else {
-					CreateDynamicExplosionDMG(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility(),Missile::Data[mobid][Missile::Damage],Missile::Data[mobid][Missile::VehicleDamage],Missile::Data[mobid][Missile::PlayerID]);
+					Cast3D::ExplosionDMG(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility(),Missile::Data[mobid][Missile::Damage],Missile::Data[mobid][Missile::VehicleDamage],Missile::Data[mobid][Missile::PlayerID]);
 				}
 			}
 		}
 		default: {
 			if(Missile::Data[mobid][Missile::Damage] == -1.0){
-				CreateDynamicExplosion(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility());
+				Cast3D::Explosion(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility());
 			} else {
-				CreateDynamicExplosionDMG(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility(),Missile::Data[mobid][Missile::Damage],Missile::Data[mobid][Missile::VehicleDamage],Missile::Data[mobid][Missile::PlayerID]);
+				Cast3D::ExplosionDMG(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility(),Missile::Data[mobid][Missile::Damage],Missile::Data[mobid][Missile::VehicleDamage],Missile::Data[mobid][Missile::PlayerID]);
 			}
 		}
 	}

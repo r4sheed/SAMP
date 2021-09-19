@@ -69,7 +69,7 @@ public FCNPC::OnUpdate(npcid){
 			foreach(new i : Player){
 				if(IsPlayerInDynamicArea(i,OczyKierowcy[idx]) && GetPlayerVehicleID(i) != Autokar[idx]){
 					GetPlayerPos(i,px,py,pz);
-					if(IsPointInSphericalSectorEx(px,py,pz,x,y,z,0.0,z_angle,15.0,VERTICAL_CAMERA_RADIUS,35.0,true) && !IsPlayerPaused(i)){
+					if(Area::PointInSphericalSectorEx(px,py,pz,x,y,z,0.0,z_angle,15.0,VERTICAL_CAMERA_RADIUS,35.0) && !IsPlayerPaused(i)){
 						if(KierowcaAutokaruPlay[idx]){
 							if(FCNPC::GetSpeed(npcid) > 0.0){
 								if(IsPlayerInAnyVehicle(i)){

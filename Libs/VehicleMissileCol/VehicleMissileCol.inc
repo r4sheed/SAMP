@@ -10,7 +10,7 @@
  File Version: 2.0.0
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.2.0
+ 3DTryg Version: 5.3.0
  Missile Version: 2.3.0
 
  Vehicle Weapons:
@@ -286,11 +286,11 @@
 
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.2.0
+	#error [ADM] This include required 3DTryg.inc v5.3.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
-#elseif (TRYG3D_VERSION < 50200)
-	#error [ADM] Update your 3DTryg.inc to v5.2.0
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
+#elseif (TRYG3D_VERSION < 50300)
+	#error [ADM] Update your 3DTryg.inc to v5.3.0
 #endif
 
 #if defined _veh_missile_launcher
@@ -922,10 +922,10 @@ public OnVehicleShot(playerid,type){
 			GetPointInFrontOfVehicle3DCol(vid,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],VMC::Distance[vid][type]);
 
 			if(VMC::Damage[vid][type] == -1.0){
-				CreateDynamicExplosion(F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],MISSILE_TYPE_EXPLODE_NORMAL,5.0,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,GetMissileStreamDistance());
+				Cast3D::Explosion(F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],MISSILE_TYPE_EXPLODE_NORMAL,5.0,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,GetMissileStreamDistance());
 			} else {
 				if(VMC::VehDamage[vid][type] == -1.0) VMC::VehDamage[vid][type] = 750.0;
-				CreateDynamicExplosionDMG(F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],MISSILE_TYPE_EXPLODE_NORMAL,5.0,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,GetMissileStreamDistance(),.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type],.byplayerid=playerid);
+				Cast3D::ExplosionDMG(F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],MISSILE_TYPE_EXPLODE_NORMAL,5.0,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,GetMissileStreamDistance(),.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type],.byplayerid=playerid);
 			}
 			
 			VMC::Tick[playerid][type] = GetTickCount();
