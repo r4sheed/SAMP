@@ -1,4 +1,4 @@
-3DTryg.inc;5.2.1;https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc;stable;released
+3DTryg.inc;5.3.0;https://adm.ct8.pl/cloud/Libs/3DTryg/3DTryg.inc;stable;released
 ADM.inc;3.0.0;https://adm.ct8.pl/cloud/Libs/ADM/ADM.inc;deprecated;removed
 BitFunctions.inc;1.8.0;https://adm.ct8.pl/cloud/Libs/BitFunctions/BitFunctions.inc;stable;released
 DataConvert.inc;2.3.0;https://adm.ct8.pl/cloud/Libs/DataConvert/DataConvert.inc;stable;released
