@@ -9,7 +9,7 @@
  Plugins: ColAndreas, YSF, Streamer, FCNPC, VehicleStreamer
  Internal Modules: Actor, VehicleCollision, PlayerCollision, ActorCollision, Draw3D, CatchItems, GrenadeDetection
 
- File Version: 5.3.0
+ File Version: 5.3.1
  ColAndreas Version: 1.5.0
  YSF Version: R19 (kurta999)
  Streamer Version: 2.9.5
@@ -115,7 +115,7 @@
  IsPointBetween2Points2D(Float:px,Float:py,Float:xA,Float:yA,Float:xB,Float:yB);
  IsPointBetween2Points3D(Float:px,Float:py,Float:pz,Float:xA,Float:yA,Float:zA,Float:xB,Float:yB,Float:zB);
  IsProbable(chance);
- IsProbableEx(chance,poolsize); //by default IsProbable using 100
+ IsProbableEx(chance,poolsize); //by default IsProbable using poolsize 100
  Float:CalculatePercent(Float:value,Float:maxvalue);
  Float:GetPlayerTargetAngle(playerid,Float:x,Float:y,&Float:rz=0.0);
  Float:SetPlayerTargetAngle(playerid,Float:x,Float:y,&Float:rz=0.0);
@@ -413,6 +413,7 @@
  
  Grenade Detection Callbacks (ColAndreas):
  OnPlayerDroppingGrenade(playerid,weaponid,Float:x,Float:y,Float:z);
+ OnPlayerGrenadeExplode(playerid,weaponid,Float:x,Float:y,Float:z);
  
  YSF Functions:
  Float:GetPlayerHydraReactorRX(playerid);
@@ -660,11 +661,11 @@
 /*
 //Check Version 3DTryg.inc
 #if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+	#error [ADM] This include required 3DTryg.inc v5.3.1
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to v5.3.1
+#elseif (TRYG3D_VERSION < 50301)
+	#error [ADM] Update your 3DTryg.inc to v5.3.1
 #endif
 */
 
@@ -683,7 +684,7 @@
 #define _3D_Tryg
 #define TRYG3D_SAMP_INCLUDE
 
-#define TRYG3D_VERSION									(50300) //a.b.c 10000*a+100*b+c
+#define TRYG3D_VERSION									(50301) //a.b.c 10000*a+100*b+c
 #if defined GetPlayerCustomSkin
 	#define TRYG3D_SAMP_VERSION							"0.3 DL"
 #else
@@ -1239,6 +1240,7 @@ new const Float:Tryg3D::OrientationRotation[element_orientation][2] = {
 };
 
 new Float:Tryg3D::StreamDistance = 300.0,
+	Tryg3D::ExplosionTime = 2200,
 	Tryg3D::DeatchTick[MAX_PLAYERS];
 
 new const Float:Tryg3D::WeaponDamage[] = {
@@ -2285,10 +2287,10 @@ stock GetPointInFront3DEx(Float:x,Float:y,Float:z,Float:rx,Float:ry,Float:rz,Flo
 }
 
 stock Float:GetPointInFrontOfPlayer(playerid,&Float:tx,&Float:ty,Float:radius){
-	new Float:rz;
+	new Float:rz,T3D:vid = GetPlayerVehicleID(playerid);
 	GetPlayerPos(playerid,tx,ty,rz);
-	if(IsPlayerInAnyVehicle(playerid)){
-		GetVehicleZAngle(GetPlayerVehicleID(playerid),rz);
+	if(T3D:vid != 0){
+		GetVehicleZAngle(T3D:vid,rz);
 	} else {
 		GetPlayerFacingAngle(playerid,rz);
 	}
@@ -3018,7 +3020,7 @@ stock IsPlayerFakeSpectating(playerid,bool:force_disable=true){
 	new Float:px,Float:py,Float:pz,Float:cx,Float:cy,Float:cz;
 	GetPlayerPos(playerid,px,py,pz);
 	GetPlayerCameraPos(playerid,cx,cy,cz);
-	if(VectorSize(px-cx,py-cy,pz-cz) < 20.0) return 0;
+	if(GetDistanceBetweenPoints3D(px,py,pz,cx,cy,cz) < 20.0) return 0;
 	if(force_disable) SetCameraBehindPlayer(playerid);
 	return 1;
 }
@@ -3505,27 +3507,29 @@ stock Item::IsPlayerInRange(playerid,Float:range,TRYG3D_ELEMENT_TAG:targetid,Ite
  *                                                                                                                                  *
  ************************************************************************************************************************************/
 stock Cast3D::Explosion(Float:x,Float:y,Float:z,type,Float:radius,worldid = -1,interiorid = -1,playerid = -1,Float:distance = 200.0){
-	new Float:px, Float:py, Float:pz;
+	new Float:px, Float:py, Float:pz, T3D:vid;
 	if(playerid == -1){
 		Tryg3D::Foreach(i){
-			if(IsPlayerInAnyVehicle(i)){
-				GetVehiclePos(GetPlayerVehicleID(i),px,py,pz);
+			T3D:vid = GetPlayerVehicleID(i);
+			if(T3D:vid != 0){
+				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(i,px,py,pz);
 			}
-			if((GetPlayerInterior(i) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(i) == worldid || worldid == -1) && (VectorSize(px-x,py-y,pz-z) <= distance)){
-				if(type != 14) CreateExplosionForPlayer(i,x,y,z,type,radius);
+			if((GetPlayerInterior(i) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(i) == worldid || worldid == -1) && (GetDistanceBetweenPoints3D(x,y,z,px,py,pz) <= distance)){
+				CreateExplosionForPlayer(i,x,y,z,type,radius);
 			}
 		}
 	} else {
 		if(IsPlayerConnected(playerid)){
-			if(IsPlayerInAnyVehicle(playerid)){
-				GetVehiclePos(GetPlayerVehicleID(playerid),px,py,pz);
+			T3D:vid = GetPlayerVehicleID(playerid);
+			if(T3D:vid != 0){
+				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(playerid,px,py,pz);
 			}
-			if((GetPlayerInterior(playerid) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(playerid) == worldid || worldid == -1) && (VectorSize(px-x,py-y,pz-z) <= distance)){
-				if(type != 14) CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+			if((GetPlayerInterior(playerid) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(playerid) == worldid || worldid == -1) && (GetDistanceBetweenPoints3D(x,y,z,px,py,pz) <= distance)){
+				CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 			}
 		}
 	}
@@ -3536,84 +3540,108 @@ stock Cast3D::ExplosionDMG(Float:x,Float:y,Float:z,type,Float:radius,worldid = -
 	new Float:T3D:health,Float:T3D:armour,T3D:vid,Float:px,Float:py,Float:pz;
 	if(playerid == -1){
 		Tryg3D::Foreach(i){
-			if(IsPlayerInAnyVehicle(i)){
-				GetVehiclePos(GetPlayerVehicleID(i),px,py,pz);
+			T3D:vid = GetPlayerVehicleID(i);
+			if(T3D:vid != 0){
+				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(i,px,py,pz);
 			}
-			if((GetPlayerInterior(i) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(i) == worldid || worldid == -1) && (VectorSize(px-x,py-y,pz-z) <= distance)){
+			if((GetPlayerInterior(i) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(i) == worldid || worldid == -1) && (GetDistanceBetweenPoints3D(x,y,z,px,py,pz) <= distance)){
 				if(Item::InRangeOfPoint(x,y,z,radius,i,item_player,ignore_vehicle,byplayerid,ignore_actor,collision_flags)){
-					if(IsPlayerInAnyVehicle(i)){
-						T3D:vid = GetPlayerVehicleID(i);
+					if(T3D:vid != 0){
 						GetVehicleHealth(T3D:vid,T3D:health);
-						if(type != 14) CreateExplosionForPlayer(i,x,y,z,type,radius);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
 						if(i != byplayerid) SetVehicleHealth(T3D:vid,NLTZF(T3D:health-vehicle_damage));
 					} else {
 						GetPlayerHealth(i,T3D:health);
 						GetPlayerArmour(i,T3D:armour);
-						SetPlayerHealth(i,765.0); //anti death in explosion
-						if(type != 14) CreateExplosionForPlayer(i,x,y,z,type,radius);
+						SetPlayerHealth(i,765.0);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
 						SetPlayerHealth(i,T3D:health);
 						SetPlayerArmour(i,T3D:armour);
 						if(i != byplayerid) Tryg3D::GivePlayerDamage(i,damage,byplayerid,WEAPON_DYNAMIC_EXPLOSION_DMG,3);
 					}
 				} else if(collision_flags != TRYG3D_COLLISION_FLAG_NONE && IsPlayerInRangeOfPoint(i,radius,x,y,z)){
-					if(IsPlayerInAnyVehicle(i)){
-						T3D:vid = GetPlayerVehicleID(i);
+					if(T3D:vid != 0){
 						GetVehicleHealth(T3D:vid,T3D:health);
-						if(type != 14) CreateExplosionForPlayer(i,x,y,z,type,radius);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
 						SetVehicleHealth(T3D:vid,T3D:health);
 					} else {
 						GetPlayerHealth(i,T3D:health);
 						GetPlayerArmour(i,T3D:armour);
-						SetPlayerHealth(i,765.0); //anti death in explosion
-						if(type != 14) CreateExplosionForPlayer(i,x,y,z,type,radius);
+						SetPlayerHealth(i,765.0);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
 						SetPlayerHealth(i,T3D:health);
 						SetPlayerArmour(i,T3D:armour);
 					}
-				} else if(type != 14){
+				} else if(IsPlayerInRangeOfPoint(i,50.0,x,y,z)){
+					if(T3D:vid != 0){
+						GetVehicleHealth(T3D:vid,T3D:health);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
+						SetVehicleHealth(T3D:vid,T3D:health);
+					} else {
+						GetPlayerHealth(i,T3D:health);
+						GetPlayerArmour(i,T3D:armour);
+						SetPlayerHealth(i,765.0);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
+						SetPlayerHealth(i,T3D:health);
+						SetPlayerArmour(i,T3D:armour);
+					}
+				} else {
 					CreateExplosionForPlayer(i,x,y,z,type,radius);
 				}
 			}
 		}
 	} else {
 		if(IsPlayerConnected(playerid)){
-			if(IsPlayerInAnyVehicle(playerid)){
-				GetVehiclePos(GetPlayerVehicleID(playerid),px,py,pz);
+			T3D:vid = GetPlayerVehicleID(playerid);
+			if(T3D:vid != 0){
+				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(playerid,px,py,pz);
 			}
-			if((GetPlayerInterior(playerid) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(playerid) == worldid || worldid == -1) && (VectorSize(px-x,py-y,pz-z) <= distance)){
+			if((GetPlayerInterior(playerid) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(playerid) == worldid || worldid == -1) && (GetDistanceBetweenPoints3D(x,y,z,px,py,pz) <= distance)){
 				if(Item::InRangeOfPoint(x,y,z,radius,playerid,item_player,ignore_vehicle,byplayerid,ignore_actor,collision_flags)){
-					if(IsPlayerInAnyVehicle(playerid)){
-						T3D:vid = GetPlayerVehicleID(playerid);
+					if(T3D:vid != 0){
 						GetVehicleHealth(T3D:vid,T3D:health);
-						if(type != 14) CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 						if(playerid != byplayerid) SetVehicleHealth(T3D:vid,NLTZF(T3D:health-vehicle_damage));
 					} else {
 						GetPlayerHealth(playerid,T3D:health);
 						GetPlayerArmour(playerid,T3D:armour);
-						SetPlayerHealth(playerid,765.0); //anti death in explosion
-						if(type != 14) CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						SetPlayerHealth(playerid,765.0);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 						SetPlayerHealth(playerid,T3D:health);
 						SetPlayerArmour(playerid,T3D:armour);
 						if(playerid != byplayerid) Tryg3D::GivePlayerDamage(playerid,damage,byplayerid,WEAPON_DYNAMIC_EXPLOSION_DMG,3);
 					}
 				} else if(collision_flags != TRYG3D_COLLISION_FLAG_NONE && IsPlayerInRangeOfPoint(playerid,radius,x,y,z)){
-					if(IsPlayerInAnyVehicle(playerid)){
-						T3D:vid = GetPlayerVehicleID(playerid);
+					if(T3D:vid != 0){
 						GetVehicleHealth(T3D:vid,T3D:health);
-						if(type != 14) CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 						SetVehicleHealth(T3D:vid,T3D:health);
 					} else {
 						GetPlayerHealth(playerid,T3D:health);
 						GetPlayerArmour(playerid,T3D:armour);
-						SetPlayerHealth(playerid,765.0); //anti death in explosion
-						if(type != 14) CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						SetPlayerHealth(playerid,765.0);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 						SetPlayerHealth(playerid,T3D:health);
 						SetPlayerArmour(playerid,T3D:armour);
 					}
-				} else if(type != 14){
+				} else if(IsPlayerInRangeOfPoint(playerid,50.0,x,y,z)){
+					if(T3D:vid != 0){
+						GetVehicleHealth(T3D:vid,T3D:health);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						SetVehicleHealth(T3D:vid,T3D:health);
+					} else {
+						GetPlayerHealth(playerid,T3D:health);
+						GetPlayerArmour(playerid,T3D:armour);
+						SetPlayerHealth(playerid,765.0);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						SetPlayerHealth(playerid,T3D:health);
+						SetPlayerArmour(playerid,T3D:armour);
+					}
+				} else {
 					CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 				}
 			}
@@ -3627,100 +3655,124 @@ stock Cast3D::ExplosionRangeDMG(Float:x,Float:y,Float:z,type,Float:radius,worldi
 	new Float:T3D:health,Float:T3D:armour,T3D:vid,Float:px,Float:py,Float:pz,Float:T3D:dist,Float:T3D:damage;
 	if(playerid == -1){
 		Tryg3D::Foreach(i){
-			if(IsPlayerInAnyVehicle(i)){
-				GetVehiclePos(GetPlayerVehicleID(i),px,py,pz);
+			T3D:vid = GetPlayerVehicleID(i);
+			if(T3D:vid != 0){
+				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(i,px,py,pz);
 			}
-			if((GetPlayerInterior(i) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(i) == worldid || worldid == -1) && (VectorSize(px-x,py-y,pz-z) <= distance)){
+			if((GetPlayerInterior(i) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(i) == worldid || worldid == -1) && (GetDistanceBetweenPoints3D(x,y,z,px,py,pz) <= distance)){
 				if(Item::InRangeOfPoint(x,y,z,radius,i,item_player,ignore_vehicle,byplayerid,ignore_actor,collision_flags)){
-					if(IsPlayerInAnyVehicle(i)){
-						T3D:vid = GetPlayerVehicleID(i);
+					if(T3D:vid != 0){
 						GetVehicleHealth(T3D:vid,T3D:health);
-						if(type != 14) CreateExplosionForPlayer(i,x,y,z,type,radius);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
 						if(i != byplayerid){
 							T3D:dist = GetDistanceBetweenPoints3D(x,y,z,px,py,pz);
-							T3D:damage = NLTVF((1.0-(T3D:dist/radius))*max_vehicle_damage,min_vehicle_damage);
+							T3D:damage = (1.0-(T3D:dist/radius))*(max_vehicle_damage-min_vehicle_damage)+min_vehicle_damage;
 							SetVehicleHealth(T3D:vid,NLTZF(T3D:health-T3D:damage));
 						}
 					} else {
 						GetPlayerHealth(i,T3D:health);
 						GetPlayerArmour(i,T3D:armour);
-						SetPlayerHealth(i,765.0); //anti death in explosion
-						if(type != 14) CreateExplosionForPlayer(i,x,y,z,type,radius);
+						SetPlayerHealth(i,765.0);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
 						SetPlayerHealth(i,T3D:health);
 						SetPlayerArmour(i,T3D:armour);
 						if(i != byplayerid){
 							T3D:dist = GetDistanceBetweenPoints3D(x,y,z,px,py,pz);
-							T3D:damage = NLTVF((1.0-(T3D:dist/radius))*max_damage,min_damage);
+							T3D:damage = (1.0-(T3D:dist/radius))*(max_damage-min_damage)+min_damage;
 							Tryg3D::GivePlayerDamage(i,T3D:damage,byplayerid,WEAPON_DYNAMIC_EXPLOSION_RANGE,3);
 						}
 					}
 				} else if(collision_flags != TRYG3D_COLLISION_FLAG_NONE && IsPlayerInRangeOfPoint(i,radius,x,y,z)){
-					if(IsPlayerInAnyVehicle(i)){
-						T3D:vid = GetPlayerVehicleID(i);
+					if(T3D:vid != 0){
 						GetVehicleHealth(T3D:vid,T3D:health);
-						if(type != 14) CreateExplosionForPlayer(i,x,y,z,type,radius);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
 						SetVehicleHealth(T3D:vid,T3D:health);
 					} else {
 						GetPlayerHealth(i,T3D:health);
 						GetPlayerArmour(i,T3D:armour);
-						SetPlayerHealth(i,765.0); //anti death in explosion
-						if(type != 14) CreateExplosionForPlayer(i,x,y,z,type,radius);
+						SetPlayerHealth(i,765.0);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
 						SetPlayerHealth(i,T3D:health);
 						SetPlayerArmour(i,T3D:armour);
 					}
-				} else if(type != 14){
+				} else if(IsPlayerInRangeOfPoint(i,50.0,x,y,z)){
+					if(T3D:vid != 0){
+						GetVehicleHealth(T3D:vid,T3D:health);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
+						SetVehicleHealth(T3D:vid,T3D:health);
+					} else {
+						GetPlayerHealth(i,T3D:health);
+						GetPlayerArmour(i,T3D:armour);
+						SetPlayerHealth(i,765.0);
+						CreateExplosionForPlayer(i,x,y,z,type,radius);
+						SetPlayerHealth(i,T3D:health);
+						SetPlayerArmour(i,T3D:armour);
+					}
+				} else {
 					CreateExplosionForPlayer(i,x,y,z,type,radius);
 				}
 			}
 		}
 	} else {
 		if(IsPlayerConnected(playerid)){
-			if(IsPlayerInAnyVehicle(playerid)){
-				GetVehiclePos(GetPlayerVehicleID(playerid),px,py,pz);
+			T3D:vid = GetPlayerVehicleID(playerid);
+			if(T3D:vid != 0){
+				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(playerid,px,py,pz);
 			}
-			if((GetPlayerInterior(playerid) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(playerid) == worldid || worldid == -1) && (VectorSize(px-x,py-y,pz-z) <= distance)){
+			if((GetPlayerInterior(playerid) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(playerid) == worldid || worldid == -1) && (GetDistanceBetweenPoints3D(x,y,z,px,py,pz) <= distance)){
 				if(Item::InRangeOfPoint(x,y,z,radius,playerid,item_player,ignore_vehicle,byplayerid,ignore_actor,collision_flags)){
-					if(IsPlayerInAnyVehicle(playerid)){
-						T3D:vid = GetPlayerVehicleID(playerid);
+					if(T3D:vid != 0){
 						GetVehicleHealth(T3D:vid,T3D:health);
-						if(type != 14) CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 						if(playerid != byplayerid){
 							T3D:dist = GetDistanceBetweenPoints3D(x,y,z,px,py,pz);
-							T3D:damage = NLTVF((1.0-(T3D:dist/radius))*max_vehicle_damage,min_vehicle_damage);
+							T3D:damage = (1.0-(T3D:dist/radius))*(max_vehicle_damage-min_vehicle_damage)+min_vehicle_damage;
 							SetVehicleHealth(T3D:vid,NLTZF(T3D:health-T3D:damage));
 						}
 					} else {
 						GetPlayerHealth(playerid,T3D:health);
 						GetPlayerArmour(playerid,T3D:armour);
-						SetPlayerHealth(playerid,765.0); //anti death in explosion
-						if(type != 14) CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						SetPlayerHealth(playerid,765.0);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 						SetPlayerHealth(playerid,T3D:health);
 						SetPlayerArmour(playerid,T3D:armour);
 						if(playerid != byplayerid){
 							T3D:dist = GetDistanceBetweenPoints3D(x,y,z,px,py,pz);
-							T3D:damage = NLTVF((1.0-(T3D:dist/radius))*max_damage,min_damage);
+							T3D:damage = (1.0-(T3D:dist/radius))*(max_damage-min_damage)+min_damage;
 							Tryg3D::GivePlayerDamage(playerid,T3D:damage,byplayerid,WEAPON_DYNAMIC_EXPLOSION_RANGE,3);
 						}
 					}
 				} else if(collision_flags != TRYG3D_COLLISION_FLAG_NONE && IsPlayerInRangeOfPoint(playerid,radius,x,y,z)){
-					if(IsPlayerInAnyVehicle(playerid)){
-						T3D:vid = GetPlayerVehicleID(playerid);
+					if(T3D:vid != 0){
 						GetVehicleHealth(T3D:vid,T3D:health);
-						if(type != 14) CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 						SetVehicleHealth(T3D:vid,T3D:health);
 					} else {
 						GetPlayerHealth(playerid,T3D:health);
 						GetPlayerArmour(playerid,T3D:armour);
-						SetPlayerHealth(playerid,765.0); //anti death in explosion
-						if(type != 14) CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						SetPlayerHealth(playerid,765.0);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 						SetPlayerHealth(playerid,T3D:health);
 						SetPlayerArmour(playerid,T3D:armour);
 					}
-				} else if(type != 14){
+				} else if(IsPlayerInRangeOfPoint(playerid,50.0,x,y,z)){
+					if(T3D:vid != 0){
+						GetVehicleHealth(T3D:vid,T3D:health);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						SetVehicleHealth(T3D:vid,T3D:health);
+					} else {
+						GetPlayerHealth(playerid,T3D:health);
+						GetPlayerArmour(playerid,T3D:armour);
+						SetPlayerHealth(playerid,765.0);
+						CreateExplosionForPlayer(playerid,x,y,z,type,radius);
+						SetPlayerHealth(playerid,T3D:health);
+						SetPlayerArmour(playerid,T3D:armour);
+					}
+				} else {
 					CreateExplosionForPlayer(playerid,x,y,z,type,radius);
 				}
 			}
@@ -3733,14 +3785,14 @@ stock Cast3D::Damage(weaponid,bodypart,Float:damage,Float:vehicle_damage,Float:x
 	new Float:T3D:health, T3D:vid, Float:px, Float:py, Float:pz;
 	if(playerid == -1){
 		Tryg3D::Foreach(i){
-			if(IsPlayerInAnyVehicle(i)){
-				GetVehiclePos(GetPlayerVehicleID(i),px,py,pz);
+			T3D:vid = GetPlayerVehicleID(i);
+			if(T3D:vid != 0){
+				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(i,px,py,pz);
 			}
-			if((GetPlayerInterior(i) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(i) == worldid || worldid == -1) && (VectorSize(px-x,py-y,pz-z) <= radius)){
-				if(IsPlayerInAnyVehicle(i)){
-					T3D:vid = GetPlayerVehicleID(i);
+			if((GetPlayerInterior(i) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(i) == worldid || worldid == -1) && (GetDistanceBetweenPoints3D(x,y,z,px,py,pz) <= radius)){
+				if(T3D:vid != 0){
 					GetVehicleHealth(T3D:vid,T3D:health);
 					if(i != byplayerid) SetVehicleHealth(T3D:vid,NLTZF(T3D:health-vehicle_damage));
 				} else {
@@ -3750,14 +3802,14 @@ stock Cast3D::Damage(weaponid,bodypart,Float:damage,Float:vehicle_damage,Float:x
 		}
 	} else {
 		if(IsPlayerConnected(playerid)){
-			if(IsPlayerInAnyVehicle(playerid)){
-				GetVehiclePos(GetPlayerVehicleID(playerid),px,py,pz);
+			T3D:vid = GetPlayerVehicleID(playerid);
+			if(T3D:vid != 0){
+				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(playerid,px,py,pz);
 			}
-			if((GetPlayerInterior(playerid) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(playerid) == worldid || worldid == -1) && (VectorSize(px-x,py-y,pz-z) <= radius)){
-				if(IsPlayerInAnyVehicle(playerid)){
-					T3D:vid = GetPlayerVehicleID(playerid);
+			if((GetPlayerInterior(playerid) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(playerid) == worldid || worldid == -1) && (GetDistanceBetweenPoints3D(x,y,z,px,py,pz) <= radius)){
+				if(T3D:vid != 0){
 					GetVehicleHealth(T3D:vid,T3D:health);
 					if(playerid != byplayerid) SetVehicleHealth(T3D:vid,NLTZF(T3D:health-vehicle_damage));
 				} else {
@@ -3777,16 +3829,16 @@ stock Cast3D::Gravity(Float:x,Float:y,Float:z,Float:radius,Float:power = 1.0,wor
 	if(playerid == -1){
 		Tryg3D::Foreach(i){
 			if(i == byplayerid) continue;
-			if(IsPlayerInAnyVehicle(i)){
+			T3D:vid = GetPlayerVehicleID(i);
+			if(T3D:vid != 0){
 				if(GetPlayerVehicleSeat(i) != 0) continue;
-				T3D:vid = GetPlayerVehicleID(i);
 				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(i,px,py,pz);
 			}
-			T3D:dist = VectorSize(px-x,py-y,pz-z);
+			T3D:dist = GetDistanceBetweenPoints3D(x,y,z,px,py,pz);
 			if((GetPlayerInterior(i) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(i) == worldid || worldid == -1) && (T3D:dist <= radius)){
-				if(IsPlayerInAnyVehicle(i)){
+				if(T3D:vid != 0){
 					if(T3D:invert){
 						GetRotationFor2Point3D(px,py,pz,x,y,z,rx,rz);
 					} else {
@@ -3807,16 +3859,16 @@ stock Cast3D::Gravity(Float:x,Float:y,Float:z,Float:radius,Float:power = 1.0,wor
 		}
 	} else {
 		if(IsPlayerConnected(playerid)){
-			if(IsPlayerInAnyVehicle(playerid)){
+			T3D:vid = GetPlayerVehicleID(playerid);
+			if(T3D:vid != 0){
 				if(GetPlayerVehicleSeat(playerid) != 0) return 0;
-				T3D:vid = GetPlayerVehicleID(playerid);
 				GetVehiclePos(T3D:vid,px,py,pz);
 			} else {
 				GetPlayerPos(playerid,px,py,pz);
 			}
-			T3D:dist = VectorSize(px-x,py-y,pz-z);
+			T3D:dist = GetDistanceBetweenPoints3D(x,y,z,px,py,pz);
 			if((GetPlayerInterior(playerid) == interiorid || interiorid == -1) && (GetPlayerVirtualWorld(playerid) == worldid || worldid == -1) && (T3D:dist <= radius)){
-				if(IsPlayerInAnyVehicle(playerid)){
+				if(T3D:vid != 0){
 					if(T3D:invert){
 						GetRotationFor2Point3D(px,py,pz,x,y,z,rx,rz);
 					} else {
@@ -4513,10 +4565,10 @@ stock Animation::IsPlayerRunning(playerid){
 
 	//GetPointInFrontOfPlayer (ColAndreas)
 	stock Float:GetPointInFrontOfPlayerCol(playerid,&Float:tx,&Float:ty,Float:radius){
-		new Float:rz,Float:z;
+		new Float:rz,Float:z,T3D:vid = GetPlayerVehicleID(playerid);
 		GetPlayerPos(playerid,tx,ty,z);
-		if(IsPlayerInAnyVehicle(playerid)){
-			GetVehicleZAngle(GetPlayerVehicleID(playerid),rz);
+		if(T3D:vid != 0){
+			GetVehicleZAngle(T3D:vid,rz);
 		} else {
 			GetPlayerFacingAngle(playerid,rz);
 		}
@@ -4963,6 +5015,7 @@ stock Animation::IsPlayerRunning(playerid){
 		Tryg3D::LastPos[MAX_PLAYERS][Vectors3D];
 
 	forward OnPlayerDroppingGrenade(playerid,weaponid,Float:x,Float:y,Float:z);
+	forward OnPlayerGrenadeExplode(playerid,weaponid,Float:x,Float:y,Float:z);
 
 	T3D:function OnGrenadeHoldExpired(playerid,weaponid,Float:x,Float:y,Float:z,Float:angle){
 		new time = GetTickCount() - Tryg3D::PlayerGrenadeActive[playerid], fly_time,
@@ -4994,16 +5047,19 @@ stock Animation::IsPlayerRunning(playerid){
 				//vehicle collision
 				InteriorFindZ(ftx,fty,ftz,2.0,ftz);
 				SetTimerEx("OnPlayerDroppingGrenade",fly_time,false,"ddfff",playerid,weaponid,ftx,fty,ftz);
+				if(weaponid == 16) SetTimerEx("OnPlayerGrenadeExplode",fly_time+Tryg3D::ExplosionTime,false,"ddfff",playerid,weaponid,ftx,fty,ftz);
 				return 1;
 			} else if(ftx != points[i+1][0] || fty != points[i+1][1] || ftz != points[i+1][2]){
 				//wall collision
 				SetTimerEx("OnPlayerDroppingGrenade",fly_time,false,"ddfff",playerid,weaponid,ftx,fty,ftz);
+				if(weaponid == 16) SetTimerEx("OnPlayerGrenadeExplode",fly_time+Tryg3D::ExplosionTime,false,"ddfff",playerid,weaponid,ftx,fty,ftz);
 				return 1;
 			}
 		}
 		//no collision
 		InteriorFindZ(tx,ty,z,2.0,tz);
 		SetTimerEx("OnPlayerDroppingGrenade",fly_time,false,"ddfff",playerid,weaponid,tx,ty,tz);
+		if(weaponid == 16) SetTimerEx("OnPlayerGrenadeExplode",fly_time+Tryg3D::ExplosionTime,false,"ddfff",playerid,weaponid,tx,ty,tz);
 		return 1;
 	}
 
@@ -6386,6 +6442,7 @@ public OnGameModeExit(){
 #pragma unused T3DV5_StreamDistance
 #pragma unused T3DV5_DeatchTick
 #pragma unused T3DV5_OrientationRotation
+#pragma unused T3DV5_ExplosionTime
 #pragma unused v3DFSAT
 
 #undef T3DV5_UpdateErrorCount
