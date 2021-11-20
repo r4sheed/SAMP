@@ -14,13 +14,13 @@
 
 
 ### ADM Team:
-* Banan (Beta Tester 2014 - 2017)
-* FerilanS (Beta Tester 2014 - 2017)
-* Unrea1 (Beta Tester 2017 - 2018)
+* Banan (Tester 2014 - 2017)
+* FerilanS (Tester 2014 - 2017)
+* Unrea1 (Tester 2017 - 2018)
 * TDI97 (Mapper 2015 - 2018)
-* Switel12 (Beta Tester 2015 - 2018, Distribution Manager 2018)
-* W1z4rD (Beta Tester 2017 - 2018)
-
+* Switel12 (Tester 2015 - 2018, Distribution Manager 2018)
+* W1z4rD (Tester 2017 - 2018)
+* $continue$ (Russian distribution helper 2021 - 2022)
 
 ### Contributors:
 * Crayder (3DTryg, DataConvert)
@@ -60,5 +60,5 @@
 * Wizzard2H (Mines)
 * rasheed (SpecialVehicle)
 * TDI97 (SpecialVehicle)
-* $continue$ (3DTryg, Russian distribution helper)
+* $continue$ (3DTryg)
 * [Y_Less](https://www.burgershot.gg/member.php?action=profile&uid=6) (MD5)
