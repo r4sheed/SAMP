@@ -17,20 +17,22 @@ Hello, I would like to present you the Portal Gun Script
 
 [b]Functions:[/b]
 [code]
-TogglePrivatePortalGun(bool:toggle);            //default: false
-bool:IsTogglePrivatePortalGun();
-ToggleUseTeamPortalGun(bool:toggle);            //default: false
-bool:IsToggleUseTeamPortalGun();
-TogglePortalGunForAll(bool:toggle);             //default: true
-bool:IsTogglePortalGunForAll();
-TogglePortalGunForPlayer(playerid,toggle);      //default: 0
-IsTogglePortalGunForPlayer(playerid);
-Float:GetPortalGunSpeed(playerid);
-SetPortalGunSpeed(playerid,Float:speed);
-Float:GetPortalGunStreamDistance();
-SetPortalGunStreamDistance(Float:streamdistance);
-ForceOpenPortalGunRing(playerid,portal_id,Float:ox,Float:oy,Float:oz,Float:tx,Float:ty,Float:tz,worldid,interiorid);
-ForceClosePortalGunRing(playerid);
+PortalGun::TogglePrivate(bool:toggle);            //default: false
+PortalGun::IsTogglePrivate();
+PortalGun::ToggleUseTeam(bool:toggle);            //default: false
+PortalGun::IsToggleUseTeam();
+PortalGun::ToggleForAll(bool:toggle);             //default: true
+PortalGun::IsToggleForAll();
+PortalGun::ToggleForPlayer(playerid,toggle);      //default: 0
+PortalGun::IsToggleForPlayer(playerid);
+PortalGun::GetSpeed(playerid);
+PortalGun::SetSpeed(playerid,Float:speed);
+PortalGun::GetStreamDistance();
+PortalGun::SetStreamDistance(Float:streamdistance);
+PortalGun::SetType(playerid,type);
+PortalGun::GetType(playerid);
+PortalGun::OpenRing(playerid,portal_id,Float:ox,Float:oy,Float:oz,Float:tx,Float:ty,Float:tz,worldid,interiorid);
+PortalGun::CloseRing(playerid);
 [/code]
 
 [b]Activation:[/b]
