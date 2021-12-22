@@ -10,7 +10,7 @@
  File Version: 2.0.0
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
  Missile Version: 2.3.0
 
  Vehicle Weapons:
@@ -285,12 +285,32 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#endif
+
+#if !defined TRYG3D_MOD_PLAYER
+	#error [ADM] Module not initialized: TRYG3D_MOD_PLAYER (add #define TRYG3D_ENABLE_PLAYER before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_VEHICLE
+	#error [ADM] Module not initialized: TRYG3D_MOD_VEHICLE (add #define TRYG3D_ENABLE_VEHICLE before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_UNIVERSAL
+	#error [ADM] Module not initialized: TRYG3D_MOD_UNIVERSAL (add #define TRYG3D_ENABLE_UNIVERSAL before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_CAST3D
+	#error [ADM] Module not initialized: TRYG3D_MOD_CAST3D (add #define TRYG3D_ENABLE_CAST3D before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
 #endif
 
 #if defined _veh_missile_launcher
@@ -813,12 +833,12 @@ public OnVehicleShot(playerid,type){
 			F4[T3D:VW] = GetPlayerVirtualWorld(playerid);
 			F4[T3D:INT] = GetPlayerInterior(playerid);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rY]-180.0,F5[T3D:rZ]+90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rY]-180.0,F5[T3D:rZ]+90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,10.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rY],F5[T3D:rZ]+90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rY],F5[T3D:rZ]+90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,10.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
 			VMC::Tick[playerid][type] = GetTickCount();
@@ -842,28 +862,28 @@ public OnVehicleShot(playerid,type){
 			F4[T3D:VW] = GetPlayerVirtualWorld(playerid);
 			F4[T3D:INT] = GetPlayerInterior(playerid);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+15.0),F5[T3D:rZ]+90.0,6.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+15.0),F5[T3D:rZ]+90.0,6.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,8.0,15.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_BIG,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+45.0),F5[T3D:rZ]+90.0,5.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+45.0),F5[T3D:rZ]+90.0,5.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,8.0,15.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_BIG,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+75.0),F5[T3D:rZ]+90.0,4.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+75.0),F5[T3D:rZ]+90.0,4.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,8.0,15.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_BIG,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+105.0),F5[T3D:rZ]+90.0,4.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+105.0),F5[T3D:rZ]+90.0,4.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,8.0,15.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_BIG,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+135.0),F5[T3D:rZ]+90.0,5.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+135.0),F5[T3D:rZ]+90.0,5.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,8.0,15.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_BIG,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+165.0),F5[T3D:rZ]+90.0,6.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],Tryg3D::CompressRotation(F5[T3D:rY]+165.0),F5[T3D:rZ]+90.0,6.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,8.0,15.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_BIG,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 			
 			VMC::Tick[playerid][type] = GetTickCount();
@@ -888,20 +908,20 @@ public OnVehicleShot(playerid,type){
 			F4[T3D:VW] = GetPlayerVirtualWorld(playerid);
 			F4[T3D:INT] = GetPlayerInterior(playerid);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ]+90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ]+90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,10.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_NORMAL,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ]-90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ]-90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,10.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_NORMAL,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ]+45.0,4.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ]+45.0,4.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,10.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_NORMAL,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ]-45.0,4.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ]-45.0,4.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,10.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_NORMAL,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
 			VMC::Tick[playerid][type] = GetTickCount();
@@ -919,13 +939,13 @@ public OnVehicleShot(playerid,type){
 			}
 
 			new F5[Float3D];
-			GetPointInFrontOfVehicle3DCol(vid,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],VMC::Distance[vid][type]);
+			Tryg3D::GetPointInFrontOfVehicleCol(vid,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],VMC::Distance[vid][type]);
 
 			if(VMC::Damage[vid][type] == -1.0){
-				Cast3D::Explosion(F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],MISSILE_TYPE_EXPLODE_NORMAL,5.0,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,GetMissileStreamDistance());
+				Tryg3D::CastExplosion(F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],MISSILE_TYPE_EXPLODE_NORMAL,5.0,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,GetMissileStreamDistance());
 			} else {
 				if(VMC::VehDamage[vid][type] == -1.0) VMC::VehDamage[vid][type] = 750.0;
-				Cast3D::ExplosionDMG(F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],MISSILE_TYPE_EXPLODE_NORMAL,5.0,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,GetMissileStreamDistance(),.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type],.byplayerid=playerid);
+				Tryg3D::CastExplosionDMG(F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],MISSILE_TYPE_EXPLODE_NORMAL,5.0,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,GetMissileStreamDistance(),.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type],.byplayerid=playerid);
 			}
 			
 			VMC::Tick[playerid][type] = GetTickCount();
@@ -947,9 +967,9 @@ public OnVehicleShot(playerid,type){
 			if(GetVehicleMortarMissileAimSys(vid)){
 				if(!IsVehicleMissileAimSysReady(playerid)) return 1;
 				
-				if((VMC::dist = GetDistanceBetweenPoints2D(VMC::Target[playerid][0],VMC::Target[playerid][1],F5[T3D:X],F5[T3D:Y])) > VMC::Distance[vid][type]){
+				if((VMC::dist = Tryg3D::GetDistance2D(VMC::Target[playerid][0],VMC::Target[playerid][1],F5[T3D:X],F5[T3D:Y])) > VMC::Distance[vid][type]){
 					new Float:tx,Float:ty;
-					GetPointFor2Point2DEx(F5[T3D:X],F5[T3D:Y],VMC::Target[playerid][0],VMC::Target[playerid][1],VMC::dist,tx,ty);
+					Tryg3D::GetPointFor2Point2DEx(F5[T3D:X],F5[T3D:Y],VMC::Target[playerid][0],VMC::Target[playerid][1],VMC::dist,tx,ty);
 					VMC::Target[playerid][0] = tx;
 					VMC::Target[playerid][1] = ty;
 					VMC::dist = VMC::Distance[vid][type];
@@ -961,9 +981,9 @@ public OnVehicleShot(playerid,type){
 				if(remote_cnt > MAX_MISSILE_REMOTE_TARGET) remote_cnt = MAX_MISSILE_REMOTE_TARGET;
 				if(remote_cnt < 4) remote_cnt = 4;
 				
-				GetRotationFor2Point2D(F5[T3D:X],F5[T3D:Y],VMC::Target[playerid][0],VMC::Target[playerid][1],F4[T3D:rZ]);
+				Tryg3D::GetRotationFor2Point2D(F5[T3D:X],F5[T3D:Y],VMC::Target[playerid][0],VMC::Target[playerid][1],F4[T3D:rZ]);
 			} else {
-				GetPlayerCameraZAngle(playerid,F4[T3D:rZ]);
+				Tryg3D::GetPlayerCameraZAngle(playerid,F4[T3D:rZ]);
 				
 				arc_height = GetVehicleMortarMissileHeight(vid);
 				remote_cnt = MAX_MISSILE_REMOTE_TARGET;
@@ -973,13 +993,13 @@ public OnVehicleShot(playerid,type){
 			F4[T3D:VW] = GetPlayerVirtualWorld(playerid);
 			F4[T3D:INT] = GetPlayerInterior(playerid);
 			
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,F4[T3D:rZ]-90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,F4[T3D:rZ]-90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
 			ColAndreas::FindZ_For2DCoord(F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,15.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,ANY_TEAM,true,remote_cnt,arc_height,VehicleMortarRotation[vid],.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,F4[T3D:rZ]+90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,F4[T3D:rZ]+90.0,3.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
 			ColAndreas::FindZ_For2DCoord(F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,15.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,ANY_TEAM,true,remote_cnt,arc_height,-VehicleMortarRotation[vid],.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 			
@@ -1002,9 +1022,9 @@ public OnVehicleShot(playerid,type){
 			if(GetVehicleMegaMissileAimSys(vid)){
 				if(!IsVehicleMissileAimSysReady(playerid)) return 1;
 				
-				if((VMC::dist = GetDistanceBetweenPoints2D(VMC::Target[playerid][0],VMC::Target[playerid][1],F5[T3D:X],F5[T3D:Y])) > VMC::Distance[vid][type]){
+				if((VMC::dist = Tryg3D::GetDistance2D(VMC::Target[playerid][0],VMC::Target[playerid][1],F5[T3D:X],F5[T3D:Y])) > VMC::Distance[vid][type]){
 					new Float:tx,Float:ty;
-					GetPointFor2Point2DEx(F5[T3D:X],F5[T3D:Y],VMC::Target[playerid][0],VMC::Target[playerid][1],VMC::dist,tx,ty);
+					Tryg3D::GetPointFor2Point2DEx(F5[T3D:X],F5[T3D:Y],VMC::Target[playerid][0],VMC::Target[playerid][1],VMC::dist,tx,ty);
 					VMC::Target[playerid][0] = tx;
 					VMC::Target[playerid][1] = ty;
 					VMC::dist = VMC::Distance[vid][type];
@@ -1016,9 +1036,9 @@ public OnVehicleShot(playerid,type){
 				if(remote_cnt > MAX_MISSILE_REMOTE_TARGET) remote_cnt = MAX_MISSILE_REMOTE_TARGET;
 				if(remote_cnt < 4) remote_cnt = 4;
 				
-				GetRotationFor2Point2D(F5[T3D:X],F5[T3D:Y],VMC::Target[playerid][0],VMC::Target[playerid][1],F4[T3D:rZ]);
+				Tryg3D::GetRotationFor2Point2D(F5[T3D:X],F5[T3D:Y],VMC::Target[playerid][0],VMC::Target[playerid][1],F4[T3D:rZ]);
 			} else {
-				GetPlayerCameraZAngle(playerid,F4[T3D:rZ]);
+				Tryg3D::GetPlayerCameraZAngle(playerid,F4[T3D:rZ]);
 				
 				arc_height = GetVehicleMegaMissileHeight(vid);
 				remote_cnt = MAX_MISSILE_REMOTE_TARGET;
@@ -1028,33 +1048,33 @@ public OnVehicleShot(playerid,type){
 			F4[T3D:VW] = GetPlayerVirtualWorld(playerid);
 			F4[T3D:INT] = GetPlayerInterior(playerid);
 			
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+60.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+60.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
 			ColAndreas::FindZ_For2DCoord(F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,15.0,25.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,ANY_TEAM,true,remote_cnt,arc_height,-VehicleMegaRotation[vid],.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+120.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+120.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
 			ColAndreas::FindZ_For2DCoord(F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,15.0,25.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,ANY_TEAM,true,remote_cnt,arc_height,-VehicleMegaRotation[vid],.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
 			ColAndreas::FindZ_For2DCoord(F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,15.0,25.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,ANY_TEAM,true,remote_cnt,arc_height,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+240.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+240.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
 			ColAndreas::FindZ_For2DCoord(F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,15.0,25.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,ANY_TEAM,true,remote_cnt,arc_height,VehicleMegaRotation[vid],.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+300.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+300.0),8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
 			ColAndreas::FindZ_For2DCoord(F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,15.0,25.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,ANY_TEAM,true,remote_cnt,arc_height,VehicleMegaRotation[vid],.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,F4[T3D:rZ],8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,F4[T3D:rZ],8.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],VMC::dist,F4[T3D:tX],F4[T3D:tY]);
 			ColAndreas::FindZ_For2DCoord(F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,15.0,25.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,ANY_TEAM,true,remote_cnt,arc_height,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 
@@ -1073,15 +1093,15 @@ public OnVehicleShot(playerid,type){
 			}
 			
 			new F4[Float3D], F5[Vectors3D];
-			GetPointInFrontOfVehicle3D(vid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],5.0);
+			Tryg3D::GetPointInFrontOfVehicle3D(vid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],5.0);
 			Tryg3D::GetVehicleRotation(vid,F4[T3D:rX],F4[T3D:rY],F4[T3D:rZ]);
 			
 			F4[T3D:VW] = GetPlayerVirtualWorld(playerid);
 			F4[T3D:INT] = GetPlayerInterior(playerid);
 			
 			for(new i = 0; i < GetVehicleCongreveSalvo(vid); i++){
-				Random::PointOnSphericalSector(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rX],F4[T3D:rZ],VMC::Distance[vid][type],GetVehicleCongreveSpread(vid),GetVehicleCongreveSpread(vid),F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
-				MovePointCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
+				Tryg3D::GetPointOnSphericalSector(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rX],F4[T3D:rZ],VMC::Distance[vid][type],GetVehicleCongreveSpread(vid),GetVehicleCongreveSpread(vid),F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+				Tryg3D::MovePointCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 				Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,15.0,25.0,VMC::Speed[vid][type],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],playerid,ANY_TEAM,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 			}
 			
@@ -1102,14 +1122,14 @@ public OnVehicleShot(playerid,type){
 			new F4[Float3D], F5[Float3D];
 			GetVehiclePos(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 			Tryg3D::GetVehicleRotation(vid,F5[T3D:rX],F5[T3D:rY],F5[T3D:rZ]);
-			GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],270.0,F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],270.0,F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			
 			F4[T3D:VW] = GetPlayerVirtualWorld(playerid);
 			F4[T3D:INT] = GetPlayerInterior(playerid);
 			
 			for(new i = 0; i < GetVehicleHavocSalvo(vid); i++){
-				GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation((float(i)/GetVehicleHavocSalvo(vid))*360.0+F5[T3D:rZ]),GetVehicleHavocSpread(vid),F5[T3D:tX],F5[T3D:tY]);
-				MovePointCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],-100.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+				Tryg3D::GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation((float(i)/GetVehicleHavocSalvo(vid))*360.0+F5[T3D:rZ]),GetVehicleHavocSpread(vid),F5[T3D:tX],F5[T3D:tY]);
+				Tryg3D::MovePointCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],-100.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
 				Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,15.0,25.0,VMC::Speed[vid][type],F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_HYDRA,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],playerid,ANY_TEAM,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
 			}
 			
@@ -1134,8 +1154,8 @@ public OnVehicleShot(playerid,type){
 			F4[T3D:VW] = GetPlayerVirtualWorld(playerid);
 			F4[T3D:INT] = GetPlayerInterior(playerid);
 			
-			GetPointInFrontOfVehicle3D(vid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],1.0);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],270.0,F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFrontOfVehicle3D(vid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],1.0);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],270.0,F5[T3D:rZ],VMC::Distance[vid][type],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			
 			if(GetVehicleGroundBombType(vid) == 0){
 				Missile::Launch(MISSILE_TYPE_EXPLODE_HUGE,15.0,25.0,VMC::Speed[vid][type],F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_BOMB_STATIC,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,ANY_TEAM,.damage=VMC::Damage[vid][type],.vehicle_damage=VMC::VehDamage[vid][type]);
@@ -1164,7 +1184,7 @@ public OnVehicleShot(playerid,type){
 			F4[T3D:INT] = GetPlayerInterior(playerid);
 			
 			for(new i = 0; i < GetVehicleFlareSalvo(vid); i++){
-				GetPointInFrontOfVehicle3D(vid,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],((i+1)*(VMC::Distance[vid][type]/GetVehicleFlareSalvo(vid)))*-1.0);
+				Tryg3D::GetPointInFrontOfVehicle3D(vid,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],((i+1)*(VMC::Distance[vid][type]/GetVehicleFlareSalvo(vid)))*-1.0);
 				switch(GetVehicleFlareType(vid)){
 					case VEHICLE_FLARE_TYPE_RED: {
 						Missile::Launch(0,15.0,0.0,VMC::Speed[vid][type],F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F4[T3D:VW],F4[T3D:INT],-1,GetMissileStreamDistance(),MISSILE_OBJECT_FLARE_1,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid);
