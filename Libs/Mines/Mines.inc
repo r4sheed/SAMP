@@ -9,7 +9,7 @@
 
  File Version: 2.2.1
  Streamer Version: 2.9.5
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Functions:
  Mines::Create(type,Float:detection_range,Float:explode_radius,Float:health,respawntime,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,mine_object = MINE_OBJECT_STANDARD,teamid = ANY_TEAM,detect_type = MINE_DETECT_TYPE_ALL,byplayerid = INVALID_PLAYER_ID,Float:damage=-1.0,Float:vehicle_damage=-1.0);
@@ -82,12 +82,24 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#endif
+
+#if !defined TRYG3D_MOD_PLAYER
+	#error [ADM] Module not initialized: TRYG3D_MOD_PLAYER (add #define TRYG3D_ENABLE_PLAYER before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_UNIVERSAL
+	#error [ADM] Module not initialized: TRYG3D_MOD_UNIVERSAL (add #define TRYG3D_ENABLE_UNIVERSAL before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_CAST3D
+	#error [ADM] Module not initialized: TRYG3D_MOD_CAST3D (add #define TRYG3D_ENABLE_CAST3D before include 3DTryg.inc)
 #endif
 
 #if defined _dynamic_mine_system
@@ -401,10 +413,10 @@ stock Mines::OnExplode(mobid,type,playerid){
 	GetDynamicObjectPos(Mines::Data[mobid][Mines::Object],minex,miney,minez);
 	
 	if(Mines::GetDamage(mobid) == -1.0){
-		Cast3D::Explosion(minex,miney,minez,Mines::Data[mobid][Mines::Type],Mines::Data[mobid][Mines::Explode],worldid,interiorid,-1,Mines::GetExplodeVisibility());
+		Tryg3D::CastExplosion(minex,miney,minez,Mines::Data[mobid][Mines::Type],Mines::Data[mobid][Mines::Explode],worldid,interiorid,-1,Mines::GetExplodeVisibility());
 	} else {
 		if(Mines::GetVehicleDamage(mobid) == -1.0) Mines::Data[mobid][Mines::VehicleDamage] = 750.0;
-		Cast3D::ExplosionDMG(minex,miney,minez,Mines::Data[mobid][Mines::Type],Mines::Data[mobid][Mines::Explode],worldid,interiorid,-1,Mines::GetExplodeVisibility(),Mines::GetDamage(mobid),Mines::GetVehicleDamage(mobid),Mines::Data[mobid][Mines::PlayerID]);
+		Tryg3D::CastExplosionDMG(minex,miney,minez,Mines::Data[mobid][Mines::Type],Mines::Data[mobid][Mines::Explode],worldid,interiorid,-1,Mines::GetExplodeVisibility(),Mines::GetDamage(mobid),Mines::GetVehicleDamage(mobid),Mines::Data[mobid][Mines::PlayerID]);
 	}
 	
 	#if defined DYNAMIC_MINES_GRENADE

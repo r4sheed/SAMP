@@ -94,6 +94,11 @@ MINE_OBJECT_PIZZA
 [code]
 #include <a_samp>
 #include <streamer>
+
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_UNIVERSAL
+#define TRYG3D_ENABLE_CAST3D
+
 #include <3DTryg>
 #include <Mines>
 
