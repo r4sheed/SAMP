@@ -6,6 +6,12 @@ https://www.youtube.com/watch?v=_1mHqL4_KbQ
 
 [b]Пример кода:[/b]
 [code]
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_VEHICLE
+#define TRYG3D_ENABLE_UNIVERSAL
+#define TRYG3D_ENABLE_CAST3D
+#define TRYG3D_ENABLE_COLANDREAS
+
 #include <Streamer>
 #include <colandreas>
 #include <route_rand>

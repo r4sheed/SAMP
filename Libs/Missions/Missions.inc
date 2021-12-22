@@ -10,7 +10,7 @@
  File Version: 1.2.0
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
  ExtendedGrenade Version: 1.1.0
 
  Functions:
@@ -68,12 +68,12 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
 //Check Version ExtendedGrenade.inc
@@ -85,8 +85,24 @@
 	#endif
 #endif
 
-#if !defined TRYG3D_COLANDREAS
-	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#if !defined TRYG3D_MOD_PLAYER
+	#error [ADM] Module not initialized: TRYG3D_MOD_PLAYER (add #define TRYG3D_ENABLE_PLAYER before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_VEHICLE
+	#error [ADM] Module not initialized: TRYG3D_MOD_VEHICLE (add #define TRYG3D_ENABLE_VEHICLE before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_UNIVERSAL
+	#error [ADM] Module not initialized: TRYG3D_MOD_UNIVERSAL (add #define TRYG3D_ENABLE_UNIVERSAL before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_CAST3D
+	#error [ADM] Module not initialized: TRYG3D_MOD_CAST3D (add #define TRYG3D_ENABLE_CAST3D before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
 #endif
 
 #if defined _MISSIONS_INCLUDE
@@ -162,19 +178,12 @@
 	#error [ADM] Definition MISSIONS_MAX_GASPIPE must be in the range 1 - 999
 #endif
 
-
 #if !defined MISSIONS_ROBBER_CHANCE
-	#define MISSIONS_ROBBER_CHANCE			45
-#endif
-#if MISSIONS_ROBBER_CHANCE < 0 || MISSIONS_ROBBER_CHANCE > 99
-	#error [ADM] Definition MISSIONS_ROBBER_CHANCE must be in the range 0 - 99
+	#define MISSIONS_ROBBER_CHANCE			45.0
 #endif
 
 #if !defined MISSIONS_BOMB_FAIL_CHANCE
-	#define MISSIONS_BOMB_FAIL_CHANCE		40
-#endif
-#if MISSIONS_BOMB_FAIL_CHANCE < 0 || MISSIONS_BOMB_FAIL_CHANCE > 99
-	#error [ADM] Definition MISSIONS_BOMB_FAIL_CHANCE must be in the range 0 - 99
+	#define MISSIONS_BOMB_FAIL_CHANCE		40.0
 #endif
 
 #if !defined MISSIONS_GASPIPE_DOT
@@ -461,7 +470,7 @@ enum Missions::EnumPatrol {
 #endif
 
 new bool:					Missions::Enabled[MISSIONS_MAX_TYPES],
-	Float:					Missions::SpawnZonePolygon[MISSIONS_MAX_TYPES][MAX_POLYGON_POINTS],
+	Float:					Missions::SpawnZonePolygon[MISSIONS_MAX_TYPES][TRYG3D_MAX_POLYGON_POINTS],
 							Missions::SpawnZonePolygonSize[MISSIONS_MAX_TYPES],
 							Missions::SpawnZoneType[MISSIONS_MAX_TYPES],
 							Missions::CurrentWeather,
@@ -645,7 +654,7 @@ stock Missions::SetSpawnRectangle(mission_type,Float:minx,Float:miny,Float:maxx,
 						RR_MergeFloat(x,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
 						RR_MergeFloat(y,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
 						RR_MergeFloat(z,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-						if(Area::PointInRectangle(x,y,minx,miny,maxx,maxy)){
+						if(Tryg3D::IsPointInRectangle(x,y,minx,miny,maxx,maxy)){
 							Missions::validation_status = true;
 							break;
 						}
@@ -655,7 +664,7 @@ stock Missions::SetSpawnRectangle(mission_type,Float:minx,Float:miny,Float:maxx,
 			}
 			case MISSIONS_TYPE_SCRAP: {
 				for(new i = 0, j = sizeof(Missions::ScrapSpawns); i < j; i++){
-					if(Area::PointInRectangle(Missions::ScrapSpawns[i][0],Missions::ScrapSpawns[i][1],minx,miny,maxx,maxy)){
+					if(Tryg3D::IsPointInRectangle(Missions::ScrapSpawns[i][0],Missions::ScrapSpawns[i][1],minx,miny,maxx,maxy)){
 						Missions::validation_status = true;
 						break;
 					}
@@ -690,7 +699,7 @@ stock Missions::SetSpawnPolygon(mission_type,Float:points[],maxpoints=sizeof(poi
 						RR_MergeFloat(x,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
 						RR_MergeFloat(y,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
 						RR_MergeFloat(z,fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false),fgetchar(inpf,0,false));
-						if(Area::PointInPolygon(x,y,points,maxpoints)){
+						if(Tryg3D::IsPointInPolygon(x,y,points,maxpoints)){
 							Missions::validation_status = true;
 							break;
 						}
@@ -700,7 +709,7 @@ stock Missions::SetSpawnPolygon(mission_type,Float:points[],maxpoints=sizeof(poi
 			}
 			case MISSIONS_TYPE_SCRAP: {
 				for(new i = 0, j = sizeof(Missions::ScrapSpawns); i < j; i++){
-					if(Area::PointInPolygon(Missions::ScrapSpawns[i][0],Missions::ScrapSpawns[i][1],points,maxpoints)){
+					if(Tryg3D::IsPointInPolygon(Missions::ScrapSpawns[i][0],Missions::ScrapSpawns[i][1],points,maxpoints)){
 						Missions::validation_status = true;
 						break;
 					}
@@ -738,7 +747,7 @@ stock Missions::DisarmBomb(playerid){
 								CallLocalFunction("OnPlayerDisarmBomb","ddd",playerid,mobid,MISSIONS_BOMB_DISARM_TOO_LATE);
 								return 1;
 							}
-							if(IsProbable(MISSIONS_BOMB_FAIL_CHANCE)){
+							if(Tryg3D::IsProbable(MISSIONS_BOMB_FAIL_CHANCE)){
 								CallLocalFunction("OnPlayerDisarmBomb","ddd",playerid,mobid,MISSIONS_BOMB_DISARM_FAIL);
 								Missions::BombData[mobid][f_tick] = 1794;
 							} else {
@@ -826,21 +835,21 @@ stock Missions::OnBombUpdate(){
 			new Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:rz, mission_type = MISSIONS_TYPE_BOMB;
 			switch(Missions::SpawnZoneType[mission_type]){
 				case MISSIONS_SPAWN_TYPE_RECTANGLE: {
-					Random::PointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],x,y);
-					while(IsPointInWater(x,y,0.0)){
-						Random::PointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],x,y);
+					Tryg3D::GetPointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],x,y);
+					while(Tryg3D::IsPointInWater(x,y,0.0)){
+						Tryg3D::GetPointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],x,y);
 					}
 				}
 				case MISSIONS_SPAWN_TYPE_POLYGON: {
-					Random::PointInPolygon(Missions::SpawnZonePolygon[mission_type],x,y,Missions::SpawnZonePolygonSize[mission_type]);
-					while(IsPointInWater(x,y,0.0)){
-						Random::PointInPolygon(Missions::SpawnZonePolygon[mission_type],x,y,Missions::SpawnZonePolygonSize[mission_type]);
+					Tryg3D::GetPointInPolygon(Missions::SpawnZonePolygon[mission_type],x,y,Missions::SpawnZonePolygonSize[mission_type]);
+					while(Tryg3D::IsPointInWater(x,y,0.0)){
+						Tryg3D::GetPointInPolygon(Missions::SpawnZonePolygon[mission_type],x,y,Missions::SpawnZonePolygonSize[mission_type]);
 					}
 				}
 			}
 			ColAndreas::FindZ_For2DCoord(x,y,z);
-			GetPointInWallForPoint(x,y,z+1.5,5000.0,tx,ty,tz);
-			GetRotationFor2Point2D(tx,ty,x,y,rz);
+			Tryg3D::GetPointInWallForPoint(x,y,z+1.5,5000.0,tx,ty,tz);
+			Tryg3D::GetRotationFor2Point2D(tx,ty,x,y,rz);
 			Missions::BombData[mobid][f_text] = CreateDynamic3DTextLabel("EMP Explosive",0xFF0000FF,tx,ty,tz,35.0,INVALID_PLAYER_ID,INVALID_VEHICLE_ID,0,0,0);
 			Missions::BombData[mobid][f_object] = CreateDynamicObject(363,tx,ty,tz,0.0,0.0,Tryg3D::CompressRotation(rz+180.0));
 			Missions::BombData[mobid][f_icon] = CreateDynamicMapIcon(tx,ty,tz,37,1,0,0,-1,300.0);
@@ -851,11 +860,11 @@ stock Missions::OnBombUpdate(){
 			if(Missions::BombData[mobid][f_active]){
 				new Float:tx,Float:ty,Float:tz;
 				GetDynamicObjectPos(Missions::BombData[mobid][f_object],tx,ty,tz);
-				Cast3D::Explosion(tx,ty,tz,7,25.0,0,0,-1,200.0);
-				Cast3D::Explosion(tx-2.5,ty-2.5,tz,7,25.0,0,0,-1,200.0);
-				Cast3D::Explosion(tx-2.5,ty+2.5,tz,7,25.0,0,0,-1,200.0);
-				Cast3D::Explosion(tx+2.5,ty-2.5,tz,7,25.0,0,0,-1,200.0);
-				Cast3D::Explosion(tx+2.5,ty+2.5,tz,7,25.0,0,0,-1,200.0);
+				Tryg3D::CastExplosion(tx,ty,tz,7,25.0,0,0,-1,200.0);
+				Tryg3D::CastExplosion(tx-2.5,ty-2.5,tz,7,25.0,0,0,-1,200.0);
+				Tryg3D::CastExplosion(tx-2.5,ty+2.5,tz,7,25.0,0,0,-1,200.0);
+				Tryg3D::CastExplosion(tx+2.5,ty-2.5,tz,7,25.0,0,0,-1,200.0);
+				Tryg3D::CastExplosion(tx+2.5,ty+2.5,tz,7,25.0,0,0,-1,200.0);
 				if(IsValidDynamicObject(Missions::BombData[mobid][f_object])){
 					DestroyDynamicObject(Missions::BombData[mobid][f_object]);
 					Missions::BombData[mobid][f_object] = STREAMER_TAG_OBJECT:INVALID_STREAMER_ID;
@@ -910,14 +919,14 @@ stock Missions::CreateWood(Float:x,Float:y,Float:z,worldid=0,interiorid=0,Float:
 	Missions::WoodData[mobid][f_maxhealth] = max_health;
 	
 	new Float:rx,Float:ry;
-	GetGroundRotation(x,y,0.25,rx,ry);
+	Tryg3D::GetGroundRotation(x,y,0.25,rx,ry);
 	Missions::WoodData[mobid][f_object] = CreateDynamicObject(846,x,y,z+0.5,rx,ry,force_angle,worldid,interiorid,-1,100.0);
 	Missions::WoodData[mobid][f_area] = CreateDynamicSphere(x,y,z,20.0,worldid,interiorid);
 	Missions::WoodData[mobid][f_icon] = CreateDynamicMapIcon(x,y,z,7,1,0,0,-1,100.0);
 	Missions::WoodData[mobid][f_tick] = gettime()+2*60*60;
 	
 	new buffer[64];
-	format(buffer,sizeof(buffer),"Tree %.1f HP",NMTVF(Missions::WoodData[mobid][f_health],Missions::WoodData[mobid][f_maxhealth]));
+	format(buffer,sizeof(buffer),"Tree %.1f HP",Tryg3D::NMTVF(Missions::WoodData[mobid][f_health],Missions::WoodData[mobid][f_maxhealth]));
 	Missions::WoodData[mobid][f_text] = CreateDynamic3DTextLabel(buffer,0xCC0000FF,x,y,z+1.0,20.0,INVALID_PLAYER_ID,INVALID_VEHICLE_ID,0,worldid,interiorid);
 	
 	Streamer::SetIntData(STREAMER_TYPE_AREA,Missions::WoodData[mobid][f_area],E_STREAMER_EXTRA_ID,mobid+MISSIONS_EXTRA_ID_WOOD);
@@ -952,13 +961,13 @@ stock Missions::CreateRandomWood(){
 	switch(Missions::SpawnZoneType[mission_type]){
 		case MISSIONS_SPAWN_TYPE_RECTANGLE: {
 			GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
-			while(!Area::PointInRectangle(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
+			while(!Tryg3D::IsPointInRectangle(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
 				GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
 			}
 		}
 		case MISSIONS_SPAWN_TYPE_POLYGON: {
 			GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
-			while(!Area::PointInPolygon(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
+			while(!Tryg3D::IsPointInPolygon(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
 				GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
 			}
 		}
@@ -976,7 +985,7 @@ stock Missions::OnWoodsUpdate(){
 				if(Missions::WoodData[i][f_health] < Missions::WoodData[i][f_maxhealth] && Missions::WoodData[i][f_health] > 5.0){
 					Missions::WoodData[i][f_health] += 0.05;
 				}
-				format(buffer,sizeof(buffer),"Tree %.1f HP",NMTVF(Missions::WoodData[i][f_health],Missions::WoodData[i][f_maxhealth]));
+				format(buffer,sizeof(buffer),"Tree %.1f HP",Tryg3D::NMTVF(Missions::WoodData[i][f_health],Missions::WoodData[i][f_maxhealth]));
 				UpdateDynamic3DTextLabelText(Missions::WoodData[i][f_text],0xCC0000FF,buffer);
 			}
 		}
@@ -1054,13 +1063,13 @@ stock Missions::CreateRandomScrap(){
 	switch(Missions::SpawnZoneType[mission_type]){
 		case MISSIONS_SPAWN_TYPE_RECTANGLE: {
 			rand = random(sizeof(Missions::ScrapSpawns));
-			while(!Area::PointInRectangle(Missions::ScrapSpawns[rand][0],Missions::ScrapSpawns[rand][1],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
+			while(!Tryg3D::IsPointInRectangle(Missions::ScrapSpawns[rand][0],Missions::ScrapSpawns[rand][1],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
 				rand = random(sizeof(Missions::ScrapSpawns));
 			}
 		}
 		case MISSIONS_SPAWN_TYPE_POLYGON: {
 			rand = random(sizeof(Missions::ScrapSpawns));
-			while(!Area::PointInPolygon(Missions::ScrapSpawns[rand][0],Missions::ScrapSpawns[rand][1],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
+			while(!Tryg3D::IsPointInPolygon(Missions::ScrapSpawns[rand][0],Missions::ScrapSpawns[rand][1],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
 				rand = random(sizeof(Missions::ScrapSpawns));
 			}
 		}
@@ -1151,15 +1160,15 @@ stock Missions::CreateRandomCorpse(){
 	new RandomPos[Vectors3D], Float:tx, Float:ty, Float:tz, mission_type = MISSIONS_TYPE_CORPSE;
 	switch(Missions::SpawnZoneType[mission_type]){
 		case MISSIONS_SPAWN_TYPE_RECTANGLE: {
-			Random::PointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],RandomPos[T3D:X],RandomPos[T3D:Y]);
-			while(IsPointInWater(RandomPos[T3D:X],RandomPos[T3D:Y],0.0)){
-				Random::PointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],RandomPos[T3D:X],RandomPos[T3D:Y]);
+			Tryg3D::GetPointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],RandomPos[T3D:X],RandomPos[T3D:Y]);
+			while(Tryg3D::IsPointInWater(RandomPos[T3D:X],RandomPos[T3D:Y],0.0)){
+				Tryg3D::GetPointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],RandomPos[T3D:X],RandomPos[T3D:Y]);
 			}
 		}
 		case MISSIONS_SPAWN_TYPE_POLYGON: {
-			Random::PointInPolygon(Missions::SpawnZonePolygon[mission_type],RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygonSize[mission_type]);
-			while(IsPointInWater(RandomPos[T3D:X],RandomPos[T3D:Y],0.0)){
-				Random::PointInPolygon(Missions::SpawnZonePolygon[mission_type],RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygonSize[mission_type]);
+			Tryg3D::GetPointInPolygon(Missions::SpawnZonePolygon[mission_type],RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygonSize[mission_type]);
+			while(Tryg3D::IsPointInWater(RandomPos[T3D:X],RandomPos[T3D:Y],0.0)){
+				Tryg3D::GetPointInPolygon(Missions::SpawnZonePolygon[mission_type],RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygonSize[mission_type]);
 			}
 		}
 	}
@@ -1169,9 +1178,9 @@ stock Missions::CreateRandomCorpse(){
 	
 	new rand = random(3);
 	for(new i = 1; i <= rand; i++){
-		Random::PointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
-		while(IsPointInWater(tx,ty,0.0)){
-			Random::PointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
+		Tryg3D::GetPointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
+		while(Tryg3D::IsPointInWater(tx,ty,0.0)){
+			Tryg3D::GetPointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
 		}
 		ColAndreas::FindZ_For2DCoord(tx,ty,tz);
 		Missions::CreateCorpse(tx,ty,tz+1.0);
@@ -1225,7 +1234,7 @@ stock Missions::CreateRoute(Float:x,Float:y,Float:z,worldid=0,interiorid=0,Float
 	Missions::RouteData[mobid][f_maxhealth] = max_health;
 	
 	new Float:rx,Float:ry;
-	GetGroundRotation(x,y,0.25,rx,ry);
+	Tryg3D::GetGroundRotation(x,y,0.25,rx,ry);
 	Missions::RouteData[mobid][f_object] = CreateDynamicObject(18782,x,y,z,rx,ry,0.0,worldid,interiorid,-1,100.0);
 	SetDynamicObjectMaterial(Missions::RouteData[mobid][f_object],0,5794,"roads_lawn","greyground256");
 	Missions::RouteData[mobid][f_area] = CreateDynamicSphere(x,y,z,20.0,worldid,interiorid);
@@ -1233,7 +1242,7 @@ stock Missions::CreateRoute(Float:x,Float:y,Float:z,worldid=0,interiorid=0,Float
 	Missions::RouteData[mobid][f_tick] = gettime()+2*60*60;
 	
 	new buffer[64];
-	format(buffer,sizeof(buffer),"Damaged route %.1f HP",NMTVF(Missions::RouteData[mobid][f_health],Missions::RouteData[mobid][f_maxhealth]));
+	format(buffer,sizeof(buffer),"Damaged route %.1f HP",Tryg3D::NMTVF(Missions::RouteData[mobid][f_health],Missions::RouteData[mobid][f_maxhealth]));
 	Missions::RouteData[mobid][f_text] = CreateDynamic3DTextLabel(buffer,0xCC0000FF,x,y,z,20.0,INVALID_PLAYER_ID,INVALID_VEHICLE_ID,0,worldid,interiorid);
 	
 	Streamer::SetIntData(STREAMER_TYPE_AREA,Missions::RouteData[mobid][f_area],E_STREAMER_EXTRA_ID,mobid+MISSIONS_EXTRA_ID_ROUTE);
@@ -1268,13 +1277,13 @@ stock Missions::CreateRandomRoute(){
 	switch(Missions::SpawnZoneType[mission_type]){
 		case MISSIONS_SPAWN_TYPE_RECTANGLE: {
 			GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
-			while(!Area::PointInRectangle(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
+			while(!Tryg3D::IsPointInRectangle(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
 				GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
 			}
 		}
 		case MISSIONS_SPAWN_TYPE_POLYGON: {
 			GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
-			while(!Area::PointInPolygon(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
+			while(!Tryg3D::IsPointInPolygon(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
 				GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
 			}
 		}
@@ -1292,7 +1301,7 @@ stock Missions::OnRoutesUpdate(){
 				if(Missions::RouteData[i][f_health] < Missions::RouteData[i][f_maxhealth] && Missions::RouteData[i][f_health] > 5.0){
 					Missions::RouteData[i][f_health] += 0.05;
 				}
-				format(buffer,sizeof(buffer),"Damaged route %.1f HP",NMTVF(Missions::RouteData[i][f_health],Missions::RouteData[i][f_maxhealth]));
+				format(buffer,sizeof(buffer),"Damaged route %.1f HP",Tryg3D::NMTVF(Missions::RouteData[i][f_health],Missions::RouteData[i][f_maxhealth]));
 				UpdateDynamic3DTextLabelText(Missions::RouteData[i][f_text],0xCC0000FF,buffer);
 			}
 		}
@@ -1335,7 +1344,7 @@ stock Missions::GenerateRoute(){
 		Missions::GasPipeData[mobid][f_maxhealth] = max_health;
 		
 		new Float:rx,Float:ry;
-		GetGroundRotation(x,y,0.25,rx,ry);
+		Tryg3D::GetGroundRotation(x,y,0.25,rx,ry);
 		Missions::GasPipeData[mobid][f_object] = CreateDynamicObject(2983,x,y,z-0.2,Tryg3D::CompressRotation(rx+270.0),0.0,0.0,worldid,interiorid,-1,100.0);
 		Missions::GasPipeData[mobid][f_area] = CreateDynamicSphere(x,y,z,20.0,worldid,interiorid);
 		Missions::GasPipeData[mobid][f_icon] = CreateDynamicMapIcon(x,y,z,11,1,0,0,-1,100.0);
@@ -1343,7 +1352,7 @@ stock Missions::GenerateRoute(){
 		Missions::GasPipeData[mobid][f_effect] = Grenade::CreateGrenadeEffect(GRENADE_SPECIAL_WEAPON_TEARGAS,GRENADE_EFFECT_SMALL_SMOKE,x,y,z,worldid,interiorid,-1,100.0,MISSIONS_GASPIPE_DOT,0.0,7200,INVALID_PLAYER_ID);
 		
 		new buffer[64];
-		format(buffer,sizeof(buffer),"Damaged gas pipe %.1f HP",NMTVF(Missions::GasPipeData[mobid][f_health],Missions::GasPipeData[mobid][f_maxhealth]));
+		format(buffer,sizeof(buffer),"Damaged gas pipe %.1f HP",Tryg3D::NMTVF(Missions::GasPipeData[mobid][f_health],Missions::GasPipeData[mobid][f_maxhealth]));
 		Missions::GasPipeData[mobid][f_text] = CreateDynamic3DTextLabel(buffer,0xCC0000FF,x,y,z,20.0,INVALID_PLAYER_ID,INVALID_VEHICLE_ID,0,worldid,interiorid);
 		
 		Streamer::SetIntData(STREAMER_TYPE_AREA,Missions::GasPipeData[mobid][f_area],E_STREAMER_EXTRA_ID,mobid+MISSIONS_EXTRA_ID_GASPIPE);
@@ -1382,13 +1391,13 @@ stock Missions::GenerateRoute(){
 		switch(Missions::SpawnZoneType[mission_type]){
 			case MISSIONS_SPAWN_TYPE_RECTANGLE: {
 				GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
-				while(!Area::PointInRectangle(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
+				while(!Tryg3D::IsPointInRectangle(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
 					GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
 				}
 			}
 			case MISSIONS_SPAWN_TYPE_POLYGON: {
 				GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
-				while(!Area::PointInPolygon(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
+				while(!Tryg3D::IsPointInPolygon(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
 					GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
 				}
 			}
@@ -1406,7 +1415,7 @@ stock Missions::GenerateRoute(){
 					if(Missions::GasPipeData[i][f_health] < Missions::GasPipeData[i][f_maxhealth] && Missions::GasPipeData[i][f_health] > 5.0){
 						Missions::GasPipeData[i][f_health] += 0.05;
 					}
-					format(buffer,sizeof(buffer),"Damaged gas pipe %.1f HP",NMTVF(Missions::GasPipeData[i][f_health],Missions::GasPipeData[i][f_maxhealth]));
+					format(buffer,sizeof(buffer),"Damaged gas pipe %.1f HP",Tryg3D::NMTVF(Missions::GasPipeData[i][f_health],Missions::GasPipeData[i][f_maxhealth]));
 					UpdateDynamic3DTextLabelText(Missions::GasPipeData[i][f_text],0xCC0000FF,buffer);
 				}
 			}
@@ -1457,13 +1466,13 @@ stock Missions::CreateFire(Float:x,Float:y,Float:z,bool:explode=true,worldid=0,i
 	Missions::FireData[mobid][f_tick] = gettime()+2*60*60;
 	
 	new buffer[64];
-	format(buffer,sizeof(buffer),"Fire %.1f HP",NMTVF(Missions::FireData[mobid][f_health],Missions::FireData[mobid][f_maxhealth]));
+	format(buffer,sizeof(buffer),"Fire %.1f HP",Tryg3D::NMTVF(Missions::FireData[mobid][f_health],Missions::FireData[mobid][f_maxhealth]));
 	Missions::FireData[mobid][f_text] = CreateDynamic3DTextLabel(buffer,0xCC0000FF,x,y,z+0.5,20.0,INVALID_PLAYER_ID,INVALID_VEHICLE_ID,1,worldid,interiorid);
 	
 	Streamer::SetIntData(STREAMER_TYPE_AREA,Missions::FireData[mobid][f_area],E_STREAMER_EXTRA_ID,mobid+MISSIONS_EXTRA_ID_FIRE);
 	
 	if(explode){
-		Cast3D::Explosion(x,y,z,8,5.0,worldid,interiorid,-1,200.0);
+		Tryg3D::CastExplosion(x,y,z,8,5.0,worldid,interiorid,-1,200.0);
 	}
 	return 1;
 }
@@ -1495,15 +1504,15 @@ stock Missions::CreateRandomFire(){
 	new RandomPos[Vectors3D], Float:tx, Float:ty, Float:tz, mission_type = MISSIONS_TYPE_FIRE;
 	switch(Missions::SpawnZoneType[mission_type]){
 		case MISSIONS_SPAWN_TYPE_RECTANGLE: {
-			Random::PointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],RandomPos[T3D:X],RandomPos[T3D:Y]);
-			while(IsPointInWater(RandomPos[T3D:X],RandomPos[T3D:Y],0.0)){
-				Random::PointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],RandomPos[T3D:X],RandomPos[T3D:Y]);
+			Tryg3D::GetPointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],RandomPos[T3D:X],RandomPos[T3D:Y]);
+			while(Tryg3D::IsPointInWater(RandomPos[T3D:X],RandomPos[T3D:Y],0.0)){
+				Tryg3D::GetPointInRectangle(Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3],RandomPos[T3D:X],RandomPos[T3D:Y]);
 			}
 		}
 		case MISSIONS_SPAWN_TYPE_POLYGON: {
-			Random::PointInPolygon(Missions::SpawnZonePolygon[mission_type],RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygonSize[mission_type]);
-			while(IsPointInWater(RandomPos[T3D:X],RandomPos[T3D:Y],0.0)){
-				Random::PointInPolygon(Missions::SpawnZonePolygon[mission_type],RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygonSize[mission_type]);
+			Tryg3D::GetPointInPolygon(Missions::SpawnZonePolygon[mission_type],RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygonSize[mission_type]);
+			while(Tryg3D::IsPointInWater(RandomPos[T3D:X],RandomPos[T3D:Y],0.0)){
+				Tryg3D::GetPointInPolygon(Missions::SpawnZonePolygon[mission_type],RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygonSize[mission_type]);
 			}
 		}
 	}
@@ -1513,9 +1522,9 @@ stock Missions::CreateRandomFire(){
 	
 	new rand = random(6);
 	for(new i = 1; i <= rand; i++){
-		Random::PointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
-		while(IsPointInWater(tx,ty,0.0)){
-			Random::PointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
+		Tryg3D::GetPointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
+		while(Tryg3D::IsPointInWater(tx,ty,0.0)){
+			Tryg3D::GetPointInCircle(RandomPos[T3D:X],RandomPos[T3D:Y],10.0,tx,ty);
 		}
 		ColAndreas::FindZ_For2DCoord(tx,ty,tz);
 		Missions::CreateFire(tx,ty,tz+0.2);
@@ -1532,7 +1541,7 @@ stock Missions::OnFiresUpdate(){
 				if(Missions::FireData[i][f_health] < Missions::FireData[i][f_maxhealth] && Missions::FireData[i][f_health] > 5.0){
 					Missions::FireData[i][f_health] += 0.05;
 				}
-				format(buffer,sizeof(buffer),"Fire %.1f HP",NMTVF(Missions::FireData[i][f_health],Missions::FireData[i][f_maxhealth]));
+				format(buffer,sizeof(buffer),"Fire %.1f HP",Tryg3D::NMTVF(Missions::FireData[i][f_health],Missions::FireData[i][f_maxhealth]));
 				UpdateDynamic3DTextLabelText(Missions::FireData[i][f_text],0xCC0000FF,buffer);
 			}
 		}
@@ -1614,13 +1623,13 @@ stock Missions::CreateRandomPatrol(){
 	switch(Missions::SpawnZoneType[mission_type]){
 		case MISSIONS_SPAWN_TYPE_RECTANGLE: {
 			GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
-			while(!Area::PointInRectangle(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
+			while(!Tryg3D::IsPointInRectangle(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZoneRectangle[mission_type][0],Missions::SpawnZoneRectangle[mission_type][1],Missions::SpawnZoneRectangle[mission_type][2],Missions::SpawnZoneRectangle[mission_type][3])){
 				GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
 			}
 		}
 		case MISSIONS_SPAWN_TYPE_POLYGON: {
 			GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
-			while(!Area::PointInPolygon(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
+			while(!Tryg3D::IsPointInPolygon(RandomPos[T3D:X],RandomPos[T3D:Y],Missions::SpawnZonePolygon[mission_type],Missions::SpawnZonePolygonSize[mission_type])){
 				GetRandomRoutePoint(MISSIONS_DATA_FILE,RandomPos[T3D:X],RandomPos[T3D:Y],RandomPos[T3D:Z]);
 			}
 		}
@@ -1740,7 +1749,7 @@ public OnPlayerEnterDynamicArea(playerid,STREAMER_TAG_AREA:areaid){
 				CallLocalFunction("OnPlayerDestroyPatrol","dd",playerid,mobid);
 				Missions::DestroyPatrol(mobid);
 			} else {
-				if(IsProbable(MISSIONS_ROBBER_CHANCE)){
+				if(Tryg3D::IsProbable(MISSIONS_ROBBER_CHANCE)){
 					CallLocalFunction("OnPlayerRobbed","ddd",playerid,mobid,MISSIONS_STATE_ROBBED);
 				} else {
 					CallLocalFunction("OnPlayerRobbed","ddd",playerid,mobid,MISSIONS_STATE_FAIL_ROBBERY);
@@ -1806,9 +1815,9 @@ public OnPlayerEnterDynamicArea(playerid,STREAMER_TAG_AREA:areaid){
 			mobid = extra_id - MISSIONS_EXTRA_ID_RADAR;
 			if(mobid >= 0 && mobid < MISSIONS_MAX_RADAR){
 				if(areaid == Missions::RadarData[mobid][f_area]){
-					new Float:vspeed = GetVehicleSpeed(vehicleid);
+					new Float:vspeed = Tryg3D::GetVehicleSpeed(vehicleid);
 					if(vspeed > Missions::RadarData[mobid][f_speed]){
-						if(IsVehicleFlag(GetVehicleFlags(vehicleid),VF_STREET)){
+						if(Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vehicleid),VF_STREET)){
 							CallLocalFunction("OnPlayerExceededSpeed","ddff",playerid,mobid,vspeed,Missions::RadarData[mobid][f_speed]);
 						}
 					}
@@ -1850,7 +1859,7 @@ public OnPlayerUpdate(playerid){
 			if(mobid >= 0 && mobid < MISSIONS_MAX_FIRE){
 				if(player_areas[k] == Missions::FireData[mobid][f_area]){
 					GetDynamicObjectPos(Missions::FireData[mobid][f_object],x,y,z);
-					if(IsPlayerAimingAt(playerid,x,y,z,20.0)){
+					if(Tryg3D::IsPlayerAimingAt(playerid,x,y,z,20.0)){
 						if((keys & KEY_FIRE) && IsPlayerInRangeOfPoint(playerid,20.0,x,y,z) && (modelid == 407 || modelid == 601)){
 							Missions::FireData[mobid][f_health] -= 3.0;
 							if(Missions::FireData[mobid][f_health] <= 0.0){
@@ -1880,7 +1889,7 @@ public OnPlayerUpdate(playerid){
 					GetDynamicObjectPos(Missions::RouteData[mobid][f_object],x,y,z);
 					vid = GetPlayerVehicleID(playerid);
 					GetVehicleHealth(vid,p_health);
-					if(IsPlayerAimingAt(playerid,x,y,z,10.0)){
+					if(Tryg3D::IsPlayerAimingAt(playerid,x,y,z,10.0)){
 						if((keys & KEY_FIRE) && IsPlayerInRangeOfPoint(playerid,10.0,x,y,z) && (modelid == 486)){
 							Missions::RouteData[mobid][f_health] -= 3.0;
 							if(Missions::RouteData[mobid][f_health] <= 0.0){
@@ -1898,7 +1907,7 @@ public OnPlayerUpdate(playerid){
 					}
 					if(vid != 0 && modelid != 486 && IsPlayerInRangeOfPoint(playerid,5.0,x,y,z) && GetPlayerVehicleSeat(playerid) == 0){
 						if(p_health > 350.0){
-							new Float:veh_damage = GetVehicleSpeed(vid)*0.2;
+							new Float:veh_damage = Tryg3D::GetVehicleSpeed(vid)*0.2;
 							SetVehicleHealth(vid,p_health-veh_damage);
 							CallLocalFunction("OnPlayerVehicleDamagedByRoad","ddfff",playerid,mobid,p_health,p_health-veh_damage,veh_damage);
 						}
@@ -1911,7 +1920,7 @@ public OnPlayerUpdate(playerid){
 				if(mobid >= 0 && mobid < MISSIONS_MAX_GASPIPE){
 					if(player_areas[k] == Missions::GasPipeData[mobid][f_area]){
 						GetDynamicObjectPos(Missions::GasPipeData[mobid][f_object],x,y,z);
-						if(IsPlayerAimingAt(playerid,x,y,z,10.0)){
+						if(Tryg3D::IsPlayerAimingAt(playerid,x,y,z,10.0)){
 							if((keys & KEY_FIRE) && IsPlayerInRangeOfPoint(playerid,5.0,x,y,z)){
 								ApplyAnimation(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0);
 								Missions::GasPipeData[mobid][f_health] -= 5.0;
@@ -1929,7 +1938,7 @@ public OnPlayerUpdate(playerid){
 			if(mobid >= 0 && mobid < MISSIONS_MAX_WOOD){
 				if(player_areas[k] == Missions::WoodData[mobid][f_area]){
 					GetDynamicObjectPos(Missions::WoodData[mobid][f_object],x,y,z);
-					if(IsPlayerAimingAt(playerid,x,y,z,10.0)){
+					if(Tryg3D::IsPlayerAimingAt(playerid,x,y,z,10.0)){
 						if((keys & KEY_FIRE) && IsPlayerInRangeOfPoint(playerid,3.0,x,y,z) && GetPlayerWeapon(playerid) == 9){
 							Missions::WoodData[mobid][f_health] -= 1.0;
 							if(Missions::WoodData[mobid][f_health] <= 0.0){
