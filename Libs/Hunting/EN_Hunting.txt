@@ -95,6 +95,8 @@ HUNTING_NO_AUTO_RESPAWN //disable auto respawn (respawntime param)
 
 [b]Example Pawn Code:[/b]
 [code]
+#define TRYG3D_ENABLE_COLANDREAS
+
 #include <a_samp>
 #include <streamer>
 #include <ColAndreas>

@@ -11,7 +11,7 @@
  File Version: 1.4.4
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Functions:
  Hunting::Create(type,Float:x,Float:y,Float:z,Float:health,respawntime,worldid=-1,interiorid=-1,playerid=-1,Float:streamdistance=200.0,moving_area = 0);
@@ -84,16 +84,16 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_COLANDREAS
-	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
 #endif
 
 #if defined _hunting_system
@@ -375,7 +375,7 @@ stock Hunting::SetPos(mobid,Float:x,Float:y,Float:z,bool:disable_moving=false){
 	if(mobid <= 0 || mobid >= MAX_HUNTING_ANIMALS) return 0;
 	if(!Hunting::IsValid(mobid)) return 0;
 	
-	if(IsPointInWater(x,y) || IsPointInUnderground(x,y,z)) return 0;
+	if(Tryg3D::IsPointInWater(x,y) || Tryg3D::IsPointInUnderground(x,y,z)) return 0;
 	if(Hunting::Data[mobid][Hunting::areaid] != STREAMER_TAG_AREA:INVALID_STREAMER_ID){
 		if(!IsPointInDynamicArea(Hunting::Data[mobid][Hunting::areaid],x,y,z)) return 0;
 	}
@@ -512,7 +512,7 @@ stock Hunting::Respawn(mobid){
 	Streamer::SetIntData(STREAMER_TYPE_OBJECT,Hunting::Data[mobid][Hunting::objectid],E_STREAMER_MODEL_ID,modelid);
 
 	new Float:tmp_float,Float:target_z;
-	MovePointCol(Hunting::Data[mobid][Hunting::X],Hunting::Data[mobid][Hunting::Y],Hunting::Data[mobid][Hunting::Z]+1.0,Hunting::Data[mobid][Hunting::X],Hunting::Data[mobid][Hunting::Y],-100.0,tmp_float,tmp_float,target_z);
+	Tryg3D::MovePointCol(Hunting::Data[mobid][Hunting::X],Hunting::Data[mobid][Hunting::Y],Hunting::Data[mobid][Hunting::Z]+1.0,Hunting::Data[mobid][Hunting::X],Hunting::Data[mobid][Hunting::Y],-100.0,tmp_float,tmp_float,target_z);
 	switch(Hunting::Data[mobid][Hunting::type]){
 		case HUNTING_TYPE_DEER:	target_z += 0.5;
 	}
@@ -579,7 +579,7 @@ stock Hunting::Kill(mobid,playerid=INVALID_PLAYER_ID){
 	new Float:tmp_float,Float:target_z,Float:x,Float:y,Float:z;
 	Hunting::GetPos(mobid,x,y,z);
 	Hunting::SetPos(mobid,x,y,z);
-	MovePointCol(x,y,z+1.0,x,y,-100.0,tmp_float,tmp_float,target_z);
+	Tryg3D::MovePointCol(x,y,z+1.0,x,y,-100.0,tmp_float,tmp_float,target_z);
 	
 	switch(Hunting::Data[mobid][Hunting::type]){
 		case HUNTING_TYPE_COW:	MoveDynamicObject(Hunting::Data[mobid][Hunting::objectid],x,y,target_z+0.3,0.5,0.0,90.0);
@@ -590,6 +590,8 @@ stock Hunting::Kill(mobid,playerid=INVALID_PLAYER_ID){
 	
 	#if defined OnPlayerKillHuntAnimal
 		OnPlayerKillHuntAnimal(playerid,mobid);
+	#else
+		#pragma unused playerid
 	#endif
 	return 1;
 }
@@ -619,7 +621,7 @@ stock Hunting::ApplyMovement(mobid){
 	new	Float:tmp_float, Float:x,Float:y,Float:z, Float:vx,Float:vy,Float:vz, Float:target_z;
 	Hunting::GetPos(mobid,x,y,z);
 	if(x == 0.0 && y == 0.0 && z == 0.0) return 0;
-	MovePointCol(x,y,z+1.0,x,y,-100.0,tmp_float,tmp_float,target_z);
+	Tryg3D::MovePointCol(x,y,z+1.0,x,y,-100.0,tmp_float,tmp_float,target_z);
 	
 	if(GetTickCount() >= Hunting::Data[mobid][Hunting::calm] && Hunting::Data[mobid][Hunting::calm] != 0){
 		Hunting::SetSpeed(mobid,0.8);
@@ -635,10 +637,10 @@ stock Hunting::ApplyMovement(mobid){
 	if(Hunting::IsToggledMoving(mobid)){
 		switch(Hunting::Data[mobid][Hunting::type]){
 			case HUNTING_TYPE_COW, HUNTING_TYPE_DEER: {
-				if(GetDistanceBetweenPoints2D(Hunting::Data[mobid][Hunting::tX],Hunting::Data[mobid][Hunting::tY],x,y) == 0.0){
+				if(Tryg3D::GetDistance2D(Hunting::Data[mobid][Hunting::tX],Hunting::Data[mobid][Hunting::tY],x,y) == 0.0){
 					vx = vy = vz = 0.0;
-					Random::PointInCircle(x,y,RandomFloat(5.0,25.0),vx,vy);
-					if(GetDistanceBetweenPoints2D(x,y,vx,vy) <= 2.0 || IsPointInWater(vx,vy) || IsPointInUnderground(x,y,z+1.0)) return 0;
+					Tryg3D::GetPointInCircle(x,y,Tryg3D::RandomFloat(5.0,25.0),vx,vy);
+					if(Tryg3D::GetDistance2D(x,y,vx,vy) <= 2.0 || Tryg3D::IsPointInWater(vx,vy) || Tryg3D::IsPointInUnderground(x,y,z+1.0)) return 0;
 					ColAndreas::FindZ_For2DCoord(vx,vy,vz);
 					vz += 1.0;
 					if(ColAndreas::RayCastLine(x,y,z+1.0,vx,vy,vz,tmp_float,tmp_float,tmp_float)) return 0;
@@ -650,7 +652,7 @@ stock Hunting::ApplyMovement(mobid){
 					}
 					Hunting::Data[mobid][Hunting::tX] = vx;
 					Hunting::Data[mobid][Hunting::tY] = vy;
-					GetRotationFor2Point2D(x,y,vx,vy,Hunting::Data[mobid][Hunting::rZ]);
+					Tryg3D::GetRotationFor2Point2D(x,y,vx,vy,Hunting::Data[mobid][Hunting::rZ]);
 				}
 			}
 		}
