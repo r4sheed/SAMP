@@ -10,6 +10,10 @@
 
 [b]Установка:[/b]
 [code]
+#define TRYG3D_ENABLE_VEHICLE
+#define TRYG3D_ENABLE_UNIVERSAL
+#define TRYG3D_ENABLE_COLANDREAS
+
 #include <ColAndreas>
 #include <3DTryg>
 #include <VehPara>

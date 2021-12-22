@@ -10,6 +10,10 @@ Hello, I would like to present you the Vehicle Parachute Script
 
 [b]Installation:[/b]
 [code]
+#define TRYG3D_ENABLE_VEHICLE
+#define TRYG3D_ENABLE_UNIVERSAL
+#define TRYG3D_ENABLE_COLANDREAS
+
 #include <ColAndreas>
 #include <3DTryg>
 #include <VehPara>

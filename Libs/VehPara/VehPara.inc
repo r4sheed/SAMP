@@ -10,7 +10,7 @@
  File Version: 1.2.0
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Functions:
  bool:IsPlayerUsingVehPara(playerid);
@@ -43,16 +43,24 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_COLANDREAS
-	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#if !defined TRYG3D_MOD_VEHICLE
+	#error [ADM] Module not initialized: TRYG3D_MOD_VEHICLE (add #define TRYG3D_ENABLE_VEHICLE before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_UNIVERSAL
+	#error [ADM] Module not initialized: TRYG3D_MOD_UNIVERSAL (add #define TRYG3D_ENABLE_UNIVERSAL before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
 #endif
 
 #if defined _vehicle_parachute
@@ -151,7 +159,7 @@ stock StopVehicleParachuteAction(playerid,vehicleid=INVALID_VEHICLE_ID){
 //Hook: OnPlayerUpdate
 public OnPlayerUpdate(playerid){
 	if(IsPlayerUsingVehPara(playerid)){
-		if(IsCollisionFlag(Item::GetCollisionFlags(GetPlayerVehicleID(playerid),item_vehicle),POSITION_FLAG_GROUND)){
+		if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(GetPlayerVehicleID(playerid),item_vehicle),POSITION_FLAG_GROUND)){
 			StopVehicleParachuteAction(playerid);
 			CallLocalFunction("OnVehicleParachuteThrown","dd",playerid,GetPlayerVehicleID(playerid));
 		} else {
@@ -159,7 +167,7 @@ public OnPlayerUpdate(playerid){
 			T3D:vid = GetPlayerVehicleID(playerid);
 			T3D:tx = T3D:ty = 0.0;
 			Tryg3D::GetVehicleRotation(T3D:vid,T3D:rx,T3D:ry,T3D:rz);
-			ShiftVectorRotation((Tryg3D::DeCompressRotation(T3D:ry)/180.0),(Tryg3D::DeCompressRotation(-T3D:rx)/180.0),0.0,0.0,0.0,T3D:rz,T3D:tx,T3D:ty,T3D:tz);
+			Tryg3D::ShiftVectorRotation((Tryg3D::DeCompressRotation(T3D:ry)/180.0),(Tryg3D::DeCompressRotation(-T3D:rx)/180.0),0.0,0.0,0.0,T3D:rz,T3D:tx,T3D:ty,T3D:tz);
 			SetVehicleVelocity(T3D:vid,(T3D:tx/10.0),(T3D:ty/10.0),-0.2);
 		}
 	}
@@ -273,7 +281,7 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 					StopVehicleParachuteAction(playerid);
 					CallLocalFunction("OnVehicleParachuteThrown","dd",playerid,vid);
 				} else {
-					if(IsCollisionFlag(Item::GetCollisionFlags(vid,item_vehicle),POSITION_FLAG_AIR) && GetVehicleSpeed(vid) > 0.0){
+					if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(vid,item_vehicle),POSITION_FLAG_AIR) && Tryg3D::GetVehicleSpeed(vid) > 0.0){
 						StartVehicleParachuteAction(playerid);
 						CallLocalFunction("OnVehicleParachuteOpened","dd",playerid,vid);
 					} else {
