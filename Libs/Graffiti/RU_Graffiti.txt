@@ -6,6 +6,9 @@
 [b]Установка:[/b]
 [code]
 #include <streamer>
+
+#define TRYG3D_ENABLE_PLAYER
+
 #include <3DTryg>
 
 //#define GRAFFITI_DEFAULT_GANG			0

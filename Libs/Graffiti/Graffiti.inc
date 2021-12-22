@@ -10,7 +10,7 @@
 
  File Version: 1.0.3
  Streamer Version: 2.9.5
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Functions:
  Graffiti::Init();
@@ -37,19 +37,23 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#endif
+
+#if !defined TRYG3D_MOD_PLAYER
+	#error [ADM] Module not initialized: TRYG3D_MOD_PLAYER (add #define TRYG3D_ENABLE_PLAYER before include 3DTryg.inc)
 #endif
 
 #if defined _graffiti_los_santos
 	#endinput
 #endif
 #define _graffiti_los_santos
-#define DYNAMIC_FILTERSCRIPT						"ALS:HOOK:METHOD"
+#define DYNAMIC_FILTERSCRIPT			"ALS:HOOK:METHOD"
 
 #define Graffiti:: 						Graffiti_
 
@@ -254,7 +258,7 @@ public OnPlayerUpdate(playerid){
 					if(Graffiti::Data[mobid][Graffiti::gangid] != gangid){
 						if(player_areas[k] == Graffiti::Data[mobid][Graffiti::areaid]){
 							GetDynamicObjectPos(Graffiti::Data[mobid][Graffiti::objectid],x,y,z);
-							if(IsPlayerAimingAt(playerid,x,y,z,3.0)){
+							if(Tryg3D::IsPlayerAimingAt(playerid,x,y,z,3.0)){
 								if((keys & KEY_FIRE) && IsPlayerInRangeOfPoint(playerid,5.0,x,y,z)){
 									if(Graffiti::Data[mobid][Graffiti::playerid] != playerid){
 										Graffiti::Data[mobid][Graffiti::playerid] = playerid;
