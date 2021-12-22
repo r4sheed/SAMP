@@ -11,7 +11,7 @@
  File Version: 2.7.0
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Functions:
  Knife::ToggleUseTeam(bool:toggle);            //default: false
@@ -58,16 +58,20 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_COLANDREAS
-	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#if !defined TRYG3D_MOD_PLAYER
+	#error [ADM] Module not initialized: TRYG3D_MOD_PLAYER (add #define TRYG3D_ENABLE_PLAYER before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
 #endif
 
 #if defined _knife_shot
@@ -162,7 +166,7 @@ T3D:function Knife::Shot(playerid){
 	GetPlayerFacingAngle(playerid,mrz);
 	mvw = GetPlayerVirtualWorld(playerid);
 	mint = GetPlayerInterior(playerid);
-	GetPointInFront2D(mx,my,mrz,Knife::GetRange(playerid),mtx,mty);
+	Tryg3D::GetPointInFront2D(mx,my,mrz,Knife::GetRange(playerid),mtx,mty);
 	Knife::PlayerData[playerid][Knife::LockTarget] = INVALID_PLAYER_ID;
 	new Float:T3D:ldist = 20000;
 	pteam = GetPlayerTeam(playerid);
@@ -173,8 +177,8 @@ T3D:function Knife::Shot(playerid){
 				if(Tryg3D::IsPlayerSpawned(i)){
 					GetPlayerPos(i,px,py,pz);
 					if(GetPlayerVirtualWorld(i) == mvw && GetPlayerInterior(i) == mint){
-						if(Area::PointInCylinder3D(px,py,pz,mx,my,mz,mtx,mty,mz,2.0)){
-							if((T3D:dist = GetDistanceBetweenPoints3D(px,py,pz,mx,my,mz)) < T3D:ldist){
+						if(Tryg3D::IsPointInCylinder3D(px,py,pz,mx,my,mz,mtx,mty,mz,2.0)){
+							if((T3D:dist = Tryg3D::GetDistance3D(px,py,pz,mx,my,mz)) < T3D:ldist){
 								T3D:ldist = T3D:dist;
 								Knife::PlayerData[playerid][Knife::LockTarget] = i;
 							}
@@ -197,16 +201,16 @@ T3D:function Knife::Shot(playerid){
 	if(Knife::PlayerData[playerid][Knife::LockTarget] == INVALID_PLAYER_ID){
 		trz = Tryg3D::CompressRotation(mrz+90.0);
 		new STREAMER_TAG_OBJECT:tmpobj = CreateDynamicObject(335,mx,my,mz,0.0,90.0,trz,mvw,mint,-1);
-		GetPointInFront3DCol(mx,my,mz,356.7,mrz,Knife::GetRange(playerid),mtx,mty,mtz);		
-		GetMoveTime(mx,my,mz,mtx,mty,mtz,Knife::GetSpeed(playerid),mtime);
+		Tryg3D::GetPointInFront3DCol(mx,my,mz,356.7,mrz,Knife::GetRange(playerid),mtx,mty,mtz);		
+		mtime = Tryg3D::ShiftSpeedToMoveTime(mx,my,mz,mtx,mty,mtz,Knife::GetSpeed(playerid));
 		MoveDynamicObject(tmpobj,mtx,mty,mtz,Knife::GetSpeed(playerid),0.0,110.0,trz);
 		SetTimerEx("Knife_Destroy",mtime+KNIFE_REFRESH_MISS,false,"ddd",_:tmpobj,INVALID_PLAYER_ID,playerid);
 	} else {
 		GetPlayerPos(Knife::PlayerData[playerid][Knife::LockTarget],px,py,pz);
-		GetRotationFor2Point2D(mx,my,px,py,trz);
+		Tryg3D::GetRotationFor2Point2D(mx,my,px,py,trz);
 		trz = Tryg3D::CompressRotation(trz+90.0);
 		new STREAMER_TAG_OBJECT:tmpobj = CreateDynamicObject(335,mx,my,mz,0.0,90.0,trz,mvw,mint,-1);
-		GetMoveTime(mx,my,mz,px,py,pz,Knife::GetSpeed(playerid),mtime);
+		mtime = Tryg3D::ShiftSpeedToMoveTime(mx,my,mz,px,py,pz,Knife::GetSpeed(playerid));
 		MoveDynamicObject(tmpobj,px,py,pz,Knife::GetSpeed(playerid),0.0,90.0,trz);
 		SetTimerEx("Knife_Destroy",mtime,false,"ddd",_:tmpobj,Knife::PlayerData[playerid][Knife::LockTarget],playerid);
 	}

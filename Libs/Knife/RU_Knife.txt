@@ -11,6 +11,9 @@
 
 [b]Установка:[/b]
 [code]
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_COLANDREAS
+
 #include <colandreas>
 #include <3DTryg>
 #include <Knife>
