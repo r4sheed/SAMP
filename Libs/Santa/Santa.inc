@@ -10,7 +10,7 @@
  File Version: 1.4.4
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
  StreamerFunction Version: 3.0.0
 
  Functions:
@@ -40,16 +40,16 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_COLANDREAS
-	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
 #endif
 
 #if defined _santa_gifts
@@ -69,7 +69,7 @@
 
 new STREAMER_TAG_PICKUP:Santa::Pickup[MAX_SANTAGIFTS],
 	Float:				Santa::SpawnZoneRectangle[4],
-	Float:				Santa::SpawnZonePolygon[MAX_POLYGON_POINTS],
+	Float:				Santa::SpawnZonePolygon[TRYG3D_MAX_POLYGON_POINTS],
 						Santa::SpawnZonePolygonSize,
 						Santa::SpawnZoneType,
 						Santa::Timer;
@@ -126,15 +126,15 @@ stock Santa::RandomCreate(giftid,bool:reset){
 	new smodel = random(sizeof(SantaPickupModel)),Float:x,Float:y,Float:z;
 	switch(Santa::SpawnZoneType){
 		case 0: {
-			Random::PointInRectangle(Santa::SpawnZoneRectangle[0],Santa::SpawnZoneRectangle[1],Santa::SpawnZoneRectangle[2],Santa::SpawnZoneRectangle[3],x,y);
-			while(IsPointInWater(x,y,0.0)){
-				Random::PointInRectangle(Santa::SpawnZoneRectangle[0],Santa::SpawnZoneRectangle[1],Santa::SpawnZoneRectangle[2],Santa::SpawnZoneRectangle[3],x,y);
+			Tryg3D::GetPointInRectangle(Santa::SpawnZoneRectangle[0],Santa::SpawnZoneRectangle[1],Santa::SpawnZoneRectangle[2],Santa::SpawnZoneRectangle[3],x,y);
+			while(Tryg3D::IsPointInWater(x,y,0.0)){
+				Tryg3D::GetPointInRectangle(Santa::SpawnZoneRectangle[0],Santa::SpawnZoneRectangle[1],Santa::SpawnZoneRectangle[2],Santa::SpawnZoneRectangle[3],x,y);
 			}
 		}
 		case 1: {
-			Random::PointInPolygon(Santa::SpawnZonePolygon,x,y,Santa::SpawnZonePolygonSize);
-			while(IsPointInWater(x,y,0.0)){
-				Random::PointInPolygon(Santa::SpawnZonePolygon,x,y,Santa::SpawnZonePolygonSize);
+			Tryg3D::GetPointInPolygon(Santa::SpawnZonePolygon,x,y,Santa::SpawnZonePolygonSize);
+			while(Tryg3D::IsPointInWater(x,y,0.0)){
+				Tryg3D::GetPointInPolygon(Santa::SpawnZonePolygon,x,y,Santa::SpawnZonePolygonSize);
 			}
 		}
 	}

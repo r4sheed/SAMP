@@ -13,6 +13,12 @@ Hello, I would like to present a simple script to automatically deploy gifts on 
 [code]
 //#define SANTA_IS_EASTER_EVENT     //Change to Easter Event
 //#define SANTA_IS_EASTER_HALLOWEEN //Change to Halloween Event
+
+//#define MAX_SANTAGIFTS (100)
+//#define REFRESH_SANTAGIFTS (2*60*60*1000)	//2 hour
+
+#define TRYG3D_ENABLE_COLANDREAS
+
 #include <streamer>
 #include <ColAndreas>
 #include <3DTryg>

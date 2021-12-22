@@ -17,6 +17,8 @@
 //#define MAX_SANTAGIFTS (100)
 //#define REFRESH_SANTAGIFTS (2*60*60*1000)	//2 hour
 
+#define TRYG3D_ENABLE_COLANDREAS
+
 #include <streamer>
 #include <ColAndreas>
 #include <3DTryg>
