@@ -7,6 +7,16 @@
 #include <FCNPC>
 #include <GPS>
 
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_VEHICLE
+#define TRYG3D_ENABLE_COLANDREAS
+#define TRYG3D_ENABLE_STREAMER
+#define TRYG3D_ENABLE_FCNPC
+#define TRYG3D_ENABLE_GRENADEDETECTION
+#define TRYG3D_ENABLE_VEHICLECOL
+#define TRYG3D_ENABLE_UNIVERSAL
+#define TRYG3D_ENABLE_CAST3D
+
 #include <vnpc/vnpc>
 #include <3DTryg/3DTryg>
 #include <SWAP/SWAP>
@@ -47,12 +57,12 @@ T3D:function Legion::GetZoneOwner(checkpointid){
 
 stock Legion::GetRandomCaptureZone(npcid,&Float:x,&Float:y,&Float:z){
 	#pragma unused npcid
-	Random::PointInRectangle(500.0,500.0,3000.0,3000.0,x,y);
-	while(IsPointInWater(x,y,0.0)){
-		Random::PointInRectangle(500.0,500.0,3000.0,3000.0,x,y);
+	Tryg3D::GetPointInRectangle(500.0,500.0,3000.0,3000.0,x,y);
+	while(Tryg3D::IsPointInWater(x,y,0.0)){
+		Tryg3D::GetPointInRectangle(500.0,500.0,3000.0,3000.0,x,y);
 	}
 	ColAndreas::FindZ_For2DCoord(x,y,z);
-	z += CHARACTER_GROUND_Z_DIFF;
+	z += TRYG3D_CHARACTER_GROUND_Z_DIFF;
 	return 1;
 }
 

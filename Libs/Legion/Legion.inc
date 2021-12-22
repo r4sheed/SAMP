@@ -47,28 +47,28 @@ Legion V3.5.0 Copyright © 2021 Abyss Morgan, Unrea1
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_COLANDREAS
-	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
 #endif
 
-#if !defined TRYG3D_FCNPC
-	#error [ADM] Module not initialized: TRYG3D_FCNPC
+#if !defined TRYG3D_MOD_FCNPC
+	#error [ADM] Module not initialized: TRYG3D_MOD_FCNPC (add #define TRYG3D_ENABLE_FCNPC before include 3DTryg.inc)
 #endif
 
-#if !defined TRYG3D_STREAMER
-	#error [ADM] Module not initialized: TRYG3D_STREAMER
+#if !defined TRYG3D_MOD_STREAMER
+	#error [ADM] Module not initialized: TRYG3D_MOD_STREAMER (add #define TRYG3D_ENABLE_STREAMER before include 3DTryg.inc)
 #endif
 
-#if !defined TRYG3D_VEHICLECOLLISION
-	#error [ADM] Module not initialized: TRYG3D_VEHICLECOLLISION (add #define ENABLE_3D_TRYG_VEHICLECOL before include 3DTryg.inc)
+#if !defined TRYG3D_MOD_VEHICLECOLLISION
+	#error [ADM] Module not initialized: TRYG3D_MOD_VEHICLECOLLISION (add #define TRYG3D_ENABLE_VEHICLECOL before include 3DTryg.inc)
 #endif
 
 #if defined _LEGION_INCLUDE
@@ -111,6 +111,8 @@ Legion V3.5.0 Copyright © 2021 Abyss Morgan, Unrea1
 
 #define LEGION_EXTRA_ID_OFFSET_A		(10000000)
 #define LEGION_EXTRA_ID_OFFSET_B		(10004000)
+
+#define LEGION_COLLISION_FLAGS			(TRYG3D_COLLISION_FLAG_OBJECT + TRYG3D_COLLISION_FLAG_VEHICLE)
 
 #define LEGION_SWAP_FILE				"LegionScore.bin"
 
@@ -260,7 +262,7 @@ T3D:function Legion::OnProtocolUpdate(){
 	for(new i = 0; i < MAX_LEGION_NPC; i++){
 		npcid = Legion::NPC[i];
 		if(npcid != INVALID_PLAYER_ID){
-			//SetPlayerFakePing(npcid,randomex(25,50));
+			//SetPlayerFakePing(npcid,Tryg3D::RandomInteger(25,50));
 			switch(Legion::Data[npcid][Legion::State]){
 				case LEGION_STATE_DEAD: {
 					if(GetTickCount() > Legion::Data[npcid][Legion::RespawnTime]){
@@ -304,7 +306,7 @@ T3D:function Legion::OnProtocolUpdate(){
 						}
 					}
 				}
-				Legion::SetNextCommandTime(npcid,cur_tick+randomex(3000,10000));
+				Legion::SetNextCommandTime(npcid,cur_tick+Tryg3D::RandomInteger(3000,10000));
 			}
 		}
 	}
@@ -392,7 +394,7 @@ stock Legion::GetVehicle(npcid,Float:maxdist){
 				 472, 473, 484, 493, 501, 537, 538, 564, 569, 570,
 				 584, 590, 591, 594, 595, 606, 607, 608, 610, 611: continue;
 			default: {
-				if(IsVehicleFlag(GetVehicleFlags(vehicleid),VF_STREET) && Legion::VehicleLock[vehicleid] == INVALID_PLAYER_ID){
+				if(Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vehicleid),VF_STREET) && Legion::VehicleLock[vehicleid] == INVALID_PLAYER_ID){
 					if(worldid != -1 && GetVehicleVirtualWorld(vehicleid) != worldid) continue;
 					if(interiorid != -1 && GetVehicleInterior(vehicleid) != interiorid) continue;
 					GetVehiclePos(vehicleid,px,py,pz);
@@ -452,7 +454,7 @@ T3D:function OnLegionPathCalculated(Path:pathid, npcid, start_time) {
 		for(new i = 0; i < amount_of_nodes; i++){
 			GetPathNode(pathid,0,nodeid);
 			GetMapNodePos(nodeid,x,y,z);
-			InteriorFindZ(x,y,z,2.0,z);
+			Tryg3D::InteriorFindZ(x,y,z,2.0,z);
 			FCNPC::AddPointToMovePath(Legion::Data[npcid][Legion::MovePath],x,y,z+oz);
 		}
 		FCNPC::GoByMovePath(npcid,Legion::Data[npcid][Legion::MovePath],0,Legion::Data[npcid][Legion::MoveType],Legion::Data[npcid][Legion::MoveSpeed],FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
@@ -554,9 +556,9 @@ stock Legion::GetTarget(npcid,Float:max_dist=0.0){
 	}
 	Tryg3D::Foreach(i){
 		if(GetPlayerTeam(i) != pteam){
-			if(Item::GetDistance(i,item_player,npcid,item_fcnpc) <= max_dist && FCNPC::IsStreamedIn(npcid,i)){
+			if(Tryg3D::ItemGetDistance(i,item_player,npcid,item_fcnpc) <= max_dist && FCNPC::IsStreamedIn(npcid,i)){
 				if(GetPlayerState(i) != PLAYER_STATE_SPECTATING && GetPlayerState(i) != PLAYER_STATE_WASTED){
-					if(Item::OnFakeScreen(x,y,z,i,item_player,0.0,angle)){
+					if(Tryg3D::ItemOnFakeScreen(x,y,z,i,item_player,0.0,angle)){
 						pool_upp++;
 						pool_players[pool_upp] = i;
 					}
@@ -598,7 +600,7 @@ stock Legion::StartAttack(npcid,bool:force=false){
 	if(!IsPlayerConnected(Legion::Data[npcid][Legion::LastTarget])) return Legion::StopAttack(npcid);
 	new Float:x,Float:y,Float:z;
 	FCNPC::GetPosition(npcid,x,y,z);
-	if(!Item::OnFakeScreen(x,y,z,Legion::Data[npcid][Legion::LastTarget],item_player,0.0,FCNPC::GetAngle(npcid)) && !force) return Legion::StopAttack(npcid);
+	if(!Tryg3D::ItemOnFakeScreen(x,y,z,Legion::Data[npcid][Legion::LastTarget],item_player,0.0,FCNPC::GetAngle(npcid)) && !force) return Legion::StopAttack(npcid);
 	FCNPC::AimAtPlayer(npcid,Legion::Data[npcid][Legion::LastTarget],true,1000,true);
 	return 1;
 }
@@ -718,7 +720,7 @@ public FCNPC::OnTakeDamage(npcid, issuerid, Float:amount, weaponid, bodypart){
 								new Float:x,Float:y,Float:z;
 								GetPlayerPos(Legion::Data[npcid][Legion::LastTarget],x,y,z);
 								FCNPC::SetTargetAngle(npcid,x,y);
-							} else if(Item::GetDistance(issuerid,item_player,npcid,item_fcnpc) < Item::GetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc)){
+							} else if(Tryg3D::ItemGetDistance(issuerid,item_player,npcid,item_fcnpc) < Tryg3D::ItemGetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc)){
 								Legion::Data[npcid][Legion::LastTarget] = issuerid;
 								Legion::StartAttack(npcid,true);
 								new Float:x,Float:y,Float:z;
@@ -733,7 +735,7 @@ public FCNPC::OnTakeDamage(npcid, issuerid, Float:amount, weaponid, bodypart){
 								new Float:x,Float:y,Float:z;
 								GetPlayerPos(Legion::Data[npcid][Legion::LastTarget],x,y,z);
 								FCNPC::SetTargetAngle(npcid,x,y);
-							} else if(Item::GetDistance(issuerid,item_player,npcid,item_fcnpc) < Item::GetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc)){
+							} else if(Tryg3D::ItemGetDistance(issuerid,item_player,npcid,item_fcnpc) < Tryg3D::ItemGetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc)){
 								Legion::Data[npcid][Legion::LastTarget] = issuerid;
 								Legion::StartAttack(npcid,true);
 								new Float:x,Float:y,Float:z;
@@ -748,7 +750,7 @@ public FCNPC::OnTakeDamage(npcid, issuerid, Float:amount, weaponid, bodypart){
 								new Float:x,Float:y,Float:z;
 								GetPlayerPos(Legion::Data[npcid][Legion::LastTarget],x,y,z);
 								FCNPC::SetTargetAngle(npcid,x,y);
-							} else if(Item::GetDistance(issuerid,item_player,npcid,item_fcnpc) < Item::GetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc)){
+							} else if(Tryg3D::ItemGetDistance(issuerid,item_player,npcid,item_fcnpc) < Tryg3D::ItemGetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc)){
 								Legion::Data[npcid][Legion::LastTarget] = issuerid;
 								Legion::StartAttack(npcid,true);
 								new Float:x,Float:y,Float:z;
@@ -756,7 +758,7 @@ public FCNPC::OnTakeDamage(npcid, issuerid, Float:amount, weaponid, bodypart){
 								FCNPC::SetTargetAngle(npcid,x,y);
 							}
 							if(Legion::Data[npcid][Legion::LastTarget] != INVALID_PLAYER_ID){
-								if(FCNPC::IsStreamedIn(npcid,issuerid) && Item::GetDistance(issuerid,item_player,npcid,item_fcnpc) > 5.0){
+								if(FCNPC::IsStreamedIn(npcid,issuerid) && Tryg3D::ItemGetDistance(issuerid,item_player,npcid,item_fcnpc) > 5.0){
 									if(Legion::CanMove(npcid)){
 										if(IsPlayerInDynamicArea(Legion::Data[npcid][Legion::LastTarget],Legion::Data[npcid][Legion::move_area]) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPlayerInDynamicArea(Legion::Data[npcid][Legion::LastTarget],Legion::Data[npcid][Legion::defending_area]))){
 											if(FCNPC::IsMoving(npcid)) FCNPC::Stop(npcid);
@@ -764,11 +766,11 @@ public FCNPC::OnTakeDamage(npcid, issuerid, Float:amount, weaponid, bodypart){
 											FCNPC::GetPosition(npcid,x,y,z);
 											GetPlayerPos(Legion::Data[npcid][Legion::LastTarget],ix,iy,pz);
 											FCNPC::SetTargetAngle(npcid,ix,iy);
-											Random::PointOnCircle(ix,iy,Tryg3D::RandomFloat(3.0,8.0),px,py);
-											if(!IsPointBetween2Points2D(ix,iy,x,y,px,py) && !Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
-												if(MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,3.0)){
-													if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
-														if(Item::GetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) > 25.0){
+											Tryg3D::GetPointOnCircle(ix,iy,Tryg3D::RandomFloat(3.0,8.0),px,py);
+											if(!Tryg3D::IsPointBetween2Points2D(ix,iy,x,y,px,py) && !Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
+												if(Tryg3D::MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,3.0)){
+													if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
+														if(Tryg3D::ItemGetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) > 25.0){
 															FCNPC::GoTo(npcid,tx,ty,tz,FCNPC_MOVE_TYPE_SPRINT,FCNPC_MOVE_SPEED_SPRINT,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
 															FCNPC::ApplyAnimation(npcid,"FAT","FatSprint",4.1,true,true,true,true,true);
 														} else {
@@ -786,14 +788,14 @@ public FCNPC::OnTakeDamage(npcid, issuerid, Float:amount, weaponid, bodypart){
 					}
 				}
 				case LEGION_STATE_ENTER_VEHICLE: {
-					if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+					if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
 						FCNPC::Stop(npcid);
 						Legion::SyncArea(npcid);
 						Legion::Data[npcid][Legion::State] = LEGION_STATE_ONFOOT;
 					}
 				}
 				case LEGION_STATE_VEHICLE_DRIVER: {
-					if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+					if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
 						Legion::Data[npcid][Legion::State] = LEGION_STATE_EXIT_VEHICLE;
 						FCNPC::Stop(npcid);
 						Legion::LockVehicleForNPC(npcid,FCNPC::GetVehicleID(npcid),false);
@@ -801,8 +803,8 @@ public FCNPC::OnTakeDamage(npcid, issuerid, Float:amount, weaponid, bodypart){
 					}
 				}
 				case LEGION_STATE_VEHICLE_PASSENGER: {
-					if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
-						if(GetVehicleSpeed(FCNPC::GetVehicleID(npcid)) <= 0.0){
+					if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+						if(Tryg3D::GetVehicleSpeed(FCNPC::GetVehicleID(npcid)) <= 0.0){
 							Legion::Data[npcid][Legion::State] = LEGION_STATE_EXIT_VEHICLE;
 							FCNPC::ExitVehicle(npcid);
 						}
@@ -837,7 +839,7 @@ public FCNPC::OnUpdate(npcid){
 					}
 					Legion::StartAttack(npcid);
 				} else {
-					if(Item::GetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) > 300.0){
+					if(Tryg3D::ItemGetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) > 300.0){
 						Legion::StopAttack(npcid);
 					} else {
 						if(!FCNPC::IsShooting(npcid) && Legion::Data[npcid][Legion::Agresive] && FCNPC::GetSpeed(npcid) < FCNPC_MOVE_SPEED_SPRINT){
@@ -857,7 +859,7 @@ public FCNPC::OnUpdate(npcid){
 								new Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:px,Float:py,Float:pz,Float:ox,Float:oy,Float:oz,Float:target_z,bool:found = false;
 								FCNPC::GetPosition(npcid,x,y,z);
 								Streamer::GetItemPos(STREAMER_TYPE_CP,Legion::Data[npcid][Legion::CheckPoint],px,py,pz);
-								if(GetDistanceBetweenPoints3D(x,y,z,px,py,pz) <= 1.0){
+								if(Tryg3D::GetDistance3D(x,y,z,px,py,pz) <= 1.0){
 									if(!Legion::Data[npcid][Legion::InCheckPoint]){
 										if(Legion::GetZoneOwner(Legion::Data[npcid][Legion::CheckPoint]) == Legion::Data[npcid][Legion::TeamID]){
 											Legion::Data[npcid][Legion::Command] = LEGION_CMD_MOVE_NEARBY;
@@ -874,38 +876,38 @@ public FCNPC::OnUpdate(npcid){
 										}
 									}
 								} else {
-									if(GetDistanceBetweenPoints3D(x,y,z,px,py,pz) > 1.0){
-										if(Item::ToPointIsVeh(px,py,pz,npcid,item_fcnpc)){
-											GetPointFor2Point3D(x,y,z,px,py,pz,50.0,ox,oy,oz);
+									if(Tryg3D::GetDistance3D(x,y,z,px,py,pz) > 1.0){
+										if(Tryg3D::ItemCollisionToPoint(px,py,pz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS)){
+											Tryg3D::GetPointFor2Point3D(x,y,z,px,py,pz,50.0,ox,oy,oz);
 											for(new Float:ang = 0; ang < 360.0; ang += 1.0){
-												GetPointInFront2D(ox,oy,ang,1.0,tx,ty);
-												ColAndreas::FindGroundZ(tx,ty,z,target_z);
+												Tryg3D::GetPointInFront2D(ox,oy,ang,1.0,tx,ty);
+												Tryg3D::FindGroundZ(tx,ty,z,target_z);
 												tz = target_z + LEGION_Z_DIFF;
-												if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty)){
+												if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty)){
 													found = true;
 													break;
 												}
 											}
 											if(!found){
-												if(!Item::ToPointIsVeh(x,py,z,npcid,item_fcnpc)){
-													GetPointFor2Point2DEx(x,y,x,py,1.0,tx,ty);
-												} else if(!Item::ToPointIsVeh(px,y,z,npcid,item_fcnpc)){
-													GetPointFor2Point2DEx(x,y,px,y,1.0,tx,ty);
+												if(!Tryg3D::ItemCollisionToPoint(x,py,z,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS)){
+													Tryg3D::GetPointFor2Point2DEx(x,y,x,py,1.0,tx,ty);
+												} else if(!Tryg3D::ItemCollisionToPoint(px,y,z,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS)){
+													Tryg3D::GetPointFor2Point2DEx(x,y,px,y,1.0,tx,ty);
 												} else {
-													GetPointInFront2D(x,y,FCNPC::GetAngle(npcid),1.0,tx,ty);
+													Tryg3D::GetPointInFront2D(x,y,FCNPC::GetAngle(npcid),1.0,tx,ty);
 												}
 											}
-											ColAndreas::FindGroundZ(tx,ty,z,target_z);
+											Tryg3D::FindGroundZ(tx,ty,z,target_z);
 											tz = target_z + LEGION_Z_DIFF;
-											if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty) && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz)){
+											if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty) && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz)){
 												FCNPC::GoTo(npcid,tx,ty,tz,FCNPC_MOVE_TYPE_WALK,FCNPC_MOVE_SPEED_WALK,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
 												FCNPC::ApplyAnimation(npcid,"FAT","FatWalk",4.1,true,true,true,true,true);
 											}
-										} else if(GetDistanceBetweenPoints3D(x,y,z,px,py,pz) < 5.0){
+										} else if(Tryg3D::GetDistance3D(x,y,z,px,py,pz) < 5.0){
 											if(IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],px,py,pz)){
 												if(!Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
-													if(MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,0.5)){
-														if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty) && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz)){
+													if(Tryg3D::MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,0.5)){
+														if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty) && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz)){
 															FCNPC::GoTo(npcid,tx,ty,tz,FCNPC_MOVE_TYPE_WALK,FCNPC_MOVE_SPEED_WALK,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
 															FCNPC::ApplyAnimation(npcid,"FAT","FatWalk",4.1,true,true,true,true,true);
 														}
@@ -915,9 +917,9 @@ public FCNPC::OnUpdate(npcid){
 										} else {
 											if(IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],px,py,pz)){
 												if(!Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
-													if(MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,0.5)){
-														if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty) && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz)){
-															if(GetDistanceBetweenPoints3D(x,y,z,px,py,pz) > 25.0){
+													if(Tryg3D::MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,0.5)){
+														if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty) && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz)){
+															if(Tryg3D::GetDistance3D(x,y,z,px,py,pz) > 25.0){
 																FCNPC::GoTo(npcid,tx,ty,tz,FCNPC_MOVE_TYPE_SPRINT,FCNPC_MOVE_SPEED_SPRINT,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
 																FCNPC::ApplyAnimation(npcid,"FAT","FatSprint",4.1,true,true,true,true,true);
 															} else {
@@ -940,10 +942,10 @@ public FCNPC::OnUpdate(npcid){
 								if(Legion::Data[npcid][Legion::LastTarget] == INVALID_PLAYER_ID){
 									new Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:target_z;
 									FCNPC::GetPosition(npcid,x,y,z);
-									GetPointInFront2D(x,y,FCNPC::GetAngle(npcid),1.0,tx,ty);
-									ColAndreas::FindGroundZ(tx,ty,z,target_z);
+									Tryg3D::GetPointInFront2D(x,y,FCNPC::GetAngle(npcid),1.0,tx,ty);
+									Tryg3D::FindGroundZ(tx,ty,z,target_z);
 									tz = target_z + LEGION_Z_DIFF;
-									if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty) && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
+									if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty) && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
 										FCNPC::GoTo(npcid,tx,ty,tz,FCNPC_MOVE_TYPE_WALK,FCNPC_MOVE_SPEED_WALK,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
 										FCNPC::ApplyAnimation(npcid,"FAT","FatWalk",4.1,true,true,true,true,true);
 									} else {
@@ -953,47 +955,47 @@ public FCNPC::OnUpdate(npcid){
 									}
 								} else {
 									if(FCNPC::IsStreamedIn(npcid,Legion::Data[npcid][Legion::LastTarget])){
-										if(Item::ToItemIsVeh(npcid,item_fcnpc,Legion::Data[npcid][Legion::LastTarget],item_player)){
+										if(Tryg3D::ItemCollisionToItem(npcid,item_fcnpc,Legion::Data[npcid][Legion::LastTarget],item_player,.collision_flags = LEGION_COLLISION_FLAGS)){
 											new Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,Float:px,Float:py,Float:pz,Float:ox,Float:oy,Float:oz,Float:target_z,bool:found = false;
 											FCNPC::GetPosition(npcid,x,y,z);
 											GetPlayerPos(Legion::Data[npcid][Legion::LastTarget],px,py,pz);
-											Random::PointOnCircle(px,py,Tryg3D::RandomFloat(3.0,8.0),px,py);
-											GetPointFor2Point3D(x,y,z,px,py,pz,50.0,ox,oy,oz);
+											Tryg3D::GetPointOnCircle(px,py,Tryg3D::RandomFloat(3.0,8.0),px,py);
+											Tryg3D::GetPointFor2Point3D(x,y,z,px,py,pz,50.0,ox,oy,oz);
 											for(new Float:ang = 0; ang < 360.0; ang += 1.0){
-												GetPointInFront2D(ox,oy,ang,1.0,tx,ty);
-												ColAndreas::FindGroundZ(tx,ty,z,target_z);
+												Tryg3D::GetPointInFront2D(ox,oy,ang,1.0,tx,ty);
+												Tryg3D::FindGroundZ(tx,ty,z,target_z);
 												tz = target_z + LEGION_Z_DIFF;
-												if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty)){
+												if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty)){
 													found = true;
 													break;
 												}
 											}
 											if(!found){
-												if(!Item::ToPointIsVeh(x,py,z,npcid,item_fcnpc)){
-													GetPointFor2Point2DEx(x,y,x,py,1.0,tx,ty);
-												} else if(!Item::ToPointIsVeh(px,y,z,npcid,item_fcnpc)){
-													GetPointFor2Point2DEx(x,y,px,y,1.0,tx,ty);
+												if(!Tryg3D::ItemCollisionToPoint(x,py,z,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS)){
+													Tryg3D::GetPointFor2Point2DEx(x,y,x,py,1.0,tx,ty);
+												} else if(!Tryg3D::ItemCollisionToPoint(px,y,z,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS)){
+													Tryg3D::GetPointFor2Point2DEx(x,y,px,y,1.0,tx,ty);
 												} else {
-													GetPointInFront2D(x,y,FCNPC::GetAngle(npcid),1.0,tx,ty);
+													Tryg3D::GetPointInFront2D(x,y,FCNPC::GetAngle(npcid),1.0,tx,ty);
 												}
 											}
-											ColAndreas::FindGroundZ(tx,ty,z,target_z);
+											Tryg3D::FindGroundZ(tx,ty,z,target_z);
 											tz = target_z + LEGION_Z_DIFF;
-											if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
+											if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
 												FCNPC::GoTo(npcid,tx,ty,tz,FCNPC_MOVE_TYPE_WALK,FCNPC_MOVE_SPEED_WALK,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,false);
 												FCNPC::ApplyAnimation(npcid,"FAT","FatWalk",4.1,true,true,true,true,true);
 											}
-										} else if(Item::GetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) < 5.0){
+										} else if(Tryg3D::ItemGetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) < 5.0){
 											if(IsPlayerInDynamicArea(Legion::Data[npcid][Legion::LastTarget],Legion::Data[npcid][Legion::move_area]) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPlayerInDynamicArea(Legion::Data[npcid][Legion::LastTarget],Legion::Data[npcid][Legion::defending_area]))){
 												if(Legion::CanMove(npcid)){
 													new Float:x,Float:y,Float:z,Float:px,Float:py,Float:pz,Float:tx,Float:ty,Float:tz,Float:ix,Float:iy;
 													FCNPC::GetPosition(npcid,x,y,z);
 													GetPlayerPos(Legion::Data[npcid][Legion::LastTarget],ix,iy,pz);
 													FCNPC::SetTargetAngle(npcid,ix,iy);
-													Random::PointOnCircle(ix,iy,Tryg3D::RandomFloat(3.0,8.0),px,py);
-													if(!IsPointBetween2Points2D(ix,iy,x,y,px,py) && !Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
-														if(MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,3.0)){
-															if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
+													Tryg3D::GetPointOnCircle(ix,iy,Tryg3D::RandomFloat(3.0,8.0),px,py);
+													if(!Tryg3D::IsPointBetween2Points2D(ix,iy,x,y,px,py) && !Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
+														if(Tryg3D::MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,3.0)){
+															if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
 																FCNPC::GoTo(npcid,tx,ty,tz,FCNPC_MOVE_TYPE_WALK,FCNPC_MOVE_SPEED_WALK,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,false);
 																FCNPC::ApplyAnimation(npcid,"FAT","FatWalk",4.1,true,true,true,true,true);
 															}
@@ -1008,11 +1010,11 @@ public FCNPC::OnUpdate(npcid){
 													FCNPC::GetPosition(npcid,x,y,z);
 													GetPlayerPos(Legion::Data[npcid][Legion::LastTarget],ix,iy,pz);
 													FCNPC::SetTargetAngle(npcid,ix,iy);
-													Random::PointOnCircle(ix,iy,Tryg3D::RandomFloat(3.0,8.0),px,py);
-													if(!IsPointBetween2Points2D(ix,iy,x,y,px,py) && !Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
-														if(MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,3.0)){
-															if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
-																if(Item::GetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) > 25.0){
+													Tryg3D::GetPointOnCircle(ix,iy,Tryg3D::RandomFloat(3.0,8.0),px,py);
+													if(!Tryg3D::IsPointBetween2Points2D(ix,iy,x,y,px,py) && !Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
+														if(Tryg3D::MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,3.0)){
+															if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
+																if(Tryg3D::ItemGetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) > 25.0){
 																	FCNPC::GoTo(npcid,tx,ty,tz,FCNPC_MOVE_TYPE_SPRINT,FCNPC_MOVE_SPEED_SPRINT,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
 																	FCNPC::ApplyAnimation(npcid,"FAT","FatSprint",4.1,true,true,true,true,true);
 																} else {
@@ -1035,11 +1037,11 @@ public FCNPC::OnUpdate(npcid){
 											FCNPC::GetPosition(npcid,x,y,z);
 											GetPlayerPos(Legion::Data[npcid][Legion::LastTarget],ix,iy,pz);
 											if(!FCNPC::IsMoving(npcid) || FCNPC::GetSpeed(npcid) < FCNPC_MOVE_SPEED_SPRINT) FCNPC::SetTargetAngle(npcid,ix,iy);
-											Random::PointOnCircle(ix,iy,Tryg3D::RandomFloat(3.0,8.0),px,py);
-											if(!IsPointBetween2Points2D(ix,iy,x,y,px,py) && !Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
-												if(MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,3.0)){
-													if(!Item::ToPointIsVeh(tx,ty,tz,npcid,item_fcnpc) && !IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
-														if(Item::GetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) > 25.0){
+											Tryg3D::GetPointOnCircle(ix,iy,Tryg3D::RandomFloat(3.0,8.0),px,py);
+											if(!Tryg3D::IsPointBetween2Points2D(ix,iy,x,y,px,py) && !Legion::IsLegionOnLine(npcid,x,y,z,px,py,pz)){
+												if(Tryg3D::MovePointColWithVehicleCut(x,y,z,px,py,pz,tx,ty,tz,3.0)){
+													if(!Tryg3D::ItemCollisionToPoint(tx,ty,tz,npcid,item_fcnpc,.collision_flags = LEGION_COLLISION_FLAGS) && !Tryg3D::IsPointInWater(tx,ty) && floatabs(z-tz) <= LEGION_Z_CLIMBING && IsPointInDynamicArea(Legion::Data[npcid][Legion::move_area],tx,ty,tz) && (!Legion::Data[npcid][Legion::DefendingZone] || IsPointInDynamicArea(Legion::Data[npcid][Legion::defending_area],tx,ty,tz))){
+														if(Tryg3D::ItemGetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc) > 25.0){
 															FCNPC::GoTo(npcid,tx,ty,tz,FCNPC_MOVE_TYPE_SPRINT,FCNPC_MOVE_SPEED_SPRINT,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
 															FCNPC::ApplyAnimation(npcid,"FAT","FatSprint",4.1,true,true,true,true,true);
 														}
@@ -1051,8 +1053,8 @@ public FCNPC::OnUpdate(npcid){
 								}
 								new Float:x,Float:y,Float:z,Float:target_z,Float:tmp_float;
 								FCNPC::GetPosition(npcid,x,y,z);
-								ColAndreas::FindGroundZ(x,y,z,target_z);
-								if(IsPointInUnderground(x,y,target_z+LEGION_Z_DIFF) && !ColAndreas::RayCastLine(x,y,z,x,y,z-1000.0,tmp_float,tmp_float,tmp_float)){
+								Tryg3D::FindGroundZ(x,y,z,target_z);
+								if(Tryg3D::IsPointInUnderground(x,y,target_z+LEGION_Z_DIFF) && !ColAndreas::RayCastLine(x,y,z,x,y,z-1000.0,tmp_float,tmp_float,tmp_float)){
 									ColAndreas::FindZ_For2DCoord(x,y,target_z);
 								}
 								FCNPC::SetPosition(npcid,x,y,(target_z+LEGION_Z_DIFF));
@@ -1070,7 +1072,7 @@ public FCNPC::OnUpdate(npcid){
 						if(!FCNPC::IsMoving(npcid) && !FCNPC::IsValidMovePath(Legion::Data[npcid][Legion::MovePath])){
 							new vehicleid = Legion::GetVehicle(npcid,50.0);
 							if(IsValidVehicle(vehicleid)){
-								if(!Item::ToItemIsWall(npcid,item_fcnpc,vehicleid,item_vehicle)){
+								if(!Tryg3D::ItemToItemIsWall(npcid,item_fcnpc,vehicleid,item_vehicle)){
 									Legion::Data[npcid][Legion::State] = LEGION_STATE_ENTER_VEHICLE;
 									Legion::LockVehicleForNPC(npcid,vehicleid,true);
 									FCNPC::EnterVehicle(npcid,vehicleid,0,FCNPC_MOVE_TYPE_SPRINT);
@@ -1082,7 +1084,7 @@ public FCNPC::OnUpdate(npcid){
 										Tryg3D::Foreach(i){
 											if(max_passengers == 0) break;
 											if(i != npcid && IsPlayerNPC(i)){
-												if(Item::GetDistance(vehicleid,item_vehicle,i,item_fcnpc) < 50.0){
+												if(Tryg3D::ItemGetDistance(vehicleid,item_vehicle,i,item_fcnpc) < 50.0){
 													if(Legion::Data[i][Legion::State] == LEGION_STATE_ONFOOT){
 														Legion::Data[npcid][Legion::WaitForPassengers] = GetTickCount()+10000;
 														Legion::Data[npcid][Legion::Command] = LEGION_CMD_GET_PASSENGERS;
@@ -1148,7 +1150,7 @@ public FCNPC::OnUpdate(npcid){
 					}
 				}
 				if(IsPlayerConnected(Legion::GetTarget(npcid,25.0))){
-					if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+					if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
 						new Float:x,Float:y,Float:z;
 						GetVehiclePos(FCNPC::GetVehicleID(npcid),x,y,z);
 						SetVehiclePos(FCNPC::GetVehicleID(npcid),x,y,z);
@@ -1162,9 +1164,9 @@ public FCNPC::OnUpdate(npcid){
 			}
 			case LEGION_STATE_VEHICLE_PASSENGER: {
 				if(IsPlayerConnected(Legion::GetTarget(npcid,25.0))){
-					if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+					if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
 						if(IsPlayerInAnyVehicle(npcid)){
-							if(GetVehicleSpeed(FCNPC::GetVehicleID(npcid)) <= 0.0){
+							if(Tryg3D::GetVehicleSpeed(FCNPC::GetVehicleID(npcid)) <= 0.0){
 								Legion::Data[npcid][Legion::State] = LEGION_STATE_EXIT_VEHICLE;
 								FCNPC::ExitVehicle(npcid);
 							}
@@ -1172,7 +1174,7 @@ public FCNPC::OnUpdate(npcid){
 					}
 				}
 				if(GetTickCount() >= Legion::Data[npcid][Legion::WaitForDriver] && Legion::Data[npcid][Legion::WaitForDriver] != 0){
-					if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+					if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
 						if(FCNPC::GetVehicleID(GetVehicleDriver(FCNPC::GetVehicleID(npcid))) != FCNPC::GetVehicleID(npcid)){
 							Legion::SetInterest(npcid,0);
 							Legion::Data[npcid][Legion::WaitForDriver] = 0;
@@ -1211,7 +1213,7 @@ public FCNPC::OnFinishMovePath(npcid, pathid){
 					case LEGION_STATE_ONFOOT: {
 						new Float:tx,Float:ty,Float:tz;
 						FCNPC::GetPosition(npcid,tx,ty,tz);
-						if(GetDistanceBetweenPoints3D(Legion::Data[npcid][Legion::GotoX],Legion::Data[npcid][Legion::GotoY],Legion::Data[npcid][Legion::GotoZ],tx,ty,tz) < 3.0){
+						if(Tryg3D::GetDistance3D(Legion::Data[npcid][Legion::GotoX],Legion::Data[npcid][Legion::GotoY],Legion::Data[npcid][Legion::GotoZ],tx,ty,tz) < 3.0){
 							if(Legion::Data[npcid][Legion::PathID] != FCNPC_INVALID_MOVEPATH_ID){
 								FCNPC::GoByMovePath(npcid,Legion::Data[npcid][Legion::PathID],0,FCNPC_MOVE_TYPE_WALK,FCNPC_MOVE_SPEED_WALK,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
 							}
@@ -1243,9 +1245,9 @@ public FCNPC::OnVehicleExitComplete(npcid, vehicleid){
 	new Float:x,Float:y,Float:z,Float:tx,Float:ty,Float:tz,targetid,Float:target_z,Float:tmp_float;
 	GetVehiclePos(vehicleid,x,y,z);
 	FCNPC::GetPosition(npcid,tx,ty,tz);
-	GetPointFor2Point2DEx(x,y,tx,ty,3.0,tx,ty);
-	ColAndreas::FindGroundZ(tx,ty,tz,target_z);
-	if(IsPointInUnderground(tx,ty,target_z+LEGION_Z_DIFF) && !ColAndreas::RayCastLine(tx,ty,tz,tx,ty,tz-1000.0,tmp_float,tmp_float,tmp_float)){
+	Tryg3D::GetPointFor2Point2DEx(x,y,tx,ty,3.0,tx,ty);
+	Tryg3D::FindGroundZ(tx,ty,tz,target_z);
+	if(Tryg3D::IsPointInUnderground(tx,ty,target_z+LEGION_Z_DIFF) && !ColAndreas::RayCastLine(tx,ty,tz,tx,ty,tz-1000.0,tmp_float,tmp_float,tmp_float)){
 		ColAndreas::FindZ_For2DCoord(tx,ty,target_z);
 	}
 	FCNPC::SetPosition(npcid,tx,ty,(target_z+LEGION_Z_DIFF));
@@ -1257,7 +1259,7 @@ public FCNPC::OnVehicleExitComplete(npcid, vehicleid){
 	}
 	Legion::SyncArea(npcid);
 	Legion::ClearMovePath(npcid);
-	if(GetDistanceBetweenPoints3D(Legion::Data[npcid][Legion::GotoX],Legion::Data[npcid][Legion::GotoY],Legion::Data[npcid][Legion::GotoZ],tx,ty,tz) < 10.0){
+	if(Tryg3D::GetDistance3D(Legion::Data[npcid][Legion::GotoX],Legion::Data[npcid][Legion::GotoY],Legion::Data[npcid][Legion::GotoZ],tx,ty,tz) < 10.0){
 		if(Legion::Data[npcid][Legion::PathID] != FCNPC_INVALID_MOVEPATH_ID){
 			FCNPC::GoByMovePath(npcid,Legion::Data[npcid][Legion::PathID],0,FCNPC_MOVE_TYPE_SPRINT,FCNPC_MOVE_SPEED_SPRINT,FCNPC_MOVE_MODE_NONE,FCNPC_MOVE_PATHFINDING_NONE,0.0,true);
 		}
@@ -1288,7 +1290,7 @@ public OnPlayerEnterDynamicArea(playerid,STREAMER_TAG_AREA:areaid){
 									GetPlayerPos(Legion::Data[npcid][Legion::LastTarget],x,y,z);
 									FCNPC::SetTargetAngle(npcid,x,y);
 								}
-							} else if(Item::GetDistance(playerid,item_player,npcid,item_fcnpc) < Item::GetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc)){
+							} else if(Tryg3D::ItemGetDistance(playerid,item_player,npcid,item_fcnpc) < Tryg3D::ItemGetDistance(Legion::Data[npcid][Legion::LastTarget],item_player,npcid,item_fcnpc)){
 								Legion::Data[npcid][Legion::LastTarget] = playerid;
 								Legion::StartAttack(npcid,true);
 								new Float:x,Float:y,Float:z;
@@ -1298,7 +1300,7 @@ public OnPlayerEnterDynamicArea(playerid,STREAMER_TAG_AREA:areaid){
 						}
 						case LEGION_STATE_ENTER_VEHICLE: {
 							if(Legion::Data[npcid][Legion::Agresive]){
-								if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+								if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
 									FCNPC::Stop(npcid);
 									Legion::SyncArea(npcid);
 									Legion::Data[npcid][Legion::State] = LEGION_STATE_ONFOOT;
@@ -1308,7 +1310,7 @@ public OnPlayerEnterDynamicArea(playerid,STREAMER_TAG_AREA:areaid){
 						}
 						case LEGION_STATE_VEHICLE_DRIVER: {
 							if(Legion::Data[npcid][Legion::Agresive]){
-								if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+								if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
 									Legion::Data[npcid][Legion::State] = LEGION_STATE_EXIT_VEHICLE;
 									FCNPC::Stop(npcid);
 									Legion::LockVehicleForNPC(npcid,FCNPC::GetVehicleID(npcid),false);
@@ -1319,8 +1321,8 @@ public OnPlayerEnterDynamicArea(playerid,STREAMER_TAG_AREA:areaid){
 						}
 						case LEGION_STATE_VEHICLE_PASSENGER: {
 							if(Legion::Data[npcid][Legion::Agresive]){
-								if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
-									if(GetVehicleSpeed(FCNPC::GetVehicleID(npcid)) <= 0.0){
+								if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+									if(Tryg3D::GetVehicleSpeed(FCNPC::GetVehicleID(npcid)) <= 0.0){
 										Legion::Data[npcid][Legion::State] = LEGION_STATE_EXIT_VEHICLE;
 										FCNPC::ExitVehicle(npcid);
 										Legion::ClearMovePath(npcid);
@@ -1389,7 +1391,7 @@ public OnVehicleDeath(vehicleid,killerid){
 		if(IsPlayerNPC(npcid)){
 			if(FCNPC::GetVehicleID(npcid) == vehicleid){
 				if(Legion::Data[npcid][Legion::active]){
-					if(IsCollisionFlag(Item::GetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
+					if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(npcid,item_fcnpc),POSITION_FLAG_GROUND)){
 						Legion::Data[npcid][Legion::State] = LEGION_STATE_EXIT_VEHICLE;
 						FCNPC::Stop(npcid);
 						FCNPC::ExitVehicle(npcid);
