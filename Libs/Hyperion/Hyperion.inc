@@ -10,7 +10,7 @@
  File Version: 1.0.0
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
  Missile Version: 2.3.0
  Progress Version: 1.3.1.0
 
@@ -53,16 +53,32 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_STREAMER
-	#error [ADM] Module not initialized: TRYG3D_STREAMER
+#if !defined TRYG3D_MOD_PLAYER
+	#error [ADM] Module not initialized: TRYG3D_MOD_PLAYER (add #define TRYG3D_ENABLE_PLAYER before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_UNIVERSAL
+	#error [ADM] Module not initialized: TRYG3D_MOD_UNIVERSAL (add #define TRYG3D_ENABLE_UNIVERSAL before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_CAST3D
+	#error [ADM] Module not initialized: TRYG3D_MOD_CAST3D (add #define TRYG3D_ENABLE_CAST3D before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_STREAMER
+	#error [ADM] Module not initialized: TRYG3D_MOD_STREAMER (add #define TRYG3D_ENABLE_STREAMER before include 3DTryg.inc)
 #endif
 
 //Check Version Missile.inc
@@ -565,29 +581,29 @@ stock Hyperion::SetGuardRotation(teamid,guardid,type,Float:rx,Float:rz){
 	new Float:tx,Float:ty;
 	switch(type){
 		case HYPERION_WEAPON_MISSILE: {
-			GetPointInFront2D(Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Tryg3D::CompressRotation(rz+90.0),1.2,tx,ty);
+			Tryg3D::GetPointInFront2D(Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Tryg3D::CompressRotation(rz+90.0),1.2,tx,ty);
 			SetDynamicObjectPos(Hyperion::Guard[teamid][guardid][Hyperion::Object][1],tx,ty,Hyperion::Guard[teamid][guardid][Hyperion::Z]+3.5);
-			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][1],NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
-			GetPointInFront2D(Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Tryg3D::CompressRotation(rz-90.0),1.2,tx,ty);
+			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][1],Tryg3D::NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
+			Tryg3D::GetPointInFront2D(Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Tryg3D::CompressRotation(rz-90.0),1.2,tx,ty);
 			SetDynamicObjectPos(Hyperion::Guard[teamid][guardid][Hyperion::Object][2],tx,ty,Hyperion::Guard[teamid][guardid][Hyperion::Z]+3.5);
-			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][2],NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
+			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][2],Tryg3D::NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
 		}
 		case HYPERION_WEAPON_MORTAR: {
-			GetPointInFront2D(Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Tryg3D::CompressRotation(rz+90.0),3.5,tx,ty);
+			Tryg3D::GetPointInFront2D(Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Tryg3D::CompressRotation(rz+90.0),3.5,tx,ty);
 			SetDynamicObjectPos(Hyperion::Guard[teamid][guardid][Hyperion::Object][1],tx,ty,Hyperion::Guard[teamid][guardid][Hyperion::Z]+7.0);
-			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][1],NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
-			GetPointInFront2D(Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Tryg3D::CompressRotation(rz-90.0),3.5,tx,ty);
+			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][1],Tryg3D::NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
+			Tryg3D::GetPointInFront2D(Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Tryg3D::CompressRotation(rz-90.0),3.5,tx,ty);
 			SetDynamicObjectPos(Hyperion::Guard[teamid][guardid][Hyperion::Object][2],tx,ty,Hyperion::Guard[teamid][guardid][Hyperion::Z]+7.0);
-			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][2],NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
+			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][2],Tryg3D::NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
 			
 		}
 		case HYPERION_WEAPON_CONGREVE: {
 			SetDynamicObjectPos(Hyperion::Guard[teamid][guardid][Hyperion::Object][1],Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Hyperion::Guard[teamid][guardid][Hyperion::Z]+7.0);
-			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][1],NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
+			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][1],Tryg3D::NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0));
 			SetDynamicObjectPos(Hyperion::Guard[teamid][guardid][Hyperion::Object][2],Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Hyperion::Guard[teamid][guardid][Hyperion::Z]+7.0);
-			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][2],NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0-40.0));
+			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][2],Tryg3D::NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0-40.0));
 			SetDynamicObjectPos(Hyperion::Guard[teamid][guardid][Hyperion::Object][3],Hyperion::Guard[teamid][guardid][Hyperion::X],Hyperion::Guard[teamid][guardid][Hyperion::Y],Hyperion::Guard[teamid][guardid][Hyperion::Z]+7.0);
-			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][3],NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0+40.0));
+			SetDynamicObjectRot(Hyperion::Guard[teamid][guardid][Hyperion::Object][3],Tryg3D::NMTVF(Tryg3D::CompressRotation(-rx+90.0),90.0),0.0,Tryg3D::CompressRotation(rz-180.0+40.0));
 		}
 	}
 }
@@ -643,7 +659,7 @@ stock Hyperion::GuardCreate(teamid,guardid,Float:health,type){
 }
 
 stock Hyperion::Init(){
-	printf("[ADM] Info: Load Hyperion v1.0.0 for SA:MP %s by Abyss Morgan",TRYG3D_SAMP_VERSION);
+	printf("[ADM] Info: Load Hyperion v1.0.0 for %s %s by Abyss Morgan",TRYG3D_PLATFORM_NAME,TRYG3D_PLATFORM_VERSION);
 	new k = 0, STREAMER_TAG_OBJECT:tmp_object;
 	for(new guardid = 0; guardid < 21; guardid++){
 		for(new teamid = 0; teamid < 2; teamid++){
@@ -729,7 +745,7 @@ stock Hyperion::Init(){
 }
 
 stock Hyperion::Exit(){
-	printf("[ADM] Info: Unload Hyperion v1.0.0 for SA:MP %s by Abyss Morgan",TRYG3D_SAMP_VERSION);
+	printf("[ADM] Info: Unload Hyperion v1.0.0 for %s %s by Abyss Morgan",TRYG3D_PLATFORM_NAME,TRYG3D_PLATFORM_VERSION);
 	if(Hyperion::State == HYPERION_STATE_ON){
 		Hyperion::Finish();
 	}
@@ -796,10 +812,10 @@ stock Hyperion::Start(){
 		Streamer::ToggleIdleUpdate(playerid,1);
 		switch(teamid){
 			case HYPERION_TEAM_BLUE: {
-				SetPlayerAbsolutePosition(playerid,Hyperion::BridgeSpawnBlue[used_guard[teamid]][0],Hyperion::BridgeSpawnBlue[used_guard[teamid]][1],Hyperion::BridgeSpawnBlue[used_guard[teamid]][2],0.0,HYPERION_VW,0,2000,0);
+				Tryg3D::SetPlayerAbsolutePosition(playerid,Hyperion::BridgeSpawnBlue[used_guard[teamid]][0],Hyperion::BridgeSpawnBlue[used_guard[teamid]][1],Hyperion::BridgeSpawnBlue[used_guard[teamid]][2],0.0,HYPERION_VW,0,2000,0);
 			}
 			case HYPERION_TEAM_GREEN: {
-				SetPlayerAbsolutePosition(playerid,Hyperion::BridgeSpawnGreen[used_guard[teamid]][0],Hyperion::BridgeSpawnGreen[used_guard[teamid]][1],Hyperion::BridgeSpawnGreen[used_guard[teamid]][2],180.0,HYPERION_VW,0,2000,0);
+				Tryg3D::SetPlayerAbsolutePosition(playerid,Hyperion::BridgeSpawnGreen[used_guard[teamid]][0],Hyperion::BridgeSpawnGreen[used_guard[teamid]][1],Hyperion::BridgeSpawnGreen[used_guard[teamid]][2],180.0,HYPERION_VW,0,2000,0);
 			}
 		}
 		CallLocalFunction("OnHyperionHelpPresented","d",playerid);
@@ -1065,14 +1081,14 @@ stock Hyperion::OnMegaWeaponShot(playerid){
 		case HYPERION_WEAPON_MISSILE: {
 			if(GetTickCount()-Hyperion::PlayerData[playerid][Hyperion::WeaponTick] < 500) return 1;
 
-			GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+			Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
 			
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],180.0,Tryg3D::CompressRotation(F5[T3D:rZ]+90.0),2.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],1500.0,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],180.0,Tryg3D::CompressRotation(F5[T3D:rZ]+90.0),2.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],1500.0,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_SMALL,5.0,25.0,100.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],HYPERION_VW,0,-1,HYPERION_MISSILE_STREAM,MISSILE_OBJECT_NORMAL,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,Hyperion::PlayerData[playerid][Hyperion::TeamID],.damage=0.0,.vehicle_damage=HYPERION_DAMAGE_MISSILE);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F5[T3D:rZ]+90.0),2.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],1500.0,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F5[T3D:rZ]+90.0),2.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront3DCol(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F5[T3D:rX],F5[T3D:rZ],1500.0,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_SMALL,5.0,25.0,100.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],HYPERION_VW,0,-1,HYPERION_MISSILE_STREAM,MISSILE_OBJECT_NORMAL,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,Hyperion::PlayerData[playerid][Hyperion::TeamID],.damage=0.0,.vehicle_damage=HYPERION_DAMAGE_MISSILE);
 
 			Hyperion::PlayerData[playerid][Hyperion::WeaponTick] = GetTickCount();
@@ -1083,39 +1099,39 @@ stock Hyperion::OnMegaWeaponShot(playerid){
 			new Float:tx, Float:ty, Float:tz, Float:ox, Float:oy, Float:oz;
 			
 			GetPlayerCameraPos(playerid,ox,oy,oz);
-			GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
-			GetPointInFront3DCol(ox,oy,oz,F5[T3D:rX],F5[T3D:rZ],3000.0,tx,ty,tz);
-			GetRotationFor2Point2D(F5[T3D:X],F5[T3D:Y],tx,ty,F4[T3D:rZ]);
+			Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+			Tryg3D::GetPointInFront3DCol(ox,oy,oz,F5[T3D:rX],F5[T3D:rZ],3000.0,tx,ty,tz);
+			Tryg3D::GetRotationFor2Point2D(F5[T3D:X],F5[T3D:Y],tx,ty,F4[T3D:rZ]);
 			
-			new Float:Hyperion::dist = GetDistanceBetweenPoints2D(F5[T3D:X],F5[T3D:Y],tx,ty);
+			new Float:Hyperion::dist = Tryg3D::GetDistance2D(F5[T3D:X],F5[T3D:Y],tx,ty);
 			
 			new remote_cnt = floatround(Hyperion::dist/15.0);
 		
 			if(remote_cnt > MAX_MISSILE_REMOTE_TARGET) remote_cnt = MAX_MISSILE_REMOTE_TARGET;
 			if(remote_cnt < 4) remote_cnt = 4;
 		
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+60.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+60.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,35.0,80.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],HYPERION_VW,0,-1,HYPERION_MISSILE_STREAM,MISSILE_OBJECT_BOMB,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,Hyperion::PlayerData[playerid][Hyperion::TeamID],true,remote_cnt,(Hyperion::dist/3.0),.damage=0.0,.vehicle_damage=HYPERION_DAMAGE_MORTAR);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+120.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+120.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,35.0,80.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],HYPERION_VW,0,-1,HYPERION_MISSILE_STREAM,MISSILE_OBJECT_BOMB,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,Hyperion::PlayerData[playerid][Hyperion::TeamID],true,remote_cnt,(Hyperion::dist/3.0),.damage=0.0,.vehicle_damage=HYPERION_DAMAGE_MORTAR);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,35.0,80.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],HYPERION_VW,0,-1,HYPERION_MISSILE_STREAM,MISSILE_OBJECT_BOMB,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,Hyperion::PlayerData[playerid][Hyperion::TeamID],true,remote_cnt,(Hyperion::dist/3.0),.damage=0.0,.vehicle_damage=HYPERION_DAMAGE_MORTAR);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+240.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+240.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,35.0,80.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],HYPERION_VW,0,-1,HYPERION_MISSILE_STREAM,MISSILE_OBJECT_BOMB,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,Hyperion::PlayerData[playerid][Hyperion::TeamID],true,remote_cnt,(Hyperion::dist/3.0),.damage=0.0,.vehicle_damage=HYPERION_DAMAGE_MORTAR);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+300.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,Tryg3D::CompressRotation(F4[T3D:rZ]+300.0),2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,35.0,80.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],HYPERION_VW,0,-1,HYPERION_MISSILE_STREAM,MISSILE_OBJECT_BOMB,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,Hyperion::PlayerData[playerid][Hyperion::TeamID],true,remote_cnt,(Hyperion::dist/3.0),.damage=0.0,.vehicle_damage=HYPERION_DAMAGE_MORTAR);
 
-			GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,F4[T3D:rZ],2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-			GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
+			Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],0.0,F4[T3D:rZ],2.5,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+			Tryg3D::GetPointInFront2D(F4[T3D:X],F4[T3D:Y],F4[T3D:rZ],Hyperion::dist,F4[T3D:tX],F4[T3D:tY]);
 			Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,5.0,35.0,80.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],HYPERION_VW,0,-1,HYPERION_MISSILE_STREAM,MISSILE_OBJECT_BOMB,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,Hyperion::PlayerData[playerid][Hyperion::TeamID],true,remote_cnt,(Hyperion::dist/3.0),.damage=0.0,.vehicle_damage=HYPERION_DAMAGE_MORTAR);
 
 			Hyperion::PlayerData[playerid][Hyperion::WeaponTick] = GetTickCount();
@@ -1123,11 +1139,11 @@ stock Hyperion::OnMegaWeaponShot(playerid){
 		case HYPERION_WEAPON_CONGREVE: {
 			if(GetTickCount()-Hyperion::PlayerData[playerid][Hyperion::WeaponTick] < 1500) return 1;
 			
-			GetPlayerCameraRotation(playerid,F4[T3D:rX],F4[T3D:rZ]);
+			Tryg3D::GetPlayerCameraRotation(playerid,F4[T3D:rX],F4[T3D:rZ]);
 			
 			for(new i = 0; i < 12; i++){
-				Random::PointOnSphericalSector(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F4[T3D:rX],F4[T3D:rZ],800.0,5.0,5.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
-				MovePointCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
+				Tryg3D::GetPointOnSphericalSector(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F4[T3D:rX],F4[T3D:rZ],800.0,5.0,5.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+				Tryg3D::MovePointCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ]);
 				Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,15.0,35.0,100.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],HYPERION_VW,0,-1,HYPERION_MISSILE_STREAM,MISSILE_OBJECT_HYDRA,F4[T3D:tX],F4[T3D:tY],F4[T3D:tZ],playerid,Hyperion::PlayerData[playerid][Hyperion::TeamID],.damage=0.0,.vehicle_damage=HYPERION_DAMAGE_CONGREVE);
 			}
 			
@@ -1146,17 +1162,17 @@ stock Hyperion::ConvertMega(Float:x,Float:y,Float:z,STREAMER_TAG_OBJECT:objectid
 		Float:Hyperion::dist;
 
 	GetDynamicObjectPos(objectid,ox,oy,oz);
-	ShiftPositionToOffset(x,y,z,0.0,0.0,0.0,offset_x,offset_y,offset_z,ox,oy,oz);
+	Tryg3D::ShiftPositionToOffset(x,y,z,0.0,0.0,0.0,offset_x,offset_y,offset_z,ox,oy,oz);
 	
 	Hyperion::dist = VectorSize(offset_x,offset_y,offset_z);
 	
-	ShiftVectorRotation(offset_x,offset_y,offset_z,0.0,0.0,180.0,tx,ty,tz);
+	Tryg3D::ShiftVectorRotation(offset_x,offset_y,offset_z,0.0,0.0,180.0,tx,ty,tz);
 	
 	tx *= Hyperion::dist;
 	ty *= Hyperion::dist;
 	tz *= Hyperion::dist;
 	
-	ShiftOffsetToPosition(x,y,z,0.0,0.0,0.0,tx,ty,tz,ox,oy,oz);
+	Tryg3D::ShiftOffsetToPosition(x,y,z,0.0,0.0,0.0,tx,ty,tz,ox,oy,oz);
 	SetDynamicObjectPos(objectid,ox,oy,oz);
 	
 	GetDynamicObjectRot(objectid,ox,oy,oz);
@@ -1227,7 +1243,7 @@ stock Hyperion::LoadObject(mobid,color,Float:x,Float:y,Float:z,worldid,interiori
 //Hook: OnMissileRequestLaunch
 public OnMissileRequestLaunch(Float:x,Float:y,Float:z,playerid,targetid){
 	if(!Hyperion::PlayerData[playerid][Hyperion::OnArea]){
-		if(Area::PointInRectangle(x,y,3180.0000,-350.0000,3430.0000,350.0000)) return 0;
+		if(Tryg3D::IsPointInRectangle(x,y,3180.0000,-350.0000,3430.0000,350.0000)) return 0;
 	}
 	#if defined HYPER_OnMissileRequestLaunch
 		return HYPER_OnMissileRequestLaunch(x,y,z,playerid,targetid);
@@ -1279,14 +1295,14 @@ public OnPlayerUpdate(playerid){
 		new Float:rz,Float:rx;
 		switch(Hyperion::PlayerData[playerid][Hyperion::WeaponType]){
 			case HYPERION_WEAPON_MISSILE, HYPERION_WEAPON_CONGREVE: {
-				GetPlayerCameraRotation(playerid,rx,rz);
+				Tryg3D::GetPlayerCameraRotation(playerid,rx,rz);
 			}
 			case HYPERION_WEAPON_MORTAR: {
 				new Float:T3D:rx, Float:T3D:rz, Float:tx, Float:ty, Float:tz, Float:ox, Float:oy, Float:oz;
 				GetPlayerCameraPos(playerid,ox,oy,oz);
-				GetPlayerCameraRotation(playerid,T3D:rx,T3D:rz);
-				GetPointInFront3DCol(ox,oy,oz,T3D:rx,T3D:rz,3000.0,tx,ty,tz);
-				GetRotationFor2Point2D(Hyperion::Guard[Hyperion::PlayerData[playerid][Hyperion::TeamID]][Hyperion::PlayerData[playerid][Hyperion::GuardID]][Hyperion::X],Hyperion::Guard[Hyperion::PlayerData[playerid][Hyperion::TeamID]][Hyperion::PlayerData[playerid][Hyperion::GuardID]][Hyperion::Y],tx,ty,rz);
+				Tryg3D::GetPlayerCameraRotation(playerid,T3D:rx,T3D:rz);
+				Tryg3D::GetPointInFront3DCol(ox,oy,oz,T3D:rx,T3D:rz,3000.0,tx,ty,tz);
+				Tryg3D::GetRotationFor2Point2D(Hyperion::Guard[Hyperion::PlayerData[playerid][Hyperion::TeamID]][Hyperion::PlayerData[playerid][Hyperion::GuardID]][Hyperion::X],Hyperion::Guard[Hyperion::PlayerData[playerid][Hyperion::TeamID]][Hyperion::PlayerData[playerid][Hyperion::GuardID]][Hyperion::Y],tx,ty,rz);
 				rx = 35.0;
 			}
 		}

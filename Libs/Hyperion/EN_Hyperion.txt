@@ -8,6 +8,12 @@ It is a war of two large warships in which between 6 and 42 players can particip
 
 [b]Installation:[/b]
 [code]
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_UNIVERSAL
+#define TRYG3D_ENABLE_CAST3D
+#define TRYG3D_ENABLE_COLANDREAS
+#define TRYG3D_ENABLE_STREAMER
+
 #include <streamer>
 #include <colandreas>
 #include <3DTryg>
