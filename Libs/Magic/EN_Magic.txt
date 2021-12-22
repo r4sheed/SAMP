@@ -10,6 +10,9 @@ Hello, I would like to present you the Magic Wand Script
 
 [b]Installation:[/b]
 [code]
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_COLANDREAS
+
 #include <colandreas>
 #include <3DTryg>
 #include <Magic>

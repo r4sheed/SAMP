@@ -11,7 +11,7 @@
  File Version: 1.3.0
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Functions:
  Magic::ToggleUseTeam(bool:toggle);            //default: false
@@ -60,16 +60,20 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_COLANDREAS
-	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#if !defined TRYG3D_MOD_PLAYER
+	#error [ADM] Module not initialized: TRYG3D_MOD_PLAYER (add #define TRYG3D_ENABLE_PLAYER before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
 #endif
 
 #if defined _magic_shot
@@ -192,7 +196,7 @@ T3D:function Magic::Shot(playerid){
 	GetPlayerFacingAngle(playerid,mrz);
 	mvw = GetPlayerVirtualWorld(playerid);
 	mint = GetPlayerInterior(playerid);
-	GetPointInFront2D(mx,my,mrz,Magic::GetRange(playerid),mtx,mty);
+	Tryg3D::GetPointInFront2D(mx,my,mrz,Magic::GetRange(playerid),mtx,mty);
 	Magic::PlayerData[playerid][Magic::LockTarget] = INVALID_PLAYER_ID;
 	pteam = GetPlayerTeam(playerid);
 	
@@ -202,8 +206,8 @@ T3D:function Magic::Shot(playerid){
 				if(Tryg3D::IsPlayerSpawned(i)){
 					GetPlayerPos(i,px,py,pz);
 					if(GetPlayerVirtualWorld(i) == mvw && GetPlayerInterior(i) == mint){
-						if(Area::PointInCylinder3D(px,py,pz,mx,my,mz,mtx,mty,mz,2.0)){
-							if((dist = GetDistanceBetweenPoints3D(px,py,pz,mx,my,mz)) < ldist){
+						if(Tryg3D::IsPointInCylinder3D(px,py,pz,mx,my,mz,mtx,mty,mz,2.0)){
+							if((dist = Tryg3D::GetDistance3D(px,py,pz,mx,my,mz)) < ldist){
 								ldist = dist;
 								Magic::PlayerData[playerid][Magic::LockTarget] = i;
 							}
@@ -227,16 +231,16 @@ T3D:function Magic::Shot(playerid){
 	if(Magic::PlayerData[playerid][Magic::LockTarget] == INVALID_PLAYER_ID){
 		new STREAMER_TAG_OBJECT:tmpobj = CreateDynamicObject(Magic::PlayerData[playerid][Magic::Projectile][T3D:INT],mx+Magic::PlayerData[playerid][Magic::Projectile][T3D:X],my+Magic::PlayerData[playerid][Magic::Projectile][T3D:Y],mz+Magic::PlayerData[playerid][Magic::Projectile][T3D:Z],Magic::PlayerData[playerid][Magic::Projectile][T3D:rX],Magic::PlayerData[playerid][Magic::Projectile][T3D:rY],Tryg3D::CompressRotation(mrz+Magic::PlayerData[playerid][Magic::Projectile][T3D:rZ]),mvw,mint,-1,_,100.0);
 		GetDynamicObjectPos(tmpobj,mx,my,mz);
-		GetPointInFront3DCol(mx,my,mz,0.0,mrz,Magic::GetRange(playerid),mtx,mty,mtz);		
-		GetMoveTime(mx,my,mz,mtx,mty,mtz,Magic::GetSpeed(playerid),mtime);
+		Tryg3D::GetPointInFront3DCol(mx,my,mz,0.0,mrz,Magic::GetRange(playerid),mtx,mty,mtz);		
+		mtime = Tryg3D::ShiftSpeedToMoveTime(mx,my,mz,mtx,mty,mtz,Magic::GetSpeed(playerid));
 		MoveDynamicObject(tmpobj,mtx,mty,mtz,Magic::GetSpeed(playerid),Magic::PlayerData[playerid][Magic::Projectile][T3D:rX],Magic::PlayerData[playerid][Magic::Projectile][T3D:rY],Tryg3D::CompressRotation(mrz+Magic::PlayerData[playerid][Magic::Projectile][T3D:rZ]));
 		SetTimerEx("Magic_Destroy",mtime,0,"ddd",_:tmpobj,INVALID_PLAYER_ID,playerid);
 	} else {
 		GetPlayerPos(Magic::PlayerData[playerid][Magic::LockTarget],px,py,pz);
-		GetRotationFor2Point2D(mx,my,px,py,mrz);
+		Tryg3D::GetRotationFor2Point2D(mx,my,px,py,mrz);
 		new STREAMER_TAG_OBJECT:tmpobj = CreateDynamicObject(Magic::PlayerData[playerid][Magic::Projectile][T3D:INT],mx+Magic::PlayerData[playerid][Magic::Projectile][T3D:X],my+Magic::PlayerData[playerid][Magic::Projectile][T3D:Y],mz+Magic::PlayerData[playerid][Magic::Projectile][T3D:Z],Magic::PlayerData[playerid][Magic::Projectile][T3D:rX],Magic::PlayerData[playerid][Magic::Projectile][T3D:rY],Tryg3D::CompressRotation(mrz+Magic::PlayerData[playerid][Magic::Projectile][T3D:rZ]),mvw,mint,-1,_,100.0);
 		GetDynamicObjectPos(tmpobj,mx,my,mz);
-		GetMoveTime(mx,my,mz,px,py,pz,Magic::GetSpeed(playerid),mtime);
+		mtime = Tryg3D::ShiftSpeedToMoveTime(mx,my,mz,px,py,pz,Magic::GetSpeed(playerid));
 		MoveDynamicObject(tmpobj,px,py,pz,Magic::GetSpeed(playerid),Magic::PlayerData[playerid][Magic::Projectile][T3D:rX],Magic::PlayerData[playerid][Magic::Projectile][T3D:rY],Tryg3D::CompressRotation(mrz+Magic::PlayerData[playerid][Magic::Projectile][T3D:rZ]));
 		SetTimerEx("Magic_Destroy",mtime,0,"ddd",_:tmpobj,Magic::PlayerData[playerid][Magic::LockTarget],playerid);
 	}
