@@ -12,6 +12,19 @@
 - [url=https://www.youtube.com/watch?v=NDWkGCxCJuA]New Vehicle Missile[/url]
 - [url=https://www.youtube.com/watch?v=qQ1T2NszDkc]Flares[/url]
 
+[b]Установка:[/b]
+[code]
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_UNIVERSAL
+#define TRYG3D_ENABLE_CAST3D
+#define TRYG3D_ENABLE_COLANDREAS
+
+#include <streamer>
+#include <colandreas>
+#include <3DTryg>
+#include <Missile>
+[/code]
+
 [b]Функции:[/b]
 [code]
 Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);

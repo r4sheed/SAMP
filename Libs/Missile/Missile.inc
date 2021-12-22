@@ -10,7 +10,7 @@
  File Version: 2.3.1
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Functions:
  Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:speed,Float:x,Float:y,Float:z,worldid,interiorid,playerid,Float:streamdistance,missile_object,Float:tx,Float:ty,Float:tz,byplayerid=INVALID_PLAYER_ID,teamid=ANY_TEAM,bool:remote=false,remote_count=MAX_MISSILE_REMOTE_TARGET,remote_height=1.0,Float:arc_roll=0.0,Float:damage=-1.0,Float:vehicle_damage=-1.0);
@@ -62,16 +62,28 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_COLANDREAS
-	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#if !defined TRYG3D_MOD_PLAYER
+	#error [ADM] Module not initialized: TRYG3D_MOD_PLAYER (add #define TRYG3D_ENABLE_PLAYER before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_UNIVERSAL
+	#error [ADM] Module not initialized: TRYG3D_MOD_UNIVERSAL (add #define TRYG3D_ENABLE_UNIVERSAL before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_CAST3D
+	#error [ADM] Module not initialized: TRYG3D_MOD_CAST3D (add #define TRYG3D_ENABLE_CAST3D before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
 #endif
 
 #if defined _missile_launcher
@@ -192,7 +204,7 @@ stock Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:spee
 	if(mobid > Missile::UpperBound) Missile::UpperBound = mobid;
 	
 	new Float:rx, Float:rz;
-	GetRotationFor2Point3D(x,y,z,tx,ty,tz,rx,rz);
+	Tryg3D::GetRotationFor2Point3D(x,y,z,tx,ty,tz,rx,rz);
 	switch(missile_object){
 		case MISSILE_OBJECT_NORMAL: {
 			rz = Tryg3D::CompressRotation(rz-90.0);
@@ -240,20 +252,20 @@ stock Missile::Launch(type,Float:detection_range,Float:explode_radius,Float:spee
 		Missile::Data[mobid][Missile::RemoteCount] = remote_count-2;
 		Missile::Data[mobid][Missile::RemoteID] = 2;
 		
-		GetArcPoints3D(x,y,z,tx,ty,tz,arc_roll,remote_height,Missile::Points[mobid],remote_count);
+		Tryg3D::GetArcPoints3D(x,y,z,tx,ty,tz,arc_roll,remote_height,Missile::Points[mobid],remote_count);
 		
 		new rid = remote_count-1;
 		tx = Missile::Points[mobid][rid][0];
 		ty = Missile::Points[mobid][rid][1];
 		tz = Missile::Points[mobid][rid][2];
 		
-		MovePointCol(tx,ty,tz,tx,ty,tz-10000.0,Missile::Points[mobid][rid][0],Missile::Points[mobid][rid][1],Missile::Points[mobid][rid][2]);
+		Tryg3D::MovePointCol(tx,ty,tz,tx,ty,tz-10000.0,Missile::Points[mobid][rid][0],Missile::Points[mobid][rid][1],Missile::Points[mobid][rid][2]);
 		
 		tx = Missile::Points[mobid][1][0];
 		ty = Missile::Points[mobid][1][1];
 		tz = Missile::Points[mobid][1][2];
 		
-		GetRotationFor2Point3D(x,y,z,tx,ty,tz,rx,rz);
+		Tryg3D::GetRotationFor2Point3D(x,y,z,tx,ty,tz,rx,rz);
 		switch(missile_object){
 			case MISSILE_OBJECT_NORMAL: {
 				rz = Tryg3D::CompressRotation(rz-90.0);
@@ -330,7 +342,7 @@ stock Missile::LaunchAimPlayer(targetid,type,Float:detection_range,Float:explode
 	if(mobid > Missile::UpperBound) Missile::UpperBound = mobid;
 	
 	new Float:rx, Float:rz;
-	GetRotationFor2Point3D(x,y,z,tx,ty,tz,rx,rz);
+	Tryg3D::GetRotationFor2Point3D(x,y,z,tx,ty,tz,rx,rz);
 	switch(missile_object){
 		case MISSILE_OBJECT_NORMAL: {
 			rz = Tryg3D::CompressRotation(rz-90.0);
@@ -423,7 +435,7 @@ stock Missile::RemoteTarget(mobid,Float:tx,Float:ty,Float:tz,Float:speed = 0.0){
 	new missile_modelid = Streamer::GetIntData(STREAMER_TYPE_OBJECT,Missile::Data[mobid][Missile::Object],E_STREAMER_MODEL_ID),
 		Float:x ,Float:y, Float:z, Float:rx, Float:rz;
 	GetDynamicObjectPos(Missile::Data[mobid][Missile::Object],x,y,z);
-	GetRotationFor2Point3D(x,y,z,tx,ty,tz,rx,rz);
+	Tryg3D::GetRotationFor2Point3D(x,y,z,tx,ty,tz,rx,rz);
 	switch(missile_modelid){
 		case 345, 1636, 354: {
 			SetDynamicObjectRot(Missile::Data[mobid][Missile::Object],rx,0.0,rz);
@@ -471,7 +483,7 @@ stock Missile::Destroy(mobid,type,playerid){
 							}
 							default: {
 								GetDynamicObjectPos(Missile::Data[i][Missile::Object],tx,ty,tz);
-								if(GetDistanceBetweenPoints3D(x,y,z,tx,ty,tz) <= detection_range){
+								if(Tryg3D::GetDistance3D(x,y,z,tx,ty,tz) <= detection_range){
 									Missile::Data[i][Missile::RemoteCount] = MISSILE_REMOTE_FLARE;
 									Streamer::GetFloatData(STREAMER_TYPE_OBJECT,Missile::Data[i][Missile::Object],E_STREAMER_MOVE_SPEED,speed);
 									Missile::RemoteTarget(i,x,y,z,speed);
@@ -487,23 +499,23 @@ stock Missile::Destroy(mobid,type,playerid){
 				if(IsPlayerInAnyVehicle(playerid)){
 					new T3D:vid = GetPlayerVehicleID(playerid), Float:T3D:health;
 					GetVehicleHealth(T3D:vid,T3D:health);
-					SetVehicleHealth(T3D:vid,NLTZF(T3D:health-NLTZF(Missile::Data[mobid][Missile::VehicleDamage])));
+					SetVehicleHealth(T3D:vid,Tryg3D::NLTZF(T3D:health-Tryg3D::NLTZF(Missile::Data[mobid][Missile::VehicleDamage])));
 				} else {
-					Tryg3D::GivePlayerDamage(playerid,NLTZF(Missile::Data[mobid][Missile::Damage]),Missile::Data[mobid][Missile::PlayerID],WEAPON_MISSILE_BULLET,3);
+					Tryg3D::GivePlayerDamage(playerid,Tryg3D::NLTZF(Missile::Data[mobid][Missile::Damage]),Missile::Data[mobid][Missile::PlayerID],WEAPON_MISSILE_BULLET,3);
 				}
 			} else {
 				if(Missile::Data[mobid][Missile::Damage] == -1.0){
-					Cast3D::Explosion(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility());
+					Tryg3D::CastExplosion(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility());
 				} else {
-					Cast3D::ExplosionDMG(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility(),Missile::Data[mobid][Missile::Damage],Missile::Data[mobid][Missile::VehicleDamage],Missile::Data[mobid][Missile::PlayerID]);
+					Tryg3D::CastExplosionDMG(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility(),Missile::Data[mobid][Missile::Damage],Missile::Data[mobid][Missile::VehicleDamage],Missile::Data[mobid][Missile::PlayerID]);
 				}
 			}
 		}
 		default: {
 			if(Missile::Data[mobid][Missile::Damage] == -1.0){
-				Cast3D::Explosion(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility());
+				Tryg3D::CastExplosion(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility());
 			} else {
-				Cast3D::ExplosionDMG(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility(),Missile::Data[mobid][Missile::Damage],Missile::Data[mobid][Missile::VehicleDamage],Missile::Data[mobid][Missile::PlayerID]);
+				Tryg3D::CastExplosionDMG(x,y,z,Missile::Data[mobid][Missile::Type],Missile::Data[mobid][Missile::Explode],worldid,interiorid,-1,Missile::GetExplodeVisibility(),Missile::Data[mobid][Missile::Damage],Missile::Data[mobid][Missile::VehicleDamage],Missile::Data[mobid][Missile::PlayerID]);
 			}
 		}
 	}
@@ -618,7 +630,7 @@ public OnDynamicObjectMoved(STREAMER_TAG_OBJECT:objectid){
 					GetPlayerPos(Missile::Data[mobid][Missile::TargetID],px,py,pz);
 					new Float:x, Float:y, Float:z, Float:tx, Float:ty, Float:tz;
 					GetDynamicObjectPos(objectid,x,y,z);
-					MovePointCol(x,y,z,px,py,pz,tx,ty,tz);
+					Tryg3D::MovePointCol(x,y,z,px,py,pz,tx,ty,tz);
 					if(tx != px || ty != py || tz != pz){
 						//collision
 						Missile::Data[mobid][Missile::RemoteCount] = 0;
@@ -631,7 +643,7 @@ public OnDynamicObjectMoved(STREAMER_TAG_OBJECT:objectid){
 					new remote_id = Missile::Data[mobid][Missile::RemoteID]++;
 					new Float:x, Float:y, Float:z, Float:tx, Float:ty, Float:tz;
 					GetDynamicObjectPos(objectid,x,y,z);
-					MovePointCol(x,y,z,Missile::Points[mobid][remote_id][0],Missile::Points[mobid][remote_id][1],Missile::Points[mobid][remote_id][2],tx,ty,tz);
+					Tryg3D::MovePointCol(x,y,z,Missile::Points[mobid][remote_id][0],Missile::Points[mobid][remote_id][1],Missile::Points[mobid][remote_id][2],tx,ty,tz);
 					if(tx != Missile::Points[mobid][remote_id][0] || ty != Missile::Points[mobid][remote_id][1] || tz != Missile::Points[mobid][remote_id][2]){
 						//collision
 						Missile::Data[mobid][Missile::RemoteCount] = 0;
