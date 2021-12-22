@@ -9,6 +9,9 @@ Hello, I would like to present you the Stingers Script (Cops and Robbers)
 
 [b]Installation:[/b]
 [code]
+
+#define TRYG3D_ENABLE_VEHICLE
+
 #include <3DTryg>
 #include <Stingers>
 [/code]

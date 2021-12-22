@@ -9,7 +9,7 @@
 
  File Version: 1.1.2
  Streamer Version: 2.9.5
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Definitions:
  STINGER_TYPE_SMALL  //Object: 2899
@@ -46,12 +46,16 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#endif
+
+#if !defined TRYG3D_MOD_VEHICLE
+	#error [ADM] Module not initialized: TRYG3D_MOD_VEHICLE (add #define TRYG3D_ENABLE_VEHICLE before include 3DTryg.inc)
 #endif
 
 #if defined _Dynamic_Stingers
@@ -259,8 +263,8 @@ public OnPlayerUpdate(playerid){
 			
 			for(new i = 0; i < 4; i++){
 				if(!TireStatus[i]){
-					GetVehiclePartPos(STIN_LastVehicle[playerid],StingersPartTable[i],STIN_PlayerHCP[playerid][6],STIN_PlayerHCP[playerid][7],STIN_PlayerHCP[playerid][8]);
-					if(Area::PointInCube3D(
+					Tryg3D::GetVehiclePartPos(STIN_LastVehicle[playerid],StingersPartTable[i],STIN_PlayerHCP[playerid][6],STIN_PlayerHCP[playerid][7],STIN_PlayerHCP[playerid][8]);
+					if(Tryg3D::IsPointInCube3D(
 						STIN_PlayerHCP[playerid][6],STIN_PlayerHCP[playerid][7],STIN_PlayerHCP[playerid][8],
 						STIN_PlayerHCP[playerid][0],STIN_PlayerHCP[playerid][1],STIN_PlayerHCP[playerid][2],
 						STIN_PlayerHCP[playerid][3],STIN_PlayerHCP[playerid][4],STIN_PlayerHCP[playerid][5],

@@ -9,6 +9,9 @@
 
 [b]Установка:[/b]
 [code]
+
+#define TRYG3D_ENABLE_VEHICLE
+
 #include <3DTryg>
 #include <Stingers>
 [/code]
