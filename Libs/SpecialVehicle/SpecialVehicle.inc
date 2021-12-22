@@ -11,7 +11,7 @@
  File Version: 1.0.0
  ColAndreas Version: 1.5.0
  Streamer Version: 2.9.5
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Functions:
  SpecialVehicle::IsToggledSpecialAbility(vehicleid);
@@ -82,16 +82,16 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_STREAMER
-	#error [ADM] Module not initialized: TRYG3D_STREAMER
+#if !defined TRYG3D_MOD_STREAMER
+	#error [ADM] Module not initialized: TRYG3D_MOD_STREAMER (add #define TRYG3D_ENABLE_STREAMER before include 3DTryg.inc)
 #endif
 
 //Check Version Missile.inc
@@ -559,7 +559,7 @@ stock SpecialVehicle::CreateMOC(Float:x,Float:y,Float:z,Float:z_angle,respawn_de
 	SetVehicleVirtualWorld(vehicleid,worldid);
 	SpecialVehicle::ToggleSpecialAbility(vehicleid,true);
 	new Float:tx,Float:ty,trailerid;
-	GetPointInFront2D(x,y,Tryg3D::CompressRotation(z_angle-180.0),9.38,tx,ty);
+	Tryg3D::GetPointInFront2D(x,y,Tryg3D::CompressRotation(z_angle-180.0),9.38,tx,ty);
 	trailerid = CreateVehicle(591,tx,ty,z,z_angle,1,1,respawn_delay,addsiren);
 	if(!IsValidVehicle(trailerid)){
 		DestroyVehicle(vehicleid);
@@ -624,7 +624,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 								}
 							}
 						}
-						if(IsVehicleFlag(GetVehicleFlags(vid),VF_BIKES) || IsVehicleFlag(GetVehicleFlags(vid),VF_RC)){
+						if(Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vid),VF_BIKES) || Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vid),VF_RC)){
 							for(new seatid = 0; seatid < 16; seatid++){
 								if(SpecialVehicle::GetValueBit(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::SeatUsed],seatid) == 0b0){
 									SpecialVehicle::SetValueBit(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::SeatUsed],seatid,0b1);
@@ -632,7 +632,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 									SpecialVehicle::VehicleData[vid][SpecialVehicle::OnVehicle] = vehicleid;
 									if(!IsToggleVehicleParachute(vid)) ToggleVehicleParachute(vid,true);
 									SwitchVehicleEngine(vid,false);
-									SetPlayerAbsolutePositionVeh(playerid,SpecialVehicle::AndromadaSeatBike[seatid][0],SpecialVehicle::AndromadaSeatBike[seatid][1],SpecialVehicle::AndromadaSeatBike[seatid][2],180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+									Tryg3D::SetPlayerAbsolutePositionVeh(playerid,SpecialVehicle::AndromadaSeatBike[seatid][0],SpecialVehicle::AndromadaSeatBike[seatid][1],SpecialVehicle::AndromadaSeatBike[seatid][2],180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 									SetVehiclePropertyValue(vid,e_VEHICLE_INTERIOR,SPECIAL_VEH_INTERIOR_ID);
 									SpecialVehicle::LinkPlayersInVehicle(vid,SPECIAL_VEH_ACTION_ENTER,vehicleid,SPECIAL_VEH_TYPE_ANDROMADA);
 									if(SpecialVehicle::VehicleData[vid][SpecialVehicle::Overlay]){
@@ -642,7 +642,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 									return SPECIAL_VEH_ENTER_SUCCES;
 								}
 							}
-						} else if(IsVehicleFlag(GetVehicleFlags(vid),VF_STREET) && !SpecialVehicle::AndromadaVehToBig(vid)){
+						} else if(Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vid),VF_STREET) && !SpecialVehicle::AndromadaVehToBig(vid)){
 							for(new seatid = 0; seatid < 4; seatid++){
 								if(SpecialVehicle::GetCellValue(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::SeatUsed],seatid,4) == 0b0){
 									SpecialVehicle::SetCellValue(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::SeatUsed],seatid,4,0b1111);
@@ -650,7 +650,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 									SpecialVehicle::VehicleData[vid][SpecialVehicle::OnVehicle] = vehicleid;
 									if(!IsToggleVehicleParachute(vid)) ToggleVehicleParachute(vid,true);
 									SwitchVehicleEngine(vid,false);
-									SetPlayerAbsolutePositionVeh(playerid,SpecialVehicle::AndromadaSeatCar[seatid][0],SpecialVehicle::AndromadaSeatCar[seatid][1],SpecialVehicle::AndromadaSeatCar[seatid][2],180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+									Tryg3D::SetPlayerAbsolutePositionVeh(playerid,SpecialVehicle::AndromadaSeatCar[seatid][0],SpecialVehicle::AndromadaSeatCar[seatid][1],SpecialVehicle::AndromadaSeatCar[seatid][2],180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 									SetVehiclePropertyValue(vid,e_VEHICLE_INTERIOR,SPECIAL_VEH_INTERIOR_ID);
 									SpecialVehicle::LinkPlayersInVehicle(vid,SPECIAL_VEH_ACTION_ENTER,vehicleid,SPECIAL_VEH_TYPE_ANDROMADA);
 									if(SpecialVehicle::VehicleData[vid][SpecialVehicle::Overlay]){
@@ -665,7 +665,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 					} else {
 						SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 						SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_ANDROMADA;
-						SetPlayerAbsolutePosition(playerid,-1667.1566,-202.4945,15.1159,180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+						Tryg3D::SetPlayerAbsolutePosition(playerid,-1667.1566,-202.4945,15.1159,180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 						GivePlayerWeapon(playerid,46,1);
 						SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 						SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_ANDROMADA;
@@ -703,7 +703,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 									RepairVehicle(vid);
 									SetVehicleHealth(vid,SpecialVehicle::VehicleData[vid][SpecialVehicle::SpawnHealth]);
 									SwitchVehicleEngine(vid,false);
-									SetPlayerAbsolutePositionVeh(playerid,300.5814,1997.0906,17.3813,0.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+									Tryg3D::SetPlayerAbsolutePositionVeh(playerid,300.5814,1997.0906,17.3813,0.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 									SetVehiclePropertyValue(vid,e_VEHICLE_INTERIOR,SPECIAL_VEH_INTERIOR_ID);
 									SpecialVehicle::LinkPlayersInVehicle(vid,SPECIAL_VEH_ACTION_ENTER,vehicleid,SPECIAL_VEH_TYPE_MOC_TRAILER);
 									SpecialVehicle::LinkComponent(vid,vehicleid,SPECIAL_VEH_INTERIOR_ID);
@@ -712,7 +712,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 								}
 							}
 						} else {
-							SetPlayerAbsolutePosition(playerid,301.7278,2001.1680,18.2882,0.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+							Tryg3D::SetPlayerAbsolutePosition(playerid,301.7278,2001.1680,18.2882,0.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 							SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 							SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_MOC_TRAILER;
 							CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
@@ -724,7 +724,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 							if(!CallLocalFunction("OnPlayerEnterVehIntRequest","dd",playerid,vehicleid)) return SPECIAL_VEH_ENTER_NOT_ALLOWED;
 							SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 							SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_TRUNK_TRAILER;
-							SetPlayerAbsolutePosition(playerid,153.2095,2031.7423,1046.8811,1.0000,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+							Tryg3D::SetPlayerAbsolutePosition(playerid,153.2095,2031.7423,1046.8811,1.0000,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 							CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 							return SPECIAL_VEH_ENTER_SUCCES;
 						}
@@ -737,7 +737,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 					if(!CallLocalFunction("OnPlayerEnterVehIntRequest","dd",playerid,vehicleid)) return SPECIAL_VEH_ENTER_NOT_ALLOWED;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_RHINO;
-					SetPlayerAbsolutePosition(playerid,304.7444,1948.0719,2017.6335,180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,304.7444,1948.0719,2017.6335,180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 					CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 					return SPECIAL_VEH_ENTER_SUCCES;
 				}
@@ -748,7 +748,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 					if(!CallLocalFunction("OnPlayerEnterVehIntRequest","dd",playerid,vehicleid)) return SPECIAL_VEH_ENTER_NOT_ALLOWED;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_FBITRUCK;
-					SetPlayerAbsolutePosition(playerid,1060.5330,1776.3317,10.8203,180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,1060.5330,1776.3317,10.8203,180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 					CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 					return SPECIAL_VEH_ENTER_SUCCES;
 				}
@@ -759,7 +759,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 					if(!CallLocalFunction("OnPlayerEnterVehIntRequest","dd",playerid,vehicleid)) return SPECIAL_VEH_ENTER_NOT_ALLOWED;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_NEVADA;
-					SetPlayerAbsolutePosition(playerid,1378.5438,1771.0582,10.8662,270.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,1378.5438,1771.0582,10.8662,270.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 					CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 					return SPECIAL_VEH_ENTER_SUCCES;
 				}
@@ -770,7 +770,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 					if(!CallLocalFunction("OnPlayerEnterVehIntRequest","dd",playerid,vehicleid)) return SPECIAL_VEH_ENTER_NOT_ALLOWED;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_SWAT;
-					SetPlayerAbsolutePosition(playerid,1300.4564,1998.1667,1017.6385,0.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,1300.4564,1998.1667,1017.6385,0.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 					CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 					return SPECIAL_VEH_ENTER_SUCCES;
 				}
@@ -782,7 +782,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_CARGOBOB;
 					GivePlayerWeapon(playerid,46,1);
-					SetPlayerAbsolutePosition(playerid,1975.8558,-2631.8870,13.5577,270.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,1975.8558,-2631.8870,13.5577,270.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 					CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 					return SPECIAL_VEH_ENTER_SUCCES;
 				}
@@ -794,7 +794,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_SHAMAL;
 					GivePlayerWeapon(playerid,46,1);
-					SetPlayerAbsolutePosition(playerid,1894.1605,-4166.7290,2.4545,90.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,1894.1605,-4166.7290,2.4545,90.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 					CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 					return SPECIAL_VEH_ENTER_SUCCES;
 				}
@@ -806,7 +806,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 					SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_AT400;
 					GivePlayerWeapon(playerid,46,1);
-					SetPlayerAbsolutePosition(playerid,16.0939,-14.7427,536.6696,180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,16.0939,-14.7427,536.6696,180.0,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 					CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 					return SPECIAL_VEH_ENTER_SUCCES;
 				}
@@ -820,7 +820,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 								if(!CallLocalFunction("OnPlayerEnterVehIntRequest","dd",playerid,vehicleid)) return SPECIAL_VEH_ENTER_NOT_ALLOWED;
 								SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 								SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_TRUNK_BACK;
-								SetPlayerAbsolutePosition(playerid,196.02711,2081.85156,1024.48446,1.00000,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+								Tryg3D::SetPlayerAbsolutePosition(playerid,196.02711,2081.85156,1024.48446,1.00000,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 								CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 								return SPECIAL_VEH_ENTER_SUCCES;
 							}
@@ -833,7 +833,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 								if(!CallLocalFunction("OnPlayerEnterVehIntRequest","dd",playerid,vehicleid)) return SPECIAL_VEH_ENTER_NOT_ALLOWED;
 								SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 								SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_TRUNK_FRONT;
-								SetPlayerAbsolutePosition(playerid,194.11169,2086.19580,1025.60100,1.00000,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+								Tryg3D::SetPlayerAbsolutePosition(playerid,194.11169,2086.19580,1025.60100,1.00000,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 								CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 								return SPECIAL_VEH_ENTER_SUCCES;
 							}
@@ -846,7 +846,7 @@ stock SpecialVehicle::EnterPlayer(playerid){
 								if(!CallLocalFunction("OnPlayerEnterVehIntRequest","dd",playerid,vehicleid)) return SPECIAL_VEH_ENTER_NOT_ALLOWED;
 								SpecialVehicle::PlayerData[playerid][SpecialVehicle::InVehicle] = vehicleid;
 								SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType] = SPECIAL_VEH_TYPE_TRUNK_TRAILER;
-								SetPlayerAbsolutePosition(playerid,153.2095,2031.7423,1046.8811,1.0000,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
+								Tryg3D::SetPlayerAbsolutePosition(playerid,153.2095,2031.7423,1046.8811,1.0000,vehicleid,SPECIAL_VEH_INTERIOR_ID,SPECIAL_VEH_TELEPORT_FREEZE);
 								CallLocalFunction("OnPlayerEnterVehInterior","ddd",playerid,vehicleid,0);
 								return SPECIAL_VEH_ENTER_SUCCES;
 							}
@@ -868,29 +868,29 @@ stock SpecialVehicle::ExitPlayer(playerid){
 			GetVehiclePos(vehicleid,F4[T3D:tX],F4[T3D:tY],F4[T3D:Z]);
 			GetVehicleZAngle(vehicleid,F4[T3D:rZ]);
 			if(IsVehicleOccupied(vehicleid)){
-				GetVehiclePartPos(vehicleid,VEHICLE_PART_TRUNK,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],0.0,0.0,1.0);
+				Tryg3D::GetVehiclePartPos(vehicleid,VEHICLE_PART_TRUNK,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],0.0,0.0,1.0);
 			} else {
-				GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),3.0,F4[T3D:X],F4[T3D:Y]);
+				Tryg3D::GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),3.0,F4[T3D:X],F4[T3D:Y]);
 			}
-			SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rZ]+180.0,GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+			Tryg3D::SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rZ]+180.0,GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 			CallLocalFunction("OnPlayerExitVehInterior","ddd",playerid,vehicleid,0);
 		}
 		case SPECIAL_VEH_TYPE_MOC_TRAILER: {
 			GetVehiclePos(vehicleid,F4[T3D:tX],F4[T3D:tY],F4[T3D:Z]);
 			GetVehicleZAngle(vehicleid,F4[T3D:rZ]);
 			if(IsVehicleOccupied(vehicleid)){
-				Item::GetOrientationPos(vehicleid,item_vehicle,o_back,12.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+				Tryg3D::ItemGetOrientationPos(vehicleid,item_vehicle,o_back,12.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
 			} else {
-				GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),12.0,F4[T3D:X],F4[T3D:Y]);
+				Tryg3D::GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),12.0,F4[T3D:X],F4[T3D:Y]);
 			}
 			if(IsPlayerInAnyVehicle(playerid)){
 				new vid = GetPlayerVehicleID(playerid);
-				if(IsCollisionFlag(Item::GetCollisionFlags(vehicleid,item_vehicle),POSITION_FLAG_GROUND)){
-					InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
-					SetPlayerAbsolutePositionVeh(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,F4[T3D:rZ],GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+				if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(vehicleid,item_vehicle),POSITION_FLAG_GROUND)){
+					Tryg3D::InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
+					Tryg3D::SetPlayerAbsolutePositionVeh(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,F4[T3D:rZ],GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 					SetVehiclePropertyValue(vid,e_VEHICLE_INTERIOR,GetVehicleInterior(vehicleid));
 				} else {
-					SetPlayerAbsolutePositionVeh(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rZ],GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePositionVeh(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rZ],GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 					SetVehiclePropertyValue(vid,e_VEHICLE_INTERIOR,GetVehicleInterior(vehicleid));
 				}
 				CallLocalFunction("OnPlayerExitVehInterior","ddd",playerid,vehicleid,1);
@@ -903,11 +903,11 @@ stock SpecialVehicle::ExitPlayer(playerid){
 				SpecialVehicle::VehicleData[vid][SpecialVehicle::OnSeat] = SPECIAL_VEH_INVALID_SEAT;
 				SpecialVehicle::VehicleData[vid][SpecialVehicle::OnVehicle] = INVALID_VEHICLE_ID;
 			} else {
-				if(IsCollisionFlag(Item::GetCollisionFlags(vehicleid,item_vehicle),POSITION_FLAG_GROUND)){
-					InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
-					SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+				if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(vehicleid,item_vehicle),POSITION_FLAG_GROUND)){
+					Tryg3D::InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 				} else {
-					SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 				}
 				CallLocalFunction("OnPlayerExitVehInterior","ddd",playerid,vehicleid,0);
 			}
@@ -917,18 +917,18 @@ stock SpecialVehicle::ExitPlayer(playerid){
 			GetVehiclePos(vehicleid,F4[T3D:tX],F4[T3D:tY],F4[T3D:Z]);
 			GetVehicleZAngle(vehicleid,F4[T3D:rZ]);
 			if(IsVehicleOccupied(vehicleid)){
-				Item::GetOrientationPos(vehicleid,item_vehicle,o_back,25.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+				Tryg3D::ItemGetOrientationPos(vehicleid,item_vehicle,o_back,25.0,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
 			} else {
-				GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),25.0,F4[T3D:X],F4[T3D:Y]);
+				Tryg3D::GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),25.0,F4[T3D:X],F4[T3D:Y]);
 			}
 			if(IsPlayerInAnyVehicle(playerid)){
 				new vid = GetPlayerVehicleID(playerid);
-				if(IsCollisionFlag(Item::GetCollisionFlags(vehicleid,item_vehicle),POSITION_FLAG_GROUND)){
-					InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
-					SetPlayerAbsolutePositionVeh(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,F4[T3D:rZ],GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+				if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(vehicleid,item_vehicle),POSITION_FLAG_GROUND)){
+					Tryg3D::InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
+					Tryg3D::SetPlayerAbsolutePositionVeh(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,F4[T3D:rZ],GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 					SetVehiclePropertyValue(vid,e_VEHICLE_INTERIOR,GetVehicleInterior(vehicleid));
 				} else {
-					SetPlayerAbsolutePositionVeh(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rZ],GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePositionVeh(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rZ],GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 					SetVehiclePropertyValue(vid,e_VEHICLE_INTERIOR,GetVehicleInterior(vehicleid));
 				}
 				CallLocalFunction("OnPlayerExitVehInterior","ddd",playerid,vehicleid,1);
@@ -937,19 +937,19 @@ stock SpecialVehicle::ExitPlayer(playerid){
 					SpecialVehicle::LinkComponent(vid,GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid));
 				}
 				SwitchVehicleEngine(vid,true);
-				if(IsVehicleFlag(GetVehicleFlags(vid),VF_BIKES) || IsVehicleFlag(GetVehicleFlags(vid),VF_RC)){
+				if(Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vid),VF_BIKES) || Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vid),VF_RC)){
 					SpecialVehicle::SetValueBit(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::SeatUsed],SpecialVehicle::VehicleData[vid][SpecialVehicle::OnSeat],0b0);
-				} else if(IsVehicleFlag(GetVehicleFlags(vid),VF_STREET) && !SpecialVehicle::AndromadaVehToBig(vid)){
+				} else if(Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vid),VF_STREET) && !SpecialVehicle::AndromadaVehToBig(vid)){
 					SpecialVehicle::SetCellValue(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::SeatUsed],SpecialVehicle::VehicleData[vid][SpecialVehicle::OnSeat],4,0b0000);
 				}
 				SpecialVehicle::VehicleData[vid][SpecialVehicle::OnSeat] = SPECIAL_VEH_INVALID_SEAT;
 				SpecialVehicle::VehicleData[vid][SpecialVehicle::OnVehicle] = INVALID_VEHICLE_ID;
 			} else {
-				if(IsCollisionFlag(Item::GetCollisionFlags(vehicleid,item_vehicle),POSITION_FLAG_GROUND)){
-					InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
-					SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+				if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(vehicleid,item_vehicle),POSITION_FLAG_GROUND)){
+					Tryg3D::InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 				} else {
-					SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+					Tryg3D::SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 				}
 				CallLocalFunction("OnPlayerExitVehInterior","ddd",playerid,vehicleid,0);
 			}
@@ -958,13 +958,13 @@ stock SpecialVehicle::ExitPlayer(playerid){
 		default: {
 			GetVehicleZAngle(vehicleid,F4[T3D:rZ]);
 			if(IsVehicleOccupied(vehicleid)){
-				Item::GetOrientationPos(vehicleid,item_vehicle,o_back,SpecialVehicle::ExitOffset[SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType]],F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
+				Tryg3D::ItemGetOrientationPos(vehicleid,item_vehicle,o_back,SpecialVehicle::ExitOffset[SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType]],F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
 			} else {
 				GetVehiclePos(vehicleid,F4[T3D:tX],F4[T3D:tY],F4[T3D:Z]);
-				GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),SpecialVehicle::ExitOffset[SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType]],F4[T3D:X],F4[T3D:Y]);
+				Tryg3D::GetPointInFront2D(F4[T3D:tX],F4[T3D:tY],Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),SpecialVehicle::ExitOffset[SpecialVehicle::PlayerData[playerid][SpecialVehicle::VehicleType]],F4[T3D:X],F4[T3D:Y]);
 			}
-			InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
-			SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
+			Tryg3D::InteriorFindZ(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],2.0,F4[T3D:Z]);
+			Tryg3D::SetPlayerAbsolutePosition(playerid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]+1.0,Tryg3D::CompressRotation(F4[T3D:rZ]+180.0),GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),SPECIAL_VEH_TELEPORT_FREEZE);
 			CallLocalFunction("OnPlayerExitVehInterior","ddd",playerid,vehicleid,0);
 		}
 	}
@@ -2033,9 +2033,9 @@ public OnVehicleDeath(vehicleid,killerid){
 	if(vid != INVALID_VEHICLE_ID && SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Included] != vid){
 		switch(GetVehicleModel(vid)){
 			case 592: {
-				if(IsVehicleFlag(GetVehicleFlags(vehicleid),VF_BIKES) || IsVehicleFlag(GetVehicleFlags(vehicleid),VF_RC)){
+				if(Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vehicleid),VF_BIKES) || Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vehicleid),VF_RC)){
 					SpecialVehicle::SetValueBit(SpecialVehicle::VehicleData[vid][SpecialVehicle::SeatUsed],SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::OnSeat],0b0);
-				} else if(IsVehicleFlag(GetVehicleFlags(vehicleid),VF_STREET) && !SpecialVehicle::AndromadaVehToBig(vehicleid)){
+				} else if(Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(vehicleid),VF_STREET) && !SpecialVehicle::AndromadaVehToBig(vehicleid)){
 					SpecialVehicle::SetCellValue(SpecialVehicle::VehicleData[vid][SpecialVehicle::SeatUsed],SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::OnSeat],4,0b0000);
 				}
 			}
@@ -2225,7 +2225,7 @@ public OnPlayerShootDynamicObject(playerid,weaponid,STREAMER_TAG_OBJECT:objectid
 					}
 					if(IsValidVehicle(T3D:vehicleid)){
 						if(T3D:health > 249.0){
-							SetVehicleHealth(T3D:vehicleid,NLTZF(T3D:health));
+							SetVehicleHealth(T3D:vehicleid,Tryg3D::NLTZF(T3D:health));
 						} else {
 							CallLocalFunction("OnVehicleDeath","dd",T3D:vehicleid,playerid);
 							SetVehicleToRespawn(T3D:vehicleid);
@@ -2233,7 +2233,7 @@ public OnPlayerShootDynamicObject(playerid,weaponid,STREAMER_TAG_OBJECT:objectid
 					}
 					if(IsValidVehicle(T3D:trailerid)){
 						if(T3D:health > 249.0){
-							SetVehicleHealth(T3D:trailerid,NLTZF(T3D:health));
+							SetVehicleHealth(T3D:trailerid,Tryg3D::NLTZF(T3D:health));
 						} else {	
 							CallLocalFunction("OnVehicleDeath","dd",T3D:trailerid,playerid);
 							SetVehicleToRespawn(T3D:trailerid);
@@ -2284,7 +2284,7 @@ public OnPlayerWeaponShot(playerid,weaponid,hittype,hitid,Float:fX,Float:fY,Floa
 						}
 						if(IsValidVehicle(T3D:vehicleid)){
 							if(T3D:health > 249.0){
-								SetVehicleHealth(T3D:vehicleid,NLTZF(T3D:health));
+								SetVehicleHealth(T3D:vehicleid,Tryg3D::NLTZF(T3D:health));
 							} else {
 								CallLocalFunction("OnVehicleDeath","dd",T3D:vehicleid,playerid);
 								SetVehicleToRespawn(T3D:vehicleid);
@@ -2292,7 +2292,7 @@ public OnPlayerWeaponShot(playerid,weaponid,hittype,hitid,Float:fX,Float:fY,Floa
 						}
 						if(IsValidVehicle(T3D:trailerid)){
 							if(T3D:health > 249.0){
-								SetVehicleHealth(T3D:trailerid,NLTZF(T3D:health));
+								SetVehicleHealth(T3D:trailerid,Tryg3D::NLTZF(T3D:health));
 							} else {
 								CallLocalFunction("OnVehicleDeath","dd",T3D:trailerid,playerid);
 								SetVehicleToRespawn(T3D:trailerid);
@@ -2323,7 +2323,7 @@ public OnPlayerWeaponShot(playerid,weaponid,hittype,hitid,Float:fX,Float:fY,Floa
 public OnPlayerUpdate(playerid){
 	if(SpecialVehicle::PlayerData[playerid][SpecialVehicle::IsUseMagnet]){
 		SpecialVehicle::PlayerData[playerid][SpecialVehicle::VID] = GetPlayerVehicleID(playerid);
-		Item::GetOrientationPosCol(SpecialVehicle::PlayerData[playerid][SpecialVehicle::VID],item_vehicle,o_down,6.0,SpecialVehicle::PlayerData[playerid][SpecialVehicle::X],SpecialVehicle::PlayerData[playerid][SpecialVehicle::Y],SpecialVehicle::PlayerData[playerid][SpecialVehicle::Z]);
+		Tryg3D::ItemGetOrientationPosCol(SpecialVehicle::PlayerData[playerid][SpecialVehicle::VID],item_vehicle,o_down,6.0,SpecialVehicle::PlayerData[playerid][SpecialVehicle::X],SpecialVehicle::PlayerData[playerid][SpecialVehicle::Y],SpecialVehicle::PlayerData[playerid][SpecialVehicle::Z]);
 		SetVehiclePos(SpecialVehicle::PlayerData[playerid][SpecialVehicle::MagnetVehicle],SpecialVehicle::PlayerData[playerid][SpecialVehicle::X],SpecialVehicle::PlayerData[playerid][SpecialVehicle::Y],SpecialVehicle::PlayerData[playerid][SpecialVehicle::Z]+1.0);
 		GetVehicleZAngle(SpecialVehicle::PlayerData[playerid][SpecialVehicle::VID],SpecialVehicle::PlayerData[playerid][SpecialVehicle::A]);
 		SetVehicleZAngle(SpecialVehicle::PlayerData[playerid][SpecialVehicle::MagnetVehicle],SpecialVehicle::PlayerData[playerid][SpecialVehicle::A]);
@@ -2334,7 +2334,7 @@ public OnPlayerUpdate(playerid){
 			new Float:rz,Float:z_angle, vid = GetPlayerVehicleID(playerid);
 			if(IsValidVehicle(vid)){
 				GetVehicleZAngle(vid,rz);
-				GetPlayerCameraZAngle(playerid,z_angle);
+				Tryg3D::GetPlayerCameraZAngle(playerid,z_angle);
 				switch(GetVehicleModel(vid)){
 					case 470: {
 						Streamer::SetFloatData(STREAMER_TYPE_OBJECT,SpecialVehicle::VehicleData[vid][SpecialVehicle::Object][0],E_STREAMER_ATTACH_R_Z,Tryg3D::CompressRotation(z_angle-rz+90.0));
@@ -2347,10 +2347,10 @@ public OnPlayerUpdate(playerid){
 									}
 									new F5[Float3D];
 									GetVehiclePos(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
-									GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,-0.5,F5[T3D:X],F5[T3D:Y]);
-									GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+									Tryg3D::GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,-0.5,F5[T3D:X],F5[T3D:Y]);
+									Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
 									F5[T3D:Z] += 2.1;
-									GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+									Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 									PlayerPlaySound(playerid,1135,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 									Missile::Launch(MISSILE_TYPE_EXPLODE_NONE,2.0,2.0,20.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,300.0,MISSILE_OBJECT_BULLET,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 									SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -2376,11 +2376,11 @@ public OnPlayerUpdate(playerid){
 									}
 									new F5[Float3D];
 									GetVehiclePos(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
-									GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,-0.5,F5[T3D:X],F5[T3D:Y]);
-									GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+									Tryg3D::GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,-0.5,F5[T3D:X],F5[T3D:Y]);
+									Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
 									F5[T3D:Z] += 1.9;
-									GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
-									MovePointColCutLine(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],5.0);
+									Tryg3D::GetPointInFront3D(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+									Tryg3D::MovePointColCutLine(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],5.0);
 									PlayerPlaySound(playerid,1135,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 									Missile::Launch(MISSILE_TYPE_EXPLODE_NONE,2.0,2.0,20.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,300.0,MISSILE_OBJECT_BULLET,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 									SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -2401,10 +2401,10 @@ public OnPlayerUpdate(playerid){
 									}
 									new F5[Float3D];
 									GetVehiclePos(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
-									GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,-1.1,F5[T3D:X],F5[T3D:Y]);
-									GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+									Tryg3D::GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,-1.1,F5[T3D:X],F5[T3D:Y]);
+									Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
 									F5[T3D:Z] += 2.1;
-									GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+									Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 									PlayerPlaySound(playerid,1135,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 									Missile::Launch(MISSILE_TYPE_EXPLODE_NONE,2.0,2.0,20.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,300.0,MISSILE_OBJECT_BULLET,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 									SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -2425,10 +2425,10 @@ public OnPlayerUpdate(playerid){
 									}
 									new F5[Float3D];
 									GetVehiclePos(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
-									GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,3.5,F5[T3D:X],F5[T3D:Y]);
-									GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+									Tryg3D::GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,3.5,F5[T3D:X],F5[T3D:Y]);
+									Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
 									F5[T3D:Z] += 2.1;
-									GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+									Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 									PlayerPlaySound(playerid,1135,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 									Missile::Launch(MISSILE_TYPE_EXPLODE_SMALL,5.0,10.0,35.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,300.0,MISSILE_OBJECT_BULLET,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 									SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -2466,8 +2466,8 @@ public OnPlayerUpdate(playerid){
 									}
 									new F5[Float3D];
 									GetPlayerCameraPos(playerid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
-									GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
-									GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+									Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+									Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 									PlayerPlaySound(playerid,1135,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 									Missile::Launch(MISSILE_TYPE_EXPLODE_NONE,2.0,2.0,20.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,300.0,MISSILE_OBJECT_BULLET,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 									SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -2497,7 +2497,7 @@ public OnPlayerUpdate(playerid){
 					SetVehicleZAngle(vid,z_angle-5.0);
 				}
 			}
-			SetVehicleSpeed(vid,NMTVF(GetVehicleSpeed(vid)+5.0,100.0));
+			Tryg3D::SetVehicleSpeed(vid,Tryg3D::NMTVF(Tryg3D::GetVehicleSpeed(vid)+5.0,100.0));
 		}
 	}
 	#if defined SVEH_OnPlayerUpdate
@@ -2921,14 +2921,14 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 							GetVehiclePos(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 							F5[T3D:VW] = GetPlayerVirtualWorld(playerid);
 							F5[T3D:INT] = GetPlayerInterior(playerid);
-							GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],8.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+							Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],8.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 							for(new i = 0, j = GetVehiclePoolSize(); i <= j; i++){
 								if(i != vid){
-									if(IsVehicleFlag(GetVehicleFlags(i),VF_STREET) && GetVehicleModel(i) != 515){
+									if(Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(i),VF_STREET) && GetVehicleModel(i) != 515){
 										GetVehiclePos(i,px,py,pz);
 										if(GetVehicleVirtualWorld(i) == F5[T3D:VW] && GetVehicleInterior(i) == F5[T3D:INT]){
-											if(Area::PointInCylinder3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],10.0)){
-												if((T3D:dist = GetDistanceBetweenPoints3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z])) < T3D:ldist){
+											if(Tryg3D::IsPointInCylinder3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],10.0)){
+												if((T3D:dist = Tryg3D::GetDistance3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z])) < T3D:ldist){
 													T3D:ldist = T3D:dist;
 													LockTarget = i;
 												}
@@ -2968,7 +2968,7 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 									new F5[Float3D],F4[Float3D];
 									GetVehiclePos(vid,F4[T3D:X],F4[T3D:Y],F4[T3D:Z]);
 									Tryg3D::GetVehicleRotation(vid,F4[T3D:rX],F4[T3D:rY],F4[T3D:rZ]);
-									GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+									Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
 									
 									F5[T3D:VW] = GetPlayerVirtualWorld(playerid);
 									F5[T3D:INT] = GetPlayerInterior(playerid);
@@ -2977,8 +2977,8 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 										Streamer::GetFloatData(STREAMER_TYPE_OBJECT,SpecialVehicle::VehicleData[vid][SpecialVehicle::Object][k],E_STREAMER_ATTACH_OFFSET_X,F5[T3D:X]);
 										Streamer::GetFloatData(STREAMER_TYPE_OBJECT,SpecialVehicle::VehicleData[vid][SpecialVehicle::Object][k],E_STREAMER_ATTACH_OFFSET_Y,F5[T3D:Y]);
 										Streamer::GetFloatData(STREAMER_TYPE_OBJECT,SpecialVehicle::VehicleData[vid][SpecialVehicle::Object][k],E_STREAMER_ATTACH_OFFSET_Z,F5[T3D:Z]);
-										ShiftOffsetToPosition(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rX],F4[T3D:rY],F4[T3D:rZ],F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
-										GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],1200.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+										Tryg3D::ShiftOffsetToPosition(F4[T3D:X],F4[T3D:Y],F4[T3D:Z],F4[T3D:rX],F4[T3D:rY],F4[T3D:rZ],F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
+										Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],1200.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 										Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,10.0,20.0,100.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:VW],F5[T3D:INT],-1,300.0,MISSILE_OBJECT_HYDRA,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 									}
 									SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -2991,7 +2991,7 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 							SpecialVehicle::PlayerData[playerid][SpecialVehicle::AutoShot] = true;
 						}
 						case 601: {
-							if(IsPlayerLookAtSky(playerid)){
+							if(Tryg3D::IsPlayerLookAtSky(playerid)){
 								if(GetTickCount()-SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] >= 1000){
 									if(SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0] > 0 || SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0] == SPECIAL_VEH_AMMO_INFINITY){
 										if(SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0] != SPECIAL_VEH_AMMO_INFINITY){
@@ -3001,15 +3001,15 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 										new F5[Float3D],Float:rz;
 										GetVehiclePos(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 										GetVehicleZAngle(vid,rz);
-										GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,-1.8,F5[T3D:X],F5[T3D:Y]);
-										GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+										Tryg3D::GetPointInFront2D(F5[T3D:X],F5[T3D:Y],rz,-1.8,F5[T3D:X],F5[T3D:Y]);
+										Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
 										F5[T3D:Z] += 6.4;
 										
 										F5[T3D:VW] = GetPlayerVirtualWorld(playerid);
 										F5[T3D:INT] = GetPlayerInterior(playerid);
 										
 										for(new i = 0; i < 5; i++){
-											GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],(i+1)*(10.0),F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+											Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],(i+1)*(10.0),F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 											Missile::Launch(MISSILE_TYPE_EXPLODE_NONE,15.0,0.0,20.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:VW],F5[T3D:INT],-1,300.0,MISSILE_OBJECT_FLARE_2,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid);
 										}
 										SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -3022,7 +3022,7 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 							}
 						}
 						case 578: {
-							if(IsPlayerLookAtSky(playerid)){
+							if(Tryg3D::IsPlayerLookAtSky(playerid)){
 								if(GetTickCount()-SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] >= 1000){
 									if(SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0] > 0 || SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0] == SPECIAL_VEH_AMMO_INFINITY){
 										if(SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0] != SPECIAL_VEH_AMMO_INFINITY){
@@ -3031,21 +3031,21 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 										}
 										new F5[Float3D], Float:T3D:ldist = 20000, Float:T3D:dist, pteam = GetPlayerTeam(playerid), LockTarget = INVALID_PLAYER_ID, Float:px, Float:py, Float:pz;
 										GetVehiclePos(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
-										GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+										Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
 										F5[T3D:Z] += 4.3;
 										
 										F5[T3D:VW] = GetPlayerVirtualWorld(playerid);
 										F5[T3D:INT] = GetPlayerInterior(playerid);
-										GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+										Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 										
 										Tryg3D::Foreach(i){
 											if(i != playerid){
 												if(pteam != GetPlayerTeam(i) || GetPlayerTeam(i) == NO_TEAM || pteam == NO_TEAM){
-													if(IsPlayerInAnyVehicle(i) && IsVehicleFlag(GetVehicleFlags(GetPlayerVehicleID(i)),VF_AIRBORNE)){
+													if(IsPlayerInAnyVehicle(i) && Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(GetPlayerVehicleID(i)),VF_AIRBORNE)){
 														GetPlayerPos(i,px,py,pz);
 														if(GetPlayerVirtualWorld(i) == F5[T3D:VW] && GetPlayerInterior(i) == F5[T3D:INT]){
-															if(Area::PointInCylinder3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],10.0)){
-																if((T3D:dist = GetDistanceBetweenPoints3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z])) < T3D:ldist){
+															if(Tryg3D::IsPointInCylinder3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],10.0)){
+																if((T3D:dist = Tryg3D::GetDistance3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z])) < T3D:ldist){
 																	T3D:ldist = T3D:dist;
 																	LockTarget = i;
 																}
@@ -3056,10 +3056,10 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 											}
 										}
 										if(LockTarget == INVALID_PLAYER_ID){
-											GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],800.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+											Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],800.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 											Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,10.0,20.0,150.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:VW],F5[T3D:INT],-1,300.0,MISSILE_OBJECT_BIG,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 										} else {
-											GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],10.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+											Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],10.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 											Missile::LaunchAimPlayer(LockTarget,MISSILE_TYPE_EXPLODE_NORMAL,20.0,35.0,150.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:VW],F5[T3D:INT],-1,300.0,MISSILE_OBJECT_BIG,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 										}
 										SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -3070,7 +3070,7 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 							}
 						}
 						case 515: {
-							if(IsPlayerLookAtSky(playerid)){
+							if(Tryg3D::IsPlayerLookAtSky(playerid)){
 								if(GetTickCount()-SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] >= 1000){
 									new T3D:trailerid = GetVehicleTrailer(vid);
 									if(IsValidVehicle(T3D:trailerid)){
@@ -3082,21 +3082,21 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 											new F5[Float3D], Float:rz, Float:T3D:ldist = 20000, Float:T3D:dist, pteam = GetPlayerTeam(playerid), LockTarget = INVALID_PLAYER_ID, Float:px, Float:py, Float:pz;
 											GetVehiclePos(T3D:trailerid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 											GetVehicleZAngle(T3D:trailerid,rz);
-											GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
+											Tryg3D::GetPlayerCameraRotation(playerid,F5[T3D:rX],F5[T3D:rZ]);
 											F5[T3D:Z] += 7.83;
 											
 											F5[T3D:VW] = GetPlayerVirtualWorld(playerid);
 											F5[T3D:INT] = GetPlayerInterior(playerid);
-											GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+											Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 											
 											Tryg3D::Foreach(i){
 												if(i != playerid){
 													if(pteam != GetPlayerTeam(i) || GetPlayerTeam(i) == NO_TEAM || pteam == NO_TEAM){
-														if(IsPlayerInAnyVehicle(i) && IsVehicleFlag(GetVehicleFlags(GetPlayerVehicleID(i)),VF_AIRBORNE)){
+														if(IsPlayerInAnyVehicle(i) && Tryg3D::IsVehicleFlag(Tryg3D::GetVehicleFlags(GetPlayerVehicleID(i)),VF_AIRBORNE)){
 															GetPlayerPos(i,px,py,pz);
 															if(GetPlayerVirtualWorld(i) == F5[T3D:VW] && GetPlayerInterior(i) == F5[T3D:INT]){
-																if(Area::PointInCylinder3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],10.0)){
-																	if((T3D:dist = GetDistanceBetweenPoints3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z])) < T3D:ldist){
+																if(Tryg3D::IsPointInCylinder3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],10.0)){
+																	if((T3D:dist = Tryg3D::GetDistance3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z])) < T3D:ldist){
 																		T3D:ldist = T3D:dist;
 																		LockTarget = i;
 																	}
@@ -3107,10 +3107,10 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 												}
 											}
 											if(LockTarget == INVALID_PLAYER_ID){
-												GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],800.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+												Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],800.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 												Missile::Launch(MISSILE_TYPE_EXPLODE_NORMAL,10.0,20.0,150.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:VW],F5[T3D:INT],-1,300.0,MISSILE_OBJECT_BIG,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 											} else {
-												GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],10.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+												Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],10.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 												Missile::LaunchAimPlayer(LockTarget,MISSILE_TYPE_EXPLODE_NORMAL,20.0,35.0,150.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:VW],F5[T3D:INT],-1,300.0,MISSILE_OBJECT_BIG,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 											}
 											SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -3157,7 +3157,7 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 										SpecialVehicle::UpdateText(vid);
 									}
 									new F5[Float3D];
-									Item::GetOrientationPos(vid,item_vehicle,o_back,10.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
+									Tryg3D::ItemGetOrientationPos(vid,item_vehicle,o_back,10.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z]);
 									new mobid = Mines::Create(MINE_TYPE_EXPLODE_NORMAL,5.0,25.0,5.0,60,F5[T3D:X],F5[T3D:Y],-0.5,GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,100.0,MINE_OBJECT_UNDERWATER,SPECIAL_VEH_TEAM_TYPE,MINE_DETECT_TYPE_ALL,playerid,100.0,2500.0);
 									SpecialVehicle::Mine[mobid] = true;
 									SpecialVehicle::MineBy[mobid] = vid;
@@ -3172,7 +3172,7 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 						if(SpecialVehicle::PlayerData[playerid][SpecialVehicle::IsUseTurbo]){
 							if(GetTickCount()-SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] >= 2500){
 								if(SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0] > 0 || SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0] == SPECIAL_VEH_AMMO_INFINITY){
-									if(IsCollisionFlag(Item::GetCollisionFlags(vid,item_vehicle),POSITION_FLAG_AIR)){
+									if(Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(vid,item_vehicle),POSITION_FLAG_AIR)){
 										if(SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0] != SPECIAL_VEH_AMMO_INFINITY){
 											SpecialVehicle::VehicleData[vid][SpecialVehicle::Ammo][0]--;
 											SpecialVehicle::UpdateText(vid);
@@ -3182,15 +3182,15 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 										Tryg3D::GetVehicleRotation(vid,F5[T3D:rX],F5[T3D:rY],F5[T3D:rZ]);
 										F5[T3D:VW] = GetPlayerVirtualWorld(playerid);
 										F5[T3D:INT] = GetPlayerInterior(playerid);
-										GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+										Tryg3D::GetPointInFront3DCol(F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:rX],F5[T3D:rZ],300.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 										Tryg3D::Foreach(i){
 											if(i != playerid){
 												if(pteam != GetPlayerTeam(i) || GetPlayerTeam(i) == NO_TEAM || pteam == NO_TEAM){
-													if(IsPlayerInAnyVehicle(i) && IsCollisionFlag(Item::GetCollisionFlags(GetPlayerVehicleID(i),item_vehicle),POSITION_FLAG_AIR)){
+													if(IsPlayerInAnyVehicle(i) && Tryg3D::IsCollisionFlag(Tryg3D::ItemGetCollisionFlags(GetPlayerVehicleID(i),item_vehicle),POSITION_FLAG_AIR)){
 														GetPlayerPos(i,px,py,pz);
 														if(GetPlayerVirtualWorld(i) == F5[T3D:VW] && GetPlayerInterior(i) == F5[T3D:INT]){
-															if(Area::PointInCylinder3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],10.0)){
-																if((T3D:dist = GetDistanceBetweenPoints3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z])) < T3D:ldist){
+															if(Tryg3D::IsPointInCylinder3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],10.0)){
+																if((T3D:dist = Tryg3D::GetDistance3D(px,py,pz,F5[T3D:X],F5[T3D:Y],F5[T3D:Z])) < T3D:ldist){
 																	T3D:ldist = T3D:dist;
 																	LockTarget = i;
 																}
@@ -3201,10 +3201,10 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 											}
 										}
 										if(LockTarget == INVALID_PLAYER_ID){
-											Item::GetOrientationPosCol(vid,item_vehicle,o_front,800.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+											Tryg3D::ItemGetOrientationPosCol(vid,item_vehicle,o_front,800.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 											Missile::Launch(MISSILE_TYPE_EXPLODE_SMALL,5.0,10.0,150.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:VW],F5[T3D:INT],-1,300.0,MISSILE_OBJECT_HYDRA,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 										} else {
-											Item::GetOrientationPosCol(vid,item_vehicle,o_front,100.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
+											Tryg3D::ItemGetOrientationPosCol(vid,item_vehicle,o_front,100.0,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ]);
 											Missile::LaunchAimPlayer(LockTarget,MISSILE_TYPE_EXPLODE_NORMAL,20.0,35.0,150.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],F5[T3D:VW],F5[T3D:INT],-1,300.0,MISSILE_OBJECT_HYDRA,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 										}
 										SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
@@ -3226,8 +3226,8 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 										SpecialVehicle::UpdateText(vid);
 									}
 									new F5[Float3D];
-									GetPointInFrontOfVehicle3D(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],3.0);
-									GetPointInFrontOfVehicle3DCol(vid,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],300.0);
+									Tryg3D::GetPointInFrontOfVehicle3D(vid,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],3.0);
+									Tryg3D::GetPointInFrontOfVehicleCol(vid,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],300.0);
 									Missile::Launch(MISSILE_TYPE_EXPLODE_SMALL,5.0,10.0,100.0,F5[T3D:X],F5[T3D:Y],F5[T3D:Z],GetPlayerVirtualWorld(playerid),GetPlayerInterior(playerid),-1,300.0,MISSILE_OBJECT_HYDRA,F5[T3D:tX],F5[T3D:tY],F5[T3D:tZ],playerid,SPECIAL_VEH_TEAM_TYPE,.damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::Damage],.vehicle_damage=SpecialVehicle::VehicleData[vid][SpecialVehicle::VehicleDamage]);
 									SpecialVehicle::PlayerData[playerid][SpecialVehicle::WeaponTick] = GetTickCount();
 								} else {

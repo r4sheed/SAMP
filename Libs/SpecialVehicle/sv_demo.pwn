@@ -2,20 +2,28 @@
 
 #define STREAMER_ENABLE_TAGS
 
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_VEHICLE
+#define TRYG3D_ENABLE_UNIVERSAL
+#define TRYG3D_ENABLE_CAST3D
+#define TRYG3D_ENABLE_COLANDREAS
+#define TRYG3D_ENABLE_STREAMER
+#define TRYG3D_ENABLE_GRENADEDETECTION
+
 #include <a_samp>
 #include <izcmd>
 #include <sscanf2>
 #include <streamer>
 #include <colandreas>
-#include <EVF>
-#include <3DTryg>
-#include <ExtendedGrenade>
-#include <Mines>
-#include <Missile>
-#include <VehPara>
+#include <EVF/EVF>
+#include <3DTryg/3DTryg>
+#include <ExtendedGrenade/ExtendedGrenade>
+#include <Mines/Mines>
+#include <Missile/Missile>
+#include <VehPara/VehPara>
 
 #define SPECIAL_VEH_USE_TEAMS	//atention if you turn on teams NO_TEAM is treated as an ordinary team
-#include <SpecialVehicle>
+#include <SpecialVehicle/SpecialVehicle>
 
 public OnPlayerEnterVehIntRequest(playerid,vehicleid){
 	//if vehicle is owned by another team you can block enter to interior here by return 0;
