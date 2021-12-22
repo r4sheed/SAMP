@@ -10,7 +10,7 @@
  File Version: 1.1.2
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
- 3DTryg Version: 5.3.0
+ 3DTryg Version: Gen. 2 v1.0.0
 
  Functions:
  Grenade::IsWeaponEnable(playerid,special_weaponid);
@@ -60,20 +60,32 @@
 #endif
 
 //Check Version 3DTryg.inc
-#if !defined TRYG3D_SAMP_INCLUDE
-	#error [ADM] This include required 3DTryg.inc v5.3.0
+#if !defined TRYG3D_REMASTERED_INCLUDE
+	#error [ADM] This include required 3DTryg.inc Gen. 2 v1.0.0
 #elseif !defined TRYG3D_VERSION
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
-#elseif (TRYG3D_VERSION < 50300)
-	#error [ADM] Update your 3DTryg.inc to v5.3.0
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
+#elseif (TRYG3D_VERSION < 10000)
+	#error [ADM] Update your 3DTryg.inc to Gen. 2 v1.0.0
 #endif
 
-#if !defined TRYG3D_COLANDREAS
-	#error [ADM] Module not initialized: TRYG3D_COLANDREAS
+#if !defined TRYG3D_MOD_PLAYER
+	#error [ADM] Module not initialized: TRYG3D_MOD_PLAYER (add #define TRYG3D_ENABLE_PLAYER before include 3DTryg.inc)
 #endif
 
-#if !defined TRYG3D_GRENADE_DETECTION
-	#error [ADM] Module not initialized: TRYG3D_GRENADE_DETECTION (add #define ENABLE_3D_TRYG_GRENADEDETECTION before include 3DTryg.inc)
+#if !defined TRYG3D_MOD_UNIVERSAL
+	#error [ADM] Module not initialized: TRYG3D_MOD_UNIVERSAL (add #define TRYG3D_ENABLE_UNIVERSAL before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_CAST3D
+	#error [ADM] Module not initialized: TRYG3D_MOD_CAST3D (add #define TRYG3D_ENABLE_CAST3D before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_COLANDREAS
+	#error [ADM] Module not initialized: TRYG3D_MOD_COLANDREAS (add #define TRYG3D_ENABLE_COLANDREAS before include 3DTryg.inc)
+#endif
+
+#if !defined TRYG3D_MOD_GRENADEDETECTION
+	#error [ADM] Module not initialized: TRYG3D_MOD_GRENADEDETECTION (add #define TRYG3D_ENABLE_GRENADEDETECTION before include 3DTryg.inc)
 #endif
 
 #if defined _MISSIONS_INCLUDE
@@ -216,37 +228,37 @@ stock Grenade::CreateGrenadeEffect(special_weaponid,effectid,Float:x,Float:y,Flo
 		switch(effectid){
 			case GRENADE_EFFECT_CLUSTER_BOMB_1: {
 				for(new Grenade::i = 0; Grenade::i < 10; Grenade::i++){
-					Random::PointInCircle(x,y,5.0,tx,ty);
+					Tryg3D::GetPointInCircle(x,y,5.0,tx,ty);
 					ColAndreas::FindZ_For2DCoord(tx,ty,tz);
-					Cast3D::ExplosionDMG(tx,ty,tz+0.2,12,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
+					Tryg3D::CastExplosionDMG(tx,ty,tz+0.2,12,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
 				}
 			}
 			case GRENADE_EFFECT_CLUSTER_BOMB_2: {
 				for(new Grenade::i = 0; Grenade::i < 8; Grenade::i++){
-					Random::PointInCircle(x,y,15.0,tx,ty);
+					Tryg3D::GetPointInCircle(x,y,15.0,tx,ty);
 					ColAndreas::FindZ_For2DCoord(tx,ty,tz);
-					Cast3D::ExplosionDMG(tx,ty,tz+0.2,2,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
+					Tryg3D::CastExplosionDMG(tx,ty,tz+0.2,2,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
 				}
 			}
 			case GRENADE_EFFECT_CLUSTER_BOMB_3: {
 				for(new Grenade::i = 0; Grenade::i < 6; Grenade::i++){
-					Random::PointInCircle(x,y,15.0,tx,ty);
+					Tryg3D::GetPointInCircle(x,y,15.0,tx,ty);
 					ColAndreas::FindZ_For2DCoord(tx,ty,tz);
-					Cast3D::ExplosionDMG(tx,ty,tz+0.2,6,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
+					Tryg3D::CastExplosionDMG(tx,ty,tz+0.2,6,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
 				}
 			}
 			case GRENADE_EFFECT_CLUSTER_BOMB_4: {
 				for(new Grenade::i = 0; Grenade::i < 6; Grenade::i++){
-					Random::PointInCircle(x,y,20.0,tx,ty);
+					Tryg3D::GetPointInCircle(x,y,20.0,tx,ty);
 					ColAndreas::FindZ_For2DCoord(tx,ty,tz);
-					Cast3D::ExplosionDMG(tx,ty,tz+0.2,7,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
+					Tryg3D::CastExplosionDMG(tx,ty,tz+0.2,7,2.0,worldid,interiorid,playerid,streamdistance,damage,veh_damage,byplayerid);
 				}
 			}
 			case GRENADE_EFFECT_BANG_GRENADE: {
 				Tryg3D::Foreach(eg_playerid){
 					GetPlayerPos(eg_playerid,tx,ty,tz);
-					GetPlayerCameraRotation(eg_playerid,rx,rz);
-					if(Area::PointInSphericalSectorEx(x,y,z,tx,ty,tz,rx,rz,100.0,VERTICAL_CAMERA_RADIUS,HORIZONTAL_CAMERA_RADIUS,.collision_flags = TRYG3D_COLLISION_FLAG_OBJECT + TRYG3D_COLLISION_FLAG_VEHICLE)){
+					Tryg3D::GetPlayerCameraRotation(eg_playerid,rx,rz);
+					if(Tryg3D::IsPointInSphericalSectorEx(x,y,z,tx,ty,tz,rx,rz,100.0,VERTICAL_CAMERA_RADIUS,HORIZONTAL_CAMERA_RADIUS,.collision_flags = TRYG3D_COLLISION_FLAG_OBJECT + TRYG3D_COLLISION_FLAG_VEHICLE)){
 						if(Grenade::PlayerData[eg_playerid][Grenade::StunTime] == 0){
 							Grenade::PlayerData[eg_playerid][Grenade::StunTime] = GetTickCount() + 5000;
 						} else {

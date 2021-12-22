@@ -3,6 +3,20 @@ Hello, I would like to present you the Extended Granade.
 [b]Video:[/b]
 https://www.youtube.com/watch?v=wlFEwpE0j7k
 
+[b]Installation:[/b]
+[code]
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_UNIVERSAL
+#define TRYG3D_ENABLE_CAST3D
+#define TRYG3D_ENABLE_COLANDREAS
+#define TRYG3D_ENABLE_GRENADEDETECTION
+
+#include <streamer>
+#include <colandreas>
+#include <3DTryg>
+#include <ExtendedGrenade>
+[/code]
+
 [b]Functions:[/b]
 [code]
 Grenade::IsWeaponEnable(playerid,special_weaponid);
