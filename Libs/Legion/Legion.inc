@@ -265,7 +265,7 @@ T3D:function Legion::OnProtocolUpdate(){
 			//SetPlayerFakePing(npcid,Tryg3D::RandomInteger(25,50));
 			switch(Legion::Data[npcid][Legion::State]){
 				case LEGION_STATE_DEAD: {
-					if(GetTickCount() > Legion::Data[npcid][Legion::RespawnTime]){
+					if(GetTickCount() >= Legion::Data[npcid][Legion::RespawnTime]){
 						Legion::Data[npcid][Legion::RespawnTime] = 0;
 						FCNPC::Respawn(npcid);
 					}

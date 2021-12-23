@@ -8,7 +8,7 @@
  Plugins: Streamer, ColAndreas
  Modules: 3DTryg
 
- File Version: 1.4.4
+ File Version: 1.4.5
  Streamer Version: 2.9.5
  ColAndreas Version: 1.5.0
  3DTryg Version: Gen. 2 v1.0.0
@@ -411,7 +411,7 @@ stock Hunting::Create(type,Float:x,Float:y,Float:z,Float:health,respawntime,worl
 			return INVALID_HUNTING_ID;
 		}
 	} 
-	if(IsPointInWater(x,y) || IsPointInUnderground(x,y,z)){
+	if(Tryg3D::IsPointInWater(x,y) || Tryg3D::IsPointInUnderground(x,y,z)){
 		printf("[ADM] Error: Failed to Hunting::Create(%d,%f,%f,%f,...) position out of world",type,x,y,z);
 		return INVALID_HUNTING_ID;
 	}
@@ -419,7 +419,7 @@ stock Hunting::Create(type,Float:x,Float:y,Float:z,Float:health,respawntime,worl
 	Hunting::Data[mobid] = Hunting::Construct();
 	
 	new Float:tmp_float,Float:target_z;
-	MovePointCol(x,y,z+1.0,x,y,-100.0,tmp_float,tmp_float,target_z);
+	Tryg3D::MovePointCol(x,y,z+1.0,x,y,-100.0,tmp_float,tmp_float,target_z);
 	z = target_z;
 	switch(type){
 		case HUNTING_TYPE_COW: {

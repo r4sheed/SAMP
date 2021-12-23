@@ -1024,9 +1024,9 @@ stock SpecialVehicle::CreateOverlay(vehicleid){
 			//swat tank
 			SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0] = CreateDynamicObject(18848,x,y,z,0.0,0.0,0.0,-1,-1,-1,250.0,250.0);
 			SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][1] = CreateDynamicObject(1489,x,y,z,0.0,0.0,0.0,-1,-1,-1,250.0,250.0);
-			SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],1,3077,"blkbrdx","nf_blackbrd",0x00000000);
-			SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],4,3077,"blkbrdx","nf_blackbrd",0x00000000);
-			SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],5,3077,"blkbrdx","nf_blackbrd",0x00000000);
+			//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],1,3077,"blkbrdx","nf_blackbrd",0x00000000);
+			//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],4,3077,"blkbrdx","nf_blackbrd",0x00000000);
+			//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],5,3077,"blkbrdx","nf_blackbrd",0x00000000);
 			SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][1],0,5150,"wiresetc_las2","metpat64",0x00FFFFFF);
 			SetDynamicObjectNoCameraCol(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0]);
 			SetDynamicObjectNoCameraCol(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][1]);
@@ -1079,12 +1079,12 @@ stock SpecialVehicle::CreateOverlay(vehicleid){
 			//dft
 			SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0] = CreateDynamicObject(18848,x,y,z,0.0,0.0,0.0,-1,-1,-1,250.0,250.0);
 			SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][1] = CreateDynamicObject(1489,x,y,z,0.0,0.0,0.0,-1,-1,-1,250.0,250.0);
-			SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],1,11631,"mp_ranchcut","mpCJ_Black_metal",0x00000000);
-			SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],3,11631,"mp_ranchcut","mpCJ_Black_metal",0x00000000);
-			SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],4,11631,"mp_ranchcut","mpCJ_Black_metal",0x00000000);
-			SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],5,11631,"mp_ranchcut","mpCJ_Black_metal",0x00000000);
+			//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],1,11631,"mp_ranchcut","mpCJ_Black_metal",0x00000000);
+			//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],3,11631,"mp_ranchcut","mpCJ_Black_metal",0x00000000);
+			//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],4,11631,"mp_ranchcut","mpCJ_Black_metal",0x00000000);
+			//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],5,11631,"mp_ranchcut","mpCJ_Black_metal",0x00000000);
 			SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][1],0,5150,"wiresetc_las2","metpat64",0x00FFFFFF);
-			SetDynamicObjectNoCameraCol(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0]);
+			//SetDynamicObjectNoCameraCol(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0]);
 			SetDynamicObjectNoCameraCol(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][1]);
 			AttachDynamicObjectToVehicle(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],vehicleid,0.0,-3.6,-1.0,0.0,0.0,0.0);
 			AttachDynamicObjectToVehicle(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][1],vehicleid,0.0,-3.6,4.7,0.0,0.0,90.0);
@@ -1110,11 +1110,11 @@ stock SpecialVehicle::CreateOverlay(vehicleid){
 			for(new k = 0; k < 8; k++){
 				SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k] = CreateDynamicObject(18848,x,y,z,0.0,0.0,0.0,-1,-1,-1,250.0,250.0);
 				SetDynamicObjectNoCameraCol(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k]);
-				SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],0,13628,"8stad","stadroof",0x00000000);
-				SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],1,14581,"ab_mafiasuitea","barbersmir1",0x00000000);
-				SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],3,14581,"ab_mafiasuitea","barbersmir1",0x00000000);
-				SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],4,14581,"ab_mafiasuitea","barbersmir1",0x00000000);
-				SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],5,14581,"ab_mafiasuitea","barbersmir1",0x00000000);
+				//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],0,13628,"8stad","stadroof",0x00000000);
+				//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],1,14581,"ab_mafiasuitea","barbersmir1",0x00000000);
+				//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],3,14581,"ab_mafiasuitea","barbersmir1",0x00000000);
+				//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],4,14581,"ab_mafiasuitea","barbersmir1",0x00000000);
+				//SetDynamicObjectMaterial(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][k],5,14581,"ab_mafiasuitea","barbersmir1",0x00000000);
 			}
 			AttachDynamicObjectToVehicle(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][0],vehicleid,5.5,0.0,3.0,0.0,180.0,0.0);
 			AttachDynamicObjectToVehicle(SpecialVehicle::VehicleData[vehicleid][SpecialVehicle::Object][1],vehicleid,-5.5,0.0,3.0,0.0,180.0,0.0);
@@ -2441,6 +2441,9 @@ public OnPlayerUpdate(playerid){
 					case 601: {
 						Streamer::SetFloatData(STREAMER_TYPE_OBJECT,SpecialVehicle::VehicleData[vid][SpecialVehicle::Object][0],E_STREAMER_ATTACH_R_Z,Tryg3D::CompressRotation(z_angle-rz));
 					}
+					case 578: {
+						Streamer::SetFloatData(STREAMER_TYPE_OBJECT,SpecialVehicle::VehicleData[vid][SpecialVehicle::Object][0],E_STREAMER_ATTACH_R_Z,Tryg3D::CompressRotation(z_angle-rz));
+					}
 					case 515: {
 						new T3D:trailerid = GetVehicleTrailer(vid);
 						if(IsValidVehicle(T3D:trailerid)){
@@ -3067,6 +3070,8 @@ public OnPlayerKeyStateChange(playerid,newkeys,oldkeys){
 										CallLocalFunction("OnSpecialVehicleHasNoAmmo","dd",playerid,vid);
 									}
 								}
+							} else {
+								CallLocalFunction("OnPlayerShootRocketFail","d",playerid);
 							}
 						}
 						case 515: {

@@ -6,6 +6,7 @@
 #include <streamer>
 #include <FCNPC>
 #include <GPS>
+//#include <YSF>
 
 #define TRYG3D_ENABLE_PLAYER
 #define TRYG3D_ENABLE_VEHICLE
@@ -22,7 +23,7 @@
 #include <SWAP/SWAP>
 #include <EVF/EVF>
 
-#define MAX_LEGION_NPC 100
+#define MAX_LEGION_NPC 50
 #include <Legion/Legion>
 
 public OnVehicleCreated(vehicleid){
@@ -36,7 +37,7 @@ public OnPlayerSpawn(playerid){
 	GivePlayerWeapon(playerid,31,9000);
 	GivePlayerWeapon(playerid,24,9000);
 	GivePlayerWeapon(playerid,27,9000);
-	GivePlayerWeapon(playerid,38,9000);
+	//GivePlayerWeapon(playerid,38,9000);
 	return 1;
 }
 
@@ -57,10 +58,11 @@ T3D:function Legion::GetZoneOwner(checkpointid){
 
 stock Legion::GetRandomCaptureZone(npcid,&Float:x,&Float:y,&Float:z){
 	#pragma unused npcid
-	Tryg3D::GetPointInRectangle(500.0,500.0,3000.0,3000.0,x,y);
+	/*Tryg3D::GetPointInRectangle(500.0,500.0,3000.0,3000.0,x,y);
 	while(Tryg3D::IsPointInWater(x,y,0.0)){
 		Tryg3D::GetPointInRectangle(500.0,500.0,3000.0,3000.0,x,y);
-	}
+	}*/
+	Tryg3D::GetPointInCircle(1431.6643,1692.0281,25.0,x,y);
 	ColAndreas::FindZ_For2DCoord(x,y,z);
 	z += TRYG3D_CHARACTER_GROUND_Z_DIFF;
 	return 1;
@@ -79,6 +81,18 @@ stock bool:IsValidSkin(skinid){
 
 public OnFilterScriptInit(){
 	Tryg3D::InitVehicleCollision();
+
+	new buffer[256], Float:x, Float:y, Float:z;
+	for(new i = 0; i < MAX_LEGION_NPC; i++){
+		format(buffer,sizeof(buffer),"NPC_%03d",i+1);
+		
+		Tryg3D::GetPointInCircle(1431.6643,1692.0281,25.0,x,y);
+		ColAndreas::FindZ_For2DCoord(x,y,z);
+		z += TRYG3D_CHARACTER_GROUND_Z_DIFF;
+		
+		Legion::NPC[i] = Legion::Create(buffer,163,0x003D00FF,x,y,z,Tryg3D::RandomFloat(0.0,360.0),0,0,100.0,100.0);
+		Legion::SetAgressive(Legion::NPC[i],true);
+	}
 	
 	return 1;
 }

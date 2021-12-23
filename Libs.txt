@@ -7,7 +7,7 @@ ExtendedGrenade.inc;1.1.2;https://adm.ct8.pl/cloud/Libs/ExtendedGrenade/Extended
 FoxForeach.inc;1.2.1;https://adm.ct8.pl/cloud/Libs/FoxForeach/FoxForeach.inc;stable;removed
 Graffiti.inc;1.0.3;https://adm.ct8.pl/cloud/Libs/Graffiti/Graffiti.inc;stable;released
 hashtag.inc;1.2.1;https://adm.ct8.pl/cloud/Libs/hashtag/hashtag.inc;stable;released
-Hunting.inc;1.4.4;https://adm.ct8.pl/cloud/Libs/Hunting/Hunting.inc;stable;released
+Hunting.inc;1.4.5;https://adm.ct8.pl/cloud/Libs/Hunting/Hunting.inc;stable;released
 Hyperion.inc;1.0.0;https://adm.ct8.pl/cloud/Libs/Hyperion/Hyperion.inc;stable;released
 Knife.inc;2.7.0;https://adm.ct8.pl/cloud/Libs/Knife/Knife.inc;stable;released
 Legion.inc;3.5.0;https://adm.ct8.pl/cloud/Libs/Legion/Legion.inc;experimental;unreleased
