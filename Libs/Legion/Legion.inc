@@ -1,5 +1,5 @@
 /*
-Legion V3.5.0 Copyright © 2021 Abyss Morgan, Unrea1
+Legion V3.5.0 Copyright © 2022 Abyss Morgan, Unrea1
 */
 
 #if defined _samp_included

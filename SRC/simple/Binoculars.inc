@@ -6,8 +6,8 @@ CMD:binoculars(playerid){
 	new szLIST[3096], buffer[128], cnt = 0;
 	Tryg3D::Foreach(i){
 		if(playerid == i) continue;
-		if(IsPlayerSpawned(i)){
-			if(Item::OnPlayerScreen(playerid,i,item_player)){
+		if(Tryg3D::IsPlayerSpawned(i)){
+			if(Tryg3D::ItemOnPlayerScreen(playerid,i,item_player)){
 				format(buffer,sizeof(buffer),"{FFFFFF}%d. {00FF00}%s\n",i,GetPlayerNick(i));
 				strcat(szLIST,buffer);
 				cnt++;

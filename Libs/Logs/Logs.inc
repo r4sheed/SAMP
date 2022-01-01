@@ -2,7 +2,7 @@
  *                                                                                                  *
  *                                        )(   Log File   )(                                        *
  *                                                                                                  *
- * Copyright © 2021 Witkacy. All rights reserved.                                                   *
+ * Copyright © 2022 Witkacy. All rights reserved.                                                   *
  *                                                                                                  *
  * Website: https://adm.ct8.pl                                                                      *
  *                                                                                                  *

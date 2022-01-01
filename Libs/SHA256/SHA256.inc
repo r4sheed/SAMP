@@ -2,7 +2,7 @@
  *                                                                                                  *
  *                                         )(   SHA256   )(                                         *
  *                                                                                                  *
- * Copyright © 2021 National Security Agency. All rights reserved.                                  *
+ * Copyright © 2022 National Security Agency. All rights reserved.                                  *
  * Contributors: dwd222, Abyss Morgan                                                               *
  *                                                                                                  *
  * Website: https://adm.ct8.pl                                                                      *

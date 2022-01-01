@@ -11,9 +11,9 @@ Random Easter Egg Generator (Decoration)
 
 stock EasterEggCreate(){
 	new Float:piox, Float:pioy, Float:pioz;
-	GetRandomPointInRectangle(-3000.0,-3000.0,3000.0,3000.0,piox,pioy);
-	while(IsPointInWater(piox,pioy,0.0)){
-		GetRandomPointInRectangle(-3000.0,-3000.0,3000.0,3000.0,piox,pioy);
+	Tryg3D::GetPointInRectangle(-3000.0,-3000.0,3000.0,3000.0,piox,pioy);
+	while(Tryg3D::IsPointInWater(piox,pioy,0.0)){
+		Tryg3D::GetPointInRectangle(-3000.0,-3000.0,3000.0,3000.0,piox,pioy);
 	}
 	CA_FindZ_For2DCoord(piox,pioy,pioz);
 	new tmpobj = CreateDynamicObject(19341,piox,pioy,pioz+0.55,0.0,0.0,0.0,0,0,-1,50.0);

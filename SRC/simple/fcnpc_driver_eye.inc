@@ -69,7 +69,7 @@ public FCNPC::OnUpdate(npcid){
 			foreach(new i : Player){
 				if(IsPlayerInDynamicArea(i,OczyKierowcy[idx]) && GetPlayerVehicleID(i) != Autokar[idx]){
 					GetPlayerPos(i,px,py,pz);
-					if(Area::PointInSphericalSectorEx(px,py,pz,x,y,z,0.0,z_angle,15.0,VERTICAL_CAMERA_RADIUS,35.0) && !IsPlayerPaused(i)){
+					if(Tryg3D::IsPointInSphericalSectorEx(px,py,pz,x,y,z,0.0,z_angle,15.0,VERTICAL_CAMERA_RADIUS,35.0) && !IsPlayerPaused(i)){
 						if(KierowcaAutokaruPlay[idx]){
 							if(FCNPC::GetSpeed(npcid) > 0.0){
 								if(IsPlayerInAnyVehicle(i)){
@@ -114,10 +114,10 @@ public FCNPC::OnUpdate(npcid){
 			}
 		}
 		//GetPointInFront3D(x,y,z,0.0,z_angle,4.0,px,py,pz);
-		GetPointInFrontOfVehicle3D(Autokar[idx],x,y,z,6.5);
-		GetPointInFrontOfVehicle3D(Autokar[idx],px,py,pz,8.0);
+		Tryg3D::GetPointInFrontOfVehicle3D(Autokar[idx],x,y,z,6.5);
+		Tryg3D::GetPointInFrontOfVehicle3D(Autokar[idx],px,py,pz,8.0);
 		new Float:T3D:x,Float:T3D:y,Float:T3D:z;
-		if(MovePointColWithVehicle(x,y,z,px,py,pz,T3D:x,T3D:y,T3D:z) != INVALID_VEHICLE_ID){
+		if(Tryg3D::MovePointColWithVehicle(x,y,z,px,py,pz,T3D:x,T3D:y,T3D:z) != INVALID_VEHICLE_ID){
 			if(KierowcaAutokaruPlay[idx]){
 				if(FCNPC::GetSpeed(npcid) > 0.0){
 					cmd_l(npcid,"Auto na drodze!");

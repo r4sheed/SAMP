@@ -2,7 +2,7 @@
  *                                                                                                  *
  *                                          )(   MD5   )(                                           *
  *                                                                                                  *
- * Copyright © 2021 Ron Rivest. All rights reserved.                                                *
+ * Copyright © 2022 Ron Rivest. All rights reserved.                                                *
  * Contributors: Colin Plumb, Y_Less, Abyss Morgan                                                  *
  *                                                                                                  *
  * Website: https://adm.ct8.pl                                                                      *

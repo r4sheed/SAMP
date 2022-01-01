@@ -1,6 +1,6 @@
 /*
  mentiones.inc
- Copyright © 2021 Abyss Morgan. All rights reserved.
+ Copyright © 2022 Abyss Morgan. All rights reserved.
  Contributors: None
 
  Website: https://adm.ct8.pl

@@ -16,12 +16,12 @@ public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ){
 CMD:xtpmap(playerid,params[]){
 	//admin ?
 	new Float:distance, max_players = 0, idx = 0, Float:px, Float:py, Float:pz;
-	if(sscanf(params,"f",distance)) return Msg(playerid,COLOR_ERROR,"Usage: /xtpmap <distance>");
+	if(sscanf(params,"f",distance)) return SendClientMessage(playerid,-1,"Usage: /xtpmap <distance>");
 	GetPlayerPos(playerid,px,py,pz);
 	
 	Tryg3D::Foreach(i){
 		if(i != playerid){
-			if(GetDistanceBetweenPlayers(playerid,i) <= distance) max_players++;
+			if(Tryg3D::ItemGetDistance(playerid,item_player,i,item_player) <= distance) max_players++;
 		}
 	}
 	
@@ -40,7 +40,7 @@ CMD:xtpmap(playerid,params[]){
 		Tryg3D::Foreach(i){
 			if(i != playerid){
 				if(GetPlayerDistanceFromPoint(i,px,py,pz) <= distance){
-					Random::PointOnClock(MapClick[playerid][T3D:X],MapClick[playerid][T3D:Y],radius,x,y,z_angle,single_clock(max_players,idx));
+					Tryg3D::GetPointOnClock(MapClick[playerid][T3D:X],MapClick[playerid][T3D:Y],radius,x,y,z_angle,single_clock(max_players,idx));
 					CA_FindZ_For2DCoord(x,y,MAz);
 					/*
 					//FCNPC ?
@@ -78,6 +78,6 @@ CMD:vtpmap(playerid){
 	new Float:MAz,Float:z_angle;
 	GetPlayerFacingAngle(playerid,z_angle);
 	CA_FindZ_For2DCoord(MapClick[playerid][T3D:X],MapClick[playerid][T3D:Y],MAz);
-	SetPlayerAbsolutePositionVeh(playerid,MapClick[playerid][T3D:X],MapClick[playerid][T3D:Y],MAz+1.5,z_angle,0,0);
+	Tryg3D::SetPlayerAbsolutePositionVeh(playerid,MapClick[playerid][T3D:X],MapClick[playerid][T3D:Y],MAz+1.5,z_angle,0,0);
 	return 1;
 }
