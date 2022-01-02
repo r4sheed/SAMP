@@ -1,6 +1,18 @@
-/*
-#include <ADM/3DTryg>
-*/
+#include <a_samp>
+#include <izcmd>
+#include <colandreas>
+
+#define TRYG3D_ENABLE_PLAYER
+#define TRYG3D_ENABLE_COLANDREAS
+#define TRYG3D_ENABLE_UNIVERSAL
+
+#include <3DTryg/3DTryg>
+
+stock GetPlayerNick(playerid){
+	new pnick[MAX_PLAYER_NAME];
+	GetPlayerName(playerid,pnick,sizeof(pnick));
+	return pnick;
+}
 
 CMD:binoculars(playerid){
 	new szLIST[3096], buffer[128], cnt = 0;

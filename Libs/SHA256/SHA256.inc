@@ -51,7 +51,7 @@ stock SHA256::UINT64ToBit(value){
 	return str;
 }
 
-stock SHA256::BitToUINT32(str[]){
+stock SHA256::BitToUINT32(const str[]){
 	new results = 0, j, fx = 0, len = strlen(str);
 	if(len > 32) len = 32;
 	j = len - 1;
@@ -62,7 +62,7 @@ stock SHA256::BitToUINT32(str[]){
 	return results;
 }
 
-stock SHA256::TextToBit(text[], bittext[], len){
+stock SHA256::TextToBit(const text[], bittext[], len){
 	new i = 0, n = 0;
 	while(text[i] && n < len){
 	    new j = 0;
@@ -78,7 +78,7 @@ stock SHA256::RotateRight(value, rot){
 	return (value >>> rot) | (value << (32 - rot));
 }
 
-stock SHA256::Hash(str[]){
+stock SHA256::Hash(const str[]){
     new H[] =  {0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19};
 
 	new k[] =  {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
