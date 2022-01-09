@@ -3,9 +3,7 @@
 
 Technical support for SA:MP libraries will end on 02.01.2022.
 
-You able to download libraries from [https://adm.ct8.pl](https://adm.ct8.pl) until 02.02.2022 after this date, repository [https://github.com/AbyssMorgan/SAMP](https://github.com/AbyssMorgan/SAMP) will be archived.
-
-My team going to support Trilogy:MP with pawn language, after project released.
+My team going to support Trilogy Online with pawn language, after project released.
 
 
 Join [Discord](https://discord.com/invite/Z43HHMt)
