@@ -1,19 +1,11 @@
 ## SA:MP Includes and Scripts (ADM Project)
 
 
-Technical support for SA:MP libraries will end on 02.01.2022.
+Technical Support for SA:MP libraries has ended on 02.01.2022.
 
-My team going to support Trilogy Online with pawn language, after project released.
-
-
-Join [Discord](https://discord.com/invite/Z43HHMt)
 
 ### Download:
 * [ADM Project Website](https://adm.ct8.pl)
-
-
-### Found a bug, please report it here:
-* [Discord](https://discord.com/invite/Z43HHMt)
 
 
 ### Repository developers:
