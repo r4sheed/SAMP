@@ -15,7 +15,6 @@ Technical Support for SA:MP libraries has ended on 02.01.2022.
 * TDI97 (Mapper 2015 - 2018)
 * Switel12 (Tester 2015 - 2018, Distribution Manager 2018)
 * W1z4rD (Tester 2017 - 2018)
-* $continue$ (Russian distribution helper 2021 - 2022)
 
 ### Contributors:
 * Crayder (3DTryg, DataConvert)
