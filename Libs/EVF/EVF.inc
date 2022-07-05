@@ -2646,8 +2646,8 @@ EVF::Public:: EVF::OnVehicleBombExplode(playerid,vehicleid){
 	SetVehicleParams(vehicleid,VEHICLE_TYPE_ALARM,0);
 	new Float:pos[3];
 	GetVehiclePos(vehicleid,pos[0],pos[1],pos[2]);
-	#if defined TRYG3D_SAMP_INCLUDE
-		Cast3D::Explosion(pos[0],pos[1],pos[2],3,30.0,GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),-1,200.0);
+	#if defined TRYG3D_SAMP_INCLUDE && defined TRYG3D_MOD_CAST3D
+		Tryg3D::CastExplosion(pos[0],pos[1],pos[2],3,30.0,GetVehicleVirtualWorld(vehicleid),GetVehicleInterior(vehicleid),-1,200.0);
 	#else
 		CreateExplosion(pos[0],pos[1],pos[2],3,30.0);
 	#endif
