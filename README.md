@@ -4,10 +4,6 @@
 Technical Support for SA:MP libraries has ended on 02.01.2022.
 
 
-### Download:
-* [ADM Project Website](https://adm.ct8.pl)
-
-
 ### Repository developers:
 * Abyss Morgan (Main Programmer)
 
