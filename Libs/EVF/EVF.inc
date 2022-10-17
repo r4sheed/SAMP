@@ -1998,28 +1998,28 @@ stock GetVehicleComponentPrice(componentid){
 #if !defined OPEN_MP && !defined _YSF_included
 	#define IsVehicleOccupied 		EVF::IsVehicleOccupied
 	#define GetVehicleColor 		EVF::GetVehicleColor
+
+	stock EVF::GetVehicleColor(vehicleid,&color1,&color2){
+		if(IsValidVehicle(vehicleid)){
+			color1 = GetVehiclePropertyValue(vehicleid,e_VEHICLE_COLOR_1);
+			color2 = GetVehiclePropertyValue(vehicleid,e_VEHICLE_COLOR_2);
+			return 1;
+		}
+		return 0;
+	}
+
+	stock bool:EVF::IsVehicleOccupied(vehicleid){
+		EVF::Foreach(i){
+			if(IsPlayerInVehicle(i,vehicleid)){
+				return true;
+			}
+		}
+		return false;
+	}
 #endif
 
 #define EVF_GetVehicleInterior(%0)	GetVehiclePropertyValue((%0),e_VEHICLE_INTERIOR)
 #define EVF_GetVehiclePaintjob(%0)	GetVehiclePropertyValue((%0),e_VEHICLE_PAINTJOB)
-
-stock EVF::GetVehicleColor(vehicleid,&color1,&color2){
-	if(IsValidVehicle(vehicleid)){
-		color1 = GetVehiclePropertyValue(vehicleid,e_VEHICLE_COLOR_1);
-		color2 = GetVehiclePropertyValue(vehicleid,e_VEHICLE_COLOR_2);
-		return 1;
-	}
-	return 0;
-}
-
-stock bool:EVF::IsVehicleOccupied(vehicleid){
-	EVF::Foreach(i){
-		if(IsPlayerInVehicle(i,vehicleid)){
-			return true;
-		}
-	}
-	return false;
-}
 
 stock EVF::GetVehicleSpawnInfo(vehicleid,&Float:x,&Float:y,&Float:z,&Float:rotation,&worldid,&interiorid){
 	x = Float:GetVehiclePropertyValue(vehicleid,e_VEHICLE_SPAWN_X);
