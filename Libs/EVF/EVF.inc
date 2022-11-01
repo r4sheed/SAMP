@@ -8,7 +8,7 @@
  Plugins: Streamer
  Modules: None
 
- File Version: 3.3.3
+ File Version: 3.3.4
  Streamer Version: 2.9.5
 
  Functions:
@@ -101,13 +101,15 @@
  EVF_ImportVehicle(vehicleid,modelid,Float:x,Float:y,Float:z,Float:angle,color1,color2,worldid,interiorid,unoccupied_damage);
  EVF_RemoveVehicle(vehicleid);
 
- Compatible with YSF Functions:
+ Compatible with YSF & OPEN_MP Functions:
  GetVehicleColor(vehicleid,&color1,&color2);
+ IsVehicleOccupied(vehicleid);
+
+ Compatible with YSF Functions:
  GetVehiclePaintjob(vehicleid);
  GetVehicleInterior(vehicleid);
  EVF::GetVehicleSpawnInfo(vehicleid,&Float:x,&Float:y,&Float:z,&Float:rotation,&worldid,&interiorid);
  EVF::SetVehicleSpawnInfo(vehicleid,Float:x,Float:y,Float:z,Float:rotation,worldid,interiorid);
- IsVehicleOccupied(vehicleid);
 
  Callbacks:
  OnVehicleCreated(vehicleid);                       //Called when a vehicle is created.
@@ -269,7 +271,7 @@
 #endif
 #define _EVF_include
 
-#define EVF_Version									(30303) //a.b.c 10000*a+100*b+c
+#define EVF_Version									(30304) //a.b.c 10000*a+100*b+c
 #if defined GetPlayerCustomSkin
 	#define EVF_SAMP_VERSION						"0.3 DL"
 #else
@@ -1989,11 +1991,15 @@ stock GetVehicleComponentPrice(componentid){
 
 //Detect YSF.inc
 #if !defined _YSF_included
-	
 	#define GetVehicleInterior(%0)	GetVehiclePropertyValue((%0),e_VEHICLE_INTERIOR)
 	#define GetVehiclePaintjob(%0)	GetVehiclePropertyValue((%0),e_VEHICLE_PAINTJOB)
+#endif
 
-	stock GetVehicleColor(vehicleid,&color1,&color2){
+#if !defined OPEN_MP && !defined _YSF_included
+	#define IsVehicleOccupied 		EVF::IsVehicleOccupied
+	#define GetVehicleColor 		EVF::GetVehicleColor
+
+	stock EVF::GetVehicleColor(vehicleid,&color1,&color2){
 		if(IsValidVehicle(vehicleid)){
 			color1 = GetVehiclePropertyValue(vehicleid,e_VEHICLE_COLOR_1);
 			color2 = GetVehiclePropertyValue(vehicleid,e_VEHICLE_COLOR_2);
@@ -2001,8 +2007,8 @@ stock GetVehicleComponentPrice(componentid){
 		}
 		return 0;
 	}
-	
-	stock bool:IsVehicleOccupied(vehicleid){
+
+	stock bool:EVF::IsVehicleOccupied(vehicleid){
 		EVF::Foreach(i){
 			if(IsPlayerInVehicle(i,vehicleid)){
 				return true;
@@ -2014,24 +2020,6 @@ stock GetVehicleComponentPrice(componentid){
 
 #define EVF_GetVehicleInterior(%0)	GetVehiclePropertyValue((%0),e_VEHICLE_INTERIOR)
 #define EVF_GetVehiclePaintjob(%0)	GetVehiclePropertyValue((%0),e_VEHICLE_PAINTJOB)
-
-stock EVF::GetVehicleColor(vehicleid,&color1,&color2){
-	if(IsValidVehicle(vehicleid)){
-		color1 = GetVehiclePropertyValue(vehicleid,e_VEHICLE_COLOR_1);
-		color2 = GetVehiclePropertyValue(vehicleid,e_VEHICLE_COLOR_2);
-		return 1;
-	}
-	return 0;
-}
-
-stock bool:EVF::IsVehicleOccupied(vehicleid){
-	EVF::Foreach(i){
-		if(IsPlayerInVehicle(i,vehicleid)){
-			return true;
-		}
-	}
-	return false;
-}
 
 stock EVF::GetVehicleSpawnInfo(vehicleid,&Float:x,&Float:y,&Float:z,&Float:rotation,&worldid,&interiorid){
 	x = Float:GetVehiclePropertyValue(vehicleid,e_VEHICLE_SPAWN_X);
@@ -2753,7 +2741,7 @@ stock EVF::ChangeVehiclePaintjob(vehicleid,paintjobid){
 		SetVehiclePropertyValue(vehicleid,e_VEHICLE_PAINTJOB,paintjobid);
 		if(paintjobid == RESET_PAINTJOB_ID){
 			new color1,color2;
-			if(EVF::GetVehicleColor(vehicleid,color1,color2)){
+			if(GetVehicleColor(vehicleid,color1,color2)){
 				ChangeVehicleColor(vehicleid,color1,color2);
 			}
 		}
@@ -3401,7 +3389,7 @@ public OnVehicleSpawn(vehicleid){
 	SetVehiclePropertyValue(vehicleid,e_VEHICLE_PAINTJOB,RESET_PAINTJOB_ID);
 
 	new color1,color2;
-	if(EVF::GetVehicleColor(vehicleid,color1,color2)){
+	if(GetVehicleColor(vehicleid,color1,color2)){
 		ChangeVehicleColor(vehicleid,color1,color2);
 	}
 	
