@@ -54,5 +54,5 @@ Technical Support for SA:MP libraries has ended on 02.01.2022.
 * Wizzard2H (Mines)
 * rasheed (SpecialVehicle)
 * TDI97 (SpecialVehicle)
-* $continue$ (3DTryg)
-* [Y_Less](https://www.burgershot.gg/member.php?action=profile&uid=6) (MD5)
+* "$continue$" (3DTryg)
+* Y_Less (MD5)
